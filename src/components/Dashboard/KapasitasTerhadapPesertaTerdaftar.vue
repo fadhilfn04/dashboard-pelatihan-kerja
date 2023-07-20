@@ -42,12 +42,19 @@ export default {
           },
         },
         legend: {
+          reversed: false,
           symbolWidth: 10,
           symbolHeight: 10,
           symbolPadding: 5,
           symbolRadius: 0,
         },
         plotOptions: {
+          series: {
+            stacking: 'normal',
+            dataLabels: {
+              enabled: true,
+            },
+          },
           column: {
             maxPointWidth: 50,
             dataLabels: {
@@ -60,16 +67,47 @@ export default {
         },
         series: [
           {
-            name: "Jumlah Tenaga Kerja",
-            data: [],
-            color: "#FFC000",
+            name: "Kapasitas Terisi",
+            data: [220, 180, 160, 140, 120, 100, 120, 140, 160, 180],
+            color: "#F65464",
+          },
+          {
+            name: "Kapasitas Tersisa",
+            data: [200, 180, 160, 140, 120, 100, 120, 140, 160, 180],
+            color: "#0BB783",
           },
         ],
       },
-      dataPelatihan: [
+      dataKapasitas: [
         {
-          categories: "Prakerja",
-          jumlah: 17474795,
+          categories: "Balai Pelatihan Nasional",
+        },
+        {
+          categories: "Balai Pelatihan Nasional",
+        },
+        {
+          categories: "Balai Pelatihan Nasional",
+        },
+        {
+          categories: "Balai Pelatihan Nasional",
+        },
+        {
+          categories: "Balai Pelatihan Nasional",
+        },
+        {
+          categories: "Balai Pelatihan Nasional",
+        },
+        {
+          categories: "Balai Pelatihan Nasional",
+        },
+        {
+          categories: "Balai Pelatihan Nasional",
+        },
+        {
+          categories: "Balai Pelatihan Nasional",
+        },
+        {
+          categories: "Balai Pelatihan Nasional",
         },
       ],
     };
@@ -79,7 +117,7 @@ export default {
     this.sortedData();
     var categories = [];
     var jumlah = [];
-    this.dataPelatihan.forEach((item) => {
+    this.dataKapasitas.forEach((item) => {
       categories.push(item.categories);
       jumlah.push(item.jumlah);
     });
@@ -103,7 +141,7 @@ export default {
         });
     },
     sortedData() {
-      return this.dataPelatihan.sort((a, b) => b.jumlah - a.jumlah);
+      return this.dataKapasitas.sort((a, b) => b.jumlah - a.jumlah);
     },
   },
 };

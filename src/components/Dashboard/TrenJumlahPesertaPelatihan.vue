@@ -11,9 +11,6 @@ export default {
   data() {
     return {
       chartOptions: {
-        chart: {
-          type: "column",
-        },
         title: {
           text: null,
         },
@@ -61,38 +58,86 @@ export default {
         },
         series: [
           {
-            name: "Jumlah Tenaga Kerja",
+            name: "Kompetensi",
             data: [
-              2082, 245080, 574841, 163560, 1709365, 1399069, 1063947, 598438,
-              4454038, 2682325, 679437, 1267279, 16209, 494,
+              100000, 200000, 1000000, 163560, 1709365, 1399069, 1063947, 598438,
+              4454038, 2682325, 679437, 1267279
             ],
-            color: "#4472C4",
+            color: "#4EE1AC",
+          },
+          {
+            name: "Peningkatan Produktifitas",
+            data: [
+              5000000, 245080, 574841, 163560, 1709365, 1399069, 1063947, 598438,
+              4454038, 2682325, 679437, 1267279
+            ],
+            color: "#FF9F43",
+          },
+          {
+            name: "Pra Kerja",
+            data: [
+              2500000, 245080, 574841, 163560, 1709365, 1399069, 1063947, 598438,
+              4454038, 2682325, 679437, 1267279
+            ],
+            color: "#FF8181",
+          },
+          {
+            name: "Pemagangan Dalam Kerja",
+            data: [
+              3500000, 245080, 574841, 163560, 1709365, 1399069, 1063947, 598438,
+              4454038, 2682325, 679437, 1267279
+            ],
+            color: "#DE4EE1",
+          },
+          {
+            name: "Pemagangan Luar Negeri",
+            data: [
+              4000000, 245080, 574841, 163560, 1709365, 1399069, 1063947, 598438,
+              4454038, 2682325, 679437, 126727
+            ],
+            color: "#945FFB",
           },
         ],
         credits: {
           enabled: false,
         },
       },
-      dataBansos: [
+      dataTren: [
         {
-          categories: "BNPT",
-          jumlah: 2746196,
+          categories: "Jan",
         },
         {
-          categories: "BPUM",
-          jumlah: 1132577,
+          categories: "Feb",
         },
         {
-          categories: "BST",
-          jumlah: 3090722,
+          categories: "Mar",
         },
         {
-          categories: "PKH",
-          jumlah: 1052468,
+          categories: "Apr",
         },
         {
-          categories: "SEMBAKO",
-          jumlah: 2158317,
+          categories: "Mei",
+        },
+        {
+          categories: "Jun",
+        },
+        {
+          categories: "Jul",
+        },
+        {
+          categories: "Agu",
+        },
+        {
+          categories: "Sep",
+        },
+        {
+          categories: "Okt",
+        },
+        {
+          categories: "Nov",
+        },
+        {
+          categories: "Des",
         },
       ],
     };
@@ -102,7 +147,7 @@ export default {
     this.sortedData();
     var categories = [];
     var jumlah = [];
-    this.dataBansos.forEach((item) => {
+    this.dataTren.forEach((item) => {
       categories.push(item.categories);
       jumlah.push(item.jumlah);
     });
@@ -128,7 +173,7 @@ export default {
         });
     },
     sortedData() {
-      return this.dataBansos.sort((a, b) => b.jumlah - a.jumlah);
+      return this.dataTren.sort((a, b) => b.jumlah - a.jumlah);
     },
   },
 };
