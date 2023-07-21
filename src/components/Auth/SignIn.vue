@@ -99,7 +99,7 @@ export default {
             value: token,
             expiredAt: Date.now()+(60*60*1000)
           }));
-          this.$router.push("/dashboard");
+          this.$router.push("/");
           return true;
         }else {
           this.loginError = true;

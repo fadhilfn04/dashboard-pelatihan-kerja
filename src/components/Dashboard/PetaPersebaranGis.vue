@@ -7,12 +7,6 @@
     :zoom="zoom"
     @update-data="updateData"
   />
-  <TheLegend
-    v-if="dataPolygon"
-    :level="level"
-    :legends="legends"
-    @update-data="updateData"
-  />
 
   <Modal size="2xl" v-if="isShowModal" @close="closeModal" class="z-1000">
     <template #header>
@@ -25,7 +19,7 @@
         <table class="w-full text-left text-sm text-gray-500">
           <thead class="bg-gray-50 text-xs uppercase text-gray-700">
             <tr>
-              <th scope="col" class="px-2 py-3">Kecamatan</th>
+              <th scope="col" class="px-2 py-3">Wilayah Kabupaten/Kota</th>
               <th scope="col" class="px-2 py-3">Jumlah Tenaga Kerja</th>
               <th scope="col" class="px-2 py-3">Persentase</th>
             </tr>
@@ -37,7 +31,7 @@
               :key="index"
             >
               <td class="px-2 py-4">
-                <a href="#" class="font-semibold text-brand-blue-1">{{
+                <a href="#" class="font-semibold text-brand-blue-1">Kota {{
                   city.name
                 }}</a>
               </td>
@@ -64,7 +58,6 @@
 
 <script>
 import MapTenagaKerja from "./PetaPersebaran/MapTenagaKerja.vue";
-import TheLegend from "./PetaPersebaran/TheLegend.vue";
 import { ref } from "vue";
 import { Modal } from "flowbite-vue";
 import axios from "axios";
@@ -73,7 +66,6 @@ export default {
   name: "PetaPersebaranGis",
   components: {
     MapTenagaKerja,
-    TheLegend,
     Modal,
   },
   data() {

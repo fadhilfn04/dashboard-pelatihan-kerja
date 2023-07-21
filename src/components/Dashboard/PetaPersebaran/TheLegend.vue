@@ -1,9 +1,4 @@
 <template>
-  <div
-    class="flex w-full bg-brand-background p-1 text-sm font-normal tracking-wide text-gray-700"
-  >
-    Jumlah Keseluruhan Data NIK Unik: {{ summaryNik }}
-  </div>
   <div class="mt-4 flex w-full flex-col px-32">
     <div class="mb-4 w-fit self-center">
       <!-- Breadcrumb -->

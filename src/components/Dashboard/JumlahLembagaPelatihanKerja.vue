@@ -11,81 +11,182 @@ export default {
     return {
       chartOptions: {
         chart: {
-          type: "pie",
-          options3d: {
-            enabled: true,
-            alpha: 45,
-            beta: 0,
-          },
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
         },
         title: {
-          text: null,
+          text: '',
+          align: 'left'
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+          point: {
+              valueSuffix: '%'
+          }
+        },
+        credits: {
+          enabled: false
         },
         plotOptions: {
           pie: {
-            innerSize: "70%",
-            depth: 45,
-            dataLabels: {
-              enabled: true,
-              formatter: function () {
-                const absoluteValue = Math.abs(this.y);
-                const formatter = new Intl.NumberFormat("en-US");
-                return formatter.format(absoluteValue);
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                  enabled: false
               },
-              style: {
-                fontSize: "16px",
-              },
-            },
-            showInLegend: true,
-          },
+              showInLegend: true
+          }
         },
-        legend: {
-          symbolWidth: 10,
-          symbolHeight: 10,
-          symbolPadding: 5,
-          symbolRadius: 0,
-        },
-        colors: ["#4472C4", "#ED7D31"],
-        series: [
-          {
-            name: "Jumlah Tenaga Kerja",
-            data: [],
-          },
-        ],
-        credits: {
-          enabled: false,
-        },
+        series: [{
+          name: 'Produktifitas',
+          colorByPoint: true,
+          data: [{
+              name: 'Lembaga Pemerintah',
+              color: "#FFA800",
+              y: 40.00,
+          },  {
+              name: 'Lembaga Swasta',
+              color: "#8A50FC",
+              y: 30.00
+          }, {
+              name: 'Lembaga Yayasan',
+              color: "#F65464",
+              y: 30.00
+          }, {
+              name: 'Lembaga Pribadi',
+              color: "#1BC5BC",
+              y: 30.00
+          }]
+        }]
       },
+      dataKewirausahaan: [
+        {
+          provinsi: "JAWA BARAT",
+        },
+        {
+          provinsi: "JAWA TENGAH",
+        },
+        {
+          provinsi: "JAWA TIMUR",
+        },
+        {
+          provinsi: "DKI JAKARTA",
+        },
+        {
+          provinsi: "BANTEN",
+        },
+        {
+          provinsi: "SUMATERA UTARA",
+        },
+        {
+          provinsi: "SULAWESEI SELATAN",
+        },
+        {
+          provinsi: "SUMATERA SELATAN",
+        },
+        {
+          provinsi: "LAMPUNG",
+        },
+        {
+          provinsi: "RIAU",
+        },
+        {
+          provinsi: "SUMATERA BARAT",
+        },
+        {
+          provinsi: "DAERAH ISTIMEWA YOGYAKARTA",
+        },
+        {
+          provinsi: "KALIMANTAN TIMUR",
+        },
+        {
+          provinsi: "BALI",
+        },
+        {
+          provinsi: "ACEH",
+        },
+        {
+          provinsi: "NUSA TENGGARA BARAT",
+        },
+        {
+          provinsi: "KEPULAUAN RIAU",
+        },
+        {
+          provinsi: "JAMBI", 
+        },
+        {
+          provinsi: "KALIMANTAN BARAT",
+        },
+        {
+          provinsi: "KALIMANTAN SELATAN",
+        },
+        {
+          provinsi: "NUSA TENGGARA TIMUR",
+        },
+        {
+          provinsi: "SULAWESI UTARA",
+        },
+        {
+          provinsi: "SULAWESI TENGGARA",
+        },
+        {
+          provinsi: "SULAWESI TENGAH",
+        },
+        {
+          provinsi: "KALIMANTAN TENGAH",
+        },
+        {
+          provinsi: "BENGKULU",
+        },
+        {
+          provinsi: "MALUKU",
+        },
+        {
+          provinsi: "KEPULAUAN BANGKA BELITUNG",
+        },
+        {
+          provinsi: "SULAWESI BARAT",
+        },
+        {
+          provinsi: "GORONTALO",
+        },
+        {
+          provinsi: "MALUKU UTARA",
+        },
+        {
+          provinsi: "PAPUA",
+        },
+        {
+          provinsi: "PAPUA BARAT",
+        },
+        {
+          provinsi: "KALIMANTAN UTARA",
+        },
+      ],
     };
   },
-  props: {
-    filter: {
-      type: String,
-      default: "/sektor",
-    },
-  },
-  mounted() {
-    this.loadData();
-  },
-  watch: {
-    filter() {
-      this.loadData();
-    },
-  },
+
   methods: {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get("http://192.168.221.169:8000" + this.filter, {
+        .get("http://192.168.221.169:8000/kewirausahaan", {
           headers: {
             Authorization: "Bearer " + token.value,
           },
         })
         .then((response) => {
           if (response.data) {
-            this.chartOptions.series[0].data = response.data;
+            this.chartOptions.series[0].data = response.data.data;
           }
         });
+    },
+    sortedData() {
+      return this.dataKewirausahaan.sort((a, b) => b.jumlah - a.jumlah);
     },
   },
 };
