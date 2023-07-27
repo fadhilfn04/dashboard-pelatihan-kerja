@@ -11,57 +11,69 @@ export default {
     return {
       chartOptions: {
         chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: 'pie'
+          type: 'column'
         },
         title: {
-          text: '',
-          align: 'left'
+          text: null,
+        },
+        legend: {
+          symbolWidth: 10,
+          symbolHeight: 10,
+          symbolPadding: 5,
+          symbolRadius: 0,
         },
         tooltip: {
-          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        accessibility: {
-          point: {
-              valueSuffix: '%'
-          }
-        },
-        credits: {
-          enabled: false
+          headerFormat:
+            '<span style="font-size:10px">{point.key}</span><table>',
+          pointFormat:
+            '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y}</b></td></tr>',
+          footerFormat: "</table>",
+          shared: true,
+          useHTML: true,
         },
         plotOptions: {
-          pie: {
-              allowPointSelect: true,
-              cursor: 'pointer',
-              dataLabels: {
-                  enabled: false
-              },
-              showInLegend: true
-          }
+          column: {
+            pointPadding: 0.1,
+            borderWidth: 0,
+          },
+          series: {
+            groupPadding: 0.1,
+          },
         },
-        series: [{
-          name: 'Produktifitas',
-          colorByPoint: true,
-          data: [{
-              name: 'Lembaga Pemerintah',
-              color: "#FFA800",
-              y: 40.00,
-          },  {
-              name: 'Lembaga Swasta',
-              color: "#8A50FC",
-              y: 30.00
-          }, {
-              name: 'Lembaga Yayasan',
-              color: "#F65464",
-              y: 30.00
-          }, {
-              name: 'Lembaga Pribadi',
-              color: "#1BC5BC",
-              y: 30.00
-          }]
-        }]
+        series: [
+          {
+            name: "Lembaga Pemerintah",
+            data: [
+              1000
+            ],
+            color: "#FFA800",
+          },
+          {
+            name: "Lembaga Swasta",
+            data: [
+              2000
+            ],
+            color: "#8A50FC",
+          },
+          {
+            name: "Lembaga Yayasan",
+            data: [
+              3000
+            ],
+            color: "#F65464",
+          },
+          {
+            name: "Lembaga Pribadi",
+            data: [
+              4000
+            ],
+            color: "#1BC5BC",
+          },
+        ],
+        credits: {
+          enabled: false,
+        },
       },
       dataKewirausahaan: [
         {

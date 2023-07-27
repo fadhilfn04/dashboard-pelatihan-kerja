@@ -1,7 +1,7 @@
 <template>
   <div class="w-full bg-white border border-gray-200 rounded-lg shadow">
     <div class="p-6 border-b-2">
-      <h5 class="font-semibold text-lg">Data Sumber Daerah</h5>
+      <h5 class="font-semibold text-lg">Upload Management</h5>
     </div>
     <div class="p-6">
       <div class="relative overflow-x-auto">
@@ -19,14 +19,14 @@
           <tbody>
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
               <td class="px-6 py-4">1</td>
-              <td class="px-6 py-4">Bantuan Sosial Usaha Tahun 2022</td>
+              <td class="px-6 py-4">Data Pelatihan Kerja 2023</td>
               <td class="px-6 py-4">
                 <span
                   class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
                   >File Import</span
                 >
               </td>
-              <td class="px-6 py-4">Disnaker Kota Bandung</td>
+              <td class="px-6 py-4">Kemnaker</td>
               <td class="px-6 py-4">22 Januari 2023</td>
               <td>
                 <button

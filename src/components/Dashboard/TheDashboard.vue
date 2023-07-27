@@ -62,10 +62,10 @@
       <div class="p-5">
           <div class="flex justify-between pb-2">
             <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-              Kapasitas LPK
+              Kapasitas Lembaga Pelatihan Kerja
             </h5>
             <select class="block appearance-none bg-blue-100 border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-sm text-blue-600">
-              <option>Sebaran Peserta Pelatihan</option>
+              <option>Provinsi</option>
               <option>Option 2</option>
               <option>Option 3</option>
             </select>
@@ -84,7 +84,7 @@
               <VueDatePicker v-model="year" year-picker />
             </div>
             <select class="block appearance-none bg-blue-100 border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-sm text-blue-600">
-              <option>Sebaran Peserta Pelatihan</option>
+              <option>Provinsi</option>
               <option>Option 2</option>
               <option>Option 3</option>
             </select>
@@ -113,13 +113,13 @@
 
     <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
       <div class="p-5">
-            <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-              Produktifitas Tenaga Kerja
-            </h5>
-            <div class="flex justify-start pb-2">
+            <div class="flex justify-between pb-2">
+              <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+                Produktifitas Tenaga Kerja
+              </h5>
               <div class="relative w-32">
-              <VueDatePicker v-model="year" year-picker />
-            </div>
+                <VueDatePicker v-model="year" year-picker />
+              </div>
             </div>
         <ProduktifitasTenagaKerja />
       </div>

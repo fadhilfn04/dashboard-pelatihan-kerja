@@ -68,44 +68,44 @@ export default {
       },
       dataPekerjaan: [
         {
-          categories: "Balai Pelatihan Nasional",
-          jumlah: 8561081,
+          categories: "Balai Pelatihan Nasional 1",
+          jumlah: 2561081,
         },
         {
-          categories: "Balai Pelatihan Nasional",
+          categories: "Balai Pelatihan Nasional 2",
           jumlah: 2427343,
         },
         {
-          categories: "Balai Pelatihan Nasional",
+          categories: "Balai Pelatihan Nasional 3",
           jumlah: 1800170,
         },
         {
-          categories: "Balai Pelatihan Nasional",
-          jumlah: 980995,
+          categories: "Balai Pelatihan Nasional 4",
+          jumlah: 1500423,
         },
         {
-          categories: "Balai Pelatihan Nasional",
-          jumlah: 980995,
+          categories: "Balai Pelatihan Nasional 5",
+          jumlah: 1023124,
         },
         {
-          categories: "Balai Pelatihan Nasional",
-          jumlah: 980995,
+          categories: "Balai Pelatihan Nasional 6",
+          jumlah: 529342,
         },
         {
-          categories: "Balai Pelatihan Nasional",
-          jumlah: 980995,
+          categories: "Balai Pelatihan Nasional 7",
+          jumlah: 295739,
         },
         {
-          categories: "Balai Pelatihan Nasional",
-          jumlah: 980995,
+          categories: "Balai Pelatihan Nasional 8",
+          jumlah: 492019,
         },
         {
-          categories: "Balai Pelatihan Nasional",
-          jumlah: 980995,
+          categories: "Balai Pelatihan Nasional 9",
+          jumlah: 500995,
         },
         {
-          categories: "Balai Pelatihan Nasional",
-          jumlah: 980995,
+          categories: "Balai Pelatihan Nasional 10",
+          jumlah: 900995,
         },
       ],
     };

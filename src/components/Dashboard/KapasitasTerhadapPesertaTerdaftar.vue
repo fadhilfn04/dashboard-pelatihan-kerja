@@ -18,131 +18,59 @@ export default {
           text: null,
         },
         xAxis: {
-          categories: [],
+          categories: ['BPN 1', 'BPN 2', 'BPN 3', 'BPN 4'],
           title: {
-            text: null,
+              text: null
           },
-          labels: {
-            style: {
-              fontSize: "14px",
-            },
-          },
+          gridLineWidth: 1,
+          lineWidth: 0
         },
         yAxis: {
           min: 0,
-          title: null,
-          labels: {
-            formatter: function () {
-              return Highcharts.numberFormat(this.value, 0, ".", ",");
-            },
-            style: {
-              fontSize: "10px",
-            },
-            overflow: "justify",
+          title: {
+              text: null,
+              align: 'high'
           },
+          labels: {
+              overflow: 'justify'
+          },
+          gridLineWidth: 0
         },
         legend: {
-          reversed: false,
-          symbolWidth: 10,
-          symbolHeight: 10,
-          symbolPadding: 5,
-          symbolRadius: 0,
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'top',
+          x: -40,
+          y: 80,
+          floating: true,
+          borderWidth: 1,
+          backgroundColor:
+              Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+          shadow: true
+        },
+        tooltip: {
+          valueSuffix: ' millions'
         },
         plotOptions: {
-          series: {
-            stacking: 'normal',
-            dataLabels: {
-              enabled: true,
-            },
-          },
-          column: {
-            maxPointWidth: 50,
-            dataLabels: {
-              enabled: true,
-            },
-          },
+          bar: {
+              dataLabels: {
+                  enabled: true
+              },
+              groupPadding: 0.1
+          }
         },
         credits: {
           enabled: false,
         },
-        series: [
-          {
-            name: "Kapasitas Terisi",
-            data: [220, 180, 160, 140, 120, 100, 120, 140, 160, 180],
-            color: "#F65464",
-          },
-          {
-            name: "Kapasitas Tersisa",
-            data: [200, 180, 160, 140, 120, 100, 120, 140, 160, 180],
-            color: "#0BB783",
-          },
-        ],
+        series: [{
+            name: 'Kapasitas Terisi',
+            data: [631, 727, 3714, 726]
+        }, {
+            name: 'Kapasitas Tersisa',
+            data: [814, 841, 3714, 726]
+        }],
       },
-      dataKapasitas: [
-        {
-          categories: "Balai Pelatihan Nasional",
-        },
-        {
-          categories: "Balai Pelatihan Nasional",
-        },
-        {
-          categories: "Balai Pelatihan Nasional",
-        },
-        {
-          categories: "Balai Pelatihan Nasional",
-        },
-        {
-          categories: "Balai Pelatihan Nasional",
-        },
-        {
-          categories: "Balai Pelatihan Nasional",
-        },
-        {
-          categories: "Balai Pelatihan Nasional",
-        },
-        {
-          categories: "Balai Pelatihan Nasional",
-        },
-        {
-          categories: "Balai Pelatihan Nasional",
-        },
-        {
-          categories: "Balai Pelatihan Nasional",
-        },
-      ],
     };
-  },
-  mounted() {
-    // this.loadData(); // uncomment this line if you want to load data from API
-    this.sortedData();
-    var categories = [];
-    var jumlah = [];
-    this.dataKapasitas.forEach((item) => {
-      categories.push(item.categories);
-      jumlah.push(item.jumlah);
-    });
-    this.chartOptions.xAxis.categories = categories;
-    this.chartOptions.series[0].data = jumlah;
-  },
-
-  methods: {
-    loadData() {
-      const token = JSON.parse(localStorage.getItem("token"));
-      axios
-        .get("http://192.168.221.169:8000/pelatihan", {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        })
-        .then((response) => {
-          if (response.data) {
-            this.chartOptions.series[0].data = response.data.data;
-          }
-        });
-    },
-    sortedData() {
-      return this.dataKapasitas.sort((a, b) => b.jumlah - a.jumlah);
-    },
   },
 };
 </script>
