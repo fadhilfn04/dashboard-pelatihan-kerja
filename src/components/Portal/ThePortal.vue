@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-3 gap-4">
+  <div class="flex justify-between">
     <PortalItem :link="{ url: '/dashboard', title: 'Dashboard' }" />
     <PortalItem :link="{ url: '/api-generator', title: 'API Generator' }" />
     <PortalItem

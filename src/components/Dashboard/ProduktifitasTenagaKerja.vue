@@ -46,15 +46,11 @@ export default {
           name: 'Produktifitas',
           colorByPoint: true,
           data: [{
-              name: 'Tinggi',
+              name: 'Bekerja',
               color: "#4EE1AC",
               y: 40.00,
           },  {
-              name: 'Sedang',
-              color: "#FEC435",
-              y: 30.00
-          },  {
-              name: 'Rendah',
+              name: 'Tidak Bekerja',
               color: "#FF8181",
               y: 30.00
           }]

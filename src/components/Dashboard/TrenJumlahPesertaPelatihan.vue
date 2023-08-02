@@ -82,7 +82,7 @@ export default {
             color: "#FF8181",
           },
           {
-            name: "Pemagangan Dalam Kerja",
+            name: "Pemagangan Dalam Negeri",
             data: [
               3500000, 245080, 574841, 163560, 1709365, 1399069, 1063947, 598438,
               4454038, 2682325, 679437, 1267279

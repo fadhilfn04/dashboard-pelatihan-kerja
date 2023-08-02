@@ -34,15 +34,17 @@
   </div>
 
   <div class="grid grid-cols-3 gap-8">
-    <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-      <div class="p-5">
-        <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-          Jumlah Lembaga Pelatihan Kerja
-        </h5>
-        <JumlahLembagaPelatihanKerja />
+    <div class="col-span-2">
+      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+          <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+            Jumlah Lembaga Pelatihan Kerja
+          </h5>
+          <JumlahLembagaPelatihanKerja />
+        </div>
       </div>
     </div>
-    <div class="col-span-2">
+    <div class="col-span-1">
       <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between pb-2">
@@ -60,6 +62,18 @@
   <div class="grid grid-cols-2 gap-8">
     <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
       <div class="p-5">
+        <div class="flex justify-between pb-2">
+          <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+            Persentase LPK Terhadap Pencari Kerja
+          </h5>
+        </div>
+
+        <PersentaseTerhadapPencariKerja />
+      </div>
+    </div>
+    
+    <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div class="p-5">
           <div class="flex justify-between pb-2">
             <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
               Kapasitas Lembaga Pelatihan Kerja
@@ -74,7 +88,7 @@
       </div>
     </div>
 
-    <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+    <!-- <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
       <div class="p-5">
           <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
             Kapasitas Terhadap Peserta Terdaftar
@@ -91,7 +105,7 @@
           </div>
         <KapasitasTerhadapPesertaTerdaftar />
       </div>
-    </div>
+    </div> -->
   </div>
 
   <div class="grid grid-cols-3 gap-8">
@@ -111,19 +125,21 @@
       </div>
     </div>
 
-    <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-      <div class="p-5">
-            <div class="flex justify-between pb-2">
-              <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-                Produktifitas Tenaga Kerja
-              </h5>
-              <div class="relative w-32">
-                <VueDatePicker v-model="year" year-picker />
-              </div>
+    <!-- <div class="col-span-2"> -->
+      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+          <div class="flex justify-between pb-2">
+            <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+              Produktifitas Tenaga Kerja
+            </h5>
+            <div class="relative w-32">
+              <VueDatePicker v-model="year" year-picker />
             </div>
-        <ProduktifitasTenagaKerja />
+          </div>
+            <ProduktifitasTenagaKerja />
+        </div>
       </div>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -132,6 +148,7 @@ import PetaPersebaran from "./PetaPersebaran.vue";
 import JumlahTenagaKerjaByGaji from "./JumlahTenagaKerjaByGaji.vue";
 import KapasitasTerhadapPesertaTerdaftar from "./KapasitasTerhadapPesertaTerdaftar.vue";
 import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
+import PersentaseTerhadapPencariKerja from "./PersentaseTerhadapPencariKerja.vue";
 import KapasitasLPK from "./KapasitasLPK.vue";
 import JumlahTenagaKerjaJabatanTerbanyak from "./JumlahTenagaKerjaJabatanTerbanyak.vue";
 import TrenJumlahPesertaPelatihan from "./TrenJumlahPesertaPelatihan.vue";
@@ -155,6 +172,7 @@ export default {
     JumlahTenagaKerjaByGaji,
     KapasitasTerhadapPesertaTerdaftar,
     TingkatAkreditasiLembagaPelatihanKerja,
+    PersentaseTerhadapPencariKerja,
     KapasitasLPK,
     JumlahLembagaPelatihanKerja,
     ProduktifitasTenagaKerja,

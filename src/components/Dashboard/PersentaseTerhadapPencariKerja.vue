@@ -7,7 +7,7 @@ import axios from "axios";
 import Highcharts from "highcharts";
 
 export default {
-  name: "TingkatAkreditasiLembagaPelatihanKerja",
+  name: "PersentaseTerhadapPencariKerja",
   data() {
     return {
       chartOptions: {
@@ -43,16 +43,24 @@ export default {
           }
         },
         series: [{
-          name: 'Tingkat Akreditasi',
+          name: 'Persentase',
           colorByPoint: true,
           data: [{
-              name: 'Terakreditasi',
-              color: "#4EE1AC",
-              y: 40.00,
+              name: 'LPK 1',
+              color: "#FFA800",
+              y: 50.00,
           },  {
-              name: 'Tidak Terakreditasi',
-              color: "#FEC435",
-              y: 30.00
+              name: 'LPK 2',
+              color: "#8A50FC",
+              y: 50.00
+          },  {
+              name: 'LPK 3',
+              color: "#F65464",
+              y: 50.00
+          },  {
+              name: 'LPK 4',
+              color: "#1BC5BC",
+              y: 50.00
           }]
         }]
       },
