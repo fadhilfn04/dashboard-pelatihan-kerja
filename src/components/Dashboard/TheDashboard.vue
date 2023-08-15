@@ -29,7 +29,7 @@
           Tampilkan 
         </button>
       </div>
-      <PetaPersebaranGis />
+      <!-- <PetaPersebaranGis /> -->
     </div>
   </div>
 
@@ -117,7 +117,7 @@
                 Tren Jumlah Peserta Pelatihan
               </h5>
               <div class="relative w-32">
-                <VueDatePicker v-model="year" year-picker />
+                <VueDatePicker v-model="year" year-picker mode-height="120" :action-row="{ showNow: false, showPreview: false }" locale="id" cancelText="Batal" selectText="Pilih" menu-class-name="dp-theme-light" />
               </div>
             </div>
           <TrenJumlahPesertaPelatihan />
@@ -133,7 +133,7 @@
               Produktifitas Tenaga Kerja
             </h5>
             <div class="relative w-32">
-              <VueDatePicker v-model="year" year-picker />
+              <VueDatePicker v-model="year" year-picker mode-height="120" :action-row="{ showNow: false, showPreview: false }" locale="id" cancelText="Batal" selectText="Pilih" menu-class-name="dp-theme-light" />
             </div>
           </div>
             <ProduktifitasTenagaKerja />
@@ -144,58 +144,85 @@
 </template>
 
 <script>
-import PetaPersebaran from "./PetaPersebaran.vue";
-import JumlahTenagaKerjaByGaji from "./JumlahTenagaKerjaByGaji.vue";
-import KapasitasTerhadapPesertaTerdaftar from "./KapasitasTerhadapPesertaTerdaftar.vue";
-import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
-import PersentaseTerhadapPencariKerja from "./PersentaseTerhadapPencariKerja.vue";
-import KapasitasLPK from "./KapasitasLPK.vue";
-import JumlahTenagaKerjaJabatanTerbanyak from "./JumlahTenagaKerjaJabatanTerbanyak.vue";
-import TrenJumlahPesertaPelatihan from "./TrenJumlahPesertaPelatihan.vue";
-import DemografiTenagaKerja from "./DemografiTenagaKerja.vue";
-import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
-import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
-import PetaPersebaranGis from "./PetaPersebaranGis.vue";
-import { Modal } from "flowbite-vue";
-import { ref } from "vue";
+  import PetaPersebaran from "./PetaPersebaran.vue";
+  import JumlahTenagaKerjaByGaji from "./JumlahTenagaKerjaByGaji.vue";
+  import KapasitasTerhadapPesertaTerdaftar from "./KapasitasTerhadapPesertaTerdaftar.vue";
+  import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
+  import PersentaseTerhadapPencariKerja from "./PersentaseTerhadapPencariKerja.vue";
+  import KapasitasLPK from "./KapasitasLPK.vue";
+  import JumlahTenagaKerjaJabatanTerbanyak from "./JumlahTenagaKerjaJabatanTerbanyak.vue";
+  import TrenJumlahPesertaPelatihan from "./TrenJumlahPesertaPelatihan.vue";
+  import DemografiTenagaKerja from "./DemografiTenagaKerja.vue";
+  import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
+  import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
+  import PetaPersebaranGis from "./PetaPersebaranGis.vue";
+  import { Modal } from "flowbite-vue";
 
-import VueDatePicker from "@vuepic/vue-datepicker";
-import '@vuepic/vue-datepicker/dist/main.css'
+  import VueDatePicker from "@vuepic/vue-datepicker";
+  import '@vuepic/vue-datepicker/dist/main.css'
 
-import FilterProvinsi from "../Shared/FilterProvinsi.vue";
+  import FilterProvinsi from "../Shared/FilterProvinsi.vue";
 
-export default {
-  name: "TheDashboard",
-  components: {
-    PetaPersebaran,
-    PetaPersebaranGis,
-    JumlahTenagaKerjaByGaji,
-    KapasitasTerhadapPesertaTerdaftar,
-    TingkatAkreditasiLembagaPelatihanKerja,
-    PersentaseTerhadapPencariKerja,
-    KapasitasLPK,
-    JumlahLembagaPelatihanKerja,
-    ProduktifitasTenagaKerja,
-    JumlahTenagaKerjaJabatanTerbanyak,
-    TrenJumlahPesertaPelatihan,
-    DemografiTenagaKerja,
-    FilterProvinsi,
-    Modal,
-    VueDatePicker,
-  },
-  data() {
-    return {
-      filterSektor: "/sektor",
-      filterPendidikan: 0,
-      filterPekerjaan: 0,
-      filterPelatihan: 0,
-      filterBansos: 0,
-      filterKewirausahaan: 0,
-      year: 2023,
-    };
-  },
+  export default {
+    name: "TheDashboard",
+    components: {
+      PetaPersebaran,
+      PetaPersebaranGis,
+      JumlahTenagaKerjaByGaji,
+      KapasitasTerhadapPesertaTerdaftar,
+      TingkatAkreditasiLembagaPelatihanKerja,
+      PersentaseTerhadapPencariKerja,
+      KapasitasLPK,
+      JumlahLembagaPelatihanKerja,
+      ProduktifitasTenagaKerja,
+      JumlahTenagaKerjaJabatanTerbanyak,
+      TrenJumlahPesertaPelatihan,
+      DemografiTenagaKerja,
+      FilterProvinsi,
+      Modal,
+      VueDatePicker,
+    },
+    data() {
+      return {
+        filterSektor: "/sektor",
+        filterPendidikan: 0,
+        filterPekerjaan: 0,
+        filterPelatihan: 0,
+        filterBansos: 0,
+        filterKewirausahaan: 0,
+        year: 2023,
+      };
+    },
 
-  methods: {
-  },
-};
+    methods: {
+    },
+  };
 </script>
+
+<style lang="css">
+  .dp-custom-menu {
+    box-shadow: 0 0 6px #1976d2;
+  }
+
+  .dp-theme-light {
+    --dp-background-color: #ffffff;
+    --dp-text-color: #212121;
+    --dp-hover-color: #f3f3f3;
+    --dp-hover-text-color: #212121;
+    --dp-hover-icon-color: #959595;
+    --dp-primary-color: #1976d2;
+    --dp-primary-text-color: #212121;
+    --dp-secondary-color: #c0c4cc;
+    --dp-border-color: #ddd;
+    --dp-menu-border-color: #ddd;
+    --dp-border-color-hover: #aaaeb7;
+    --dp-disabled-color: #f6f6f6;
+    --dp-scroll-bar-background: #f3f3f3;
+    --dp-scroll-bar-color: #959595;
+    --dp-success-color: #76d275;
+    --dp-success-color-disabled: #a3d9b1;
+    --dp-icon-color: #959595;
+    --dp-danger-color: #ff6f60;
+    --dp-highlight-color: rgba(25, 118, 210, 0.1);
+  }
+</style>

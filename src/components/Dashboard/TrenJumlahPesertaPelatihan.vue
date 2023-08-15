@@ -58,22 +58,6 @@ export default {
         },
         series: [
           {
-            name: "Kompetensi",
-            data: [
-              100000, 200000, 1000000, 163560, 1709365, 1399069, 1063947, 598438,
-              4454038, 2682325, 679437, 1267279
-            ],
-            color: "#4EE1AC",
-          },
-          {
-            name: "Peningkatan Produktifitas",
-            data: [
-              5000000, 245080, 574841, 163560, 1709365, 1399069, 1063947, 598438,
-              4454038, 2682325, 679437, 1267279
-            ],
-            color: "#FF9F43",
-          },
-          {
             name: "Pra Kerja",
             data: [
               2500000, 245080, 574841, 163560, 1709365, 1399069, 1063947, 598438,
@@ -84,7 +68,7 @@ export default {
           {
             name: "Pemagangan Dalam Negeri",
             data: [
-              3500000, 245080, 574841, 163560, 1709365, 1399069, 1063947, 598438,
+              3500000, 239742, 547382, 873432, 1709365, 1399069, 1063947, 598438,
               4454038, 2682325, 679437, 1267279
             ],
             color: "#DE4EE1",
@@ -144,7 +128,7 @@ export default {
   },
 
   mounted() {
-    this.sortedData();
+    // this.sortedData();
     var categories = [];
     var jumlah = [];
     this.dataTren.forEach((item) => {
@@ -155,26 +139,26 @@ export default {
     this.chartOptions.series[0].data = jumlah;
   },
 
-  methods: {
-    loadData() {
-      const token = JSON.parse(localStorage.getItem("token"));
-      axios
-        .get("http://192.168.221.169:8000/bansos", {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        })
-        .then((response) => {
-          if (response.data.success) {
-            const responseData = response.data.data;
-            const mappedData = responseData.map((item) => [item.total]);
-            this.chartOptions.series[0].data = mappedData;
-          }
-        });
-    },
-    sortedData() {
-      return this.dataTren.sort((a, b) => b.jumlah - a.jumlah);
-    },
-  },
+  // methods: {
+  //   loadData() {
+  //     const token = JSON.parse(localStorage.getItem("token"));
+  //     axios
+  //       .get("http://192.168.221.169:8000/trenJumlahPesertaPelatihan", {
+  //         headers: {
+  //           Authorization: "Bearer " + token.value,
+  //         },
+  //       })
+  //       .then((response) => {
+  //         if (response.data.success) {
+  //           const responseData = response.data.data;
+  //           const mappedData = responseData.map((item) => [item.total]);
+  //           this.chartOptions.series[0].data = mappedData;
+  //         }
+  //       });
+  //   },
+  //   sortedData() {
+  //     return this.dataTren.sort((a, b) => b.jumlah - a.jumlah);
+  //   },
+  // },
 };
 </script>

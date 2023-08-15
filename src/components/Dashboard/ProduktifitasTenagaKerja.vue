@@ -48,15 +48,15 @@ export default {
           data: [{
               name: 'Bekerja',
               color: "#4EE1AC",
-              y: 40.00,
+              y: 50.00,
           },  {
               name: 'Tidak Bekerja',
               color: "#FF8181",
-              y: 30.00
+              y: 50.00
           }]
         }]
       },
-      dataKewirausahaan: [
+      dataProduktifitas: [
         {
           provinsi: "JAWA BARAT",
         },
@@ -163,24 +163,24 @@ export default {
     };
   },
 
-  methods: {
-    loadData() {
-      const token = JSON.parse(localStorage.getItem("token"));
-      axios
-        .get("http://192.168.221.169:8000/kewirausahaan", {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        })
-        .then((response) => {
-          if (response.data) {
-            this.chartOptions.series[0].data = response.data.data;
-          }
-        });
-    },
-    sortedData() {
-      return this.dataKewirausahaan.sort((a, b) => b.jumlah - a.jumlah);
-    },
-  },
+  // methods: {
+  //   loadData() {
+  //     const token = JSON.parse(localStorage.getItem("token"));
+  //     axios
+  //       .get("http://192.168.221.169:8000/kewirausahaan", {
+  //         headers: {
+  //           Authorization: "Bearer " + token.value,
+  //         },
+  //       })
+  //       .then((response) => {
+  //         if (response.data) {
+  //           this.chartOptions.series[0].data = response.data.data;
+  //         }
+  //       });
+  //   },
+  //   sortedData() {
+  //     return this.dataProduktifitas.sort((a, b) => b.jumlah - a.jumlah);
+  //   },
+  // },
 };
 </script>

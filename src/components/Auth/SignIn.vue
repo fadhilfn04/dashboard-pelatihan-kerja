@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     async login() {
-      axios.post('http://192.168.221.169:8000/login', {
+      axios.post('http://localhost:8000/login', {
         email: this.username,
         password: this.password
       })

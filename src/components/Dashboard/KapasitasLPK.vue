@@ -66,80 +66,80 @@ export default {
           },
         ],
       },
-      dataPekerjaan: [
+      dataLPK: [
         {
           categories: "Balai Pelatihan Nasional 1",
-          jumlah: 2561081,
+          value: 2561081,
         },
         {
           categories: "Balai Pelatihan Nasional 2",
-          jumlah: 2427343,
+          value: 2427343,
         },
         {
           categories: "Balai Pelatihan Nasional 3",
-          jumlah: 1800170,
+          value: 1800170,
         },
         {
           categories: "Balai Pelatihan Nasional 4",
-          jumlah: 1500423,
+          value: 1500423,
         },
         {
           categories: "Balai Pelatihan Nasional 5",
-          jumlah: 1023124,
+          value: 1023124,
         },
         {
           categories: "Balai Pelatihan Nasional 6",
-          jumlah: 529342,
+          value: 529342,
         },
         {
           categories: "Balai Pelatihan Nasional 7",
-          jumlah: 295739,
+          value: 295739,
         },
         {
           categories: "Balai Pelatihan Nasional 8",
-          jumlah: 492019,
+          value: 492019,
         },
         {
           categories: "Balai Pelatihan Nasional 9",
-          jumlah: 500995,
+          value: 500995,
         },
         {
           categories: "Balai Pelatihan Nasional 10",
-          jumlah: 900995,
+          value: 900995,
         },
       ],
     };
   },
   mounted() {
-    //this.loadData(); // uncomment this line if you want to load data from API
+    // this.loadData(); // uncomment this line if you want to load data from API
     var categories = [];
-    var jumlah = [];
-    this.dataPekerjaan.forEach((item) => {
+    var value = [];
+    this.dataLPK.forEach((item) => {
       categories.push(item.categories);
-      jumlah.push(item.jumlah);
+      value.push(item.value);
     });
     this.chartOptions.xAxis.categories = categories;
-    this.chartOptions.series[0].data = jumlah;
+    this.chartOptions.series[0].data = value;
   },
 
-  methods: {
-    loadData() {
-      const token = JSON.parse(localStorage.getItem("token"));
-      axios
-        .get("http://192.168.221.169:8000/pekerjaan", {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        })
-        .then((response) => {
-          if (response.data) {
-            this.chartOptions.series[0].data = response.data.data;
-          }
-        });
-    },
-    sortedData() {
-      return this.dataPekerjaan.sort((a, b) => b.jumlah - a.jumlah);
-    },
-  },
+  // methods: {
+  //   loadData() {
+  //     const token = JSON.parse(localStorage.getItem("token"));
+  //     axios
+  //       .get("http://192.168.221.169:8000/kapasitasLPK", {
+  //         headers: {
+  //           Authorization: "Bearer " + token.value,
+  //         },
+  //       })
+  //       .then((response) => {
+  //         if (response.data) {
+  //           this.chartOptions.series[0].data = response.data.data;
+  //         }
+  //       });
+  //   },
+  //   sortedData() {
+  //     return this.dataLPK.sort((a, b) => b.jumlah - a.jumlah);
+  //   },
+  // },
 };
 </script>
