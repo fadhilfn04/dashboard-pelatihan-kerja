@@ -66,80 +66,46 @@ export default {
           },
         ],
       },
-      dataLPK: [
-        {
-          categories: "Balai Pelatihan Nasional 1",
-          value: 2561081,
-        },
-        {
-          categories: "Balai Pelatihan Nasional 2",
-          value: 2427343,
-        },
-        {
-          categories: "Balai Pelatihan Nasional 3",
-          value: 1800170,
-        },
-        {
-          categories: "Balai Pelatihan Nasional 4",
-          value: 1500423,
-        },
-        {
-          categories: "Balai Pelatihan Nasional 5",
-          value: 1023124,
-        },
-        {
-          categories: "Balai Pelatihan Nasional 6",
-          value: 529342,
-        },
-        {
-          categories: "Balai Pelatihan Nasional 7",
-          value: 295739,
-        },
-        {
-          categories: "Balai Pelatihan Nasional 8",
-          value: 492019,
-        },
-        {
-          categories: "Balai Pelatihan Nasional 9",
-          value: 500995,
-        },
-        {
-          categories: "Balai Pelatihan Nasional 10",
-          value: 900995,
-        },
-      ],
     };
   },
-  mounted() {
-    // this.loadData(); // uncomment this line if you want to load data from API
-    var categories = [];
-    var value = [];
-    this.dataLPK.forEach((item) => {
-      categories.push(item.categories);
-      value.push(item.value);
-    });
-    this.chartOptions.xAxis.categories = categories;
-    this.chartOptions.series[0].data = value;
+  props: {
+    filter: {
+      type: String,
+      default: "/rekap-kapasitas-lpk",
+    },
   },
+  mounted() {
+    this.loadData(); // uncomment this line if you want to load data from API
+  },
+  watch: {
+    filter() {
+      this.loadData();
+    },
+  },
+  methods: {
+    loadData() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      axios
+        .get("http://localhost:8000" + this.filter, {
+          headers: {
+            Authorization: "Bearer " + token.value,
+          },
+        })
+        .then((response) => {
+          // console.log(response.data);
+          if (response.data) {
+            var categories = [];
+            var value = [];
+            response.data.data.forEach((item) => {
+              categories.push(item.nama_lembaga);
+              value.push(item.kapasitas_latih);
+            });
 
-  // methods: {
-  //   loadData() {
-  //     const token = JSON.parse(localStorage.getItem("token"));
-  //     axios
-  //       .get("http://192.168.221.169:8000/kapasitasLPK", {
-  //         headers: {
-  //           Authorization: "Bearer " + token.value,
-  //         },
-  //       })
-  //       .then((response) => {
-  //         if (response.data) {
-  //           this.chartOptions.series[0].data = response.data.data;
-  //         }
-  //       });
-  //   },
-  //   sortedData() {
-  //     return this.dataLPK.sort((a, b) => b.jumlah - a.jumlah);
-  //   },
-  // },
+            this.chartOptions.xAxis.categories = categories;
+            this.chartOptions.series[0].data = value;
+          }
+        });
+    },
+  },
 };
 </script>

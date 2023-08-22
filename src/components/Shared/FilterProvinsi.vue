@@ -18,7 +18,7 @@ onMounted(async () => {
   try {
     const token = JSON.parse(localStorage.getItem("token"));
     const response = await axios.get(
-      "http://192.168.221.169:8000/list-provinsi",
+      "http://localhost:8000/list-provinsi",
       {
         headers: {
           Authorization: "Bearer " + token.value,
@@ -105,24 +105,24 @@ onMounted(async () => {
             <label
               for="default-radio-4"
               class="ml-2 w-full rounded text-sm font-medium text-gray-900"
-              >Nasional</label
+              >NASIONAL</label
             >
           </div>
         </li>
-        <li v-for="provinsi in provinsiList" :key="provinsi.code">
+        <li v-for="provinsi in provinsiList" :key="provinsi.id">
           <div class="flex items-center rounded p-2 hover:bg-gray-100">
             <input
-              :id="provinsi.code"
+              :id="provinsi.id"
               type="radio"
-              :value="provinsi.code"
+              :value="provinsi.id"
               name="radioProvinsi"
               class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-blue-500"
-              @change="emitEvent(provinsi.code)"
+              @change="emitEvent(provinsi.id)"
             />
             <label
               for="default-radio-4"
               class="ml-2 w-full rounded text-sm font-medium text-gray-900"
-              >{{ provinsi.name }}</label
+              >{{ provinsi.nama_provinsi }}</label
             >
           </div>
         </li>
@@ -141,10 +141,10 @@ export default {
     },
   },
   methods: {
-    emitEvent(code) {
+    emitEvent(id) {
       const data = {
         tipe: this.tipe,
-        code: code,
+        id: id,
       };
       this.$emit("provinsiChanged", data);
     },

@@ -7,7 +7,7 @@ import axios from "axios";
 import Highcharts from "highcharts";
 
 export default {
-  name: "TingkatAkreditasiLembagaPelatihanKerja",
+  name: "PersentaseTerhadapPencariKerja",
   data() {
     return {
       chartOptions: {
@@ -43,16 +43,12 @@ export default {
           }
         },
         series: [{
-          name: 'Tingkat Akreditasi',
+          name: 'Persentase',
           colorByPoint: true,
           data: [{
-              name: 'Terakreditasi',
-              color: "#4EE1AC",
-              y: 50,
-          },  {
-              name: 'Tidak Terakreditasi',
-              color: "#FEC435",
-              y: 30
+            name: [],
+            color: "#FFA800",
+            y: 100,
           }]
         }]
       },
@@ -67,7 +63,7 @@ export default {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get("http://localhost:8000/rekap-tingkat-akreditasi-lpk", {
+        .get("http://localhost:8000/rekap-persentase-lpk-terhadap-pencari-kerja", {
           headers: {
             Authorization: "Bearer " + token.value,
           },
@@ -75,19 +71,15 @@ export default {
         .then((response) => {
           // console.log(response.data);
           if (response.data) {
-            var accredited = [];
-            var not_accredited = [];
-            
-            // response.data.data.forEach((item) => {
-            //     data.push(item.status_akreditasi);
-            //     // y.push(item.kapasitas_latih);
-            // });
-            
-            accredited.push(response.data.data.accredited);
-            not_accredited.push(response.data.data.not_accredited);
+            var data = [];
+            var y = [];
+            response.data.data.forEach((item) => {
+                data.push(item.nama_lembaga);
+                // y.push(item.kapasitas_latih);
+            });
 
-            // this.chartOptions.series[0].data[0].y = accredited;
-            // this.chartOptions.series[0].data[1].y = not_accredited;
+            this.chartOptions.series[0].data[0].name = data;
+            // this.chartOptions.series[0].data[0].y = y;
           }
         });
     },

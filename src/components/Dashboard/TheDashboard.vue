@@ -68,7 +68,7 @@
           </h5>
         </div>
 
-        <PersentaseTerhadapPencariKerja />
+        <PersentaseLPKTerhadapPencariKerja />
       </div>
     </div>
     
@@ -78,13 +78,12 @@
             <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
               Kapasitas Lembaga Pelatihan Kerja
             </h5>
-            <select class="block appearance-none bg-blue-100 border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-sm text-blue-600">
-              <option>Provinsi</option>
-              <option>Option 2</option>
-              <option>Option 3</option>
-            </select>
+            <FilterProvinsi
+              @provinsiChanged="handleProvinsiChanged"
+              tipe="provinsi"
+            />
           </div>
-        <KapasitasLPK />
+        <KapasitasLPK :filter="filterProvinsi"/>
       </div>
     </div>
 
@@ -117,7 +116,9 @@
                 Tren Jumlah Peserta Pelatihan
               </h5>
               <div class="relative w-32">
-                <VueDatePicker v-model="year" year-picker mode-height="120" :action-row="{ showNow: false, showPreview: false }" locale="id" cancelText="Batal" selectText="Pilih" menu-class-name="dp-theme-light" />
+                <VueDatePicker 
+                  v-model="year" year-picker mode-height="120" :action-row="{ showNow: false, showPreview: false }" locale="id" cancelText="Batal" selectText="Pilih" menu-class-name="dp-theme-light"
+                />
               </div>
             </div>
           <TrenJumlahPesertaPelatihan />
@@ -125,21 +126,19 @@
       </div>
     </div>
 
-    <!-- <div class="col-span-2"> -->
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-        <div class="p-5">
-          <div class="flex justify-between pb-2">
-            <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-              Produktifitas Tenaga Kerja
-            </h5>
-            <div class="relative w-32">
-              <VueDatePicker v-model="year" year-picker mode-height="120" :action-row="{ showNow: false, showPreview: false }" locale="id" cancelText="Batal" selectText="Pilih" menu-class-name="dp-theme-light" />
-            </div>
+    <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div class="p-5">
+        <div class="flex justify-between pb-2">
+          <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+            Produktifitas Tenaga Kerja
+          </h5>
+          <div class="relative w-32">
+            <VueDatePicker v-model="year" year-picker mode-height="120" :action-row="{ showNow: false, showPreview: false }" locale="id" cancelText="Batal" selectText="Pilih" menu-class-name="dp-theme-light" />
           </div>
-            <ProduktifitasTenagaKerja />
         </div>
+          <ProduktifitasTenagaKerja />
       </div>
-    <!-- </div> -->
+    </div>
   </div>
 </template>
 
@@ -148,7 +147,7 @@
   import JumlahTenagaKerjaByGaji from "./JumlahTenagaKerjaByGaji.vue";
   import KapasitasTerhadapPesertaTerdaftar from "./KapasitasTerhadapPesertaTerdaftar.vue";
   import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
-  import PersentaseTerhadapPencariKerja from "./PersentaseTerhadapPencariKerja.vue";
+  import PersentaseLPKTerhadapPencariKerja from "./PersentaseLPKTerhadapPencariKerja.vue";
   import KapasitasLPK from "./KapasitasLPK.vue";
   import JumlahTenagaKerjaJabatanTerbanyak from "./JumlahTenagaKerjaJabatanTerbanyak.vue";
   import TrenJumlahPesertaPelatihan from "./TrenJumlahPesertaPelatihan.vue";
@@ -171,7 +170,7 @@
       JumlahTenagaKerjaByGaji,
       KapasitasTerhadapPesertaTerdaftar,
       TingkatAkreditasiLembagaPelatihanKerja,
-      PersentaseTerhadapPencariKerja,
+      PersentaseLPKTerhadapPencariKerja,
       KapasitasLPK,
       JumlahLembagaPelatihanKerja,
       ProduktifitasTenagaKerja,
@@ -184,17 +183,28 @@
     },
     data() {
       return {
-        filterSektor: "/sektor",
-        filterPendidikan: 0,
-        filterPekerjaan: 0,
-        filterPelatihan: 0,
-        filterBansos: 0,
-        filterKewirausahaan: 0,
+        filterProvinsi: "/rekap-kapasitas-lpk",
+        filterTahunTren: "/rekap-tren-jumlah-peserta-pelatihan",
+        filterTahunProduktifitas: "/rekap-produktifitas-tenaga-kerja",
         year: 2023,
       };
     },
 
     methods: {
+      handleProvinsiChanged(data) {
+        switch (data.tipe) {
+          case "provinsi":
+            if (data.id != 0) {
+              this.filterProvinsi = "/rekap-kapasitas-lpk-provinsi/" + data.id;
+            } else {
+              this.filterProvinsi = "/rekap-kapasitas-lpk";
+            }
+            break;
+
+          default:
+            break;
+        }
+      },
     },
   };
 </script>

@@ -59,26 +59,17 @@ export default {
         series: [
           {
             name: "Pra Kerja",
-            data: [
-              2500000, 245080, 574841, 163560, 1709365, 1399069, 1063947, 598438,
-              4454038, 2682325, 679437, 1267279
-            ],
+            data: [],
             color: "#FF8181",
           },
           {
             name: "Pemagangan Dalam Negeri",
-            data: [
-              3500000, 239742, 547382, 873432, 1709365, 1399069, 1063947, 598438,
-              4454038, 2682325, 679437, 1267279
-            ],
+            data: [],
             color: "#DE4EE1",
           },
           {
             name: "Pemagangan Luar Negeri",
-            data: [
-              4000000, 245080, 574841, 163560, 1709365, 1399069, 1063947, 598438,
-              4454038, 2682325, 679437, 126727
-            ],
+            data: [],
             color: "#945FFB",
           },
         ],
@@ -128,37 +119,41 @@ export default {
   },
 
   mounted() {
-    // this.sortedData();
-    var categories = [];
-    var jumlah = [];
-    this.dataTren.forEach((item) => {
-      categories.push(item.categories);
-      jumlah.push(item.jumlah);
-    });
-    this.chartOptions.xAxis.categories = categories;
-    this.chartOptions.series[0].data = jumlah;
+    this.loadData(); // uncomment this line if you want to load data from API
   },
 
-  // methods: {
-  //   loadData() {
-  //     const token = JSON.parse(localStorage.getItem("token"));
-  //     axios
-  //       .get("http://192.168.221.169:8000/trenJumlahPesertaPelatihan", {
-  //         headers: {
-  //           Authorization: "Bearer " + token.value,
-  //         },
-  //       })
-  //       .then((response) => {
-  //         if (response.data.success) {
-  //           const responseData = response.data.data;
-  //           const mappedData = responseData.map((item) => [item.total]);
-  //           this.chartOptions.series[0].data = mappedData;
-  //         }
-  //       });
-  //   },
-  //   sortedData() {
-  //     return this.dataTren.sort((a, b) => b.jumlah - a.jumlah);
-  //   },
-  // },
+  methods: {
+    loadData() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      axios
+        .get("http://localhost:8000/rekap-tren-jumlah-peserta-pelatihan", {
+          headers: {
+            Authorization: "Bearer " + token.value,
+          },
+        })
+        .then((response) => {
+          // console.log(response.data);
+          if (response.data) {
+            var prakerja = [];
+            var dalam_negeri = [];
+            var luar_negeri = [];
+            var categories = [];
+
+            this.dataTren.forEach((item) => {
+              categories.push(item.categories);
+            });
+            this.chartOptions.xAxis.categories = categories;
+
+            prakerja.push(response.data.data.prakerja);
+            dalam_negeri.push(response.data.data.dalam_negeri);
+            luar_negeri.push(response.data.data.luar_negeri);
+
+            this.chartOptions.series[0].data = prakerja;
+            this.chartOptions.series[1].data = dalam_negeri;
+            this.chartOptions.series[2].data = luar_negeri;
+          }
+        });
+    },
+  },
 };
 </script>

@@ -44,30 +44,22 @@ export default {
         series: [
           {
             name: "Lembaga Pemerintah",
-            data: [
-              1000
-            ],
+            data: [],
             color: "#FFA800",
           },
           {
             name: "Lembaga Swasta",
-            data: [
-              2000
-            ],
+            data: [],
             color: "#8A50FC",
           },
           {
             name: "Lembaga Yayasan",
-            data: [
-              3000
-            ],
+            data: [],
             color: "#F65464",
           },
           {
             name: "Lembaga Pribadi",
-            data: [
-              4000
-            ],
+            data: [],
             color: "#1BC5BC",
           },
         ],
@@ -78,36 +70,39 @@ export default {
     };
   },
 
-  // mounted() {
-  //   //this.loadData(); // uncomment this line if you want to load data from API
-  //   var categories = [];
-  //   var jumlah = [];
-  //   this.dataPekerjaan.forEach((item) => {
-  //     categories.push(item.categories);
-  //     jumlah.push(item.jumlah);
-  //   });
-  //   this.chartOptions.xAxis.categories = categories;
-  //   this.chartOptions.series[0].data = jumlah;
-  // },
+  mounted() {
+    this.loadData(); // uncomment this line if you want to load data from API
+  },
 
-  // methods: {
-  //   loadData() {
-  //     const token = JSON.parse(localStorage.getItem("token"));
-  //     axios
-  //       .get("http://192.168.221.169:8000/jumlahLPK", {
-  //         headers: {
-  //           Authorization: "Bearer " + token.value,
-  //         },
-  //       })
-  //       .then((response) => {
-  //         if (response.data) {
-  //           this.chartOptions.series[0].data = response.data.data;
-  //         }
-  //       });
-  //   },
-  //   sortedData() {
-  //     return this.dataPekerjaan.sort((a, b) => b.jumlah - a.jumlah);
-  //   },
-  // },
+  methods: {
+    loadData() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      axios
+        .get("http://localhost:8000/rekap-jumlah-lpk", {
+          headers: {
+            Authorization: "Bearer " + token.value,
+          },
+        })
+        .then((response) => {
+          // console.log(response.data);
+          if (response.data) {
+            var pemerintah = [];
+            var swasta = [];
+            var yayasan = [];
+            var pribadi = [];
+
+            pemerintah.push(response.data.data.lpk_pemerintah);
+            swasta.push(response.data.data.lpk_swasta);
+            yayasan.push(response.data.data.lpk_yayasan);
+            pribadi.push(response.data.data.lpk_pribadi);
+
+            this.chartOptions.series[0].data = pemerintah;
+            this.chartOptions.series[1].data = swasta;
+            this.chartOptions.series[2].data = yayasan;
+            this.chartOptions.series[3].data = pribadi;
+          }
+        });
+    },
+  },
 };
 </script>
