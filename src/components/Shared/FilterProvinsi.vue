@@ -18,7 +18,7 @@ onMounted(async () => {
   try {
     const token = JSON.parse(localStorage.getItem("token"));
     const response = await axios.get(
-      "http://192.168.221.169:8000/list-provinsi",
+      import.meta.env.VITE_API_URL + "/list-provinsi",
       {
         headers: {
           Authorization: "Bearer " + token.value,

@@ -91,7 +91,7 @@ export default {
     getSummaryNik() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get("http://192.168.221.169:8000/summary-nik", {
+        .get(import.meta.env.VITE_API_URL + "/summary-nik", {
           headers: {
             Authorization: "Bearer " + token.value,
           },

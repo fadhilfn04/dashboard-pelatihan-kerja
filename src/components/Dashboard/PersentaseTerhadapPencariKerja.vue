@@ -87,7 +87,7 @@ export default {
   //   loadData() {
   //     const token = JSON.parse(localStorage.getItem("token"));
   //     axios
-  //       .get("http://192.168.221.169:8000/persentaseTerhadapPencariKerja", {
+  //       .get(import.meta.env.VITE_API_URL + "/persentaseTerhadapPencariKerja", {
   //         headers: {
   //           Authorization: "Bearer " + token.value,
   //         },

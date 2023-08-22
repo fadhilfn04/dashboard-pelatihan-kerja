@@ -126,7 +126,7 @@ export default {
   //   loadData() {
   //     const token = JSON.parse(localStorage.getItem("token"));
   //     axios
-  //       .get("http://192.168.221.169:8000/kapasitasLPK", {
+  //       .get(import.meta.env.VITE_API_URL + "/kapasitasLPK", {
   //         headers: {
   //           Authorization: "Bearer " + token.value,
   //         },

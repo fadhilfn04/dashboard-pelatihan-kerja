@@ -75,7 +75,7 @@ export default {
   //   loadData() {
   //     const token = JSON.parse(localStorage.getItem("token"));
   //     axios
-  //       .get("http://localhost:8000/rekap-tingkat-akreditasi-lpk", {
+  //       .get(import.meta.env.VITE_API_URL + "/rekap-tingkat-akreditasi-lpk", {
   //         headers: {
   //           Authorization: "Bearer " + token.value,
   //         },
