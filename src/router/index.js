@@ -4,6 +4,8 @@ import Dashboard from "@/views/DashboardView.vue";
 import SignInView from "@/views/SignInView.vue";
 import ApiGenerator from "@/views/ApiGeneratorView.vue";
 import UploadManagement from "@/views/UploadManagementView.vue";
+import UploadSourceData from "@/views/UploadSourceDataView.vue";
+import UploadFilePendukung from "@/views/UploadFilePendukungView.vue";
 import PetaPersebaranTenagaKerja from "@/components/Dashboard/PetaPersebaranTenagaKerja.vue";
 import SumberDataView from "@/views/SumberDataView.vue";
 
@@ -36,6 +38,22 @@ const routes = [
     path: "/upload-management",
     name: "Upload Management",
     component: UploadManagement,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/upload-management/source-data",
+    name: "Upload Management Source Data",
+    component: UploadSourceData,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/upload-management/file-pendukung",
+    name: "Upload Management File Pendukung",
+    component: UploadFilePendukung,
     meta: {
       requiresAuth: true,
     },

@@ -1,15 +1,15 @@
 <template>
-  <div class="w-full bg-white border border-gray-200 rounded-lg shadow">
-    <div class="p-6 border-b-2">
-      <h5 class="font-semibold text-lg">Upload Management</h5>
+  <div class="w-full rounded-lg border border-gray-200 bg-white shadow">
+    <div class="border-b-2 p-6">
+      <h5 class="text-lg font-semibold">Upload Management</h5>
     </div>
     <div class="p-6">
       <div class="relative overflow-x-auto">
-        <table class="w-full text-sm text-left text-gray-500">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <table class="w-full text-left text-sm text-gray-500">
+          <thead class="bg-gray-50 text-xs uppercase text-gray-700">
             <tr>
               <th scope="col" class="px-6 py-3">No</th>
-              <th scope="col" class="px-6 py-3">Nama Sumber Data</th>
+              <th scope="col" class="px-6 py-3">Nama</th>
               <th scope="col" class="px-6 py-3">Jenis Sumber</th>
               <th scope="col" class="px-6 py-3">Uploader</th>
               <th scope="col" class="px-6 py-3">Pembaharuan Terakhir</th>
@@ -17,25 +17,72 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <tr class="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
               <td class="px-6 py-4">1</td>
-              <td class="px-6 py-4">Data Pelatihan Kerja 2023</td>
+              <td class="px-6 py-4">Upload Source Master Data Pelatihan</td>
               <td class="px-6 py-4">
                 <span
-                  class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+                  class="mr-2 rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300"
                   >File Import</span
                 >
               </td>
               <td class="px-6 py-4">Kemnaker</td>
-              <td class="px-6 py-4">22 Januari 2023</td>
+              <td class="px-6 py-4">22 Agustus 2023</td>
               <td>
-                <button
+                <RouterLink
+                  :to="SOURCE_DATA_PATH"
                   type="button"
-                  class="text-white bg-brand-blue-1 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-4 py-2 mr-2 mb-2"
-                  @click="showModal"
+                  class="mr-2 mb-2 rounded-lg bg-brand-blue-1 px-4 py-2 text-xs font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300"
                 >
-                  Upload
-                </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-arrow-right"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                    />
+                  </svg>
+                </RouterLink>
+              </td>
+            </tr>
+            <tr class="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
+              <td class="px-6 py-4">2</td>
+              <td class="px-6 py-4">
+                Upload File Pendukung Source Master Data Pelatihan
+              </td>
+              <td class="px-6 py-4">
+                <span
+                  class="mr-2 rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300"
+                  >File Import</span
+                >
+              </td>
+              <td class="px-6 py-4">Kemnaker</td>
+              <td class="px-6 py-4">22 Agustus 2023</td>
+              <td>
+                <RouterLink
+                  :to="FILE_PENDUKUNG_PATH"
+                  type="button"
+                  class="mr-2 mb-2 rounded-lg bg-brand-blue-1 px-4 py-2 text-xs font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-arrow-right"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                    />
+                  </svg>
+                </RouterLink>
               </td>
             </tr>
           </tbody>
@@ -43,65 +90,28 @@
       </div>
     </div>
   </div>
-
-  <Modal :size="xl" v-if="isShowModal" @close="closeModal">
-    <template #header>
-      <div class="flex items-center text-lg">Upload Management</div>
-    </template>
-    <template #body>
-      <table class="w-full text-sm text-left text-gray-500">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-          <tr>
-            <th scope="col" class="px-2 py-3">No</th>
-            <th scope="col" class="px-2 py-3">Tabel</th>
-            <th scope="col" class="px-2 py-3">Url</th>
-            <th scope="col" class="px-2 py-3">Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <td class="px-2 py-4">1</td>
-            <td class="px-2 py-4">Penempatan</td>
-            <td class="px-2 py-4">
-              <a href="datamaster.kemnaker.go.id/penempatan"
-                >datamaster.kemnaker.go.id/penempatan</a
-              >
-            </td>
-            <td class="px-2 py-4">
-              <button
-                type="button"
-                class="text-white bg-brand-blue-1 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-4 py-2 mr-2 mb-2"
-              >
-                Detail
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </template>
-    <template #footer>
-      <div class="flex justify-end">
-        <button
-          @click="closeModal"
-          type="button"
-          class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
-        >
-          Close
-        </button>
-      </div>
-    </template>
-  </Modal>
 </template>
 
 <script>
-import { Modal } from "flowbite-vue";
+import { Modal, Alert } from "flowbite-vue";
 import { ref } from "vue";
+import { RouterLink } from "vue-router";
 
 export default {
   name: "UploadManagement",
+  data() {
+    return {
+      SOURCE_DATA_PATH: "/upload-management/source-data",
+      FILE_PENDUKUNG_PATH: "/upload-management/file-pendukung",
+    };
+  },
+
   components: {
     Modal,
+    Alert,
+    RouterLink,
   },
+
   setup() {
     const isShowModal = ref(false);
 
@@ -120,5 +130,4 @@ export default {
     };
   },
 };
-
 </script>
