@@ -126,7 +126,7 @@ export default {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get("http://192.168.221.169:8000/provinsi", {
+        .get(import.meta.env.VITE_API_URL + "/provinsi", {
           headers: {
             Authorization: "Bearer " + token.value,
           },
@@ -150,7 +150,7 @@ export default {
       this.province = prov;
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get("http://192.168.221.169:8000/provinsi/" + this.province.id, {
+        .get(import.meta.env.VITE_API_URL + "/provinsi/" + this.province.id, {
           headers: {
             Authorization: "Bearer " + token.value,
           },

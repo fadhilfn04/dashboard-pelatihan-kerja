@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     async login() {
-      axios.post('http://localhost:8000/login', {
+      axios.post(import.meta.env.VITE_API_URL + '/login', {
         email: this.username,
         password: this.password
       })

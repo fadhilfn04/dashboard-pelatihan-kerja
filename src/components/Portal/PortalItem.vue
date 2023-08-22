@@ -4,15 +4,15 @@
   >
     <RouterLink :to="link.url">
       <img
-        class="w-full px-16 py-4"
+        class="w-full px-16 py-8"
         src="/assets/images/kemnaker-icon.png"
         alt=""
       />
     </RouterLink>
-    <div class="p-5">
+    <div>
       <RouterLink :to="link.url">
         <h5
-          class="mb-2 text-xl font-semibold tracking-tight text-gray-900 text-center"
+          class="mb-8 text-xl font-semibold tracking-tight text-gray-900 text-center"
         >
           {{ link.title }}
         </h5>
