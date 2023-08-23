@@ -6,22 +6,22 @@
       </h5>
       <div class="flex justify-between pb-2">
         <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mr-3 text-sm">
-          <option>Sebaran Peserta Pelatihan</option>
-          <option>Option 2</option>
-          <option>Option 3</option>
-        </select>
-        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mr-3 text-sm">
-          <option>Peserta Berbasis Kompetensi</option>
-          <option>Option 2</option>
-          <option>Option 3</option>
-        </select>
-        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mr-3 text-sm">
-          <option>Kompetensi Teknis</option>
-          <option>Option 2</option>
-          <option>Option 3</option>
-        </select>
-        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mr-3 text-sm">
           <option>Semua Provinsi/Wilayah</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+        </select>
+        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mr-3 text-sm">
+          <option>Semua Kabupaten/Kota</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+        </select>
+        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mr-3 text-sm">
+          <option>Tipe Lembaga</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+        </select>
+        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mr-3 text-sm">
+          <option>Kapasitas Latih</option>
           <option>Option 2</option>
           <option>Option 3</option>
         </select>
@@ -79,7 +79,7 @@
               Kapasitas Lembaga Pelatihan Kerja
             </h5>
             <FilterProvinsi
-              @provinsiChanged="handleProvinsiChanged"
+              @provinsiChanged="handleProvinsiChange"
               tipe="provinsi"
             />
           </div>
@@ -116,12 +116,16 @@
                 Tren Jumlah Peserta Pelatihan
               </h5>
               <div class="relative w-32">
-                <VueDatePicker 
+                <!-- <VueDatePicker 
                   v-model="year" year-picker mode-height="120" :action-row="{ showNow: false, showPreview: false }" locale="id" cancelText="Batal" selectText="Pilih" menu-class-name="dp-theme-light"
+                /> -->
+                <DatePicker picker="year" id="datepicker_tren"
+                  v-model="selectedDate"
+                  @change="handleTrenJumlahChange"  
                 />
               </div>
             </div>
-          <TrenJumlahPesertaPelatihan />
+          <TrenJumlahPesertaPelatihan :filter="filterTrenJumlah"/>
         </div>
       </div>
     </div>
@@ -133,10 +137,13 @@
             Produktifitas Tenaga Kerja
           </h5>
           <div class="relative w-32">
-            <VueDatePicker v-model="year" year-picker mode-height="120" :action-row="{ showNow: false, showPreview: false }" locale="id" cancelText="Batal" selectText="Pilih" menu-class-name="dp-theme-light" />
+            <DatePicker picker="year" id="datepicker_produktifitas"
+                  v-model="selectedDate"
+                  @change="handleProduktifitasChange"  
+                />
           </div>
         </div>
-          <ProduktifitasTenagaKerja />
+          <ProduktifitasTenagaKerja :filter="filterProduktifitas"/>
       </div>
     </div>
   </div>
@@ -157,8 +164,8 @@
   import PetaPersebaranGis from "./PetaPersebaranGis.vue";
   import { Modal } from "flowbite-vue";
 
-  import VueDatePicker from "@vuepic/vue-datepicker";
-  import '@vuepic/vue-datepicker/dist/main.css'
+  import { DatePicker } from 'ant-design-vue';
+  import 'ant-design-vue/dist/reset.css';
 
   import FilterProvinsi from "../Shared/FilterProvinsi.vue";
 
@@ -179,19 +186,20 @@
       DemografiTenagaKerja,
       FilterProvinsi,
       Modal,
-      VueDatePicker,
+      DatePicker,
     },
     data() {
       return {
         filterProvinsi: "/rekap-kapasitas-lpk",
-        filterTahunTren: "/rekap-tren-jumlah-peserta-pelatihan",
-        filterTahunProduktifitas: "/rekap-produktifitas-tenaga-kerja",
-        year: 2023,
+        filterTrenJumlah: "/rekap-tren-jumlah-peserta-pelatihan",
+        filterProduktifitas: "/rekap-produktifitas-tenaga-kerja",
+        selectedDate: null,
+        selectedYear: null
       };
     },
 
     methods: {
-      handleProvinsiChanged(data) {
+      handleProvinsiChange(data) {
         switch (data.tipe) {
           case "provinsi":
             if (data.id != 0) {
@@ -203,6 +211,26 @@
 
           default:
             break;
+        }
+      },
+
+      handleTrenJumlahChange(date) {
+
+        if (date.$y != 0) {
+          this.filterTrenJumlah = "/rekap-tren-jumlah-peserta-pelatihan-tahun/" + date.$y;
+        } else {
+          this.filterTrenJumlah = "/rekap-tren-jumlah-peserta-pelatihan";
+        }
+      },
+
+      handleProduktifitasChange(date) {
+
+        if (date.$y != 0) {
+          this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja-tahun/" + date.$y;
+        } else if (date.$y == null) {
+          this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja";
+        } else {
+          this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja";
         }
       },
     },

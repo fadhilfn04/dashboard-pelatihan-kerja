@@ -48,11 +48,11 @@ export default {
           data: [{
               name: 'Terakreditasi',
               color: "#4EE1AC",
-              y: 50,
+              y: [],
           },  {
               name: 'Tidak Terakreditasi',
               color: "#FEC435",
-              y: 30
+              y: []
           }]
         }]
       },
@@ -60,34 +60,25 @@ export default {
   },
 
   mounted() {
-    this.loadData(); // uncomment this line if you want to load data from API
+    this.loadData();
   },
 
   methods: {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get("http://localhost:8000/rekap-tingkat-akreditasi-lpk", {
+        .get(import.meta.env.VITE_API_URL + '/rekap-tingkat-akreditasi-lpk', {
           headers: {
             Authorization: "Bearer " + token.value,
           },
         })
         .then((response) => {
-          // console.log(response.data);
           if (response.data) {
-            var accredited = [];
-            var not_accredited = [];
-            
-            // response.data.data.forEach((item) => {
-            //     data.push(item.status_akreditasi);
-            //     // y.push(item.kapasitas_latih);
-            // });
-            
-            accredited.push(response.data.data.accredited);
-            not_accredited.push(response.data.data.not_accredited);
+            var accredited = response.data.data.accredited;
+            var notAccredited = response.data.data.not_accredited;
 
-            // this.chartOptions.series[0].data[0].y = accredited;
-            // this.chartOptions.series[0].data[1].y = not_accredited;
+            this.chartOptions.series[0].data[0].y = accredited;
+            this.chartOptions.series[0].data[1].y = notAccredited;
           }
         });
     },

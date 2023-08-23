@@ -86,13 +86,12 @@ export default {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get("http://localhost:8000" + this.filter, {
+        .get(import.meta.env.VITE_API_URL + this.filter, {
           headers: {
             Authorization: "Bearer " + token.value,
           },
         })
         .then((response) => {
-          // console.log(response.data);
           if (response.data) {
             var categories = [];
             var value = [];

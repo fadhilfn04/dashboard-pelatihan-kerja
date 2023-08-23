@@ -117,22 +117,30 @@ export default {
       ],
     };
   },
-
+  props: {
+    filter: {
+      type: String,
+      default: "/rekap-tren-jumlah-peserta-pelatihan",
+    },
+  },
   mounted() {
     this.loadData(); // uncomment this line if you want to load data from API
   },
-
+  watch: {
+    filter() {
+      this.loadData();
+    },
+  },
   methods: {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get("http://localhost:8000/rekap-tren-jumlah-peserta-pelatihan", {
+        .get(import.meta.env.VITE_API_URL + this.filter, {
           headers: {
             Authorization: "Bearer " + token.value,
           },
         })
         .then((response) => {
-          // console.log(response.data);
           if (response.data) {
             var prakerja = [];
             var dalam_negeri = [];

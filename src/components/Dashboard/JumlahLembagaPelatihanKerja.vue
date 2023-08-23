@@ -16,15 +16,15 @@ export default {
         title: {
           text: null,
         },
-        legend: {
-          symbolWidth: 10,
-          symbolHeight: 10,
-          symbolPadding: 5,
-          symbolRadius: 0,
+        xAxis: {
+          enabled: false,
+        },
+        yAxis: {
+          enabled: false,
         },
         tooltip: {
           headerFormat:
-            '<span style="font-size:10px">{point.key}</span><table>',
+            '<span style="font-size:10px"></span><table>',
           pointFormat:
             '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
             '<td style="padding:0"><b>{point.y}</b></td></tr>',
@@ -71,35 +71,29 @@ export default {
   },
 
   mounted() {
-    this.loadData(); // uncomment this line if you want to load data from API
+    this.loadData();
   },
 
   methods: {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get("http://localhost:8000/rekap-jumlah-lpk", {
+        .get(import.meta.env.VITE_API_URL + '/rekap-jumlah-lpk', {
           headers: {
             Authorization: "Bearer " + token.value,
           },
         })
         .then((response) => {
-          // console.log(response.data);
           if (response.data) {
-            var pemerintah = [];
-            var swasta = [];
-            var yayasan = [];
-            var pribadi = [];
+            var pemerintah = response.data.data.lpk_pemerintah;
+            var swasta = response.data.data.lpk_swasta;
+            var yayasan = response.data.data.lpk_yayasan;
+            var pribadi = response.data.data.lpk_pribadi;
 
-            pemerintah.push(response.data.data.lpk_pemerintah);
-            swasta.push(response.data.data.lpk_swasta);
-            yayasan.push(response.data.data.lpk_yayasan);
-            pribadi.push(response.data.data.lpk_pribadi);
-
-            this.chartOptions.series[0].data = pemerintah;
-            this.chartOptions.series[1].data = swasta;
-            this.chartOptions.series[2].data = yayasan;
-            this.chartOptions.series[3].data = pribadi;
+            this.chartOptions.series[0].data = [pemerintah];
+            this.chartOptions.series[1].data = [swasta];
+            this.chartOptions.series[2].data = [yayasan];
+            this.chartOptions.series[3].data = [pribadi];
           }
         });
     },

@@ -45,11 +45,7 @@ export default {
         series: [{
           name: 'Persentase',
           colorByPoint: true,
-          data: [{
-            name: [],
-            color: "#FFA800",
-            y: 100,
-          }]
+          data: []
         }]
       },
     };
@@ -63,23 +59,28 @@ export default {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get("http://localhost:8000/rekap-persentase-lpk-terhadap-pencari-kerja", {
+        .get(import.meta.env.VITE_API_URL + '/rekap-persentase-lpk-terhadap-pencari-kerja', {
           headers: {
             Authorization: "Bearer " + token.value,
           },
         })
         .then((response) => {
-          // console.log(response.data);
           if (response.data) {
-            var data = [];
-            var y = [];
+            var namaLembaga = [];
+            var kapasitasLatih = [];
             response.data.data.forEach((item) => {
-                data.push(item.nama_lembaga);
-                // y.push(item.kapasitas_latih);
+                namaLembaga.push(item.nama_lembaga);
+                kapasitasLatih.push(item.kapasitas_latih);
             });
 
-            this.chartOptions.series[0].data[0].name = data;
-            // this.chartOptions.series[0].data[0].y = y;
+            var dataPoints = [];
+            for (let i = 0; i < namaLembaga.length; i++) {
+              dataPoints.push({
+                name: namaLembaga[i],
+                y: kapasitasLatih[i],
+              });
+            }
+            this.chartOptions.series[0].data = dataPoints;
           }
         });
     },

@@ -48,41 +48,46 @@ export default {
           data: [{
               name: 'Bekerja',
               color: "#4EE1AC",
-              y: 30,
+              y: [],
           },  {
               name: 'Tidak Bekerja',
               color: "#FF8181",
-              y: 50
+              y: []
           }]
         }]
       },
     };
   },
-
+  props: {
+    filter: {
+      type: String,
+      default: "/rekap-produktifitas-tenaga-kerja",
+    },
+  },
   mounted() {
     this.loadData(); // uncomment this line if you want to load data from API
   },
-
+  watch: {
+    filter() {
+      this.loadData();
+    },
+  },
   methods: {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get("http://localhost:8000/rekap-produktifitas-tenaga-kerja", {
+        .get(import.meta.env.VITE_API_URL + this.filter, {
           headers: {
             Authorization: "Bearer " + token.value,
           },
         })
         .then((response) => {
-          console.log(response.data);
           if (response.data) {
-            var bekerja       = [];
-            var tidak_bekerja = [];
+            var bekerja       = response.data.data.bekerja;
+            var tidakBekerja  = response.data.data.tidak_bekerja;
             
-            bekerja.push(response.data.data.bekerja);
-            tidak_bekerja.push(response.data.data.tidak_bekerja);
-
-            // this.chartOptions.series[0].data[0].y = bekerja;
-            // this.chartOptions.series[0].data[1].y = tidak_bekerja;
+            this.chartOptions.series[0].data[0].y = bekerja;
+            this.chartOptions.series[0].data[1].y = tidakBekerja;
           }
         });
     },
