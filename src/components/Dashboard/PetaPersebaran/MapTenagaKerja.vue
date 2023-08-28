@@ -13,37 +13,29 @@
         name="OpenStreetMap"
       >
       </LTileLayer>
-      <l-polygon
-        v-for="(polygon, index) in formattedDataPolygon"
-        :key="polygon.uuid"
-        :lat-lngs="polygon.polygon"
-        color="#FFFFFF"
-        :weight="1"
-        :fill="true"
-        :fillOpacity="1"
-        :fillColor="polygon.color"
-        @click="detailProvinsi(polygon, polygon.uuid)"
+      <LMarker
+        v-for="(marker, index) in formattedDataMarker"
+        :key="marker.uuid"
+        :lat-lng="markerLatLng(marker)"
+        @click="detailProvinsi(marker, marker.uuid)"
       >
-        <l-tooltip>
-          <span class="text-md font-bold">{{ polygon.name }}</span
-          ><br />
-          <span class="text-xs font-normal">Jumlah : {{ polygon.value }}</span>
-        </l-tooltip>
-      </l-polygon>
+        <LTooltip>
+          <span class="text-md font-bold">{{ marker.name }}</span>
+        </LTooltip>
+      </LMarker>
     </LMap>
   </div>
 </template>
 <script>
 import "leaflet/dist/leaflet.css";
-import { LPolygon, LMap, LTileLayer, LTooltip } from "@vue-leaflet/vue-leaflet";
-import L from "leaflet";
+import { LMarker, LMap, LTileLayer, LTooltip } from "@vue-leaflet/vue-leaflet";
 
 export default {
   name: "MapTenagaKerja",
   components: {
     LMap,
     LTileLayer,
-    LPolygon,
+    LMarker,
     LTooltip,
   },
   emits: ["update-data"],
@@ -53,40 +45,43 @@ export default {
       dataMap: undefined,
     };
   },
-  props: ["zoom", "level", "center", "dataPolygon", "legends"],
+  props: ["zoom", "level", "center", "dataMarker", "legends"],
   methods: {
-    detailProvinsi(polygon, uuid) {
+    detailProvinsi(marker, uuid) {
       if (this.level == 2) {
         const isKecamatan = true;
         const level = 3;
         const newData = {
-          api: "/provinsi/kab_kota/" + uuid,
+          api: "/provinsi/lembaga/" + uuid,
           level: level,
           isKecamatan: isKecamatan,
         };
         this.$emit("update-data", newData);
       } else if (this.level == 1) {
-        const center = L.polygon(polygon.polygon).getBounds().getCenter();
+        const center = [marker.lat, marker.lng];
         const level = 2;
         const newData = {
-          api: "/provinsigis/" + uuid,
+          api: "/provinsiFilterKota/" + uuid,
           level: level,
           center: center,
         };
         this.$emit("update-data", newData);
       }
     },
+    markerLatLng(marker) {
+      return [marker.lat, marker.lng];
+    },
   },
   computed: {
-    formattedDataPolygon() {
-      return this.dataPolygon.map((polygon) => {
-        if (typeof polygon.value === "number") {
+    formattedDataMarker() {
+      return this.dataMarker.map((marker) => {
+        if (typeof marker.value === "number") {
           return {
-            ...polygon,
-            value: polygon.value.toLocaleString(),
+            ...marker,
+            value: marker.value.toLocaleString(),
           };
         }
-        return polygon;
+        return marker;
       });
     },
   },
@@ -96,7 +91,7 @@ export default {
         this.zoomMap = val;
       }, 250);
     },
-    dataPolygon(newData) {
+    dataMarker(newData) {
       this.dataMap = newData;
     },
   },

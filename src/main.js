@@ -4,6 +4,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import Highcharts from "highcharts";
+import Accessibility from "highcharts/modules/accessibility";
 import Maps from "highcharts/modules/map";
 import HighchartsVue from "highcharts-vue";
 import VueSweetalert2 from "vue-sweetalert2";
@@ -15,7 +16,9 @@ import "typeface-poppins";
 import "@/index.css";
 import App from "@/App.vue";
 
+
 Maps(Highcharts);
+Accessibility(Highcharts);
 
 library.add(faSearch);
 
