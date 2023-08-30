@@ -75,7 +75,7 @@ export default {
     },
   },
   mounted() {
-    this.loadData(); // uncomment this line if you want to load data from API
+    this.loadData();
   },
   watch: {
     filter() {

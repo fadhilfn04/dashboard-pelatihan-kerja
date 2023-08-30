@@ -1,3 +1,9 @@
+<script setup>
+const updateSelectedProvinsi = (data) => {
+  selectedProvinsi.value = data.id;
+};
+</script>
+
 <template>
   <div class="w-full rounded-lg border border-gray-200 bg-white shadow">
     <div class="p-5">
@@ -5,31 +11,19 @@
         Peta Persebaran Pelatihan Kerja Indonesia
       </h5>
       <div class="flex justify-between pb-2">
-        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mr-3 text-sm">
-          <option>Semua Provinsi/Wilayah</option>
-          <option>Option 2</option>
-          <option>Option 3</option>
-        </select>
-        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mr-3 text-sm">
-          <option>Semua Kabupaten/Kota</option>
-          <option>Option 2</option>
-          <option>Option 3</option>
-        </select>
-        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mr-3 text-sm">
-          <option>Tipe Lembaga</option>
-          <option>Option 2</option>
-          <option>Option 3</option>
-        </select>
-        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mr-3 text-sm">
-          <option>Kapasitas Latih</option>
-          <option>Option 2</option>
-          <option>Option 3</option>
-        </select>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm">
-          Tampilkan 
-        </button>
+        <FilterPetaProvinsi
+          @PetaProvinsiChanged="updateSelectedProvinsi"
+        />
+        <FilterPetaKota
+          :tipe="'kota'"
+          :selectedProvinsi="selectedProvinsi"
+          @PetaKotaChanged="handleKotaChanged"
+        />
+        <FilterPetaTipeLembaga/>
+        <FilterPetaKapasitasLatih/>
+        <FilterButtonReset/>
       </div>
-      <!-- <PetaPersebaranGis /> -->
+      <PetaPersebaranGis :filter="filterPetaProvinsi"/>
     </div>
   </div>
 
@@ -79,32 +73,13 @@
               Kapasitas Lembaga Pelatihan Kerja
             </h5>
             <FilterProvinsi
-              @provinsiChanged="handleProvinsiChange"
+              @provinsiChanged="handleKapasitasLPKProvinsiChanged"
               tipe="provinsi"
             />
           </div>
         <KapasitasLPK :filter="filterProvinsi"/>
       </div>
     </div>
-
-    <!-- <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-      <div class="p-5">
-          <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-            Kapasitas Terhadap Peserta Terdaftar
-          </h5>
-          <div class="flex justify-between pb-2">
-            <div class="relative w-32">
-              <VueDatePicker v-model="year" year-picker />
-            </div>
-            <select class="block appearance-none bg-blue-100 border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-sm text-blue-600">
-              <option>Provinsi</option>
-              <option>Option 2</option>
-              <option>Option 3</option>
-            </select>
-          </div>
-        <KapasitasTerhadapPesertaTerdaftar />
-      </div>
-    </div> -->
   </div>
 
   <div class="grid grid-cols-3 gap-8">
@@ -116,12 +91,9 @@
                 Tren Jumlah Peserta Pelatihan
               </h5>
               <div class="relative w-32">
-                <!-- <VueDatePicker 
-                  v-model="year" year-picker mode-height="120" :action-row="{ showNow: false, showPreview: false }" locale="id" cancelText="Batal" selectText="Pilih" menu-class-name="dp-theme-light"
-                /> -->
                 <DatePicker picker="year" id="datepicker_tren"
                   v-model="selectedDate"
-                  @change="handleTrenJumlahChange"  
+                  @change="handleTrenJumlahChanged"  
                 />
               </div>
             </div>
@@ -138,9 +110,9 @@
           </h5>
           <div class="relative w-32">
             <DatePicker picker="year" id="datepicker_produktifitas"
-                  v-model="selectedDate"
-                  @change="handleProduktifitasChange"  
-                />
+              v-model="selectedDate"
+              @change="handleProduktifitasChanged"  
+            />
           </div>
         </div>
           <ProduktifitasTenagaKerja :filter="filterProduktifitas"/>
@@ -150,8 +122,7 @@
 </template>
 
 <script>
-  import PetaPersebaran from "./PetaPersebaran.vue";
-  import JumlahTenagaKerjaByGaji from "./JumlahTenagaKerjaByGaji.vue";
+  import { ref } from 'vue';
   import KapasitasTerhadapPesertaTerdaftar from "./KapasitasTerhadapPesertaTerdaftar.vue";
   import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
   import PersentaseLPKTerhadapPencariKerja from "./PersentaseLPKTerhadapPencariKerja.vue";
@@ -169,12 +140,18 @@
 
   import FilterProvinsi from "../Shared/FilterProvinsi.vue";
 
+  import FilterPetaProvinsi from "../Shared/FilterPetaProvinsi.vue";
+  import FilterPetaKota from "../Shared/FilterPetaKota.vue";
+  import FilterPetaTipeLembaga from "../Shared/FilterPetaTipeLembaga.vue";
+  import FilterPetaKapasitasLatih from "../Shared/FilterPetaKapasitasLatih.vue";
+  import FilterButtonReset from "../Shared/FilterButtonReset.vue";
+
+  const selectedProvinsi = ref(null);
+
   export default {
     name: "TheDashboard",
     components: {
-      PetaPersebaran,
       PetaPersebaranGis,
-      JumlahTenagaKerjaByGaji,
       KapasitasTerhadapPesertaTerdaftar,
       TingkatAkreditasiLembagaPelatihanKerja,
       PersentaseLPKTerhadapPencariKerja,
@@ -187,19 +164,26 @@
       FilterProvinsi,
       Modal,
       DatePicker,
+      FilterPetaProvinsi,
+      FilterPetaKota,
+      FilterPetaTipeLembaga,
+      FilterPetaKapasitasLatih,
+      FilterButtonReset
     },
     data() {
       return {
         filterProvinsi: "/rekap-kapasitas-lpk",
         filterTrenJumlah: "/rekap-tren-jumlah-peserta-pelatihan",
         filterProduktifitas: "/rekap-produktifitas-tenaga-kerja",
+        filterPetaProvinsi: "/provinsi",
         selectedDate: null,
-        selectedYear: null
+        selectedYear: null,
+        selectedProvinsi: null,
       };
     },
 
     methods: {
-      handleProvinsiChange(data) {
+      handleKapasitasLPKProvinsiChanged(data) {
         switch (data.tipe) {
           case "provinsi":
             if (data.id != 0) {
@@ -214,7 +198,13 @@
         }
       },
 
-      handleTrenJumlahChange(date) {
+      handleKotaChanged(data) {
+        // Handle Kota change event here
+        console.log("Kota changed:", data);
+        // Add your logic here based on the selected Kota
+      },
+
+      handleTrenJumlahChanged(date) {
 
         if (date.$y != 0) {
           this.filterTrenJumlah = "/rekap-tren-jumlah-peserta-pelatihan-tahun/" + date.$y;
@@ -223,16 +213,29 @@
         }
       },
 
-      handleProduktifitasChange(date) {
+      handleProduktifitasChanged(date) {
 
         if (date.$y != 0) {
           this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja-tahun/" + date.$y;
-        } else if (date.$y == null) {
-          this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja";
         } else {
           this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja";
         }
       },
+
+      // handleProvinsiChanged(data) {
+      //   if (data.id != 0) {
+      //     console.log("0");
+      //     this.filterPetaProvinsi = "/provinsiFilter/" + data.id;
+      //   } else {
+      //     console.log("1");
+      //     this.filterPetaProvinsi = "/provinsi";
+      //   }
+      // }
+
+      // handleProvinsiChanged(provinsi) {
+      //   console.log(true);
+      //   this.selectedProvinsi = provinsi; // Update selectedProvinsi when event is emitted
+      // },
     },
   };
 </script>

@@ -1,9 +1,9 @@
 <template>
   <MapTenagaKerja
-    v-if="dataPolygon"
+    v-if="dataMarker"
     :level="level"
     :center="center"
-    :dataPolygon="dataPolygon"
+    :dataMarker="dataMarker"
     :zoom="zoom"
     @update-data="updateData"
   />
@@ -19,24 +19,28 @@
         <table class="w-full text-left text-sm text-gray-500">
           <thead class="bg-gray-50 text-xs uppercase text-gray-700">
             <tr>
-              <th scope="col" class="px-2 py-3">Wilayah Kabupaten/Kota</th>
-              <th scope="col" class="px-2 py-3">Jumlah Tenaga Kerja</th>
-              <th scope="col" class="px-2 py-3">Persentase</th>
+              <th scope="col" class="px-2 py-3">Nama Lembaga</th>
+              <th scope="col" class="px-2 py-3">Alamat</th>
+              <th scope="col" class="px-2 py-3">No. Telp</th>
+              <th scope="col" class="px-2 py-3">Status Akreditasi</th>
+              <th scope="col" class="px-2 py-3">Kapasitas Latih</th>
             </tr>
           </thead>
           <tbody>
             <tr
               class="border-b bg-white"
-              v-for="(city, index) in dataKecamatan"
+              v-for="(dataLembaga, index) in dataLembaga"
               :key="index"
             >
               <td class="px-2 py-4">
                 <a href="#" class="font-semibold text-brand-blue-1">Kota {{
-                  city.name
+                  dataLembaga.nama_lembaga
                 }}</a>
               </td>
-              <td class="px-2 py-4">{{ city.jumlah }}</td>
-              <td class="px-2 py-4">{{ city.persentase }}</td>
+              <td class="px-2 py-4">{{ dataLembaga.alamat }}</td>
+              <td class="px-2 py-4">{{ dataLembaga.no_telp }}</td>
+              <td class="px-2 py-4">{{ dataLembaga.status_akreditasi }}</td>
+              <td class="px-2 py-4">{{ dataLembaga.kapasitas_latih }}</td>
             </tr>
           </tbody>
         </table>
@@ -73,16 +77,25 @@ export default {
       imageUrl: window.BASE_URL + "assets/images/bg-item.png",
       host: import.meta.env.VITE_API_URL,
       center: [-0.884123, 116.038462],
-      api: "/provinsigis",
-      dataPolygon: undefined,
+      api: this.filter,
+      dataMarker: undefined,
       dataDaerah: undefined,
       legends: [],
       zoom: 5,
       level: 1,
       isKecamatan: false,
-      dataKecamatan: undefined,
+      dataLembaga: undefined,
       kabKota: undefined,
     };
+  },
+  props: {
+    filter: {
+      type: String,
+      default: "/provinsi",
+    },
+  },
+  mounted() {
+    this.fetchData();
   },
   watch: {
     api(newApi) {
@@ -100,56 +113,56 @@ export default {
     },
     legends(newLegends) {
       this.dataDaerah.forEach((daerah) => {
-        if (daerah.value >= 0 && daerah.value <= newLegends[0].legend) {
+        if (daerah.code >= 0 && daerah.code <= newLegends[0].legend) {
           daerah.color = newLegends[0].color;
         } else if (
-          daerah.value > newLegends[0].legend &&
-          daerah.value <= newLegends[1].legend
+          daerah.code > newLegends[0].legend &&
+          daerah.code <= newLegends[1].legend
         ) {
           daerah.color = newLegends[1].color;
         } else if (
-          daerah.value > newLegends[1].legend &&
-          daerah.value <= newLegends[2].legend
+          daerah.code > newLegends[1].legend &&
+          daerah.code <= newLegends[2].legend
         ) {
           daerah.color = newLegends[2].color;
         } else if (
-          daerah.value > newLegends[2].legend &&
-          daerah.value <= newLegends[3].legend
+          daerah.code > newLegends[2].legend &&
+          daerah.code <= newLegends[3].legend
         ) {
           daerah.color = newLegends[3].color;
         } else if (
-          daerah.value > newLegends[3].legend &&
-          daerah.value <= newLegends[4].legend
+          daerah.code > newLegends[3].legend &&
+          daerah.code <= newLegends[4].legend
         ) {
           daerah.color = newLegends[4].color;
         } else if (
-          daerah.value > newLegends[4].legend &&
-          daerah.value <= newLegends[5].legend
+          daerah.code > newLegends[4].legend &&
+          daerah.code <= newLegends[5].legend
         ) {
           daerah.color = newLegends[5].color;
         } else if (
-          daerah.value > newLegends[5].legend &&
-          daerah.value <= newLegends[6].legend
+          daerah.code > newLegends[5].legend &&
+          daerah.code <= newLegends[6].legend
         ) {
           daerah.color = newLegends[6].color;
         } else if (
-          daerah.value > newLegends[6].legend &&
-          daerah.value <= newLegends[7].legend
+          daerah.code > newLegends[6].legend &&
+          daerah.code <= newLegends[7].legend
         ) {
           daerah.color = newLegends[7].color;
         } else if (
-          daerah.value > newLegends[7].legend &&
-          daerah.value <= newLegends[8].legend
+          daerah.code > newLegends[7].legend &&
+          daerah.code <= newLegends[8].legend
         ) {
           daerah.color = newLegends[8].color;
         } else if (
-          daerah.value > newLegends[8].legend &&
-          daerah.value <= newLegends[9].legend
+          daerah.code > newLegends[8].legend &&
+          daerah.code <= newLegends[9].legend
         ) {
           daerah.color = newLegends[9].color;
         }
       });
-      this.dataPolygon = this.dataDaerah;
+      this.dataMarker = this.dataDaerah;
     },
   },
   created() {
@@ -172,8 +185,8 @@ export default {
               response.data.features.forEach((item) => {
                 dataDetail.push({
                   name: item.properties.PROVINSI,
-                  value: item.properties.TOTAL,
-                  polygon: item.geometry.coordinates,
+                  lat: item.geometry.coordinates[0],
+                  lng: item.geometry.coordinates[1],
                   uuid: item.properties.UUID,
                   color: "",
                 });
@@ -182,8 +195,8 @@ export default {
               response.data.features.forEach((item) => {
                 dataDetail.push({
                   name: item.properties.KAB_KOTA,
-                  value: item.properties.TOTAL,
-                  polygon: item.geometry.coordinates,
+                  lat: item.geometry.coordinates[0],
+                  lng: item.geometry.coordinates[1],
                   uuid: item.properties.UUID,
                   color: "",
                 });
@@ -195,29 +208,11 @@ export default {
       } else if (this.level == 3) {
         axios.get(url, config).then((response) => {
           if (response.data) {
-            this.dataKecamatan = response.data;
+            this.dataLembaga = response.data;
           }
         });
         this.level = 2;
       }
-      // fetch(this.api)
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     var provinceData = [];
-      //     data.features.forEach((item) => {
-      //       provinceData.push({
-      //         name: item.name,
-      //         value: item.total,
-      //         polygon: item.path,
-      //         kabupatenKotaData: [],
-      //         color: "",
-      //       });
-      //     });
-      //     this.dataProvinsi = provinceData;
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
     },
     updateData(newData) {
       if (newData.isKecamatan) {

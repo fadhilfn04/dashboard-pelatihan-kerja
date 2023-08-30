@@ -23,12 +23,15 @@
     "highcharts": "^10.3.3",
     "highcharts-vue": "^1.4.0",
     "leaflet": "^1.9.4",
+    "select2": "^4.1.0-rc.0",
     "typeface-poppins": "^1.1.13",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6",
-    "vue-sweetalert2": "^5.0.5"
+    "vue-sweetalert2": "^5.0.5",
+    "vue3-select2-component": "^0.1.7"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.3",
     "@vitejs/plugin-vue": "^4.0.0",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.21",
