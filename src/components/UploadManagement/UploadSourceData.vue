@@ -24,7 +24,8 @@
               <th scope="col" class="px-6 py-3">Total Peserta Pelatihan</th>
               <th scope="col" class="px-6 py-3">Total Penyelenggara Magang</th>
               <th scope="col" class="px-6 py-3">Total Peserta Pemagangan</th>
-              <th scope="col" class="px-6 py-3">Tanggal Diupload</th>
+              <th scope="col" class="px-6 py-3">Tanggal Mulai Diupload</th>
+              <th scope="col" class="px-6 py-3">Tanggal Selesai Diupload</th>
             </tr>
           </thead>
           <tbody>
@@ -36,7 +37,8 @@
               <td class="px-6 py-4">{{ lfp.total_peserta_pelatihan }}</td>
               <td class="px-6 py-4">{{ lfp.total_penyelenggara_magang }}</td>
               <td class="px-6 py-4">{{ lfp.total_peserta_pemagangan }}</td>
-              <td class="px-6 py-4">{{ lfp.created_at }}</td>
+              <td class="px-6 py-4">{{ lfp.upload_started }}</td>
+              <td class="px-6 py-4">{{ lfp.upload_finished }}</td>
             </tr>
           </tbody>
         </table>
@@ -49,8 +51,8 @@
         <div class="flex items-center text-lg">Upload Source Master Data Pelatihan</div>
       </template>
       <template #body>
-          <div id="alert-success-container" class="hidden">
-            <Alert id="alert-success" type="success" class="mb-4" closable></Alert>
+          <div id="alert-info-container" class="hidden">
+            <Alert id="alert-info" type="info" class="mb-4" closable></Alert>
           </div>
           <div id="alert-fail-container" class="hidden">
             <Alert id="alert-fail" type="danger" class="mb-4" closable></Alert>
@@ -165,24 +167,15 @@ export default {
             'Content-Type': 'multipart/form-data'
           },
         })
-        .then(response => {
-          alertDivContainer = document.getElementById("alert-success-container");
-          alertDiv = document.getElementById("alert-success");
-          alertDivContainer.style.display = "block";
-          alertDivMessage = alertDiv.getElementsByClassName("ml-3")[0];
-          alertDivMessage.innerHTML = response.data.message;
 
-          this.loadData();
-          document.getElementById("form").reset();
-        }).catch(response => {
-          alertDivContainer = document.getElementById("alert-fail-container");
-          alertDiv = document.getElementById("alert-fail");
-          alertDivContainer.style.display = "block";
-          alertDivMessage = alertDiv.getElementsByClassName("ml-3")[0];
-          alertDivMessage.innerHTML = response.response.data.message;
+        alertDivContainer = document.getElementById("alert-info-container");
+        alertDiv = document.getElementById("alert-info");
+        alertDivContainer.style.display = "block";
+        alertDivMessage = alertDiv.getElementsByClassName("ml-3")[0];
+        alertDivMessage.innerHTML = "Upload sedang berjalan. Mohon tunggu, total data akan tampil pada tabel log jika sudah selesai. Silahkan refresh halaman.";
 
-          document.getElementById("form").reset();
-        })
+        this.loadData();
+        document.getElementById("form").reset();
       }
       else {
         alertDivContainer = document.getElementById("alert-fail-container");
