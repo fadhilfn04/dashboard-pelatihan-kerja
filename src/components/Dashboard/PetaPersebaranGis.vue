@@ -77,7 +77,7 @@ export default {
       imageUrl: window.BASE_URL + "assets/images/bg-item.png",
       host: import.meta.env.VITE_API_URL,
       center: [-0.884123, 116.038462],
-      api: this.filter,
+      api: "/provinsi",
       dataMarker: undefined,
       dataDaerah: undefined,
       legends: [],
@@ -93,12 +93,22 @@ export default {
       type: String,
       default: "/provinsi",
     },
+    selectedProvinsi: {
+      immediate: true,
+      handler(newSelectedProvinsi) {
+        this.fetchData(newSelectedProvinsi); // Fetch data based on the new selectedProvinsi
+      },
+    },
   },
   mounted() {
     this.fetchData();
   },
   watch: {
     api(newApi) {
+      this.fetchData();
+    },
+    selectedProvinsi(newValue) {
+      this.selectedProvinsi = newValue;
       this.fetchData();
     },
     dataDaerah(newDataDaerah) {
@@ -169,8 +179,9 @@ export default {
     this.fetchData();
   },
   methods: {
-    fetchData() {
-      const url = this.host + this.api;
+    fetchData(selectedProvinsi) {
+      // const url = this.host + this.api;
+      const url = this.host + this.api + (this.selectedProvinsi ? `/${this.selectedProvinsi}` : "");
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: {
@@ -187,7 +198,7 @@ export default {
                   name: item.properties.PROVINSI,
                   lat: item.geometry.coordinates[0],
                   lng: item.geometry.coordinates[1],
-                  uuid: item.properties.UUID,
+                  id: item.properties.ID,
                   color: "",
                 });
               });
@@ -197,7 +208,7 @@ export default {
                   name: item.properties.KAB_KOTA,
                   lat: item.geometry.coordinates[0],
                   lng: item.geometry.coordinates[1],
-                  uuid: item.properties.UUID,
+                  id: item.properties.ID,
                   color: "",
                 });
               });

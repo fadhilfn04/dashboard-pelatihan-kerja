@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import { Dropdown } from "flowbite";
 import axios from "axios";
 
 const tipeLembagaList = ref([]);
@@ -25,6 +24,14 @@ onMounted(async () => {
 </script>
 
 <template>
+  <!-- <a-form-item class="tipeLembaga">
+    <a-select placeholder="Semua Tipe Lembaga" @change="emitEvent($event.target.value)">
+      <a-select-option v-for="tipeLembaga in tipeLembagaList" :key="tipeLembaga.id" :value="tipeLembaga.id">
+        {{ tipeLembaga.nama_tipe_lembaga }}
+      </a-select-option>
+    </a-select>
+  </a-form-item> -->
+
   <select
     id="dropdownTipeLembaga"
     class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mr-3 text-sm"
@@ -36,6 +43,13 @@ onMounted(async () => {
     </option>
   </select>
 </template>
+
+<style>
+  .tipeLembaga {
+    flex: 1;
+    margin-right: 10px !important;
+  }
+</style>
 
 <script>
 export default {

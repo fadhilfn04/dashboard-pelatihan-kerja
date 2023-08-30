@@ -215,7 +215,7 @@ export default {
                   name: item.properties.PROVINSI,
                   value: item.properties.TOTAL,
                   polygon: item.geometry.coordinates,
-                  uuid: item.properties.UUID,
+                  id: item.properties.ID,
                   color: "",
                 });
               });
@@ -225,7 +225,7 @@ export default {
                   name: item.properties.KAB_KOTA,
                   value: item.properties.TOTAL,
                   polygon: item.geometry.coordinates,
-                  uuid: item.properties.UUID,
+                  id: item.properties.ID,
                   color: "",
                 });
               });

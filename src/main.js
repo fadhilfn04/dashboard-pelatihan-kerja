@@ -10,6 +10,9 @@ import HighchartsVue from "highcharts-vue";
 import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
+import Antd from "ant-design-vue";
+import 'ant-design-vue/dist/reset.css';
+
 import router from "@/router/index.js";
 
 import "typeface-poppins";
@@ -26,5 +29,6 @@ createApp(App)
   .use(HighchartsVue)
   .use(router)
   .use(VueSweetalert2)
+  .use(Antd)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app");

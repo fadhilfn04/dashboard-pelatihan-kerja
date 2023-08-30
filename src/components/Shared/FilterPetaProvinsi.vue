@@ -1,12 +1,8 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import axios from "axios";
-// import $ from "jquery"; // Import jQuery
-// import "select2/dist/css/select2.min.css"; // Import Select2 styles
-// import "select2"; // Import Select2 library
 
 const provinsiList = ref([]);
-const select2Provinsi = ref(null);  
 
 onMounted(async () => {
   try {
@@ -25,14 +21,17 @@ onMounted(async () => {
     }
   } catch (error) {}
 });
-
-// Initialize Select2
-// onMounted(() => {
-//   $(select2Provinsi.value).select2();
-// });
 </script>
 
 <template>
+  <!-- <a-form-item class="provinsi">
+    <a-select placeholder="Semua Provinsi/Wilayah" @change="emitEvent($event.target.value)">
+      <a-select-option v-for="provinsi in provinsiList" :key="provinsi.id" :value="provinsi.id">
+        {{ provinsi.nama_provinsi }}
+      </a-select-option>
+    </a-select>
+  </a-form-item> -->
+
   <select
     id="dropdownProvinsi"
     class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mr-3 text-sm"
@@ -44,6 +43,13 @@ onMounted(async () => {
     </option>
   </select>
 </template>
+
+<style>
+  .provinsi {
+    flex: 1;
+    margin-right: 10px !important;
+  }
+</style>
 
 <script>
 export default {

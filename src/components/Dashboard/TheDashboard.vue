@@ -12,18 +12,19 @@ const updateSelectedProvinsi = (data) => {
       </h5>
       <div class="flex justify-between pb-2">
         <FilterPetaProvinsi
-          @PetaProvinsiChanged="updateSelectedProvinsi"
+          @PetaProvinsiChanged="handleProvinsiChanged"
         />
         <FilterPetaKota
-          :tipe="'kota'"
-          :selectedProvinsi="selectedProvinsi"
           @PetaKotaChanged="handleKotaChanged"
         />
         <FilterPetaTipeLembaga/>
         <FilterPetaKapasitasLatih/>
-        <FilterButtonReset/>
+        <ButtonReset/>
       </div>
-      <PetaPersebaranGis :filter="filterPetaProvinsi"/>
+      <PetaPersebaranGis
+        :filter="filterPetaProvinsi"
+        :selectedProvinsi="selectedProvinsi"
+      />
     </div>
   </div>
 
@@ -134,17 +135,13 @@ const updateSelectedProvinsi = (data) => {
   import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
   import PetaPersebaranGis from "./PetaPersebaranGis.vue";
   import { Modal } from "flowbite-vue";
-
   import { DatePicker } from 'ant-design-vue';
-  import 'ant-design-vue/dist/reset.css';
-
   import FilterProvinsi from "../Shared/FilterProvinsi.vue";
-
   import FilterPetaProvinsi from "../Shared/FilterPetaProvinsi.vue";
   import FilterPetaKota from "../Shared/FilterPetaKota.vue";
   import FilterPetaTipeLembaga from "../Shared/FilterPetaTipeLembaga.vue";
   import FilterPetaKapasitasLatih from "../Shared/FilterPetaKapasitasLatih.vue";
-  import FilterButtonReset from "../Shared/FilterButtonReset.vue";
+  import ButtonReset from "../Shared/ButtonReset.vue";
 
   const selectedProvinsi = ref(null);
 
@@ -168,7 +165,7 @@ const updateSelectedProvinsi = (data) => {
       FilterPetaKota,
       FilterPetaTipeLembaga,
       FilterPetaKapasitasLatih,
-      FilterButtonReset
+      ButtonReset
     },
     data() {
       return {
@@ -222,20 +219,10 @@ const updateSelectedProvinsi = (data) => {
         }
       },
 
-      // handleProvinsiChanged(data) {
-      //   if (data.id != 0) {
-      //     console.log("0");
-      //     this.filterPetaProvinsi = "/provinsiFilter/" + data.id;
-      //   } else {
-      //     console.log("1");
-      //     this.filterPetaProvinsi = "/provinsi";
-      //   }
-      // }
-
-      // handleProvinsiChanged(provinsi) {
-      //   console.log(true);
-      //   this.selectedProvinsi = provinsi; // Update selectedProvinsi when event is emitted
-      // },
+      handleProvinsiChanged(data) {
+        console.log(data);
+        this.filterPetaProvinsi = data.id !== 0 ? `/provinsiFilter/${data.id}` : "/provinsi";
+      },
     },
   };
 </script>

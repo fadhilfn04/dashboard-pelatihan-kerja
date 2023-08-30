@@ -138,7 +138,7 @@ export default {
               return {
                 "hc-key": item.kd_maps,
                 value: parseInt(item.total),
-                id: item.uuid_provinsi,
+                id: item.id_provinsi,
                 name: item.name,
               };
             });

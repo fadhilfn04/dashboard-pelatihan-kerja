@@ -15,9 +15,9 @@
       </LTileLayer>
       <LMarker
         v-for="(marker, index) in formattedDataMarker"
-        :key="marker.uuid"
+        :key="marker.id"
         :lat-lng="markerLatLng(marker)"
-        @click="detailProvinsi(marker, marker.uuid)"
+        @click="detailProvinsi(marker, marker.id)"
       >
         <LTooltip>
           <span class="text-md font-bold">{{ marker.name }}</span>
@@ -36,7 +36,7 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
-    LTooltip,
+    LTooltip
   },
   emits: ["update-data"],
   data() {
@@ -47,12 +47,12 @@ export default {
   },
   props: ["zoom", "level", "center", "dataMarker", "legends"],
   methods: {
-    detailProvinsi(marker, uuid) {
+    detailProvinsi(marker, id) {
       if (this.level == 2) {
         const isKecamatan = true;
         const level = 3;
         const newData = {
-          api: "/provinsi/lembaga/" + uuid,
+          api: "/provinsi/lembaga/" + id,
           level: level,
           isKecamatan: isKecamatan,
         };
@@ -61,7 +61,7 @@ export default {
         const center = [marker.lat, marker.lng];
         const level = 2;
         const newData = {
-          api: "/provinsiFilterKota/" + uuid,
+          api: "/provinsiFilterKota/" + id,
           level: level,
           center: center,
         };
