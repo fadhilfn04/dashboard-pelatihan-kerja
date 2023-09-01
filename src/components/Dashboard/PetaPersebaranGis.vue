@@ -51,8 +51,7 @@
         <button
           @click="closeModal"
           type="button"
-          class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300"
-        >
+          class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300">
           Kembali
         </button>
       </div>
@@ -93,22 +92,15 @@ export default {
       type: String,
       default: "/provinsi",
     },
-    selectedProvinsi: {
-      immediate: true,
-      handler(newSelectedProvinsi) {
-        this.fetchData(newSelectedProvinsi); // Fetch data based on the new selectedProvinsi
-      },
-    },
   },
   mounted() {
     this.fetchData();
   },
   watch: {
-    api(newApi) {
+    filter() {
       this.fetchData();
     },
-    selectedProvinsi(newValue) {
-      this.selectedProvinsi = newValue;
+    api(newApi) {
       this.fetchData();
     },
     dataDaerah(newDataDaerah) {
@@ -179,9 +171,9 @@ export default {
     this.fetchData();
   },
   methods: {
-    fetchData(selectedProvinsi) {
-      // const url = this.host + this.api;
-      const url = this.host + this.api + (this.selectedProvinsi ? `/${this.selectedProvinsi}` : "");
+    fetchData() {
+      const url = this.host + this.api;
+      // const url = import.meta.env.VITE_API_URL + this.filter;
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: {

@@ -13,6 +13,11 @@ import "sweetalert2/dist/sweetalert2.min.css";
 import Antd from "ant-design-vue";
 import 'ant-design-vue/dist/reset.css';
 
+import "leaflet/dist/leaflet.css";
+import "leaflet/dist/leaflet.js";
+import "leaflet-fullscreen/dist/leaflet.fullscreen.css";
+import "leaflet-fullscreen";
+
 import router from "@/router/index.js";
 
 import "typeface-poppins";

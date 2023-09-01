@@ -5,6 +5,9 @@
       :use-global-leaflet="false"
       :center="center"
       :zoom="zoomMap"
+      :min-zoom="minZoom"
+      :fullscreen="fullscreenControl"
+      :fullscreen-options="fullscreenControlOptions"
       style="z-index: 0"
     >
       <LTileLayer
@@ -14,7 +17,7 @@
       >
       </LTileLayer>
       <LMarker
-        v-for="(marker, index) in formattedDataMarker"
+        v-for="(marker) in formattedDataMarker"
         :key="marker.id"
         :lat-lng="markerLatLng(marker)"
         @click="detailProvinsi(marker, marker.id)"
@@ -27,8 +30,7 @@
   </div>
 </template>
 <script>
-import "leaflet/dist/leaflet.css";
-import { LMarker, LMap, LTileLayer, LTooltip } from "@vue-leaflet/vue-leaflet";
+import { LMarker, LMap, LTileLayer, LTooltip, LControl } from "@vue-leaflet/vue-leaflet";
 
 export default {
   name: "MapTenagaKerja",
@@ -36,13 +38,19 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
-    LTooltip
+    LTooltip,
+    LControl,
   },
   emits: ["update-data"],
   data() {
     return {
+      minZoom: 5,
       zoomMap: 5,
       dataMap: undefined,
+      fullscreenControl: true,
+      fullscreenControlOptions: {
+        position: 'topLeft',
+      }
     };
   },
   props: ["zoom", "level", "center", "dataMarker", "legends"],
@@ -77,7 +85,7 @@ export default {
       return this.dataMarker.map((marker) => {
         if (typeof marker.value === "number") {
           return {
-            ...marker,
+            marker,
             value: marker.value.toLocaleString(),
           };
         }

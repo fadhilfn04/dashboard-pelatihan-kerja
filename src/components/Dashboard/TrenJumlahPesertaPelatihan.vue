@@ -125,6 +125,14 @@ export default {
   },
   mounted() {
     this.loadData(); // uncomment this line if you want to load data from API
+    var categories = [];
+    var jumlah = [];
+    this.dataTren.forEach((item) => {
+      categories.push(item.categories);
+      jumlah.push(item.jumlah);
+    });
+    this.chartOptions.xAxis.categories = categories;
+    this.chartOptions.series[0].data = jumlah;
   },
   watch: {
     filter() {
@@ -142,20 +150,20 @@ export default {
         })
         .then((response) => {
           if (response.data) {
+            console.log(response.data.data);
+            var categories = [];
             var prakerja = [];
             var dalam_negeri = [];
             var luar_negeri = [];
-            var categories = [];
-
-            this.dataTren.forEach((item) => {
-              categories.push(item.categories);
-            });
-            this.chartOptions.xAxis.categories = categories;
 
             prakerja.push(response.data.data.prakerja);
             dalam_negeri.push(response.data.data.dalam_negeri);
             luar_negeri.push(response.data.data.luar_negeri);
 
+            this.dataTren.forEach((item) => {
+              categories.push(item.categories);
+            });
+            this.chartOptions.xAxis.categories = categories;
             this.chartOptions.series[0].data = prakerja;
             this.chartOptions.series[1].data = dalam_negeri;
             this.chartOptions.series[2].data = luar_negeri;

@@ -1,8 +1,8 @@
-<script setup>
+<!-- <script setup>
 const updateSelectedProvinsi = (data) => {
   selectedProvinsi.value = data.id;
 };
-</script>
+</script> -->
 
 <template>
   <div class="w-full rounded-lg border border-gray-200 bg-white shadow">
@@ -10,21 +10,14 @@ const updateSelectedProvinsi = (data) => {
       <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
         Peta Persebaran Pelatihan Kerja Indonesia
       </h5>
-      <div class="flex justify-between pb-2">
-        <FilterPetaProvinsi
-          @PetaProvinsiChanged="handleProvinsiChanged"
-        />
-        <FilterPetaKota
-          @PetaKotaChanged="handleKotaChanged"
-        />
-        <FilterPetaTipeLembaga/>
-        <FilterPetaKapasitasLatih/>
+      <a-form class="filter-form">
+        <FilterPetaProvinsi @petaProvinsiChanged="handleProvinsiChanged" />
+        <FilterPetaKota @petaKotaChanged="handleKotaChanged"/>
+        <FilterPetaTipeLembaga @petaTipeLembagaChanged="handleTipeLembagaChanged"/>
+        <FilterPetaKapasitasLatih @petaKapasitasLatihChanged="handleKapasitasLatihChanged"/>
         <ButtonReset/>
-      </div>
-      <PetaPersebaranGis
-        :filter="filterPetaProvinsi"
-        :selectedProvinsi="selectedProvinsi"
-      />
+      </a-form>
+      <PetaPersebaranGis :filter="filterPetaProvinsi"/>
     </div>
   </div>
 
@@ -143,8 +136,6 @@ const updateSelectedProvinsi = (data) => {
   import FilterPetaKapasitasLatih from "../Shared/FilterPetaKapasitasLatih.vue";
   import ButtonReset from "../Shared/ButtonReset.vue";
 
-  const selectedProvinsi = ref(null);
-
   export default {
     name: "TheDashboard",
     components: {
@@ -175,7 +166,7 @@ const updateSelectedProvinsi = (data) => {
         filterPetaProvinsi: "/provinsi",
         selectedDate: null,
         selectedYear: null,
-        selectedProvinsi: null,
+        selectedProvinceId: null
       };
     },
 
@@ -195,14 +186,7 @@ const updateSelectedProvinsi = (data) => {
         }
       },
 
-      handleKotaChanged(data) {
-        // Handle Kota change event here
-        console.log("Kota changed:", data);
-        // Add your logic here based on the selected Kota
-      },
-
       handleTrenJumlahChanged(date) {
-
         if (date.$y != 0) {
           this.filterTrenJumlah = "/rekap-tren-jumlah-peserta-pelatihan-tahun/" + date.$y;
         } else {
@@ -211,7 +195,6 @@ const updateSelectedProvinsi = (data) => {
       },
 
       handleProduktifitasChanged(date) {
-
         if (date.$y != 0) {
           this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja-tahun/" + date.$y;
         } else {
@@ -219,15 +202,45 @@ const updateSelectedProvinsi = (data) => {
         }
       },
 
-      handleProvinsiChanged(data) {
-        console.log(data);
-        this.filterPetaProvinsi = data.id !== 0 ? `/provinsiFilter/${data.id}` : "/provinsi";
+      handleProvinsiChanged(id) {
+        if (id != 0) {
+          this.filterPetaProvinsi = "/provinsiFilter/" + id;
+        } else {
+          this.filterPetaProvinsi = "/provinsi";
+        }
+      },
+      handleKotaChanged(id) {
+        if (id != 0) {
+          this.filterPetaProvinsi = "/kotaFilter/" + id;
+        } else {
+          this.filterPetaProvinsi = "/provinsi";
+        }
+      },
+      handleTipeLembagaChanged(id) {
+        if (id != 0) {
+          this.filterPetaProvinsi = "/tipeLembagaFilter/" + id;
+        } else {
+          this.filterPetaProvinsi = "/provinsi";
+        }
+      },
+      handleKapasitasLatihChanged(id) {
+        if (id != 0) {
+          this.filterPetaProvinsi = "/kapasitasLatihFilter/" + id;
+        } else {
+          this.filterPetaProvinsi = "/provinsi";
+        }
       },
     },
   };
 </script>
 
 <style lang="css">
+  .filter-form {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+  }
+
   .dp-custom-menu {
     box-shadow: 0 0 6px #1976d2;
   }

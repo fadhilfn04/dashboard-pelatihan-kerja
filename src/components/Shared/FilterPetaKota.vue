@@ -35,35 +35,19 @@ const filteredKotaList = computed(() => {
 </script>
 
 <template>
-  <!-- <a-form-item class="kota">
-    <a-select placeholder="Semua Kabupaten/Kota" @change="emitEvent($event)">
+  <a-form-item class="kota">
+    <a-select placeholder="Semua Kabupaten/Kota" show-search @change="emitEvent($event)">
       <a-select-option v-for="kabKota in filteredKotaList" :key="kabKota.id_provinsi" :value="kabKota.id_provinsi">
         {{ kabKota.nama_kabupaten_kota }}
       </a-select-option>
     </a-select>
-  </a-form-item> -->
-
-  <select
-    id="dropdownKota"
-    class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mr-3 text-sm"
-    @change="emitEvent($event.target.value)"
-  >
-    <option value="" disabled selected>Semua Kabupaten/Kota</option>
-    <option
-      v-for="kabKota in filteredKotaList"
-      :key="kabKota.id_provinsi"
-      :value="kabKota.id_provinsi"
-    >
-      {{ kabKota.nama_kabupaten_kota }}
-    </option>
-  </select>
+  </a-form-item>
 </template>
 
 <style>
   .kota {
     flex: 1;
-    margin-right: 10px !important;
-    height: 5px !important;
+    margin: 0px !important;
   }
 </style>
 
@@ -75,6 +59,15 @@ export default {
     tipe: {
       type: String,
       default: null,
+    },
+    filter: {
+      type: String,
+      default: "/provinsi",
+    },
+  },
+  watch: {
+    filter() {
+      this.loadData();
     },
   },
   methods: {
