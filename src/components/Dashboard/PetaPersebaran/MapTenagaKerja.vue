@@ -6,8 +6,6 @@
       :center="center"
       :zoom="zoomMap"
       :min-zoom="minZoom"
-      :fullscreen="fullscreenControl"
-      :fullscreen-options="fullscreenControlOptions"
       style="z-index: 0"
     >
       <LTileLayer
@@ -47,10 +45,6 @@ export default {
       minZoom: 5,
       zoomMap: 5,
       dataMap: undefined,
-      fullscreenControl: true,
-      fullscreenControlOptions: {
-        position: 'topLeft',
-      }
     };
   },
   props: ["zoom", "level", "center", "dataMarker", "legends"],
@@ -69,7 +63,7 @@ export default {
         const center = [marker.lat, marker.lng];
         const level = 2;
         const newData = {
-          api: "/provinsiFilterKota/" + id,
+          api: "/kabKotaFilter/" + id,
           level: level,
           center: center,
         };

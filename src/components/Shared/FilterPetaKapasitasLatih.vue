@@ -2,34 +2,15 @@
 import { onMounted, ref } from "vue";
 import { Dropdown } from "flowbite";
 import axios from "axios";
-
-const kapasitasLatihList = ref([]);
-
-onMounted(async () => {
-  try {
-    const token = JSON.parse(localStorage.getItem("token"));
-    const response = await axios.get(
-      import.meta.env.VITE_API_URL + '/list-kapasitas-latih',
-      {
-        headers: {
-          Authorization: "Bearer " + token.value,
-        },
-      }
-    );
-
-    if (response.data.success) {
-      kapasitasLatihList.value = response.data.data;
-    }
-  } catch (error) {}
-});
 </script>
 
 <template>
   <a-form-item class="kapasitasLatih">
-    <a-select placeholder="Semua Kapasitas Latih" show-search @change="emitEvent($event.target.value)">
-      <a-select-option v-for="kapasitasLatih in kapasitasLatihList" :key="kapasitasLatih.id" :value="kapasitasLatih.id">
-        {{ kapasitasLatih.kapasitas_latih }}
-        </a-select-option>
+    <a-select placeholder="Semua Kapasitas Latih" @change="emitEvent">
+      <a-select-option value="kurang_500">Kurang dari 500</a-select-option>
+      <a-select-option value="lebih_500">Lebih dari 500</a-select-option>
+      <a-select-option value="kurang_1000">Kurang dari 1000</a-select-option>
+      <a-select-option value="lebih_1000">Lebih dari 1000</a-select-option>
     </a-select>
   </a-form-item>
 </template>
@@ -51,12 +32,12 @@ export default {
     },
   },
   methods: {
-    emitEvent(id) {
+    emitEvent(selectedValue) {
       const data = {
-        tipe: this.tipe,
-        id: id,
+        value: selectedValue
       };
-      this.$emit("kapasitasLatihChanged", data);
+
+      this.$emit("petaKapasitasLatihChanged", data);
     },
   },
 };

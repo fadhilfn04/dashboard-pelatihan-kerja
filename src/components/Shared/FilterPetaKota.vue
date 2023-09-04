@@ -37,7 +37,7 @@ const filteredKotaList = computed(() => {
 <template>
   <a-form-item class="kota">
     <a-select placeholder="Semua Kabupaten/Kota" show-search @change="emitEvent($event)">
-      <a-select-option v-for="kabKota in filteredKotaList" :key="kabKota.id_provinsi" :value="kabKota.id_provinsi">
+      <a-select-option v-for="kabKota in filteredKotaList" :key="kabKota.id_provinsi" :value="kabKota.id">
         {{ kabKota.nama_kabupaten_kota }}
       </a-select-option>
     </a-select>
@@ -73,9 +73,9 @@ export default {
   methods: {
     emitEvent(id) {
       const data = {
-        tipe: this.tipe,
         id: id,
       };
+
       this.$emit("PetaKotaChanged", data);
     },
   },

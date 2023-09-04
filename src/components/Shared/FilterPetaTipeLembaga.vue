@@ -25,8 +25,8 @@ onMounted(async () => {
 
 <template>
   <a-form-item class="tipeLembaga">
-    <a-select placeholder="Semua Tipe Lembaga" show-search @change="emitEvent($event.target.value)">
-      <a-select-option v-for="tipeLembaga in tipeLembagaList" :key="tipeLembaga.id" :value="tipeLembaga.id">
+    <a-select placeholder="Semua Tipe Lembaga" show-search @change="emitEvent($event)">
+      <a-select-option v-for="tipeLembaga in tipeLembagaList" :key="tipeLembaga.id" :value="tipeLembaga.nama_tipe_lembaga">
         {{ tipeLembaga.nama_tipe_lembaga }}
       </a-select-option>
     </a-select>

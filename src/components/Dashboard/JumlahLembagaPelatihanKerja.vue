@@ -16,10 +16,9 @@ export default {
         title: {
           text: null,
         },
-        xAxis: {
-          enabled: false,
-        },
+        xAxis: null,
         yAxis: {
+          title: null,
           enabled: false,
         },
         tooltip: {

@@ -59,18 +59,24 @@ export default {
         series: [
           {
             name: "Pra Kerja",
-            data: [],
             color: "#FF8181",
+            marker: {
+              symbol: 'circle'
+            },
           },
           {
             name: "Pemagangan Dalam Negeri",
-            data: [],
             color: "#DE4EE1",
+            marker: {
+              symbol: 'circle'
+            },
           },
           {
             name: "Pemagangan Luar Negeri",
-            data: [],
             color: "#945FFB",
+            marker: {
+              symbol: 'circle'
+            },
           },
         ],
         credits: {
@@ -124,15 +130,7 @@ export default {
     },
   },
   mounted() {
-    this.loadData(); // uncomment this line if you want to load data from API
-    var categories = [];
-    var jumlah = [];
-    this.dataTren.forEach((item) => {
-      categories.push(item.categories);
-      jumlah.push(item.jumlah);
-    });
-    this.chartOptions.xAxis.categories = categories;
-    this.chartOptions.series[0].data = jumlah;
+    this.loadData();
   },
   watch: {
     filter() {
@@ -149,24 +147,22 @@ export default {
           },
         })
         .then((response) => {
-          if (response.data) {
-            console.log(response.data.data);
-            var categories = [];
-            var prakerja = [];
-            var dalam_negeri = [];
-            var luar_negeri = [];
+          if (response.data && response.data.data) {
+            const data = response.data.data.rekap_tren;
 
-            prakerja.push(response.data.data.prakerja);
-            dalam_negeri.push(response.data.data.dalam_negeri);
-            luar_negeri.push(response.data.data.luar_negeri);
+            var categories      = [];
+            const prakerja      = data.prakerja;
+            const dalam_negeri  = data.dalam_negeri;
+            const luar_negeri   = data.luar_negeri;
 
             this.dataTren.forEach((item) => {
               categories.push(item.categories);
             });
-            this.chartOptions.xAxis.categories = categories;
-            this.chartOptions.series[0].data = prakerja;
-            this.chartOptions.series[1].data = dalam_negeri;
-            this.chartOptions.series[2].data = luar_negeri;
+
+            this.chartOptions.xAxis.categories  = categories;
+            this.chartOptions.series[0].data    = prakerja;
+            this.chartOptions.series[1].data    = dalam_negeri;
+            this.chartOptions.series[2].data    = luar_negeri;
           }
         });
     },

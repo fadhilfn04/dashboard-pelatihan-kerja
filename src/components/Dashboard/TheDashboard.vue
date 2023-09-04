@@ -35,12 +35,9 @@ const updateSelectedProvinsi = (data) => {
     <div class="col-span-1">
       <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
-          <div class="flex justify-between pb-2">
             <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
               Tingkat Akreditasi Lembaga Pelatihan Kerja
             </h5>
-          </div>
-
           <TingkatAkreditasiLembagaPelatihanKerja />
         </div>
       </div>
@@ -160,13 +157,16 @@ const updateSelectedProvinsi = (data) => {
     },
     data() {
       return {
-        filterProvinsi: "/rekap-kapasitas-lpk",
-        filterTrenJumlah: "/rekap-tren-jumlah-peserta-pelatihan",
-        filterProduktifitas: "/rekap-produktifitas-tenaga-kerja",
-        filterPetaProvinsi: "/provinsi",
-        selectedDate: null,
-        selectedYear: null,
-        selectedProvinceId: null
+        filterProvinsi            : "/rekap-kapasitas-lpk",
+        filterTrenJumlah          : "/rekap-tren-jumlah-peserta-pelatihan",
+        filterProduktifitas       : "/rekap-produktifitas-tenaga-kerja",
+        filterPetaProvinsi        : "/provinsi",
+        filterPetaKota            : "/kabKota",
+        filterPetaTipeLembaga     : "/tipeLembaga",
+        filterPetaKapasitasLatih  : "/kapasitasLatih",
+        selectedDate              : null,
+        selectedYear              : null,
+        selectedProvinceId        : null
       };
     },
 
@@ -211,23 +211,23 @@ const updateSelectedProvinsi = (data) => {
       },
       handleKotaChanged(id) {
         if (id != 0) {
-          this.filterPetaProvinsi = "/kotaFilter/" + id;
+          this.filterPetaKota = "/kabKotaFilter/" + id;
         } else {
-          this.filterPetaProvinsi = "/provinsi";
+          this.filterPetaKota = "/kabKota";
         }
       },
       handleTipeLembagaChanged(id) {
         if (id != 0) {
-          this.filterPetaProvinsi = "/tipeLembagaFilter/" + id;
+          this.filterPetaTipeLembaga = "/tipeLembagaFilter/" + id;
         } else {
-          this.filterPetaProvinsi = "/provinsi";
+          this.filterPetaTipeLembaga = "/tipeLembaga";
         }
       },
       handleKapasitasLatihChanged(id) {
         if (id != 0) {
-          this.filterPetaProvinsi = "/kapasitasLatihFilter/" + id;
+          this.filterPetaKapasitasLatih = "/kapasitasLatihFilter/" + id;
         } else {
-          this.filterPetaProvinsi = "/provinsi";
+          this.filterPetaKapasitasLatih = "/kapasitasLatih";
         }
       },
     },

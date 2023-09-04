@@ -26,7 +26,7 @@ onMounted(async () => {
 <template>
   <a-form-item class="provinsi">
     <a-select placeholder="Semua Provinsi/Wilayah" @change="emitEvent" show-search>
-      <a-select-option v-for="provinsi in provinsiList" :key="provinsi.id" :value="provinsi.id">
+      <a-select-option v-for="provinsi in provinsiList" :key="provinsi.id" :value="provinsi.nama_provinsi" :id="provinsi.id">
         {{ provinsi.nama_provinsi }}
       </a-select-option>
     </a-select>

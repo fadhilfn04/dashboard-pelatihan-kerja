@@ -100,13 +100,13 @@ export default {
     filter() {
       this.fetchData();
     },
-    api(newApi) {
+    api() {
       this.fetchData();
     },
-    dataDaerah(newDataDaerah) {
+    dataDaerah() {
       this.processingData();
     },
-    center(newCenter) {
+    center() {
       if (this.level == 1) {
         this.zoom = 5;
       } else if (this.level == 2) {
