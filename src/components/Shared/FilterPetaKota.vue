@@ -3,11 +3,16 @@ import { onMounted, ref, computed } from "vue";
 import axios from "axios";
 
 const kotaList = ref([]);
+const isDisabled = ref(true); // Initialize as disabled
 
 // Props
 const props = defineProps({
   selectedProvinsi: String,
 });
+
+const onProvinsiChanged = (id) => {
+  isDisabled.value = false; // Enable the component when a selection is made
+}
 
 onMounted(async () => {
   try {
@@ -36,8 +41,8 @@ const filteredKotaList = computed(() => {
 
 <template>
   <a-form-item class="kota">
-    <a-select placeholder="Semua Kabupaten/Kota" show-search @change="emitEvent($event)">
-      <a-select-option v-for="kabKota in filteredKotaList" :key="kabKota.id_provinsi" :value="kabKota.id">
+    <a-select placeholder="Semua Kabupaten/Kota" show-search @change="emitEvent($event)" :disabled="isDisabled">
+      <a-select-option v-for="kabKota in filteredKotaList" :key="kabKota.id" :value="kabKota.nama_kabupaten_kota" :id_provinsi="kabKota.id_provinsi">
         {{ kabKota.nama_kabupaten_kota }}
       </a-select-option>
     </a-select>
@@ -64,6 +69,12 @@ export default {
       type: String,
       default: "/provinsi",
     },
+  },
+  setup() {
+    return {
+      isDisabled,
+      onProvinsiChanged,
+    };
   },
   watch: {
     filter() {

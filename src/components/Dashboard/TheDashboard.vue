@@ -11,13 +11,13 @@ const updateSelectedProvinsi = (data) => {
         Peta Persebaran Pelatihan Kerja Indonesia
       </h5>
       <a-form class="filter-form">
-        <FilterPetaProvinsi @petaProvinsiChanged="handleProvinsiChanged" />
-        <FilterPetaKota @petaKotaChanged="handleKotaChanged"/>
+        <FilterPetaProvinsi @petaProvinsiChanged="onProvinsiChanged" />
+        <FilterPetaKota :disabled="isKotaDisabled"/>
         <FilterPetaTipeLembaga @petaTipeLembagaChanged="handleTipeLembagaChanged"/>
         <FilterPetaKapasitasLatih @petaKapasitasLatihChanged="handleKapasitasLatihChanged"/>
         <ButtonReset/>
       </a-form>
-      <PetaPersebaranGis :filter="filterPetaProvinsi"/>
+      <PetaPersebaranGis/>
     </div>
   </div>
 
@@ -230,6 +230,20 @@ const updateSelectedProvinsi = (data) => {
           this.filterPetaKapasitasLatih = "/kapasitasLatih";
         }
       },
+    },
+
+    setup() {
+      const isKotaDisabled = ref(true);
+
+      const onProvinsiChanged = (id) => {
+        // Enable FilterPetaKota when a selection is made in FilterPetaProvinsi
+        isKotaDisabled.value = false;
+      };
+
+      return {
+        isKotaDisabled,
+        onProvinsiChanged,
+      };
     },
   };
 </script>

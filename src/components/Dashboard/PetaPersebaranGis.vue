@@ -76,7 +76,7 @@ export default {
       imageUrl: window.BASE_URL + "assets/images/bg-item.png",
       host: import.meta.env.VITE_API_URL,
       center: [-0.884123, 116.038462],
-      api: "/provinsi",
+      api: "/kabKota",
       dataMarker: undefined,
       dataDaerah: undefined,
       legends: [],
@@ -84,14 +84,7 @@ export default {
       level: 1,
       isKecamatan: false,
       dataLembaga: undefined,
-      kabKota: undefined,
     };
-  },
-  props: {
-    filter: {
-      type: String,
-      default: "/provinsi",
-    },
   },
   mounted() {
     this.fetchData();
@@ -184,27 +177,16 @@ export default {
         axios.get(url, config).then((response) => {
           if (response.data) {
             var dataDetail = [];
-            if (this.level == 1) {
-              response.data.features.forEach((item) => {
-                dataDetail.push({
-                  name: item.properties.PROVINSI,
-                  lat: item.geometry.coordinates[0],
-                  lng: item.geometry.coordinates[1],
-                  id: item.properties.ID,
-                  color: "",
-                });
+            response.data.features.forEach((item) => {
+              dataDetail.push({
+                name: item.properties.KAB_KOTA,
+                lat: item.geometry.coordinates[0],
+                lng: item.geometry.coordinates[1],
+                id: item.properties.ID,
+                color: "",
               });
-            } else if (this.level == 2) {
-              response.data.features.forEach((item) => {
-                dataDetail.push({
-                  name: item.properties.KAB_KOTA,
-                  lat: item.geometry.coordinates[0],
-                  lng: item.geometry.coordinates[1],
-                  id: item.properties.ID,
-                  color: "",
-                });
-              });
-            }
+            });
+
             this.dataDaerah = dataDetail;
           }
         });
