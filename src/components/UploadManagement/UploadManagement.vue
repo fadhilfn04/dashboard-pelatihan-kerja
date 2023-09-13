@@ -27,7 +27,7 @@
                 >
               </td>
               <td class="px-6 py-4">Kemnaker</td>
-              <td class="px-6 py-4">22 Agustus 2023</td>
+              <td class="px-6 py-4">31 Agustus 2023</td>
               <td>
                 <RouterLink
                   :to="SOURCE_DATA_PATH"
