@@ -66,7 +66,6 @@ export default {
   },
   methods: {
     showAlert() {
-      console.log("Hello");
       this.$swal
         .fire({
           title: "Apakah anda yakin ingin logout?",

@@ -1,8 +1,46 @@
-<!-- <script setup>
-const updateSelectedProvinsi = (data) => {
-  selectedProvinsi.value = data.id;
-};
-</script> -->
+<script setup>
+  import { onMounted, ref } from "vue";
+  import axios from "axios";
+
+  const provinsiList    = ref([]);
+  const tipeLembagaList = ref([]);
+
+  onMounted(async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const response = await axios.get(
+        import.meta.env.VITE_API_URL + '/list-provinsi',
+        {
+          headers: {
+            Authorization: "Bearer " + token.value,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        provinsiList.value = response.data.data;
+      }
+    } catch (error) {}
+  });
+
+  onMounted(async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const response = await axios.get(
+        import.meta.env.VITE_API_URL + '/list-tipe-lembaga',
+        {
+          headers: {
+            Authorization: "Bearer " + token.value,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        tipeLembagaList.value = response.data.data;
+      }
+    } catch (error) {}
+  });
+</script>
 
 <template>
   <div class="w-full rounded-lg border border-gray-200 bg-white shadow">
@@ -11,13 +49,40 @@ const updateSelectedProvinsi = (data) => {
         Peta Persebaran Pelatihan Kerja Indonesia
       </h5>
       <a-form class="filter-form">
-        <FilterPetaProvinsi @petaProvinsiChanged="onProvinsiChanged" />
-        <FilterPetaKota :disabled="isKotaDisabled"/>
-        <FilterPetaTipeLembaga @petaTipeLembagaChanged="handleTipeLembagaChanged"/>
-        <FilterPetaKapasitasLatih @petaKapasitasLatihChanged="handleKapasitasLatihChanged"/>
-        <ButtonReset/>
+        <a-form-item class="provinsi">
+          <a-select placeholder="Semua Provinsi/Wilayah" @change="onProvinceChange" show-search>
+            <a-select-option v-for="provinsi in provinsiList" :key="provinsi.id" :value="provinsi.id" :id="provinsi.id">
+              {{ provinsi.nama_provinsi }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item class="kota">
+          <a-select placeholder="Semua Kabupaten/Kota" :disabled="isKotaDisabled" show-search>
+            <a-select-option v-for="kabKota in kotaList" :key="kabKota.id" :value="kabKota.id" :id_provinsi="kabKota.id_provinsi">
+              {{ kabKota.nama_kabupaten_kota }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item class="tipeLembaga">
+          <a-select placeholder="Semua Tipe Lembaga" show-search>
+            <a-select-option v-for="tipeLembaga in tipeLembagaList" :key="tipeLembaga.id" :value="tipeLembaga.nama_tipe_lembaga">
+              {{ tipeLembaga.nama_tipe_lembaga }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item class="kapasitasLatih">
+          <a-select placeholder="Semua Kapasitas Latih">
+            <a-select-option value="kurang_500">Kurang dari 500</a-select-option>
+            <a-select-option value="lebih_500">Lebih dari 500</a-select-option>
+            <a-select-option value="kurang_1000">Kurang dari 1000</a-select-option>
+            <a-select-option value="lebih_1000">Lebih dari 1000</a-select-option>
+          </a-select>
+        </a-form-item>
+          <a-button @click="resetMap" type="primary" style="background-color: blue; border-color: blue; color: white;">
+            Reset
+          </a-button>
       </a-form>
-      <PetaPersebaranGis/>
+      <PetaPersebaranGis :filter="filterPetaProvinsi"/>
     </div>
   </div>
 
@@ -113,6 +178,7 @@ const updateSelectedProvinsi = (data) => {
 </template>
 
 <script>
+  import axios from "axios";
   import { ref } from 'vue';
   import KapasitasTerhadapPesertaTerdaftar from "./KapasitasTerhadapPesertaTerdaftar.vue";
   import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
@@ -124,14 +190,12 @@ const updateSelectedProvinsi = (data) => {
   import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
   import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
   import PetaPersebaranGis from "./PetaPersebaranGis.vue";
-  import { Modal } from "flowbite-vue";
   import { DatePicker } from 'ant-design-vue';
   import FilterProvinsi from "../Shared/FilterProvinsi.vue";
-  import FilterPetaProvinsi from "../Shared/FilterPetaProvinsi.vue";
-  import FilterPetaKota from "../Shared/FilterPetaKota.vue";
-  import FilterPetaTipeLembaga from "../Shared/FilterPetaTipeLembaga.vue";
-  import FilterPetaKapasitasLatih from "../Shared/FilterPetaKapasitasLatih.vue";
   import ButtonReset from "../Shared/ButtonReset.vue";
+
+  const kotaList        = ref([]);
+  const isKotaDisabled  = ref(true);
 
   export default {
     name: "TheDashboard",
@@ -147,12 +211,7 @@ const updateSelectedProvinsi = (data) => {
       TrenJumlahPesertaPelatihan,
       DemografiTenagaKerja,
       FilterProvinsi,
-      Modal,
       DatePicker,
-      FilterPetaProvinsi,
-      FilterPetaKota,
-      FilterPetaTipeLembaga,
-      FilterPetaKapasitasLatih,
       ButtonReset
     },
     data() {
@@ -160,17 +219,47 @@ const updateSelectedProvinsi = (data) => {
         filterProvinsi            : "/rekap-kapasitas-lpk",
         filterTrenJumlah          : "/rekap-tren-jumlah-peserta-pelatihan",
         filterProduktifitas       : "/rekap-produktifitas-tenaga-kerja",
-        filterPetaProvinsi        : "/provinsi",
+        filterPetaProvinsi        : null,
         filterPetaKota            : "/kabKota",
         filterPetaTipeLembaga     : "/tipeLembaga",
         filterPetaKapasitasLatih  : "/kapasitasLatih",
         selectedDate              : null,
         selectedYear              : null,
-        selectedProvinceId        : null
+        selectedProvinceId        : null,
       };
     },
 
     methods: {
+      onProvinceChange(id) {
+        isKotaDisabled.value = false;
+        this.getCity(id);
+
+        if (id != 0) {
+          this.filterPetaProvinsi = "/kabKotaFilter/" + id;
+        } else {
+          this.filterPetaProvinsi = "/kabKota";
+        }
+      },
+      async getCity(id) {
+        try {
+          const token = JSON.parse(localStorage.getItem("token"));
+          const response = await axios.get(
+            import.meta.env.VITE_API_URL + '/list-kab-kota/' + id,
+            {
+              headers: {
+                Authorization: "Bearer " + token.value,
+              },
+            }
+          );
+
+          if (response.data.success) {
+            kotaList.value = response.data.data;
+          }
+        } catch (error) {}
+      },
+      resetMap() {
+        window.location.reload();
+      },
       handleKapasitasLPKProvinsiChanged(data) {
         switch (data.tipe) {
           case "provinsi":
@@ -185,7 +274,6 @@ const updateSelectedProvinsi = (data) => {
             break;
         }
       },
-
       handleTrenJumlahChanged(date) {
         if (date.$y != 0) {
           this.filterTrenJumlah = "/rekap-tren-jumlah-peserta-pelatihan-tahun/" + date.$y;
@@ -193,7 +281,6 @@ const updateSelectedProvinsi = (data) => {
           this.filterTrenJumlah = "/rekap-tren-jumlah-peserta-pelatihan";
         }
       },
-
       handleProduktifitasChanged(date) {
         if (date.$y != 0) {
           this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja-tahun/" + date.$y;
@@ -201,9 +288,9 @@ const updateSelectedProvinsi = (data) => {
           this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja";
         }
       },
-
       handleProvinsiChanged(id) {
         if (id != 0) {
+          console.log(id);
           this.filterPetaProvinsi = "/provinsiFilter/" + id;
         } else {
           this.filterPetaProvinsi = "/provinsi";
@@ -231,20 +318,6 @@ const updateSelectedProvinsi = (data) => {
         }
       },
     },
-
-    setup() {
-      const isKotaDisabled = ref(true);
-
-      const onProvinsiChanged = (id) => {
-        // Enable FilterPetaKota when a selection is made in FilterPetaProvinsi
-        isKotaDisabled.value = false;
-      };
-
-      return {
-        isKotaDisabled,
-        onProvinsiChanged,
-      };
-    },
   };
 </script>
 
@@ -254,30 +327,20 @@ const updateSelectedProvinsi = (data) => {
     gap: 10px;
     padding: 10px;
   }
-
-  .dp-custom-menu {
-    box-shadow: 0 0 6px #1976d2;
+  .provinsi {
+    flex: 1;
+    margin: 0px !important;
   }
-
-  .dp-theme-light {
-    --dp-background-color: #ffffff;
-    --dp-text-color: #212121;
-    --dp-hover-color: #f3f3f3;
-    --dp-hover-text-color: #212121;
-    --dp-hover-icon-color: #959595;
-    --dp-primary-color: #1976d2;
-    --dp-primary-text-color: #212121;
-    --dp-secondary-color: #c0c4cc;
-    --dp-border-color: #ddd;
-    --dp-menu-border-color: #ddd;
-    --dp-border-color-hover: #aaaeb7;
-    --dp-disabled-color: #f6f6f6;
-    --dp-scroll-bar-background: #f3f3f3;
-    --dp-scroll-bar-color: #959595;
-    --dp-success-color: #76d275;
-    --dp-success-color-disabled: #a3d9b1;
-    --dp-icon-color: #959595;
-    --dp-danger-color: #ff6f60;
-    --dp-highlight-color: rgba(25, 118, 210, 0.1);
+  .kota {
+    flex: 1;
+    margin: 0px !important;
+  }
+  .tipeLembaga {
+    flex: 1;
+    margin: 0px !important;
+  }
+  .kapasitasLatih {
+    flex: 1;
+    margin: 0px !important;
   }
 </style>
