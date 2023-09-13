@@ -2,7 +2,7 @@
   <div class="h-[32rem] w-full" id="container">
     <LMap
       ref="map"
-      style="z-index: 0"
+      style="z-index: 0;"
       :use-global-leaflet="true"
       :center="center"
       :zoom="zoomMap"
@@ -22,14 +22,17 @@
     </LMap>
   </div>
 
-  <Modal size="2xl" v-if="isShowModal" @close="closeModal" class="z-1000">
-    <template #header>
-      <div class="flex items-center text-lg">
-        <div class="title">{{ detailLembaga.kabupaten_kota }}</div>
-      </div>
-    </template>
-    <template #body>
-      <div class="h-80 overflow-y-auto">
+  <div v-if="showCanvas">
+    <CButton color="primary" @click="() => { visible = !visible }">Toggle offcanvas</CButton>
+    <COffcanvas placement="start" :visible="visible" @hide="() => { visible = !visible }">
+      <COffcanvasHeader>
+        <COffcanvasTitle>
+          <div class="title">
+            {{ detailLembaga.kabupaten_kota }}
+          </div>
+        </COffcanvasTitle>
+      </COffcanvasHeader>
+      <COffcanvasBody>
         <div id="detail-container-name" class="display: none">
           <div class="title">Nama Lembaga</div>
           <div class="info">{{ detailLembaga.nama_lembaga }}</div>
@@ -70,19 +73,9 @@
           <div class="title">Kapasitas Latih</div>
           <div class="info">{{ detailLembaga.kapasitas_latih }}</div>
         </div>
-      </div>
-    </template>
-    <template #footer>
-      <div class="flex justify-end">
-        <button
-          @click="closeModal"
-          type="button"
-          class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300">
-          Kembali
-        </button>
-      </div>
-    </template>
-  </Modal>
+      </COffcanvasBody>
+    </COffcanvas>
+  </div>
 </template>
 
 <style>
@@ -147,6 +140,14 @@ import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.fullscreen/Control.FullScreen.css";
 import "leaflet.fullscreen/Control.FullScreen.js";
 import { Modal } from "flowbite-vue";
+import { 
+  CAlert, 
+  CButton, 
+  COffcanvas, 
+  COffcanvasBody, 
+  COffcanvasTitle, 
+  COffcanvasHeader, 
+  CCloseButton } from '@coreui/vue';
 import {
   LMap,
   LTileLayer,
@@ -154,25 +155,33 @@ import {
 } from "@vue-leaflet/vue-leaflet";
 
 export default {
-  name: "MapTenagaKerja",
+  name: "MapPelatihanKerja",
   components: {
     LMap,
     LTileLayer,
     LMarker,
-    Modal
+    Modal,
+    CAlert,
+    CButton,
+    COffcanvas,
+    COffcanvasBody,
+    COffcanvasTitle,
+    COffcanvasHeader,
+    CCloseButton
   },
-  emits: ["update-data"],
+  emits: ["refresh-map"],
   data() {
     return {
       minZoom: 5,
       maxZoom: 12,
       zoomMap: 5,
       dataMap: undefined,
-      visible: false,
       isOpenDetail: false,
       selectedMarker: null,
-      isShowModal: false,
+      visible: false,
+      showCanvas: false,
       host: import.meta.env.VITE_API_URL,
+      markerCluster: null
     };
   },
   props: {
@@ -180,42 +189,33 @@ export default {
     level: Number,
     center: Array,
     legends: Array,
+    selectedProvinceId: Number,
     dataMarker: {
       type: Array,
       required: true,
-    },
-  },
-  watch: {
-    dataMarker: {
-      handler(newDataMarker) {
-        if (newDataMarker && newDataMarker.length > 0) {
-          console.log('masuk newdatamarker mtk');
-          // window.location.reload();
-        }
-      },
-      immediate: true, // Trigger the watcher immediately when component is created
     },
   },
   methods: {
     markerLatLng(marker) {
       return [marker.lat, marker.lng];
     },
-    closeModal() {
-      this.isShowModal = false;
-    },
-    async initMap() {
+    initMap() {   
       if (this.formattedDataMarker && this.formattedDataMarker.length > 0) {
         const self = this;
         const dataMarker = this.formattedDataMarker;
         
         L.Map.addInitHook(function () {
-          const markerCluster = L.markerClusterGroup({
+          if (self.markerCluster) {
+            self.markerCluster.clearLayers();
+          }
+
+          self.markerCluster = L.markerClusterGroup({
             removeOutsideVisibleBounds: true,
             chunkedLoading: true,
           }).addTo(this);
 
           const fullscreenControl = L.control.fullscreen({
-            position: "topright",
+            position: "topright"
           });
           fullscreenControl.addTo(this);
 
@@ -242,7 +242,7 @@ export default {
               axios.get(url, config).then((response) => {
                 if (response.data && response.data.length > 0) {
                   self.detailLembaga = {};
-                  self.isShowModal = true;
+                  self.showCanvas = true;
                   self.detailLembaga.nama_lembaga = response.data[0].nama_lembaga;
                   self.detailLembaga.no_vin = response.data[0].no_vin;
                   self.detailLembaga.tipe_lembaga = response.data[0].tipe_lembaga;
@@ -261,10 +261,10 @@ export default {
             markers.push(marker);
           });
 
-          markerCluster.addLayers(markers);
+          self.markerCluster.addLayers(markers);  
         });
       }
-    }
+    },
   },
   mounted() {
     this.initMap();

@@ -17,6 +17,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet/dist/leaflet.js";
 import "leaflet-fullscreen/dist/leaflet.fullscreen.css";
 import "leaflet-fullscreen";
+import "@coreui/coreui/dist/css/coreui.min.css";
 
 import router from "@/router/index.js";
 

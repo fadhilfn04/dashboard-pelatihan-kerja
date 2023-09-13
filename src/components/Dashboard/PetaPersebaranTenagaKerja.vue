@@ -22,7 +22,7 @@
                 Peta Persebaran Tenaga Kerja Indonesia
               </h5>
             </a>
-            <MapTenagaKerja
+            <MapPelatihanKerja
               v-if="dataPolygon"
               :level="level"
               :center="center"
@@ -97,7 +97,7 @@
 
 <script>
 import { Modal } from "flowbite-vue";
-import MapTenagaKerja from "./PetaPersebaran/MapTenagaKerja.vue";
+import MapPelatihanKerja from "./PetaPersebaran/MapPelatihanKerja.vue";
 import TheLegend from "./PetaPersebaran/TheLegend.vue";
 import { ref } from "vue";
 import axios from "axios";
@@ -106,7 +106,7 @@ export default {
   name: "PetaPersebaranTenagaKerja",
   components: {
     Modal,
-    MapTenagaKerja,
+    MapPelatihanKerja,
     TheLegend,
   },
   data() {

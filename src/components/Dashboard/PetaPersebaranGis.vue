@@ -1,5 +1,5 @@
 <template>
-  <MapTenagaKerja
+  <MapPelatihanKerja
     v-if="dataMarker"
     :center="center"
     :dataMarker="dataMarker"
@@ -7,14 +7,14 @@
 </template>
 
 <script>
-import MapTenagaKerja from "./PetaPersebaran/MapTenagaKerja.vue";
+import MapPelatihanKerja from "./PetaPersebaran/MapPelatihanKerja.vue";
 import { Modal } from "flowbite-vue";
 import axios from "axios";
 
 export default {
   name: "PetaPersebaranGis",
   components: {
-    MapTenagaKerja,
+    MapPelatihanKerja,
     Modal,
   },
   data() {
@@ -22,7 +22,6 @@ export default {
       imageUrl: window.BASE_URL + "assets/images/bg-item.png",
       host: import.meta.env.VITE_API_URL,
       center: [-0.884123, 116.038462],
-      api: "/kabKota",
       dataMarker: undefined,
     };
   },
@@ -32,16 +31,24 @@ export default {
       default: "/kabKota",
     },
   },
+  mounted() {
+    this.loadData();
+  },
+  watch: {
+    filter() {
+      this.loadData();
+    },
+  },
   methods: {
-    async initMap() {
-      const url = this.host + (this.filter || this.api);
+    loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
-      const config = {
+      console.log(this.filter);
+      axios.get(import.meta.env.VITE_API_URL + this.filter, {
         headers: {
           Authorization: "Bearer " + token.value,
         },
-      };
-      axios.get(url, config).then((response) => {
+      })
+      .then((response) => {
         if (response.data) {
           var dataDetail = [];
           response.data.features.forEach((item) => {  
@@ -55,9 +62,6 @@ export default {
         }
       });
     },
-  },
-  mounted() {
-    this.initMap();
   },
 };
 </script>

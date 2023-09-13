@@ -1,47 +1,3 @@
-<script setup>
-  import { onMounted, ref } from "vue";
-  import axios from "axios";
-
-  const provinsiList    = ref([]);
-  const tipeLembagaList = ref([]);
-
-  onMounted(async () => {
-    try {
-      const token = JSON.parse(localStorage.getItem("token"));
-      const response = await axios.get(
-        import.meta.env.VITE_API_URL + '/list-provinsi',
-        {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        }
-      );
-
-      if (response.data.success) {
-        provinsiList.value = response.data.data;
-      }
-    } catch (error) {}
-  });
-
-  onMounted(async () => {
-    try {
-      const token = JSON.parse(localStorage.getItem("token"));
-      const response = await axios.get(
-        import.meta.env.VITE_API_URL + '/list-tipe-lembaga',
-        {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        }
-      );
-
-      if (response.data.success) {
-        tipeLembagaList.value = response.data.data;
-      }
-    } catch (error) {}
-  });
-</script>
-
 <template>
   <div class="w-full rounded-lg border border-gray-200 bg-white shadow">
     <div class="p-5">
@@ -179,7 +135,6 @@
 
 <script>
   import axios from "axios";
-  import { ref } from 'vue';
   import KapasitasTerhadapPesertaTerdaftar from "./KapasitasTerhadapPesertaTerdaftar.vue";
   import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
   import PersentaseLPKTerhadapPencariKerja from "./PersentaseLPKTerhadapPencariKerja.vue";
@@ -193,9 +148,6 @@
   import { DatePicker } from 'ant-design-vue';
   import FilterProvinsi from "../Shared/FilterProvinsi.vue";
   import ButtonReset from "../Shared/ButtonReset.vue";
-
-  const kotaList        = ref([]);
-  const isKotaDisabled  = ref(true);
 
   export default {
     name: "TheDashboard",
@@ -219,43 +171,89 @@
         filterProvinsi            : "/rekap-kapasitas-lpk",
         filterTrenJumlah          : "/rekap-tren-jumlah-peserta-pelatihan",
         filterProduktifitas       : "/rekap-produktifitas-tenaga-kerja",
-        filterPetaProvinsi        : null,
-        filterPetaKota            : "/kabKota",
+        filterPetaProvinsi        : "/kabKota",
         filterPetaTipeLembaga     : "/tipeLembaga",
         filterPetaKapasitasLatih  : "/kapasitasLatih",
         selectedDate              : null,
         selectedYear              : null,
         selectedProvinceId        : null,
+        provinsiList              : [],
+        kotaList                  : [],
+        tipeLembagaList           : [],
+        isKotaDisabled            : true
       };
     },
 
-    methods: {
-      onProvinceChange(id) {
-        isKotaDisabled.value = false;
-        this.getCity(id);
+    async created() {
+      await this.fetchProvinsiList();
+      await this.getTipeLembaga();
+    },
 
-        if (id != 0) {
-          this.filterPetaProvinsi = "/kabKotaFilter/" + id;
-        } else {
-          this.filterPetaProvinsi = "/kabKota";
-        }
-      },
-      async getCity(id) {
+    methods: {
+      async fetchProvinsiList() {
         try {
           const token = JSON.parse(localStorage.getItem("token"));
           const response = await axios.get(
-            import.meta.env.VITE_API_URL + '/list-kab-kota/' + id,
+            import.meta.env.VITE_API_URL + '/list-provinsi',
             {
               headers: {
                 Authorization: "Bearer " + token.value,
               },
             }
           );
-
-          if (response.data.success) {
-            kotaList.value = response.data.data;
+          if(response.data.success){
+            this.provinsiList = response.data.data;
           }
-        } catch (error) {}
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      },
+      onProvinceChange(value) {
+        this.isKotaDisabled = false;
+        this.getKota(value);
+
+        if (value != 0) {
+          this.filterPetaProvinsi = "/kabKotaFilter/" + value;
+        } else {
+          this.filterPetaProvinsi = "/kabKota";
+        }
+      },
+      async getKota(value) {
+        try {
+          const token = JSON.parse(localStorage.getItem("token"));
+          const response = await axios.get(
+            import.meta.env.VITE_API_URL + '/list-kab-kota/' + value,
+            {
+              headers: {
+                Authorization: "Bearer " + token.value,
+              },
+            }
+          );
+          if(response.data.success){
+            this.kotaList = response.data.data;
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      },
+
+      async getTipeLembaga() {
+        try {
+          const token = JSON.parse(localStorage.getItem("token"));
+          const response = await axios.get(
+            import.meta.env.VITE_API_URL + '/list-tipe-lembaga',
+            {
+              headers: {
+                Authorization: "Bearer " + token.value,
+              },
+            }
+          );
+          if(response.data.success){
+            this.tipeLembagaList = response.data.data;
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
       },
       resetMap() {
         window.location.reload();
@@ -294,13 +292,6 @@
           this.filterPetaProvinsi = "/provinsiFilter/" + id;
         } else {
           this.filterPetaProvinsi = "/provinsi";
-        }
-      },
-      handleKotaChanged(id) {
-        if (id != 0) {
-          this.filterPetaKota = "/kabKotaFilter/" + id;
-        } else {
-          this.filterPetaKota = "/kabKota";
         }
       },
       handleTipeLembagaChanged(id) {
