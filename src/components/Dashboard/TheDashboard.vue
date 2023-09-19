@@ -4,44 +4,72 @@
       <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
         Peta Persebaran Pelatihan Kerja Indonesia
       </h5>
-      <a-form class="filter-form">
-        <a-form-item class="provinsi">
-          <a-select placeholder="Semua Provinsi/Wilayah" @change="onProvinceChange" show-search>
-            <a-select-option v-for="provinsi in provinsiList" :key="provinsi.id" :value="provinsi.id" :id="provinsi.id">
-              {{ provinsi.nama_provinsi }}
-            </a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item class="kota">
-          <a-select placeholder="Semua Kabupaten/Kota" :disabled="isKotaDisabled" show-search>
-            <a-select-option v-for="kabKota in kotaList" :key="kabKota.id" :value="kabKota.id" :id_provinsi="kabKota.id_provinsi">
-              {{ kabKota.nama_kabupaten_kota }}
-            </a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item class="tipeLembaga">
-          <a-select placeholder="Semua Tipe Lembaga" show-search>
-            <a-select-option v-for="tipeLembaga in tipeLembagaList" :key="tipeLembaga.id" :value="tipeLembaga.nama_tipe_lembaga">
-              {{ tipeLembaga.nama_tipe_lembaga }}
-            </a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item class="kapasitasLatih">
-          <a-select placeholder="Semua Kapasitas Latih">
-            <a-select-option value="kurang_500">Kurang dari 500</a-select-option>
-            <a-select-option value="lebih_500">Lebih dari 500</a-select-option>
-            <a-select-option value="kurang_1000">Kurang dari 1000</a-select-option>
-            <a-select-option value="lebih_1000">Lebih dari 1000</a-select-option>
-          </a-select>
-        </a-form-item>
-          <a-button @click="resetMap" type="primary" style="background-color: blue; border-color: blue; color: white;">
-            Reset
-          </a-button>
-      </a-form>
-      <PetaPersebaranGis 
-      :filter="filterPetaProvinsi"
-      :key="componentKey"
-      />
+      <div class="network-node-container">
+        <a-form class="filter-form">
+            <a-form-item class="provinsi">
+              <a-select
+                show-search
+                placeholder="Semua Provinsi/Wilayah"
+                :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+                option-filter-prop="children"
+                :filter-option="filterOption"
+                @change="onProvinceChange($event)"
+              >
+                <a-select-option
+                  v-for="(provinceContent, index) in provinceContents"
+                  :key="index"
+                  :value="provinceContent.id"
+                  >{{ provinceContent.nama_provinsi }}</a-select-option
+                >
+              </a-select>
+            </a-form-item>
+            <a-form-item class="city">
+              <a-select
+                show-search
+                placeholder="Semua Kabupaten/Kota"
+                :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+                option-filter-prop="children"
+                :filter-option="filterOption"
+                @change="onCityChange($event)"
+                :disabled="isDisable"
+              >
+                <a-select-option
+                  v-for="(cityContent, index) in cityContents"
+                  :key="index"
+                  :value="cityContent.id"
+                  >{{ cityContent.nama_kabupaten_kota }}</a-select-option
+                >
+              </a-select>
+            </a-form-item>
+            <a-form-item class="institutionType">
+              <a-select
+                show-search
+                placeholder="Semua Tipe Lembaga"
+                :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+                option-filter-prop="children"
+                :filter-option="filterOption"
+                @change="onInstitutionTypeChange($event)"
+              >
+                <a-select-option
+                  v-for="(institutionTypeContent, index) in institutionTypeContents"
+                  :key="index"
+                  :value="institutionTypeContent.id"
+                  >{{ institutionTypeContent.nama_tipe_lembaga }}</a-select-option
+                >
+              </a-select>
+            </a-form-item>
+            <a-form-item class="trainingCapacity">
+              <a-select placeholder="Semua Kapasitas Latih">
+                <a-select-option value="kurang_500">Kurang dari 500</a-select-option>
+                <a-select-option value="lebih_500">Lebih dari 500</a-select-option>
+                <a-select-option value="kurang_1000">Kurang dari 1000</a-select-option>
+                <a-select-option value="lebih_1000">Lebih dari 1000</a-select-option>
+              </a-select>
+            </a-form-item>
+        </a-form>
+        <div id="map">
+        </div>
+      </div>
     </div>
   </div>
 
@@ -136,207 +164,650 @@
   </div>
 </template>
 
-<script>
-  import axios from "axios";
-  import KapasitasTerhadapPesertaTerdaftar from "./KapasitasTerhadapPesertaTerdaftar.vue";
-  import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
-  import PersentaseLPKTerhadapPencariKerja from "./PersentaseLPKTerhadapPencariKerja.vue";
-  import KapasitasLPK from "./KapasitasLPK.vue";
-  import JumlahTenagaKerjaJabatanTerbanyak from "./JumlahTenagaKerjaJabatanTerbanyak.vue";
-  import TrenJumlahPesertaPelatihan from "./TrenJumlahPesertaPelatihan.vue";
-  import DemografiTenagaKerja from "./DemografiTenagaKerja.vue";
-  import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
-  import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
-  import PetaPersebaranGis from "./PetaPersebaranGis.vue";
-  import { DatePicker } from 'ant-design-vue';
-  import FilterProvinsi from "../Shared/FilterProvinsi.vue";
-  import ButtonReset from "../Shared/ButtonReset.vue";
+<style>
+@media only screen and (max-width: 600px) {
+  .network-node-container .detail-container {
+    width: 100% !important;
+  }
 
-  export default {
-    name: "TheDashboard",
+  .network-node-container .legend-container {
+    display: none;
+  }
+  #name {
+    display: none;
+  }
+  #detail-container-name {
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    border-top: 1px solid rgba(227, 227, 227, 1);
+    padding-top: 35px;
+  }
+  #detail-container-id {
+    font-size: 15px;
+  }
+  #detail-container-address {
+    font-size: 15px;
+  }
+
+  #detail-container-tipe {
+    display: none;
+  }
+  #detail-container-email {
+    display: none;
+  }
+  #detail-container-telp {
+    display: none;
+  }
+  #detail-container-province {
+    display: none;
+  }
+  #detail-container-city {
+    display: none;
+  }
+  #detail-container-time {
+    display: none;
+  }
+  #detail-container-amount {
+    display: none;
+  }
+  .network-node-container .detail-container .detail-button {
+    box-sizing: content-box;
+    height: 35px !important;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 992px) {
+  .legend-container {
+    display: none;
+  }
+}
+
+.network-node-container #map {
+  height: 100vh;
+  position: relative;
+  z-index: 0;
+}
+
+.network-node-container .custom-marker {
+  width: 36px !important;
+  height: 36px !important;
+  margin-left: -18px !important;
+  margin-top: -18px !important;
+  border-radius: 100px;
+  color: #31353f;
+  background-color: rgba(255, 149, 89, 0.6);
+  outline: 5px solid rgba(255, 149, 89, 0.3) !important;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.network-node-container .detail-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background: white;
+  z-index: 999999;
+  width: 325px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 25px;
+  overflow: auto;
+}
+
+/* width */
+.network-node-container ::-webkit-scrollbar {
+  width: 14px;
+}
+
+/* Track */
+.network-node-container ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.network-node-container ::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.network-node-container ::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.network-node-container .detail-container img {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  margin-bottom: 25px;
+}
+
+.network-node-container .detail-container .name {
+  font-weight: bolder;
+  font-size: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(227, 227, 227, 1);
+  margin-bottom: 25px;
+}
+
+.network-node-container .detail-container .title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.network-node-container .detail-container .info {
+  margin-bottom: 15px;
+}
+
+.network-node-container .detail-container .detail-button {
+  background: #2a66d4;
+  color: white;
+  border: 0;
+  height: auto;
+  padding: 10px 25px;
+  font-weight: bold;
+  margin-top: 25px;
+}
+
+.network-node-container .detail-container .close-container {
+  position: absolute;
+  top: 20px;
+  right: 5%;
+  background: rgba(0, 0, 0, 0.5);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  z-index: 100;
+}
+
+.network-node-container .detail-container .close {
+  color: white;
+  font-size: 16px;
+}
+
+.network-node-container .detail-container .close:hover {
+  cursor: pointer;
+}
+
+/* Legend */
+.network-node-container .legend-container {
+  background: transparent;
+  position: absolute;
+  z-index: 999999;
+  width: 70%;
+  left: 30%;
+}
+
+.network-node-container .legend-container .filter-form {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+
+.network-node-container .legend-container .filter-form .provinsi,
+.network-node-container .legend-container .filter-form .city,
+.network-node-container .legend-container .filter-form .institutionType,
+.network-node-container .legend-container .filter-form .trainingCapacity {
+  flex: 1;
+  margin: 0px !important;
+}
+/*Legend specific*/
+.legend {
+  padding: 10px 10px;
+  font: 14px Arial, Helvetica, sans-serif;
+  line-height: 24px;
+  color: #555;
+}
+.legend .ant-select-selection {
+  display: block;
+  box-sizing: border-box;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-top: 1.02px solid #d9d9d9;
+  border-radius: 4px;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  width: 100%;
+}
+</style>
+
+<script>
+import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
+import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
+import PersentaseLPKTerhadapPencariKerja from "./PersentaseLPKTerhadapPencariKerja.vue";
+import KapasitasLPK from "./KapasitasLPK.vue";
+import TrenJumlahPesertaPelatihan from "./TrenJumlahPesertaPelatihan.vue";
+import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
+
+import FilterProvinsi from "../Shared/FilterProvinsi.vue";
+import { DatePicker } from 'ant-design-vue';
+export default {
+  layout: 'network-node-page',
+  name: "TheDashboard",
     components: {
-      PetaPersebaranGis,
-      KapasitasTerhadapPesertaTerdaftar,
       TingkatAkreditasiLembagaPelatihanKerja,
       PersentaseLPKTerhadapPencariKerja,
       KapasitasLPK,
       JumlahLembagaPelatihanKerja,
       ProduktifitasTenagaKerja,
-      JumlahTenagaKerjaJabatanTerbanyak,
       TrenJumlahPesertaPelatihan,
-      DemografiTenagaKerja,
       FilterProvinsi,
       DatePicker,
-      ButtonReset
-    },
-    data() {
-      return {
-        filterProvinsi            : "/rekap-kapasitas-lpk",
-        filterTrenJumlah          : "/rekap-tren-jumlah-peserta-pelatihan",
-        filterProduktifitas       : "/rekap-produktifitas-tenaga-kerja",
-        filterPetaProvinsi        : "/kabKota",
-        filterPetaTipeLembaga     : "/tipeLembaga",
-        filterPetaKapasitasLatih  : "/kapasitasLatih",
-        selectedDate              : null,
-        selectedYear              : null,
-        selectedProvinceId        : null,
-        provinsiList              : [],
-        kotaList                  : [],
-        tipeLembagaList           : [],
-        isKotaDisabled            : true,
-        componentKey              : 0
-      };
     },
 
-    async created() {
-      await this.fetchProvinsiList();
-      await this.getTipeLembaga();
+  data() {
+    return {
+      // form: this.$form.createForm(this, { name: 'form' }),
+      codeProvince: '',
+      codeCity: '',
+      typeId: '',
+      key: '',
+      limitData: 100,
+      isLoading: true,
+      isDisable: true,
+      isMaker: null,
+      networkNodes: [],
+      provinceContents: [],
+      cityContents: [],
+      institutionContents: [],
+      institutionTypeContents: [],
+      entityTypeContents: [],
+      isOpenDetail: false,
+      detailProfile: {},
+      allRepo: [],
+
+      filterProvinsi            : "/rekap-kapasitas-lpk",
+      filterTrenJumlah          : "/rekap-tren-jumlah-peserta-pelatihan",
+      filterProduktifitas       : "/rekap-produktifitas-tenaga-kerja",
+      selectedDate              : null,
+      selectedYear              : null,
+    }
+  },
+
+  computed: {
+    language() {
+      return this.$store.state.languageActive.key
+    },
+  },
+
+  async created() {
+    await this.getProvince()
+  },
+
+  methods: {
+    filterOption(input, option) {
+      return (
+        option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+      )
     },
 
-    methods: {
-      async fetchProvinsiList() {
-        try {
-          const token = JSON.parse(localStorage.getItem("token"));
-          const response = await axios.get(
-            import.meta.env.VITE_API_URL + '/list-provinsi',
-            {
-              headers: {
+    urlFile(path) {
+      return this.$config.FILE_SERVICE_BASE_URL + '/' + path
+    },
+
+    async getProvince() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      this.provinceContents = await fetch(
+        import.meta.env.VITE_API_URL + '/list-provinsi',
+        {
+          headers: {
+              Authorization: "Bearer " + token.value,
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => data.data)
+
+      this.institutionTypeContents = await fetch(
+        import.meta.env.VITE_API_URL + '/list-tipe-lembaga',
+        {
+          headers: {
+              Authorization: "Bearer " + token.value,
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => data.data)
+
+      this.isLoading = false
+    },
+
+    onProvinceChange(value) {
+      var arr = []
+      arr = value.split('/')
+      value = arr[0]
+      this.codeProvince = arr[1]
+      if (this.isDisable == false) {
+        this.typeId = ''
+        this.codeCity = ''
+        this.codeProvince = ''
+        this.filterRepositories()
+        this.getCity(value)
+        return false
+      }
+      this.filterRepositories()
+      this.isDisable = false
+      this.getCity(value)
+    },
+
+    async resetRepositories() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      var allRepo = await fetch(
+        import.meta.env.VITE_API_URL + '/kabKota',
+        {
+          headers: {
+              Authorization: "Bearer " + token.value,
+          },
+        }
+      )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then((data) => data.data);
+
+      this.institutionContents = await fetch(
+        import.meta.env.VITE_API_URL + '/kabKota?limit=' + allRepo
+      )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then((data) => data.data);
+      this.typeId = ''
+      this.codeCity = ''
+      this.codeProvince = ''
+      this.isDisable = true
+      this.initMap(true)
+    },
+
+    onCityChange(value) {
+      this.codeCity = value
+      this.filterRepositories()
+    },
+
+    onInstitutionTypeChange(value) {
+      this.typeId = value
+      this.filterRepositories()
+    },
+
+    checkNull(text, isParagraf) {
+      if (text == null || text == '') {
+        return '-'
+      } else {
+        if (isParagraf == true) {
+          return this.escapeString(text)
+        } else {
+          return text
+        }
+      }
+    },
+
+    escapeString(escape) {
+      return escape.replaceAll('\\n', '<br>')
+    },
+
+    async getCity(value) {
+      const token = JSON.parse(localStorage.getItem("token"));
+      this.cityContents = await fetch(
+        import.meta.env.VITE_API_URL + '/list-kab-kota/' + value,
+        {
+          headers: {
+            Authorization: "Bearer " + token.value,
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => data.data)
+    },
+
+    async filterRepositories() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      this.institutionContents = await fetch(
+        import.meta.env.VITE_API_URL + '/kabKota',
+          {
+          headers: {
+            Authorization: "Bearer " + token.value,
+          },
+        }
+      )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then((data) => data.data);
+      this.initMap(true)
+    },
+
+    async getInstitution() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      var allRepo = await fetch(
+          import.meta.env.VITE_API_URL + '/kabKota',
+          {
+            headers: {
                 Authorization: "Bearer " + token.value,
-              },
-            }
-          );
-          if(response.data.success){
-            this.provinsiList = response.data.data;
+            },
           }
-        } catch (error) {
-          console.error('Error fetching data:', error);
+      )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
         }
-      },
-      onProvinceChange(value) {
-        this.isKotaDisabled = false;
-        this.getKota(value);
-        this.componentKey += 1;
+        return res.json();
+      })
+      .then((data) => data.data);
 
-        if (value != 0) {
-          this.filterPetaProvinsi = "/kabKotaFilter/" + value;
-        } else {
-          this.filterPetaProvinsi = "/kabKota";
-        }
-      },
-      async getKota(value) {
-        try {
-          const token = JSON.parse(localStorage.getItem("token"));
-          const response = await axios.get(
-            import.meta.env.VITE_API_URL + '/list-kab-kota/' + value,
-            {
-              headers: {
+      var b = await fetch(
+        import.meta.env.VITE_API_URL + '/kabKota?limit=' + allRepo,
+        {
+            headers: {
                 Authorization: "Bearer " + token.value,
-              },
-            }
-          );
-          if(response.data.success){
-            this.kotaList = response.data.data;
+            },
           }
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      },
-
-      async getTipeLembaga() {
-        try {
-          const token = JSON.parse(localStorage.getItem("token"));
-          const response = await axios.get(
-            import.meta.env.VITE_API_URL + '/list-tipe-lembaga',
-            {
-              headers: {
-                Authorization: "Bearer " + token.value,
-              },
-            }
-          );
-          if(response.data.success){
-            this.tipeLembagaList = response.data.data;
-          }
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      },
-      resetMap() {
-        window.location.reload();
-      },
-      handleKapasitasLPKProvinsiChanged(data) {
-        switch (data.tipe) {
-          case "provinsi":
-            if (data.id != 0) {
-              this.filterProvinsi = "/rekap-kapasitas-lpk-provinsi/" + data.id;
-            } else {
-              this.filterProvinsi = "/rekap-kapasitas-lpk";
-            }
-            break;
-
-          default:
-            break;
-        }
-      },
-      handleTrenJumlahChanged(date) {
-        if (date.$y != 0) {
-          this.filterTrenJumlah = "/rekap-tren-jumlah-peserta-pelatihan-tahun/" + date.$y;
-        } else {
-          this.filterTrenJumlah = "/rekap-tren-jumlah-peserta-pelatihan";
-        }
-      },
-      handleProduktifitasChanged(date) {
-        if (date.$y != 0) {
-          this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja-tahun/" + date.$y;
-        } else {
-          this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja";
-        }
-      },
-      handleProvinsiChanged(id) {
-        if (id != 0) {
-          console.log(id);
-          this.filterPetaProvinsi = "/provinsiFilter/" + id;
-        } else {
-          this.filterPetaProvinsi = "/provinsi";
-        }
-      },
-      handleTipeLembagaChanged(id) {
-        if (id != 0) {
-          this.filterPetaTipeLembaga = "/tipeLembagaFilter/" + id;
-        } else {
-          this.filterPetaTipeLembaga = "/tipeLembaga";
-        }
-      },
-      handleKapasitasLatihChanged(id) {
-        if (id != 0) {
-          this.filterPetaKapasitasLatih = "/kapasitasLatihFilter/" + id;
-        } else {
-          this.filterPetaKapasitasLatih = "/kapasitasLatih";
-        }
-      },
+      )
+        .then((res) => res.json())
+        .then((data) => data.data)
+      return b
     },
-  };
+
+    async initMap(value) {
+      if (value != true) {
+        var map = L.map('map', {
+          zoomControl: false,
+          fullscreenControl: true,
+          fullscreenControlOptions: {
+            position: 'bottomright',
+          },
+        }).setView([-3, 122], 5)
+      } else {
+        this.isMaker.clearLayers()
+        this.institutionContents.forEach((element) => {
+          if (
+            element.contact != null &&
+            element.contact.latitude != null &&
+            element.contact.longitude != null
+          ) {
+            var name_search = element.name,
+              latitude = element.contact.latitude,
+              longitude = element.contact.longitude
+            var provinceRepo = '-'
+            var cityRepo = '-'
+            if (element.contact.region != null) {
+              if (element.contact.region.province != null) {
+                provinceRepo = element.contact.region.province.name
+              }
+              if (element.contact.region.city != null) {
+                cityRepo = element.contact.region.city.name
+              }
+            }
+            let marker = L.marker(new L.latLng(latitude, longitude), {
+              title: name_search,
+              alt: name_search,
+              name: name_search,
+              id: element.repositoryId,
+              code: element.identifier,
+              email: element.contact.email,
+              telp: element.contact.phone,
+              type: element.type.name,
+              logo: element.logo,
+              province: provinceRepo,
+              city: cityRepo,
+              address: element.contact.streetAddress,
+              serviceDate: element.openingTimes,
+              archiveCount: 'Ini Archive Count',
+            })
+            this.isMaker.addLayer(marker) //CLUSTER
+            marker.on('click', this.onMapClick)
+          }
+        })
+        return false
+      }
+      this.institutionContents = await this.getInstitution()
+      console.log(this.institutionContents)
+
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        minZoom: 5,
+        attribution: '© OpenStreetMap',
+      }).addTo(map)
+
+      L.control
+        .zoom({
+          position: 'bottomright',
+        })
+        .addTo(map)
+
+      var markers = L.markerClusterGroup()
+      this.isMaker = markers
+
+      if (this.institutionContents && this.institutionContents.length > 0) {
+        this.institutionContents.forEach((element) => {
+          if (
+            // Contact penting dan tidak boleh null (akan ditampilkan di data simpul)
+            element.contact != null &&
+            element.contact.latitude != null &&
+            element.contact.longitude != null
+          ) {
+            var name_search = element.name,
+              latitude = element.contact.latitude,
+              longitude = element.contact.longitude
+            var provinceRepo = '-'
+            var cityRepo = '-'
+            if (element.contact.region != null) {
+              if (element.contact.region.province != null) {
+                provinceRepo = element.contact.region.province.name
+              }
+              if (element.contact.region.city != null) {
+                cityRepo = element.contact.region.city.name
+              }
+            }
+            let marker = L.marker(new L.latLng(latitude, longitude), {
+              title: name_search,
+              alt: name_search,
+              name: name_search,
+              id: element.repositoryId,
+              code: element.identifier,
+              email: element.contact.email,
+              telp: element.contact.phone,
+              type: element.type.name,
+              logo: element.logo,
+              province: provinceRepo,
+              city: cityRepo,
+              address: element.contact.streetAddress,
+              serviceDate: element.openingTimes,
+              archiveCount: 'Ini Archive Count',
+            })
+            markers.addLayer(marker) //CLUSTER
+            map.addLayer(markers) // marker.on('click', this.onMapClick(nn))
+            // markersLayer.addLayer(marker) // SEARCH MARKER
+            marker.on('click', this.onMapClick)
+          }
+        })
+      }
+    },
+    onMapClick(e) {
+      this.detailProfile = []
+      this.isOpenDetail = true
+      this.detailProfile.logo = e.target.options.logo
+      this.detailProfile.id = e.target.options.id
+      this.detailProfile.name = e.target.options.name
+      this.detailProfile.code = e.target.options.code
+      this.detailProfile.type = e.target.options.type
+      this.detailProfile.email = e.target.options.email
+      this.detailProfile.telp = e.target.options.telp
+      this.detailProfile.logo = e.target.options.logo
+      this.detailProfile.province = e.target.options.province
+      this.detailProfile.city = e.target.options.city
+      this.detailProfile.address = e.target.options.address
+      this.detailProfile.serviceDate = e.target.options.serviceDate
+      this.detailProfile.archiveCount = e.target.options.archiveCount
+    },
+
+    closeDetail() {
+      this.isOpenDetail = false
+    },
+
+    handleKapasitasLPKProvinsiChanged(data) {
+      switch (data.tipe) {
+        case "provinsi":
+          if (data.id != 0) {
+            this.filterProvinsi = "/rekap-kapasitas-lpk-provinsi/" + data.id;
+          } else {
+            this.filterProvinsi = "/rekap-kapasitas-lpk";
+          }
+          break;
+
+        default:
+          break;
+      }
+    },
+    handleTrenJumlahChanged(date) {
+      if (date.$y != 0) {
+        this.filterTrenJumlah = "/rekap-tren-jumlah-peserta-pelatihan-tahun/" + date.$y;
+      } else {
+        this.filterTrenJumlah = "/rekap-tren-jumlah-peserta-pelatihan";
+      }
+    },
+    handleProduktifitasChanged(date) {
+      if (date.$y != 0) {
+        this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja-tahun/" + date.$y;
+      } else {
+        this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja";
+      }
+    },
+
+    // addHamburgerActive() {
+    //   let that = this
+    //   that.clearHamburgerActive()
+    //   that.$store.commit('hamburgerActive/add', 'simpul-jaringan')
+    // },
+
+    // ...mapMutations({
+    //   clearHamburgerActive: 'hamburgerActive/reset',
+    // }),
+  },
+  mounted() {
+    this.initMap()
+  },
+  beforeMount() {
+    // this.addHamburgerActive()
+  },
+}
 </script>
-
-<style lang="css">
-  .filter-form {
-    display: flex;
-    gap: 10px;
-    padding: 10px;
-  }
-  .provinsi {
-    flex: 1;
-    margin: 0px !important;
-  }
-  .kota {
-    flex: 1;
-    margin: 0px !important;
-  }
-  .tipeLembaga {
-    flex: 1;
-    margin: 0px !important;
-  }
-  .kapasitasLatih {
-    flex: 1;
-    margin: 0px !important;
-  }
-</style>
