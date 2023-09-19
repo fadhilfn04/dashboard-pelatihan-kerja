@@ -38,7 +38,10 @@
             Reset
           </a-button>
       </a-form>
-      <PetaPersebaranGis :filter="filterPetaProvinsi"/>
+      <PetaPersebaranGis 
+      :filter="filterPetaProvinsi"
+      :key="componentKey"
+      />
     </div>
   </div>
 
@@ -180,7 +183,8 @@
         provinsiList              : [],
         kotaList                  : [],
         tipeLembagaList           : [],
-        isKotaDisabled            : true
+        isKotaDisabled            : true,
+        componentKey              : 0
       };
     },
 
@@ -211,6 +215,7 @@
       onProvinceChange(value) {
         this.isKotaDisabled = false;
         this.getKota(value);
+        this.componentKey += 1;
 
         if (value != 0) {
           this.filterPetaProvinsi = "/kabKotaFilter/" + value;

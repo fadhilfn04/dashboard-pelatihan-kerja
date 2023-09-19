@@ -1,303 +1,87 @@
 <template>
-  <!-- <div class="network-node-container">
-    <div class="legend-container">
-      <a-form class="legend-form">
-        <a-form-item class="provinsi">
-          <a-select
-            placeholder="Pilih Provinsi"
-            @change="onProvinceChange($event)"
-            v-decorator="['province', {}]"
-          >
-            <a-select-option
-              v-for="(provinceContent, index) in provinceContents"
-              :key="index"
-              :value="provinceContent.id"
-              >{{ provinceContent.name }}</a-select-option
+  <!-- <a-spin :tip="$t('loader')" :spinning="isLoading"> -->
+    <div class="network-node-container">
+      <div class="legend-container">
+        <a-form :form="form" class="legend-form">
+          <a-form-item class="provinsi">
+            <a-select
+              :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+              show-search
+              option-filter-prop="children"
+              :filter-option="filterOption"
+              @change="onProvinceChange($event)"
+              v-decorator="['province', {}]"
             >
-          </a-select>
-        </a-form-item>
-        <a-form-item class="city">
-          <a-select placeholder="Pilih Kab/Kota" v-decorator="['city', {}]">
-            <a-select-option
-              v-for="(cityContent, index) in cityContents"
-              :key="index"
-              :value="cityContent.id"
-              >{{ cityContent.name }}</a-select-option
+              <a-select-option
+                v-for="(provinceContent, index) in provinceContents"
+                :key="index"
+                :value="provinceContent.id + '/' + provinceContent.code"
+                >{{ provinceContent.name }}</a-select-option
+              >
+            </a-select>
+          </a-form-item>
+          <a-form-item class="city">
+            <a-select
+              :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+              show-search
+              option-filter-prop="children"
+              :filter-option="filterOption"
+              @change="onCityChange($event)"
+              v-decorator="['city', {}]"
+              :disabled="isDisable"
             >
-          </a-select>
-        </a-form-item>
-        <a-form-item class="instance">
-          <a-select placeholder="Pilih Instansi" v-decorator="['instance', {}]">
-            <a-select-option
-              v-for="(instanceContent, index) in institutionContents"
-              :key="index"
-              :value="instanceContent.id"
-              >{{ instanceContent.nameParallel }}</a-select-option
+              <a-select-option
+                v-for="(cityContent, index) in cityContents"
+                :key="index"
+                :value="cityContent.code"
+                >{{ cityContent.name }}</a-select-option
+              >
+            </a-select>
+          </a-form-item>
+          <a-form-item class="instance">
+            <a-select
+              :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+              show-search
+              option-filter-prop="children"
+              :filter-option="filterOption"
+              @change="onTypeChange($event)"
+              v-decorator="['instance', {}]"
             >
-          </a-select>
-        </a-form-item>
-      </a-form>
-    </div>
-    <div id="map">
-      <div v-if="isOpenDetail" class="detail-container">
-        <img :src="detailProfile.logo" :alt="detailProfile.name" />
-
-        <div class="name" id="name">{{ detailProfile.name }}</div>
-        <div id="detail-container-name" class="display: none">
-          <div class="title">Nama</div>
-          <div class="info">{{ detailProfile.name }}</div>
-        </div>
-        <div id="detail-container-id">
-          <div class="title">KODE</div>
-          <div class="info">{{ detailProfile.code }}</div>
-        </div>
-        <div id="detail-container-tipe">
-          <div class="title">TIPE</div>
-          <div class="info">{{ detailProfile.type }}</div>
-        </div>
-        <div id="detail-container-email">
-          <div class="title">EMAIL</div>
-          <div class="info">{{ detailProfile.email }}</div>
-        </div>
-        <div id="detail-container-telp">
-          <div class="title">NOMOR TELEPON</div>
-          <div class="info">{{ detailProfile.telp }}</div>
-        </div>
-        <div id="detail-container-province">
-          <div class="title">PROVINSI</div>
-          <div class="info">{{ detailProfile.province }}</div>
-        </div>
-        <div id="detail-container-city">
-          <div class="title">KOTA/KABUPATEN</div>
-          <div class="info">{{ detailProfile.city }}</div>
-        </div>
-        <div id="detail-container-address">
-          <div class="title">ALAMAT</div>
-          <div class="info">{{ detailProfile.address }}</div>
-        </div>
-        <div id="detail-container-time">
-          <div class="title">WAKTU LAYANAN</div>
-          <div class="info">{{ detailProfile.serviceDate }}</div>
-        </div>
-        <div id="detail-container-amount">
-          <div class="title">JUMLAH KHAZANAH</div>
-          <div class="info">{{ detailProfile.archiveCount }}</div>
-        </div>
-        <a-button
-          class="detail-button"
-          @click="redirectProfileSJ(detailPrfofile.code)"
-          >Detail Simpul Jaringan</a-button
-        >
-
-        <div class="close-container">
-          <a-icon class="close" type="close" @click="closeDetail" />
-        </div>
+              <a-select-option
+                v-for="(entityTypeContent, index) in entityTypeContents"
+                :key="index"
+                :value="entityTypeContent.id"
+                >{{ entityTypeContent.name }}</a-select-option
+              >
+            </a-select>
+          </a-form-item>
+          <a-form-item class="reset">
+            <a-tooltip placement="topRight">
+              <template slot="title">Reset Filter</template>
+              <a-button
+                @click="resetRepositories"
+                class="reset-button"
+                shape="circle"
+                icon="retweet"
+              />
+            </a-tooltip>
+          </a-form-item>
+        </a-form>
+      </div>
+      <div id="map">
       </div>
     </div>
-  </div> -->
-
-  <div class="w-full rounded-lg border border-gray-200 bg-white shadow">
-    <div class="p-5">
-      <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-        Peta Persebaran Pelatihan Kerja Indonesia
-      </h5>
-      <a-form class="filter-form">
-        <a-form-item class="provinsi">
-          <a-select
-            placeholder="Pilih Provinsi"
-            @change="onProvinceChange($event)"
-          >
-            <a-select-option
-              v-for="(provinceContent, index) in provinceContents"
-              :key="index"
-              :value="provinceContent.id"
-              >{{ provinceContent.nama_provinsi }}</a-select-option
-            >
-          </a-select>
-        </a-form-item>
-        <a-form-item class="kota">
-          <a-select placeholder="Semua Kabupaten/Kota" show-search>
-            <a-select-option v-for="kabKota in cityContents" :key="kabKota.id" :value="kabKota.id" :id_provinsi="kabKota.id_provinsi">
-              {{ kabKota.nama_kabupaten_kota }}
-            </a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item class="tipeLembaga">
-          <a-select placeholder="Semua Tipe Lembaga" show-search>
-            <a-select-option v-for="tipeLembaga in institutionContents" :key="tipeLembaga.id" :value="tipeLembaga.nama_tipe_lembaga">
-              {{ tipeLembaga.nama_tipe_lembaga }}
-            </a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item class="kapasitasLatih">
-          <a-select placeholder="Semua Kapasitas Latih">
-            <a-select-option value="kurang_500">Kurang dari 500</a-select-option>
-            <a-select-option value="lebih_500">Lebih dari 500</a-select-option>
-            <a-select-option value="kurang_1000">Kurang dari 1000</a-select-option>
-            <a-select-option value="lebih_1000">Lebih dari 1000</a-select-option>
-          </a-select>
-        </a-form-item>
-          <!-- <a-button @click="resetMap" type="primary" style="background-color: blue; border-color: blue; color: white;">
-            Reset
-          </a-button> -->
-      </a-form>
-    </div>
-    <div id="map">
-      <!-- <div v-if="isOpenDetail" class="detail-container">
-        <img :src="detailProfile.logo" :alt="detailProfile.name" />
-
-        <div class="name" id="name">{{ detailProfile.name }}</div>
-        <div id="detail-container-name" class="display: none">
-          <div class="title">Nama</div>
-          <div class="info">{{ detailProfile.name }}</div>
-        </div>
-        <div id="detail-container-id">
-          <div class="title">KODE</div>
-          <div class="info">{{ detailProfile.code }}</div>
-        </div>
-        <div id="detail-container-tipe">
-          <div class="title">TIPE</div>
-          <div class="info">{{ detailProfile.type }}</div>
-        </div>
-        <div id="detail-container-email">
-          <div class="title">EMAIL</div>
-          <div class="info">{{ detailProfile.email }}</div>
-        </div>
-        <div id="detail-container-telp">
-          <div class="title">NOMOR TELEPON</div>
-          <div class="info">{{ detailProfile.telp }}</div>
-        </div>
-        <div id="detail-container-province">
-          <div class="title">PROVINSI</div>
-          <div class="info">{{ detailProfile.province }}</div>
-        </div>
-        <div id="detail-container-city">
-          <div class="title">KOTA/KABUPATEN</div>
-          <div class="info">{{ detailProfile.city }}</div>
-        </div>
-        <div id="detail-container-address">
-          <div class="title">ALAMAT</div>
-          <div class="info">{{ detailProfile.address }}</div>
-        </div>
-        <div id="detail-container-time">
-          <div class="title">WAKTU LAYANAN</div>
-          <div class="info">{{ detailProfile.serviceDate }}</div>
-        </div>
-        <div id="detail-container-amount">
-          <div class="title">JUMLAH KHAZANAH</div>
-          <div class="info">{{ detailProfile.archiveCount }}</div>
-        </div>
-        <a-button
-          class="detail-button"
-          @click="redirectProfileSJ(detailPrfofile.code)"
-          >Detail Simpul Jaringan</a-button
-        >
-
-        <div class="close-container">
-          <a-icon class="close" type="close" @click="closeDetail" />
-        </div>
-      </div> -->
-    </div>
-  </div>
-
-  <div class="grid grid-cols-3 gap-8">
-    <div class="col-span-2">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-        <div class="p-5">
-          <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-            Jumlah Lembaga Pelatihan Kerja
-          </h5>
-          <JumlahLembagaPelatihanKerja />
-        </div>
-      </div>
-    </div>
-    <div class="col-span-1">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-        <div class="p-5">
-            <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-              Tingkat Akreditasi Lembaga Pelatihan Kerja
-            </h5>
-          <TingkatAkreditasiLembagaPelatihanKerja />
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-2 gap-8">
-    <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-      <div class="p-5">
-        <div class="flex justify-between pb-2">
-          <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-            Persentase LPK Terhadap Pencari Kerja
-          </h5>
-        </div>
-
-        <PersentaseLPKTerhadapPencariKerja />
-      </div>
-    </div>
-    
-    <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-      <div class="p-5">
-          <div class="flex justify-between pb-2">
-            <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-              Kapasitas Lembaga Pelatihan Kerja
-            </h5>
-            <FilterProvinsi
-              @provinsiChanged="handleKapasitasLPKProvinsiChanged"
-              tipe="provinsi"
-            />
-          </div>
-        <KapasitasLPK :filter="filterProvinsi"/>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-3 gap-8">
-    <div class="col-span-2">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-        <div class="p-5">
-            <div class="flex justify-between pb-2">
-              <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-                Tren Jumlah Peserta Pelatihan
-              </h5>
-              <div class="relative w-32">
-                <DatePicker picker="year" id="datepicker_tren"
-                  v-model="selectedDate"
-                  @change="handleTrenJumlahChanged"  
-                />
-              </div>
-            </div>
-          <TrenJumlahPesertaPelatihan :filter="filterTrenJumlah"/>
-        </div>
-      </div>
-    </div>
-
-    <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-      <div class="p-5">
-        <div class="flex justify-between pb-2">
-          <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-            Produktifitas Tenaga Kerja
-          </h5>
-          <div class="relative w-32">
-            <DatePicker picker="year" id="datepicker_produktifitas"
-              v-model="selectedDate"
-              @change="handleProduktifitasChanged"  
-            />
-          </div>
-        </div>
-          <ProduktifitasTenagaKerja :filter="filterProduktifitas"/>
-      </div>
-    </div>
-  </div>
+  <!-- </a-spin> -->
 </template>
 
 <style>
 @media only screen and (max-width: 600px) {
-  .map {
+  .network-node-container .detail-container {
     width: 100% !important;
   }
-  .detail-container {
-    width: 100% !important;
+
+  .network-node-container .legend-container {
+    display: none;
   }
   #name {
     display: none;
@@ -342,6 +126,13 @@
     height: 35px !important;
   }
 }
+
+@media only screen and (min-width: 600px) and (max-width: 992px) {
+  .legend-container {
+    display: none;
+  }
+}
+
 .network-node-container #map {
   height: 100vh;
   position: relative;
@@ -380,7 +171,7 @@
 
 /* width */
 .network-node-container ::-webkit-scrollbar {
-  width: 5px;
+  width: 14px;
 }
 
 /* Track */
@@ -426,9 +217,10 @@
   background: #2a66d4;
   color: white;
   border: 0;
-  padding: 0 25px;
+  height: auto;
+  padding: 10px 25px;
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 25px;
 }
 
 .network-node-container .detail-container .close-container {
@@ -458,22 +250,20 @@
 .network-node-container .legend-container {
   background: transparent;
   position: absolute;
-  z-index: 100;
+  z-index: 999999;
   width: 70%;
-  top: 6%;
   left: 30%;
 }
 
-.filter-form {
+.network-node-container .legend-container .legend-form {
   display: flex;
   gap: 10px;
   padding: 10px;
 }
 
-.provinsi,
-.kota,
-.tipeLembaga,
-.kapasitasLatih {
+.network-node-container .legend-container .legend-form .provinsi,
+.network-node-container .legend-container .legend-form .city,
+.network-node-container .legend-container .legend-form .instance {
   flex: 1;
   margin: 0px !important;
 }
@@ -501,164 +291,247 @@
 </style>
 
 <script>
+// import { mapMutations } from 'vuex'
 import axios from "axios";
-import { ref } from 'vue';
-import KapasitasTerhadapPesertaTerdaftar from "./KapasitasTerhadapPesertaTerdaftar.vue";
-import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
-import PersentaseLPKTerhadapPencariKerja from "./PersentaseLPKTerhadapPencariKerja.vue";
-import KapasitasLPK from "./KapasitasLPK.vue";
-import JumlahTenagaKerjaJabatanTerbanyak from "./JumlahTenagaKerjaJabatanTerbanyak.vue";
-import TrenJumlahPesertaPelatihan from "./TrenJumlahPesertaPelatihan.vue";
-import DemografiTenagaKerja from "./DemografiTenagaKerja.vue";
-import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
-import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
-import PetaPersebaranGis from "./PetaPersebaranGis.vue";
-import { DatePicker } from 'ant-design-vue';
-import FilterProvinsi from "../Shared/FilterProvinsi.vue";
-import ButtonReset from "../Shared/ButtonReset.vue";
-
-import * as L from "leaflet";
-import "leaflet.markercluster/dist/leaflet.markercluster.js";
-import "leaflet/dist/leaflet.css";
-import "leaflet.markercluster/dist/MarkerCluster.css";
-import "leaflet.markercluster/dist/MarkerCluster.Default.css";
-import "leaflet.fullscreen/Control.FullScreen.css";
-import "leaflet.fullscreen/Control.FullScreen.js";
-import {
-  LMap,
-  LTileLayer,
-  LMarker,
-} from "@vue-leaflet/vue-leaflet";
-
 export default {
-  name: "TheDashboardNew",
-  components: {
-    PetaPersebaranGis,
-    KapasitasTerhadapPesertaTerdaftar,
-    TingkatAkreditasiLembagaPelatihanKerja,
-    PersentaseLPKTerhadapPencariKerja,
-    KapasitasLPK,
-    JumlahLembagaPelatihanKerja,
-    ProduktifitasTenagaKerja,
-    JumlahTenagaKerjaJabatanTerbanyak,
-    TrenJumlahPesertaPelatihan,
-    DemografiTenagaKerja,
-    FilterProvinsi,
-    DatePicker,
-    ButtonReset,
-    LMap,
-    LTileLayer,
-    LMarker
-  },
+  layout: 'network-node-page',
+
   data() {
     return {
-      filterProvinsi            : "/rekap-kapasitas-lpk",
-      filterTrenJumlah          : "/rekap-tren-jumlah-peserta-pelatihan",
-      filterProduktifitas       : "/rekap-produktifitas-tenaga-kerja",
-      filterPetaProvinsi        : "/kabKota",
-      filterPetaTipeLembaga     : "/tipeLembaga",
-      filterPetaKapasitasLatih  : "/kapasitasLatih",
-      selectedDate              : null,
-      selectedYear              : null,
-      selectedProvinceId        : null,
-      host                      : import.meta.env.VITE_API_URL,
-
+      // form: this.$form.createForm(this, { name: 'form' }),
+      codeProvince: '',
+      codeCity: '',
+      typeId: '',
+      key: '',
+      limitData: 100,
+      isLoading: true,
+      isDisable: true,
+      isMaker: null,
       networkNodes: [],
       provinceContents: [],
+      entityTypeContents: [],
       cityContents: [],
-      institutionContents: [],
+      instanceContents: [],
       isOpenDetail: false,
       detailProfile: {},
-      key: '',
-    };
+      allRepo: [],
+    }
   },
 
-  async created() {
-    await this.fetchProvinceContents();
-    await this.getInstitution();
+  async fetch() {
+    this.provinceContents = await fetch(
+      this.$config.CORE_SERVICE_BASE_URL +
+        '/regions/province?limit=' +
+        this.limitData
+    )
+      .then((res) => res.json())
+      .then((data) => data.data)
+
+    this.entityTypeContents = await fetch(
+      this.$config.CORE_SERVICE_BASE_URL + '/types?limit=20'
+    )
+      .then((res) => res.json())
+      .then((data) => data.data)
+
+    this.isLoading = false
+  },
+
+  computed: {
+    language() {
+      return this.$store.state.languageActive.key
+    },
   },
 
   methods: {
-    async fetchProvinceContents() {
-      try {
-        const token = JSON.parse(localStorage.getItem("token"));
-        const response = await axios.get(
+    filterOption(input, option) {
+      return (
+        option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+      )
+    },
+
+    urlFile(path) {
+      return this.$config.FILE_SERVICE_BASE_URL + '/' + path
+    },
+
+    onProvinceChange(value) {
+      var arr = []
+      arr = value.split('/')
+      value = arr[0]
+      this.codeProvince = arr[1]
+      if (this.isDisable == false) {
+        this.form.resetFields()
+        this.typeId = ''
+        this.codeCity = ''
+        this.codeProvince = ''
+        this.filterRepositories()
+        this.getCity(value)
+        return false
+      }
+      this.filterRepositories()
+      this.isDisable = false
+      this.getCity(value)
+    },
+
+    async resetRepositories() {
+      var allRepo = await fetch(
+        import.meta.env.VITE_API_URL + '/list-provinsi'
+      )
+        .then((res) => res.json())
+        .then((data) => data.pageSummary.total)
+
+      this.instanceContents = await fetch(
+        import.meta.env.VITE_API_URL + '/list-provinsi?limit=' + allRepo
+      )
+        .then((res) => res.json())
+        .then((data) => data.data)
+      this.typeId = ''
+      this.codeCity = ''
+      this.codeProvince = ''
+      this.isDisable = true
+      this.form.resetFields()
+      this.initMap(true)
+    },
+
+    onCityChange(value) {
+      this.codeCity = value
+      this.filterRepositories()
+    },
+
+    onTypeChange(value) {
+      this.typeId = value
+      this.filterRepositories()
+    },
+
+    checkNull(text, isParagraf) {
+      if (text == null || text == '') {
+        return '-'
+      } else {
+        if (isParagraf == true) {
+          return this.escapeString(text)
+        } else {
+          return text
+        }
+      }
+    },
+
+    escapeString(escape) {
+      return escape.replaceAll('\\n', '<br>')
+    },
+
+    async getCity(value) {
+      this.cityContents = await fetch(
+        this.$config.CORE_SERVICE_BASE_URL +
+          '/regions/province/' +
+          value +
+          '/city?limit=' +
+          this.limitData
+      )
+        .then((res) => res.json())
+        .then((data) => data.data)
+    },
+
+    async filterRepositories() {
+      this.instanceContents = await fetch(
+        import.meta.env.VITE_API_URL +
+          '/list-provinsi?typeId=' +
+          this.typeId +
+          '&provinceCode=' +
+          this.codeProvince +
+          '&cityCode=' +
+          this.codeCity
+      )
+        .then((res) => res.json())
+        .then((data) => data.data)
+      this.initMap(true)
+    },
+
+    async getInstance() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      var allRepo = await fetch(
           import.meta.env.VITE_API_URL + '/list-provinsi',
           {
             headers: {
-              Authorization: "Bearer " + token.value,
+                Authorization: "Bearer " + token.value,
             },
           }
-        );
-        if(response.data.success){
-          this.provinceContents = response.data.data;
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    },
-    onProvinceChange(value) {
-      this.getCity(value);
-    },
-    async getCity(value) {
-      try {
-        const token = JSON.parse(localStorage.getItem("token"));
-        const response = await axios.get(
-          import.meta.env.VITE_API_URL + '/list-kab-kota/' + value,
-          {
+      )
+          .then((res) => res.json())  
+          .then((data) => data);
+
+
+      var b = await fetch(
+        import.meta.env.VITE_API_URL + '/list-provinsi?limit=' + allRepo,
+        {
             headers: {
-              Authorization: "Bearer " + token.value,
+                Authorization: "Bearer " + token.value,
             },
           }
-        );
-        if(response.data.success){
-          this.cityContents = response.data.data;
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+      )
+        .then((res) => res.json())
+        .then((data) => data.data)
+      return b
     },
 
-    async getInstitution() {
-      try {
-        const token = JSON.parse(localStorage.getItem("token"));
-        const response = await axios.get(
-          import.meta.env.VITE_API_URL + '/list-tipe-lembaga',
-          {
-            headers: {
-              Authorization: "Bearer " + token.value,
-            },
+    async initMap(value) {
+      if (value != true) {
+        var map = L.map('map', {
+          zoomControl: false,
+          fullscreenControl: true,
+          fullscreenControlOptions: {
+            position: 'bottomright',
+          },
+        }).setView([-3, 122], 5)
+      } else {
+        this.isMaker.clearLayers()
+        this.instanceContents.forEach((element) => {
+          if (
+            element.contact != null &&
+            element.contact.latitude != null &&
+            element.contact.longitude != null
+          ) {
+            var name_search = element.name,
+              latitude = element.contact.latitude,
+              longitude = element.contact.longitude
+            var provinceRepo = '-'
+            var cityRepo = '-'
+            if (element.contact.region != null) {
+              if (element.contact.region.province != null) {
+                provinceRepo = element.contact.region.province.name
+              }
+              if (element.contact.region.city != null) {
+                cityRepo = element.contact.region.city.name
+              }
+            }
+            let marker = L.marker(new L.latLng(latitude, longitude), {
+              title: name_search,
+              alt: name_search,
+              name: name_search,
+              id: element.repositoryId,
+              code: element.identifier,
+              email: element.contact.email,
+              telp: element.contact.phone,
+              type: element.type.name,
+              logo: element.logo,
+              province: provinceRepo,
+              city: cityRepo,
+              address: element.contact.streetAddress,
+              serviceDate: element.openingTimes,
+              archiveCount: 'Ini Archive Count',
+            })
+            this.isMaker.addLayer(marker) //CLUSTER
+            marker.on('click', this.onMapClick)
           }
-        );
-        if(response.data.success){
-          this.institutionContents = response.data.data;
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
+        })
+        return false
       }
-    },
-
-    async initMap() {
-      this.institutionContents = this.getInstitution();
-
-      var map = L.map('map', {
-        zoomControl: false,
-        center: new L.latLng(
-          this.institutionContents[0].contact.latitude,
-          this.institutionContents[0].contact.longitude
-        ),
-        fullscreenControl: true,
-        fullscreenControlOptions: {
-          position: 'bottomright',
-        },
-      }).setView([-3, 122], 5)
+      this.instanceContents = await this.getInstance()
 
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         minZoom: 5,
         attribution: '© OpenStreetMap',
       }).addTo(map)
-
-      var markersLayer = new L.LayerGroup()
 
       L.control
         .zoom({
@@ -666,100 +539,97 @@ export default {
         })
         .addTo(map)
 
-      L.control
-        .resetView({
-          cssClass: 'redo-icon',
-          content: '',
-        })
-        .addTo(map)
-
       var markers = L.markerClusterGroup()
-      var controlSearch = new L.Control.Search({
-        position: 'topright',
-        layer: markersLayer,
-        initial: false,
-        zoom: 12,
-        marker: false,
-      })
+      this.isMaker = markers
 
-      map.addControl(controlSearch)
-
-      this.institutionContents.forEach((element) => {
-        console.log(element);
-        if (element.contact != null) {
-          var name_search = element.nameParallel,
+      this.instanceContents.forEach((element) => {
+        if (
+          // Contact penting dan tidak boleh null (akan ditampilkan di data simpul)
+          element.contact != null &&
+          element.contact.latitude != null &&
+          element.contact.longitude != null
+        ) {
+          var name_search = element.name,
             latitude = element.contact.latitude,
-            // longitude = element.contact.longitude
-            longitude = 110
+            longitude = element.contact.longitude
+          var provinceRepo = '-'
+          var cityRepo = '-'
+          if (element.contact.region != null) {
+            if (element.contact.region.province != null) {
+              provinceRepo = element.contact.region.province.name
+            }
+            if (element.contact.region.city != null) {
+              cityRepo = element.contact.region.city.name
+            }
+          }
           let marker = L.marker(new L.latLng(latitude, longitude), {
-            // title: name_search,
-            // alt: name_search,
-            // name: name_search,
-            // code: element.identifier,
-            // email: element.contact.email,
-            // telp: element.contact.phone,
-            // type: element.type.name,
-            // province: element.contact.region.province.name,
-            // city: element.contact.region.city.name,
-            // address: element.contact.streetAddress,
-            // serviceDate: element.openingTimes,
-            // archiveCount: 'Ini Archive Count',
+            title: name_search,
+            alt: name_search,
+            name: name_search,
+            id: element.repositoryId,
+            code: element.identifier,
+            email: element.contact.email,
+            telp: element.contact.phone,
+            type: element.type.name,
+            logo: element.logo,
+            province: provinceRepo,
+            city: cityRepo,
+            address: element.contact.streetAddress,
+            serviceDate: element.openingTimes,
+            archiveCount: 'Ini Archive Count',
           })
           markers.addLayer(marker) //CLUSTER
           map.addLayer(markers) // marker.on('click', this.onMapClick(nn))
-          markersLayer.addLayer(marker) // SEARCH MARKER
+          // markersLayer.addLayer(marker) // SEARCH MARKER
           marker.on('click', this.onMapClick)
         }
       })
     },
     onMapClick(e) {
-      console.log('map clicked!');
-      // this.detailProfile = []
-      // this.isOpenDetail = true
-      // this.detailProfile.logo = '/picture/logo_anri.png'
-      // this.detailProfile.name = e.target.options.name
-      // this.detailProfile.code = e.target.options.code
-      // this.detailProfile.type = e.target.options.type
-      // this.detailProfile.email = e.target.options.email
-      // this.detailProfile.telp = e.target.options.telp
-      // this.detailProfile.province = e.target.options.province
-      // this.detailProfile.city = e.target.options.city
-      // this.detailProfile.address = e.target.options.address
-      // this.detailProfile.serviceDate = e.target.options.serviceDate
-      // this.detailProfile.archiveCount = e.target.options.archiveCount
+      this.detailProfile = []
+      this.isOpenDetail = true
+      this.detailProfile.logo = e.target.options.logo
+      this.detailProfile.id = e.target.options.id
+      this.detailProfile.name = e.target.options.name
+      this.detailProfile.code = e.target.options.code
+      this.detailProfile.type = e.target.options.type
+      this.detailProfile.email = e.target.options.email
+      this.detailProfile.telp = e.target.options.telp
+      this.detailProfile.logo = e.target.options.logo
+      this.detailProfile.province = e.target.options.province
+      this.detailProfile.city = e.target.options.city
+      this.detailProfile.address = e.target.options.address
+      this.detailProfile.serviceDate = e.target.options.serviceDate
+      this.detailProfile.archiveCount = e.target.options.archiveCount
     },
 
     closeDetail() {
       this.isOpenDetail = false
     },
-    handleKapasitasLPKProvinsiChanged(data) {
-      switch (data.tipe) {
-        case "provinsi":
-          if (data.id != 0) {
-            this.filterProvinsi = "/rekap-kapasitas-lpk-provinsi/" + data.id;
-          } else {
-            this.filterProvinsi = "/rekap-kapasitas-lpk";
-          }
-          break;
 
-        default:
-          break;
-      }
+    redirectProfileSJ(id) {
+      let routeData = this.$router.resolve({
+        name: 'deskripsi-arsip-sj-id___' + this.language,
+        params: { id: id },
+      })
+      window.open(routeData.href, '_blank')
     },
-    handleTrenJumlahChanged(date) {
-      if (date.$y != 0) {
-        this.filterTrenJumlah = "/rekap-tren-jumlah-peserta-pelatihan-tahun/" + date.$y;
-      } else {
-        this.filterTrenJumlah = "/rekap-tren-jumlah-peserta-pelatihan";
-      }
-    },
-    handleProduktifitasChanged(date) {
-      if (date.$y != 0) {
-        this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja-tahun/" + date.$y;
-      } else {
-        this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja";
-      }
-    },
+
+    // addHamburgerActive() {
+    //   let that = this
+    //   that.clearHamburgerActive()
+    //   that.$store.commit('hamburgerActive/add', 'simpul-jaringan')
+    // },
+
+    // ...mapMutations({
+    //   clearHamburgerActive: 'hamburgerActive/reset',
+    // }),
   },
-};
+  mounted() {
+    this.initMap()
+  },
+  beforeMount() {
+    // this.addHamburgerActive()
+  },
+}
 </script>

@@ -23,7 +23,6 @@
   </div>
 
   <div v-if="showCanvas">
-    <CButton color="primary" @click="() => { visible = !visible }">Toggle offcanvas</CButton>
     <COffcanvas placement="start" :visible="visible" @hide="() => { visible = !visible }">
       <COffcanvasHeader>
         <COffcanvasTitle>
@@ -169,7 +168,6 @@ export default {
     COffcanvasHeader,
     CCloseButton
   },
-  emits: ["refresh-map"],
   data() {
     return {
       minZoom: 5,
@@ -183,6 +181,19 @@ export default {
       host: import.meta.env.VITE_API_URL,
       markerCluster: null
     };
+  },
+  computed: {
+    formattedDataMarker() {
+      return this.dataMarker.map((marker) => {
+        if (typeof marker.value === "number") {
+          return {
+            marker,
+            value: marker.value.toLocaleString(),
+          };
+        }
+        return marker;
+      });
+    },
   },
   props: {
     zoom: Number,
@@ -205,10 +216,6 @@ export default {
         const dataMarker = this.formattedDataMarker;
         
         L.Map.addInitHook(function () {
-          if (self.markerCluster) {
-            self.markerCluster.clearLayers();
-          }
-
           self.markerCluster = L.markerClusterGroup({
             removeOutsideVisibleBounds: true,
             chunkedLoading: true,
@@ -242,7 +249,8 @@ export default {
               axios.get(url, config).then((response) => {
                 if (response.data && response.data.length > 0) {
                   self.detailLembaga = {};
-                  self.showCanvas = true;
+                  self.showCanvas = true; 
+                  self.visible = true;
                   self.detailLembaga.nama_lembaga = response.data[0].nama_lembaga;
                   self.detailLembaga.no_vin = response.data[0].no_vin;
                   self.detailLembaga.tipe_lembaga = response.data[0].tipe_lembaga;
@@ -260,7 +268,6 @@ export default {
             })
             markers.push(marker);
           });
-
           self.markerCluster.addLayers(markers);  
         });
       }
@@ -268,19 +275,6 @@ export default {
   },
   mounted() {
     this.initMap();
-  },
-  computed: {
-    formattedDataMarker() {
-      return this.dataMarker.map((marker) => {
-        if (typeof marker.value === "number") {
-          return {
-            marker,
-            value: marker.value.toLocaleString(),
-          };
-        }
-        return marker;
-      });
-    },
   },
 };
 </script>
