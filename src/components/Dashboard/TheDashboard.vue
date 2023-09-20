@@ -8,7 +8,6 @@
         <a-form class="filter-form">
           <a-form-item class="province">
             <a-select
-              show-search
               placeholder="Semua Provinsi/Wilayah"
               :getPopupContainer="(triggerNode) => triggerNode.parentNode"
               option-filter-prop="children"
@@ -25,7 +24,6 @@
           </a-form-item>
           <a-form-item class="city">
             <a-select
-              show-search
               placeholder="Semua Kabupaten/Kota"
               :getPopupContainer="(triggerNode) => triggerNode.parentNode"
               option-filter-prop="children"
@@ -43,7 +41,6 @@
           </a-form-item>
           <a-form-item class="institutionType">
             <a-select
-              show-search
               placeholder="Semua Tipe Lembaga"
               :getPopupContainer="(triggerNode) => triggerNode.parentNode"
               option-filter-prop="children"
@@ -59,7 +56,11 @@
             </a-select>
           </a-form-item>
           <a-form-item class="trainingCapacity">
-            <a-select placeholder="Semua Kapasitas Latih">
+            <a-select 
+              placeholder="Semua Kapasitas Latih"
+              :filter-option="filterOption"
+              @change="onTrainingCapacityChange($event)"
+            >
               <a-select-option value="kurang_500">Kurang dari 500</a-select-option>
               <a-select-option value="lebih_500">Lebih dari 500</a-select-option>
               <a-select-option value="kurang_1000">Kurang dari 1000</a-select-option>
@@ -271,9 +272,7 @@
 }
 
 .network-node-container #map {
-  height: 80vh;
-  position: relative;
-  z-index: 0;
+  height: 75vh;
 }
 
 .network-node-container .detail-container {
@@ -439,10 +438,11 @@ export default {
 
   data() {
     return {
-      // form: this.$form.createForm(this, { name: 'form' }),
+      // form: this.$form.Form(this, { name: 'form' }),
       provinceId: '',
       cityId: '',
       institutionId: '',
+      trainingCapacityValue: '',
       key: '',
       limitData: 100,
       isLoading: true,
@@ -479,14 +479,10 @@ export default {
   methods: {
     filterOption(input, option) {
       return (
-        option.componentOptions.children[0].text
+        option.children.text
           .toLowerCase()
           .indexOf(input.toLowerCase()) >= 0
       )
-    },
-
-    urlFile(path) {
-      return this.$config.FILE_SERVICE_BASE_URL + '/' + path
     },
 
     async getProvince() {
@@ -566,6 +562,7 @@ export default {
       this.provinceId = ''
       this.cityId = ''
       this.institutionId = ''
+      this.trainingCapacityValue = ''
       this.isDisable = true
       // this.form.resetFields()
       this.initMap(true)
@@ -579,6 +576,11 @@ export default {
     onInstitutionTypeChange(value) {
       this.institutionId = value
       this.filterInstitution()
+    },
+
+    onTrainingCapacityChange(value) {
+      this.trainingCapacityValue = value
+      this.filterTrainingCapacity()
     },
 
     checkNull(text, isParagraf) {
@@ -671,6 +673,27 @@ export default {
       this.initMap(true)
     },
 
+    async filterTrainingCapacity() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      console.log(this.trainingCapacityValue)
+      this.institutionContents = await fetch(
+        import.meta.env.VITE_API_URL + '/trainingCapacityFilter/' + this.trainingCapacityValue,
+          {
+          headers: {
+            Authorization: "Bearer " + token.value,
+          },
+        }
+      )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then((data) => data.features);
+      this.initMap(true)
+    },
+
     // async filterRepositories() {
     //   const token = JSON.parse(localStorage.getItem("token"));
     //   this.institutionContents = await fetch(
@@ -727,11 +750,11 @@ export default {
       if (value != true) {
         var map = L.map('map', {
           zoomControl: false,
-          fullscreenControl: true,
-          fullscreenControlOptions: {
-            position: 'topright',
-          },
         }).setView([-3, 122], 5)
+
+        L.control.fullscreen({
+          position: 'topright',
+        }).addTo(map)
       } else {
         this.isMaker.clearLayers()
         if (this.institutionContents && this.institutionContents.length > 0) {
