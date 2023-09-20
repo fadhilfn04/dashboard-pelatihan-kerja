@@ -59,7 +59,7 @@ export default {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get(import.meta.env.VITE_API_URL + '/rekap-persentase-lpk-terhadap-pencari-kerja', {
+        .get(import.meta.env.VITE_API_URL + '/recap-percentage-job-seekers-lpk', {
           headers: {
             Authorization: "Bearer " + token.value,
           },

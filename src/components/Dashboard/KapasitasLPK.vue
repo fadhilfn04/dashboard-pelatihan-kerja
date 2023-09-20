@@ -71,7 +71,7 @@ export default {
   props: {
     filter: {
       type: String,
-      default: "/rekap-kapasitas-lpk",
+      default: "/recap-capacity-lpk",
     },
   },
   mounted() {

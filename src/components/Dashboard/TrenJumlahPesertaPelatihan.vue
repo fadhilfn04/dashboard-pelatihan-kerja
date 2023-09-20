@@ -126,7 +126,7 @@ export default {
   props: {
     filter: {
       type: String,
-      default: "/rekap-tren-jumlah-peserta-pelatihan",
+      default: "/recap-trends-number-trainees",
     },
   },
   mounted() {

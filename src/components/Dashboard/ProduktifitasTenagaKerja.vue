@@ -61,7 +61,7 @@ export default {
   props: {
     filter: {
       type: String,
-      default: "/rekap-produktifitas-tenaga-kerja",
+      default: "/recap-labor-productivity",
     },
   },
   mounted() {

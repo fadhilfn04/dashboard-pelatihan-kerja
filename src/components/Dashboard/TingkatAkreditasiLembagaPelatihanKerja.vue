@@ -67,7 +67,7 @@ export default {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get(import.meta.env.VITE_API_URL + '/rekap-tingkat-akreditasi-lpk', {
+        .get(import.meta.env.VITE_API_URL + '/accreditation-level-recap-lpk', {
           headers: {
             Authorization: "Bearer " + token.value,
           },

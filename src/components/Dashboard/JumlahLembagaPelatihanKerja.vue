@@ -77,7 +77,7 @@ export default {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get(import.meta.env.VITE_API_URL + '/rekap-jumlah-lpk', {
+        .get(import.meta.env.VITE_API_URL + '/total-recap-lpk', {
           headers: {
             Authorization: "Bearer " + token.value,
           },

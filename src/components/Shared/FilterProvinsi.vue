@@ -18,7 +18,7 @@ onMounted(async () => {
   try {
     const token = JSON.parse(localStorage.getItem("token"));
     const response = await axios.get(
-      import.meta.env.VITE_API_URL + '/list-provinsi',
+      import.meta.env.VITE_API_URL + '/province-list',
       {
         headers: {
           Authorization: "Bearer " + token.value,

@@ -6,68 +6,124 @@
       </h5>
       <div class="network-node-container">
         <a-form class="filter-form">
-            <a-form-item class="provinsi">
-              <a-select
-                show-search
-                placeholder="Semua Provinsi/Wilayah"
-                :getPopupContainer="(triggerNode) => triggerNode.parentNode"
-                option-filter-prop="children"
-                :filter-option="filterOption"
-                @change="onProvinceChange($event)"
+          <a-form-item class="province">
+            <a-select
+              show-search
+              placeholder="Semua Provinsi/Wilayah"
+              :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+              option-filter-prop="children"
+              :filter-option="filterOption"
+              @change="onProvinceChange($event)"
+            >
+              <a-select-option
+                v-for="(provinceContent, index) in provinceContents"
+                :key="index"
+                :value="provinceContent.id"
+                >{{ provinceContent.nama_provinsi }}</a-select-option
               >
-                <a-select-option
-                  v-for="(provinceContent, index) in provinceContents"
-                  :key="index"
-                  :value="provinceContent.id"
-                  >{{ provinceContent.nama_provinsi }}</a-select-option
-                >
-              </a-select>
-            </a-form-item>
-            <a-form-item class="city">
-              <a-select
-                show-search
-                placeholder="Semua Kabupaten/Kota"
-                :getPopupContainer="(triggerNode) => triggerNode.parentNode"
-                option-filter-prop="children"
-                :filter-option="filterOption"
-                @change="onCityChange($event)"
-                :disabled="isDisable"
+            </a-select>
+          </a-form-item>
+          <a-form-item class="city">
+            <a-select
+              show-search
+              placeholder="Semua Kabupaten/Kota"
+              :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+              option-filter-prop="children"
+              :filter-option="filterOption"
+              @change="onCityChange($event)"
+              :disabled="isDisable"
+            >
+              <a-select-option
+                v-for="(cityContent, index) in cityContents"
+                :key="index"
+                :value="cityContent.id"
+                >{{ cityContent.nama_kabupaten_kota }}</a-select-option
               >
-                <a-select-option
-                  v-for="(cityContent, index) in cityContents"
-                  :key="index"
-                  :value="cityContent.id"
-                  >{{ cityContent.nama_kabupaten_kota }}</a-select-option
-                >
-              </a-select>
-            </a-form-item>
-            <a-form-item class="institutionType">
-              <a-select
-                show-search
-                placeholder="Semua Tipe Lembaga"
-                :getPopupContainer="(triggerNode) => triggerNode.parentNode"
-                option-filter-prop="children"
-                :filter-option="filterOption"
-                @change="onInstitutionTypeChange($event)"
+            </a-select>
+          </a-form-item>
+          <a-form-item class="institutionType">
+            <a-select
+              show-search
+              placeholder="Semua Tipe Lembaga"
+              :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+              option-filter-prop="children"
+              :filter-option="filterOption"
+              @change="onInstitutionTypeChange($event)"
+            >
+              <a-select-option
+                v-for="(institutionTypeContent, index) in institutionTypeContents"
+                :key="index"
+                :value="institutionTypeContent.id"
+                >{{ institutionTypeContent.nama_tipe_lembaga }}</a-select-option
               >
-                <a-select-option
-                  v-for="(institutionTypeContent, index) in institutionTypeContents"
-                  :key="index"
-                  :value="institutionTypeContent.id"
-                  >{{ institutionTypeContent.nama_tipe_lembaga }}</a-select-option
-                >
-              </a-select>
-            </a-form-item>
-            <a-form-item class="trainingCapacity">
-              <a-select placeholder="Semua Kapasitas Latih">
-                <a-select-option value="kurang_500">Kurang dari 500</a-select-option>
-                <a-select-option value="lebih_500">Lebih dari 500</a-select-option>
-                <a-select-option value="kurang_1000">Kurang dari 1000</a-select-option>
-                <a-select-option value="lebih_1000">Lebih dari 1000</a-select-option>
-              </a-select>
-            </a-form-item>
+            </a-select>
+          </a-form-item>
+          <a-form-item class="trainingCapacity">
+            <a-select placeholder="Semua Kapasitas Latih">
+              <a-select-option value="kurang_500">Kurang dari 500</a-select-option>
+              <a-select-option value="lebih_500">Lebih dari 500</a-select-option>
+              <a-select-option value="kurang_1000">Kurang dari 1000</a-select-option>
+              <a-select-option value="lebih_1000">Lebih dari 1000</a-select-option>
+            </a-select>
+          </a-form-item>
+          <a-button @click="resetRepositories" type="primary" style="background-color: blue; border-color: blue; color: white;">
+            Reset
+          </a-button>
         </a-form>
         <div id="map">
+        </div>
+        <div v-if="isOpenDetail">
+          <COffcanvas placement="start" :visible="visible" @hide="() => { visible = !visible }">
+            <COffcanvasHeader>
+              <COffcanvasTitle>
+                <div class="title">
+                  {{ detailLembaga.kabupaten_kota }}
+                </div>
+              </COffcanvasTitle>
+            </COffcanvasHeader>
+            <COffcanvasBody>
+              <div id="detail-container-name" class="display: none">
+                <div class="title">Nama Lembaga</div>
+                <div class="info">{{ detailLembaga.nama_lembaga }}</div>
+              </div>
+              <div id="detail-container-id">
+                <div class="title">No. VIN</div>
+                <div class="info">{{ detailLembaga.no_vin }}</div>
+              </div>
+              <div id="detail-container-tipe">
+                <div class="title">Tipe Lembaga</div>
+                <div class="info">{{ detailLembaga.tipe_lembaga }}</div>
+              </div>
+              <div id="detail-container-email">
+                <div class="title">Email</div>
+                <div class="info">{{ detailLembaga.email }}</div>
+              </div>
+              <div id="detail-container-telp">
+                <div class="title">Nomor Telepon</div>
+                <div class="info">{{ detailLembaga.no_telp }}</div>
+              </div>
+              <div id="detail-container-province">
+                <div class="title">Provinsi</div>
+                <div class="info">{{ detailLembaga.provinsi }}</div>
+              </div>
+              <div id="detail-container-city">
+                <div class="title">Kota/Kabupaten</div>
+                <div class="info">{{ detailLembaga.kabupaten_kota }}</div>
+              </div>
+              <div id="detail-container-address">
+                <div class="title">Alamat</div>
+                <div class="info">{{ detailLembaga.alamat }}</div>
+              </div>
+              <div id="detail-container-time">
+                <div class="title">Status Akreditasi</div>
+                <div class="info">{{ detailLembaga.status_akreditasi }}</div>
+              </div>
+              <div id="detail-container-amount">
+                <div class="title">Kapasitas Latih</div>
+                <div class="info">{{ detailLembaga.kapasitas_latih }}</div>
+              </div>
+            </COffcanvasBody>
+          </COffcanvas>
         </div>
       </div>
     </div>
@@ -170,9 +226,6 @@
     width: 100% !important;
   }
 
-  .network-node-container .legend-container {
-    display: none;
-  }
   #name {
     display: none;
   }
@@ -217,32 +270,10 @@
   }
 }
 
-@media only screen and (min-width: 600px) and (max-width: 992px) {
-  .legend-container {
-    display: none;
-  }
-}
-
 .network-node-container #map {
-  height: 100vh;
+  height: 80vh;
   position: relative;
   z-index: 0;
-}
-
-.network-node-container .custom-marker {
-  width: 36px !important;
-  height: 36px !important;
-  margin-left: -18px !important;
-  margin-top: -18px !important;
-  border-radius: 100px;
-  color: #31353f;
-  background-color: rgba(255, 149, 89, 0.6);
-  outline: 5px solid rgba(255, 149, 89, 0.3) !important;
-  font-size: 12px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .network-node-container .detail-container {
@@ -336,25 +367,16 @@
   cursor: pointer;
 }
 
-/* Legend */
-.network-node-container .legend-container {
-  background: transparent;
-  position: absolute;
-  z-index: 999999;
-  width: 70%;
-  left: 30%;
-}
-
-.network-node-container .legend-container .filter-form {
+.network-node-container .filter-form {
   display: flex;
   gap: 10px;
   padding: 10px;
 }
 
-.network-node-container .legend-container .filter-form .provinsi,
-.network-node-container .legend-container .filter-form .city,
-.network-node-container .legend-container .filter-form .institutionType,
-.network-node-container .legend-container .filter-form .trainingCapacity {
+.network-node-container .filter-form .province,
+.network-node-container .filter-form .city,
+.network-node-container .filter-form .institutionType,
+.network-node-container .filter-form .trainingCapacity {
   flex: 1;
   margin: 0px !important;
 }
@@ -382,6 +404,7 @@
 </style>
 
 <script>
+import axios from "axios";
 import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
 import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
 import PersentaseLPKTerhadapPencariKerja from "./PersentaseLPKTerhadapPencariKerja.vue";
@@ -391,6 +414,11 @@ import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
 
 import FilterProvinsi from "../Shared/FilterProvinsi.vue";
 import { DatePicker } from 'ant-design-vue';
+import { 
+  COffcanvas, 
+  COffcanvasHeader, 
+  COffcanvasTitle, 
+  COffcanvasBody } from '@coreui/vue';
 export default {
   layout: 'network-node-page',
   name: "TheDashboard",
@@ -403,14 +431,18 @@ export default {
       TrenJumlahPesertaPelatihan,
       FilterProvinsi,
       DatePicker,
+      COffcanvas,
+      COffcanvasBody,
+      COffcanvasTitle,
+      COffcanvasHeader,
     },
 
   data() {
     return {
       // form: this.$form.createForm(this, { name: 'form' }),
-      codeProvince: '',
-      codeCity: '',
-      typeId: '',
+      provinceId: '',
+      cityId: '',
+      institutionId: '',
       key: '',
       limitData: 100,
       isLoading: true,
@@ -423,12 +455,12 @@ export default {
       institutionTypeContents: [],
       entityTypeContents: [],
       isOpenDetail: false,
-      detailProfile: {},
+      visible: false,
       allRepo: [],
 
-      filterProvinsi            : "/rekap-kapasitas-lpk",
-      filterTrenJumlah          : "/rekap-tren-jumlah-peserta-pelatihan",
-      filterProduktifitas       : "/rekap-produktifitas-tenaga-kerja",
+      filterProvinsi            : "/recap-capacity-lpk",
+      filterTrenJumlah          : "/recap-trends-number-trainees",
+      filterProduktifitas       : "/recap-labor-productivity",
       selectedDate              : null,
       selectedYear              : null,
     }
@@ -460,7 +492,7 @@ export default {
     async getProvince() {
       const token = JSON.parse(localStorage.getItem("token"));
       this.provinceContents = await fetch(
-        import.meta.env.VITE_API_URL + '/list-provinsi',
+        import.meta.env.VITE_API_URL + '/province-list',
         {
           headers: {
               Authorization: "Bearer " + token.value,
@@ -471,7 +503,7 @@ export default {
         .then((data) => data.data)
 
       this.institutionTypeContents = await fetch(
-        import.meta.env.VITE_API_URL + '/list-tipe-lembaga',
+        import.meta.env.VITE_API_URL + '/institutions-type-list',
         {
           headers: {
               Authorization: "Bearer " + token.value,
@@ -485,27 +517,23 @@ export default {
     },
 
     onProvinceChange(value) {
-      var arr = []
-      arr = value.split('/')
-      value = arr[0]
-      this.codeProvince = arr[1]
+      this.provinceId = value
       if (this.isDisable == false) {
-        this.typeId = ''
-        this.codeCity = ''
-        this.codeProvince = ''
-        this.filterRepositories()
+        this.cityId = ''
+        this.institutionId = ''
+        this.filterProvince()
         this.getCity(value)
         return false
       }
-      this.filterRepositories()
+      this.filterProvince()
       this.isDisable = false
       this.getCity(value)
     },
 
     async resetRepositories() {
       const token = JSON.parse(localStorage.getItem("token"));
-      var allRepo = await fetch(
-        import.meta.env.VITE_API_URL + '/kabKota',
+      await fetch(
+        import.meta.env.VITE_API_URL + '/repositories',
         {
           headers: {
               Authorization: "Bearer " + token.value,
@@ -518,10 +546,15 @@ export default {
         }
         return res.json();
       })
-      .then((data) => data.data);
+      .then((data) => data.features);
 
       this.institutionContents = await fetch(
-        import.meta.env.VITE_API_URL + '/kabKota?limit=' + allRepo
+        import.meta.env.VITE_API_URL + '/repositories',
+        {
+          headers: {
+              Authorization: "Bearer " + token.value,
+          },
+        }
       )
       .then((res) => {
         if (!res.ok) {
@@ -529,22 +562,23 @@ export default {
         }
         return res.json();
       })
-      .then((data) => data.data);
-      this.typeId = ''
-      this.codeCity = ''
-      this.codeProvince = ''
+      .then((data) => data.features);
+      this.provinceId = ''
+      this.cityId = ''
+      this.institutionId = ''
       this.isDisable = true
+      // this.form.resetFields()
       this.initMap(true)
     },
 
     onCityChange(value) {
-      this.codeCity = value
-      this.filterRepositories()
+      this.cityId = value
+      this.filterCity()
     },
 
     onInstitutionTypeChange(value) {
-      this.typeId = value
-      this.filterRepositories()
+      this.institutionId = value
+      this.filterInstitution()
     },
 
     checkNull(text, isParagraf) {
@@ -566,7 +600,7 @@ export default {
     async getCity(value) {
       const token = JSON.parse(localStorage.getItem("token"));
       this.cityContents = await fetch(
-        import.meta.env.VITE_API_URL + '/list-kab-kota/' + value,
+        import.meta.env.VITE_API_URL + '/district-list/' + value,
         {
           headers: {
             Authorization: "Bearer " + token.value,
@@ -577,10 +611,10 @@ export default {
         .then((data) => data.data)
     },
 
-    async filterRepositories() {
+    async filterProvince() {
       const token = JSON.parse(localStorage.getItem("token"));
       this.institutionContents = await fetch(
-        import.meta.env.VITE_API_URL + '/kabKota',
+        import.meta.env.VITE_API_URL + '/provinceFilter/' + this.provinceId,
           {
           headers: {
             Authorization: "Bearer " + token.value,
@@ -593,38 +627,99 @@ export default {
         }
         return res.json();
       })
-      .then((data) => data.data);
+      .then((data) => data.features);
       this.initMap(true)
     },
+
+    async filterCity() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      this.institutionContents = await fetch(
+        import.meta.env.VITE_API_URL + '/cityFilter/' + this.cityId,
+          {
+          headers: {
+            Authorization: "Bearer " + token.value,
+          },
+        }
+      )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then((data) => data.features);
+      this.initMap(true)
+    },
+
+    async filterInstitution() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      this.institutionContents = await fetch(
+        import.meta.env.VITE_API_URL + '/institutionFilter/' + this.institutionId,
+          {
+          headers: {
+            Authorization: "Bearer " + token.value,
+          },
+        }
+      )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then((data) => data.features);
+      this.initMap(true)
+    },
+
+    // async filterRepositories() {
+    //   const token = JSON.parse(localStorage.getItem("token"));
+    //   this.institutionContents = await fetch(
+    //     import.meta.env.VITE_API_URL + 
+    //         '/repositories?institutionId=' + 
+    //         this.institutionId + 
+    //         '&provinceId=' + 
+    //         this.provinceId + 
+    //         '&cityId=' + 
+    //         this.cityId,
+    //       {
+    //       headers: {
+    //         Authorization: "Bearer " + token.value,
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     if (!res.ok) {
+    //       throw new Error('Network response was not ok');
+    //     }
+    //     return res.json();
+    //   })
+    //   .then((data) => data.features);
+    //   this.initMap(true)
+    // },
 
     async getInstitution() {
       const token = JSON.parse(localStorage.getItem("token"));
       var allRepo = await fetch(
-          import.meta.env.VITE_API_URL + '/kabKota',
-          {
-            headers: {
-                Authorization: "Bearer " + token.value,
-            },
-          }
-      )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
+        import.meta.env.VITE_API_URL + '/repositories',
+        {
+          headers: {
+            Authorization: "Bearer " + token.value,
+          },
         }
-        return res.json();
-      })
-      .then((data) => data.data);
+      )
+      .then((res) => res.json())
+      .then((data) => data.features)
 
       var b = await fetch(
-        import.meta.env.VITE_API_URL + '/kabKota?limit=' + allRepo,
+        import.meta.env.VITE_API_URL + '/repositories?limit=' + allRepo,
         {
-            headers: {
-                Authorization: "Bearer " + token.value,
-            },
-          }
+          headers: {
+            Authorization: "Bearer " + token.value,
+          },
+        }
       )
         .then((res) => res.json())
-        .then((data) => data.data)
+        .then((data) => data.features)
       return b
     },
 
@@ -634,130 +729,89 @@ export default {
           zoomControl: false,
           fullscreenControl: true,
           fullscreenControlOptions: {
-            position: 'bottomright',
+            position: 'topright',
           },
         }).setView([-3, 122], 5)
       } else {
         this.isMaker.clearLayers()
-        this.institutionContents.forEach((element) => {
-          if (
-            element.contact != null &&
-            element.contact.latitude != null &&
-            element.contact.longitude != null
-          ) {
-            var name_search = element.name,
-              latitude = element.contact.latitude,
-              longitude = element.contact.longitude
-            var provinceRepo = '-'
-            var cityRepo = '-'
-            if (element.contact.region != null) {
-              if (element.contact.region.province != null) {
-                provinceRepo = element.contact.region.province.name
-              }
-              if (element.contact.region.city != null) {
-                cityRepo = element.contact.region.city.name
-              }
+        if (this.institutionContents && this.institutionContents.length > 0) {
+          this.institutionContents.forEach((item) => {
+            {
+              var name_search = item.name,
+              latitude = item.geometry.coordinates[0],
+              longitude = item.geometry.coordinates[1]
+              let marker = L.marker(new L.latLng(latitude, longitude), {
+                id: item.properties.ID,
+              })
+              this.isMaker.addLayer(marker) //CLUSTER
+              marker.on('click', this.onMapClick)
             }
-            let marker = L.marker(new L.latLng(latitude, longitude), {
-              title: name_search,
-              alt: name_search,
-              name: name_search,
-              id: element.repositoryId,
-              code: element.identifier,
-              email: element.contact.email,
-              telp: element.contact.phone,
-              type: element.type.name,
-              logo: element.logo,
-              province: provinceRepo,
-              city: cityRepo,
-              address: element.contact.streetAddress,
-              serviceDate: element.openingTimes,
-              archiveCount: 'Ini Archive Count',
-            })
-            this.isMaker.addLayer(marker) //CLUSTER
-            marker.on('click', this.onMapClick)
-          }
-        })
+          })
+        }
         return false
       }
       this.institutionContents = await this.getInstitution()
-      console.log(this.institutionContents)
 
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         minZoom: 5,
+        maxZoom: 12,
         attribution: '© OpenStreetMap',
       }).addTo(map)
 
       L.control
         .zoom({
-          position: 'bottomright',
+          position: 'topright',
         })
-        .addTo(map)
+      .addTo(map)
 
       var markers = L.markerClusterGroup()
       this.isMaker = markers
 
       if (this.institutionContents && this.institutionContents.length > 0) {
-        this.institutionContents.forEach((element) => {
-          if (
-            // Contact penting dan tidak boleh null (akan ditampilkan di data simpul)
-            element.contact != null &&
-            element.contact.latitude != null &&
-            element.contact.longitude != null
-          ) {
-            var name_search = element.name,
-              latitude = element.contact.latitude,
-              longitude = element.contact.longitude
-            var provinceRepo = '-'
-            var cityRepo = '-'
-            if (element.contact.region != null) {
-              if (element.contact.region.province != null) {
-                provinceRepo = element.contact.region.province.name
-              }
-              if (element.contact.region.city != null) {
-                cityRepo = element.contact.region.city.name
-              }
-            }
+        this.institutionContents.forEach((item) => {
+          {
+            var name_search = item.name,
+            latitude = item.geometry.coordinates[0],
+            longitude = item.geometry.coordinates[1]
             let marker = L.marker(new L.latLng(latitude, longitude), {
-              title: name_search,
-              alt: name_search,
-              name: name_search,
-              id: element.repositoryId,
-              code: element.identifier,
-              email: element.contact.email,
-              telp: element.contact.phone,
-              type: element.type.name,
-              logo: element.logo,
-              province: provinceRepo,
-              city: cityRepo,
-              address: element.contact.streetAddress,
-              serviceDate: element.openingTimes,
-              archiveCount: 'Ini Archive Count',
+              id: item.properties.ID,
             })
             markers.addLayer(marker) //CLUSTER
             map.addLayer(markers) // marker.on('click', this.onMapClick(nn))
-            // markersLayer.addLayer(marker) // SEARCH MARKER
             marker.on('click', this.onMapClick)
           }
         })
       }
     },
-    onMapClick(e) {
-      this.detailProfile = []
-      this.isOpenDetail = true
-      this.detailProfile.logo = e.target.options.logo
-      this.detailProfile.id = e.target.options.id
-      this.detailProfile.name = e.target.options.name
-      this.detailProfile.code = e.target.options.code
-      this.detailProfile.type = e.target.options.type
-      this.detailProfile.email = e.target.options.email
-      this.detailProfile.telp = e.target.options.telp
-      this.detailProfile.logo = e.target.options.logo
-      this.detailProfile.province = e.target.options.province
-      this.detailProfile.city = e.target.options.city
-      this.detailProfile.address = e.target.options.address
-      this.detailProfile.serviceDate = e.target.options.serviceDate
-      this.detailProfile.archiveCount = e.target.options.archiveCount
+    onMapClick(event) {
+      const markerId = event.target.options.id
+      const url = import.meta.env.VITE_API_URL + "/training-institutions/" + markerId
+      const token = JSON.parse(localStorage.getItem("token"));
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      };
+
+      axios.get(url, config).then((response) => {
+        if (response.data && response.data.length > 0) {
+          this.detailLembaga = []
+          this.isOpenDetail = true
+          this.visible = true
+          this.detailLembaga.nama_lembaga = response.data[0].nama_lembaga;
+          this.detailLembaga.no_vin = response.data[0].no_vin;
+          this.detailLembaga.tipe_lembaga = response.data[0].tipe_lembaga;
+          this.detailLembaga.email = response.data[0].email;
+          this.detailLembaga.no_telp = response.data[0].no_telp;
+          this.detailLembaga.provinsi = response.data[0].provinsi;
+          this.detailLembaga.kabupaten_kota = response.data[0].kabupaten_kota;
+          this.detailLembaga.alamat = response.data[0].alamat;
+          this.detailLembaga.status_akreditasi = response.data[0].status_akreditasi;
+          this.detailLembaga.kapasitas_latih = response.data[0].kapasitas_latih;
+        } else {
+          console.log('empty data!')
+        }
+      });
     },
 
     closeDetail() {
@@ -768,9 +822,9 @@ export default {
       switch (data.tipe) {
         case "provinsi":
           if (data.id != 0) {
-            this.filterProvinsi = "/rekap-kapasitas-lpk-provinsi/" + data.id;
+            this.filterProvinsi = "/recap-capacity-province-lpk/" + data.id;
           } else {
-            this.filterProvinsi = "/rekap-kapasitas-lpk";
+            this.filterProvinsi = "/recap-capacity-lpk";
           }
           break;
 
@@ -780,34 +834,21 @@ export default {
     },
     handleTrenJumlahChanged(date) {
       if (date.$y != 0) {
-        this.filterTrenJumlah = "/rekap-tren-jumlah-peserta-pelatihan-tahun/" + date.$y;
+        this.filterTrenJumlah = "/recap-trends-number-trainees-year/" + date.$y;
       } else {
-        this.filterTrenJumlah = "/rekap-tren-jumlah-peserta-pelatihan";
+        this.filterTrenJumlah = "/recap-trends-number-trainees";
       }
     },
     handleProduktifitasChanged(date) {
       if (date.$y != 0) {
-        this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja-tahun/" + date.$y;
+        this.filterProduktifitas = "/recap-labor-productivity-year/" + date.$y;
       } else {
-        this.filterProduktifitas = "/rekap-produktifitas-tenaga-kerja";
+        this.filterProduktifitas = "/recap-labor-productivity";
       }
     },
-
-    // addHamburgerActive() {
-    //   let that = this
-    //   that.clearHamburgerActive()
-    //   that.$store.commit('hamburgerActive/add', 'simpul-jaringan')
-    // },
-
-    // ...mapMutations({
-    //   clearHamburgerActive: 'hamburgerActive/reset',
-    // }),
   },
   mounted() {
     this.initMap()
-  },
-  beforeMount() {
-    // this.addHamburgerActive()
   },
 }
 </script>
