@@ -4,7 +4,7 @@
       <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
         Peta Persebaran Pelatihan Kerja Indonesia
       </h5>
-      <div class="network-node-container">
+      <div class="dashboard-container">
         <a-form class="filter-form">
           <a-form-item class="province">
             <a-select
@@ -22,23 +22,25 @@
               >
             </a-select>
           </a-form-item>
-          <a-form-item class="city">
-            <a-select
-              placeholder="Semua Kabupaten/Kota"
-              :getPopupContainer="(triggerNode) => triggerNode.parentNode"
-              option-filter-prop="children"
-              :filter-option="filterOption"
-              @change="onCityChange($event)"
-              :disabled="isDisable"
-            >
-              <a-select-option
-                v-for="(cityContent, index) in cityContents"
-                :key="index"
-                :value="cityContent.id"
-                >{{ cityContent.nama_kabupaten_kota }}</a-select-option
+          <a-tooltip title="Pilih provinsi terlebih dahulu">
+            <a-form-item class="city">
+              <a-select
+                placeholder="Semua Kabupaten/Kota"
+                :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+                option-filter-prop="children"
+                :filter-option="filterOption"
+                @change="onCityChange($event)"
+                :disabled="isDisable"
               >
-            </a-select>
-          </a-form-item>
+                <a-select-option
+                  v-for="(cityContent, index) in cityContents"
+                  :key="index"
+                  :value="cityContent.id"
+                  >{{ cityContent.nama_kabupaten_kota }}</a-select-option
+                >
+              </a-select>
+            </a-form-item>
+          </a-tooltip>
           <a-form-item class="institutionType">
             <a-select
               placeholder="Semua Tipe Lembaga"
@@ -67,9 +69,15 @@
               <a-select-option value="lebih_1000">Lebih dari 1000</a-select-option>
             </a-select>
           </a-form-item>
-          <a-button @click="resetRepositories" type="primary" style="background-color: blue; border-color: blue; color: white;">
-            Reset
-          </a-button>
+          <a-tooltip title="Klik untuk reset">
+            <a-button @click="resetRepositories" type="primary" style="background-color: blue; border-color: blue; color: white;">
+              <template #icon>
+                <a-space>
+                  <SyncOutlined spin style="vertical-align: middle;"/>
+                </a-space>
+              </template>
+            </a-button>
+          </a-tooltip>
         </a-form>
         <div id="map">
         </div>
@@ -83,46 +91,26 @@
               </COffcanvasTitle>
             </COffcanvasHeader>
             <COffcanvasBody>
-              <div id="detail-container-name" class="display: none">
-                <div class="title">Nama Lembaga</div>
-                <div class="info">{{ detailLembaga.nama_lembaga }}</div>
-              </div>
-              <div id="detail-container-id">
-                <div class="title">No. VIN</div>
-                <div class="info">{{ detailLembaga.no_vin }}</div>
-              </div>
-              <div id="detail-container-tipe">
-                <div class="title">Tipe Lembaga</div>
-                <div class="info">{{ detailLembaga.tipe_lembaga }}</div>
-              </div>
-              <div id="detail-container-email">
-                <div class="title">Email</div>
-                <div class="info">{{ detailLembaga.email }}</div>
-              </div>
-              <div id="detail-container-telp">
-                <div class="title">Nomor Telepon</div>
-                <div class="info">{{ detailLembaga.no_telp }}</div>
-              </div>
-              <div id="detail-container-province">
-                <div class="title">Provinsi</div>
-                <div class="info">{{ detailLembaga.provinsi }}</div>
-              </div>
-              <div id="detail-container-city">
-                <div class="title">Kota/Kabupaten</div>
-                <div class="info">{{ detailLembaga.kabupaten_kota }}</div>
-              </div>
-              <div id="detail-container-address">
-                <div class="title">Alamat</div>
-                <div class="info">{{ detailLembaga.alamat }}</div>
-              </div>
-              <div id="detail-container-time">
-                <div class="title">Status Akreditasi</div>
-                <div class="info">{{ detailLembaga.status_akreditasi }}</div>
-              </div>
-              <div id="detail-container-amount">
-                <div class="title">Kapasitas Latih</div>
-                <div class="info">{{ detailLembaga.kapasitas_latih }}</div>
-              </div>
+              <div class="title">Nama Lembaga</div>
+              <div class="info">{{ detailLembaga.nama_lembaga }}</div>
+              <div class="title">No. VIN</div>
+              <div class="info">{{ detailLembaga.no_vin }}</div>
+              <div class="title">Tipe Lembaga</div>
+              <div class="info">{{ detailLembaga.tipe_lembaga }}</div>
+              <div class="title">Email</div>
+              <div class="info">{{ detailLembaga.email }}</div>
+              <div class="title">Nomor Telepon</div>
+              <div class="info">{{ detailLembaga.no_telp }}</div>
+              <div class="title">Provinsi</div>
+              <div class="info">{{ detailLembaga.provinsi }}</div>
+              <div class="title">Kota/Kabupaten</div>
+              <div class="info">{{ detailLembaga.kabupaten_kota }}</div>
+              <div class="title">Alamat</div>
+              <div class="info">{{ detailLembaga.alamat }}</div>
+              <div class="title">Status Akreditasi</div>
+              <div class="info">{{ detailLembaga.status_akreditasi }}</div>
+              <div class="title">Kapasitas Latih</div>
+              <div class="info">{{ detailLembaga.kapasitas_latih }}</div>
             </COffcanvasBody>
           </COffcanvas>
         </div>
@@ -222,183 +210,31 @@
 </template>
 
 <style>
-@media only screen and (max-width: 600px) {
-  .network-node-container .detail-container {
-    width: 100% !important;
-  }
-
-  #name {
-    display: none;
-  }
-  #detail-container-name {
-    display: flex;
-    flex-direction: column;
-    font-size: 15px;
-    border-top: 1px solid rgba(227, 227, 227, 1);
-    padding-top: 35px;
-  }
-  #detail-container-id {
-    font-size: 15px;
-  }
-  #detail-container-address {
-    font-size: 15px;
-  }
-
-  #detail-container-tipe {
-    display: none;
-  }
-  #detail-container-email {
-    display: none;
-  }
-  #detail-container-telp {
-    display: none;
-  }
-  #detail-container-province {
-    display: none;
-  }
-  #detail-container-city {
-    display: none;
-  }
-  #detail-container-time {
-    display: none;
-  }
-  #detail-container-amount {
-    display: none;
-  }
-  .network-node-container .detail-container .detail-button {
-    box-sizing: content-box;
-    height: 35px !important;
-  }
-}
-
-.network-node-container #map {
+.dashboard-container #map {
   height: 75vh;
 }
 
-.network-node-container .detail-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  background: white;
-  z-index: 999999;
-  width: 325px;
-  display: flex;
-  flex-direction: column;
-  padding: 10px 25px;
-  overflow: auto;
-}
-
-/* width */
-.network-node-container ::-webkit-scrollbar {
-  width: 14px;
-}
-
-/* Track */
-.network-node-container ::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-.network-node-container ::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-/* Handle on hover */
-.network-node-container ::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-.network-node-container .detail-container img {
-  width: 200px;
-  height: 200px;
-  margin: 0 auto;
-  margin-bottom: 25px;
-}
-
-.network-node-container .detail-container .name {
-  font-weight: bolder;
-  font-size: 14px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(227, 227, 227, 1);
-  margin-bottom: 25px;
-}
-
-.network-node-container .detail-container .title {
+.title {
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-.network-node-container .detail-container .info {
+.info {
   margin-bottom: 15px;
 }
 
-.network-node-container .detail-container .detail-button {
-  background: #2a66d4;
-  color: white;
-  border: 0;
-  height: auto;
-  padding: 10px 25px;
-  font-weight: bold;
-  margin-top: 25px;
-}
-
-.network-node-container .detail-container .close-container {
-  position: absolute;
-  top: 20px;
-  right: 5%;
-  background: rgba(0, 0, 0, 0.5);
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 4px;
-  z-index: 100;
-}
-
-.network-node-container .detail-container .close {
-  color: white;
-  font-size: 16px;
-}
-
-.network-node-container .detail-container .close:hover {
-  cursor: pointer;
-}
-
-.network-node-container .filter-form {
+.filter-form {
   display: flex;
   gap: 10px;
   padding: 10px;
 }
 
-.network-node-container .filter-form .province,
-.network-node-container .filter-form .city,
-.network-node-container .filter-form .institutionType,
-.network-node-container .filter-form .trainingCapacity {
+.province,
+.city,
+.institutionType,
+.trainingCapacity {
   flex: 1;
   margin: 0px !important;
-}
-/*Legend specific*/
-.legend {
-  padding: 10px 10px;
-  font: 14px Arial, Helvetica, sans-serif;
-  line-height: 24px;
-  color: #555;
-}
-.legend .ant-select-selection {
-  display: block;
-  box-sizing: border-box;
-  background-color: #fff;
-  border: 1px solid #d9d9d9;
-  border-top: 1.02px solid #d9d9d9;
-  border-radius: 4px;
-  outline: none;
-  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-  width: 100%;
 }
 </style>
 
@@ -410,9 +246,9 @@ import PersentaseLPKTerhadapPencariKerja from "./PersentaseLPKTerhadapPencariKer
 import KapasitasLPK from "./KapasitasLPK.vue";
 import TrenJumlahPesertaPelatihan from "./TrenJumlahPesertaPelatihan.vue";
 import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
-
 import FilterProvinsi from "../Shared/FilterProvinsi.vue";
 import { DatePicker } from 'ant-design-vue';
+import { SyncOutlined } from '@ant-design/icons-vue';
 import { 
   COffcanvas, 
   COffcanvasHeader, 
@@ -434,11 +270,11 @@ export default {
       COffcanvasBody,
       COffcanvasTitle,
       COffcanvasHeader,
+      SyncOutlined
     },
 
   data() {
     return {
-      // form: this.$form.Form(this, { name: 'form' }),
       provinceId: '',
       cityId: '',
       institutionId: '',
@@ -526,46 +362,50 @@ export default {
       this.getCity(value)
     },
 
-    async resetRepositories() {
-      const token = JSON.parse(localStorage.getItem("token"));
-      await fetch(
-        import.meta.env.VITE_API_URL + '/repositories',
-        {
-          headers: {
-              Authorization: "Bearer " + token.value,
-          },
-        }
-      )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
-      })
-      .then((data) => data.features);
+    // async resetRepositories() {
+    //   const token = JSON.parse(localStorage.getItem("token"));
+    //   await fetch(
+    //     import.meta.env.VITE_API_URL + '/repositories',
+    //     {
+    //       headers: {
+    //           Authorization: "Bearer " + token.value,
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     if (!res.ok) {
+    //       throw new Error('Network response was not ok');
+    //     }
+    //     return res.json();
+    //   })
+    //   .then((data) => data.features);
 
-      this.institutionContents = await fetch(
-        import.meta.env.VITE_API_URL + '/repositories',
-        {
-          headers: {
-              Authorization: "Bearer " + token.value,
-          },
-        }
-      )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
-      })
-      .then((data) => data.features);
-      this.provinceId = ''
-      this.cityId = ''
-      this.institutionId = ''
-      this.trainingCapacityValue = ''
-      this.isDisable = true
-      // this.form.resetFields()
-      this.initMap(true)
+    //   this.institutionContents = await fetch(
+    //     import.meta.env.VITE_API_URL + '/repositories',
+    //     {
+    //       headers: {
+    //           Authorization: "Bearer " + token.value,
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     if (!res.ok) {
+    //       throw new Error('Network response was not ok');
+    //     }
+    //     return res.json();
+    //   })
+    //   .then((data) => data.features);
+    //   this.provinceId = ''
+    //   this.cityId = ''
+    //   this.institutionId = ''
+    //   this.trainingCapacityValue = ''
+    //   this.isDisable = true
+    //   // this.form.resetFields()
+    //   this.initMap(true)
+    // },
+
+    async resetRepositories() {
+      window.location.reload();
     },
 
     onCityChange(value) {
@@ -734,7 +574,7 @@ export default {
       .then((data) => data.features)
 
       var b = await fetch(
-        import.meta.env.VITE_API_URL + '/repositories?limit=' + allRepo,
+        import.meta.env.VITE_API_URL + '/repositories',
         {
           headers: {
             Authorization: "Bearer " + token.value,

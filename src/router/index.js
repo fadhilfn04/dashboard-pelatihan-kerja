@@ -6,8 +6,6 @@ import ApiGenerator from "@/views/ApiGeneratorView.vue";
 import UploadManagement from "@/views/UploadManagementView.vue";
 import UploadSourceData from "@/views/UploadSourceDataView.vue";
 import UploadFilePendukung from "@/views/UploadFilePendukungView.vue";
-import PetaPersebaranTenagaKerja from "@/components/Dashboard/PetaPersebaranTenagaKerja.vue";
-import SumberDataView from "@/views/SumberDataView.vue";
 
 const routes = [
   {
@@ -64,22 +62,6 @@ const routes = [
     component: SignInView,
     meta: {
       requiresAuth: false,
-    },
-  },
-  {
-    path: "/maps-indonesia",
-    name: "Maps Indonesia",
-    component: PetaPersebaranTenagaKerja,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: "/sumber-data",
-    name: "Sumber Data",
-    component: SumberDataView,
-    meta: {
-      requiresAuth: true,
     },
   }
 ];
