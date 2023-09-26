@@ -7,7 +7,7 @@ import axios from "axios";
 import Highcharts from "highcharts";
 
 export default {
-  name: "TrenJumlahPesertaPelatihan",
+  name: "TrenJumlahPesertaPemagangan",
   data() {
     return {
       chartOptions: {
@@ -57,6 +57,13 @@ export default {
           },
         },
         series: [
+        {
+            name: "Reguler",
+            color: "#FF8181",
+            marker: {
+              symbol: 'circle'
+            },
+          },
           {
             name: "Pra Kerja",
             color: "#FF8181",

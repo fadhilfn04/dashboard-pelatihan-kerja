@@ -6,6 +6,7 @@ import ApiGenerator from "@/views/ApiGeneratorView.vue";
 import UploadManagement from "@/views/UploadManagementView.vue";
 import UploadSourceData from "@/views/UploadSourceDataView.vue";
 import UploadFilePendukung from "@/views/UploadFilePendukungView.vue";
+import ProfilPeserta from "@/views/ProfilPesertaView.vue";
 
 const routes = [
   {
@@ -22,6 +23,14 @@ const routes = [
     component: Dashboard,
     meta: {
       requiresAuth: true,
+    },
+  },
+  {
+    path: "/sign-in",
+    name: "Sign In",
+    component: SignInView,
+    meta: {
+      requiresAuth: false,
     },
   },
   {
@@ -57,11 +66,11 @@ const routes = [
     },
   },
   {
-    path: "/sign-in",
-    name: "Sign In",
-    component: SignInView,
+    path: "/cari-profil-peserta",
+    name: "Profil Peserta",
+    component: ProfilPeserta,
     meta: {
-      requiresAuth: false,
+      requiresAuth: true,
     },
   }
 ];

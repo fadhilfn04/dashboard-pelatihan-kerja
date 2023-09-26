@@ -9,6 +9,7 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^7.0.0",
     "@coreui/vue": "^4.10.0",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
@@ -34,7 +35,7 @@
     "typeface-poppins": "^1.1.13",
     "vue": "^3.2.47",
     "vue-leaflet": "^0.1.0",
-    "vue-router": "^4.1.6",
+    "vue-router": "^4.2.5",
     "vue-sweetalert2": "^5.0.5",
     "vue3-select2-component": "^0.1.7"
   },

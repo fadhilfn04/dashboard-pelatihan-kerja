@@ -122,7 +122,7 @@
     <div class="col-span-2">
       <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
-          <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+          <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
             Jumlah Lembaga Pelatihan Kerja
           </h5>
           <JumlahLembagaPelatihanKerja />
@@ -132,40 +132,84 @@
     <div class="col-span-1">
       <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
-            <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+          <div class="flex justify-start">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
               Tingkat Akreditasi Lembaga Pelatihan Kerja
             </h5>
+          </div>
           <TingkatAkreditasiLembagaPelatihanKerja />
         </div>
       </div>
     </div>
   </div>
 
-  <div class="grid grid-cols-2 gap-8">
-    <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-      <div class="p-5">
-        <div class="flex justify-between pb-2">
-          <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-            Persentase LPK Terhadap Pencari Kerja
-          </h5>
+  <div class="grid grid-cols-3 gap-8">
+    <div class="col-span-1">
+      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+          <div class="flex justify-between">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+              Persentase Tingkat Pencari Kerja pada LPK
+            </h5>
+          </div>
+  
+          <PersentaseTingkatPencariKerjaPadaLPK />
         </div>
-
-        <PersentaseLPKTerhadapPencariKerja />
       </div>
     </div>
     
-    <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-      <div class="p-5">
-          <div class="flex justify-between pb-2">
-            <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-              Kapasitas Lembaga Pelatihan Kerja
-            </h5>
-            <FilterProvinsi
-              @provinsiChanged="handleKapasitasLPKProvinsiChanged"
-              tipe="provinsi"
-            />
-          </div>
-        <KapasitasLPK :filter="filterProvinsi"/>
+    <div class="col-span-2">
+      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+            <div class="flex justify-between">
+              <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+                Kapasitas Lembaga Pelatihan Kerja
+              </h5>
+              <FilterKapasitasLPKProvinsi
+                @provinsiKapasitasLPKChanged="handleKapasitasLPKProvinsiChanged"
+                tipe="provinsiKapasitasLPK"
+              />
+            </div>
+          <KapasitasLPK :filter="filterKapasitasLPKProvinsi"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-4 gap-8">
+    <div class="col-span-2">
+      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+            <div class="flex justify-between">
+              <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+                Tren Jumlah Kategori Program Pelatihan
+              </h5>
+              <div class="relative w-32">
+                <DatePicker picker="year" id="datepicker_tren"
+                  v-model="selectedDate"
+                  @change="handleTrenJumlahKategoriProgramPelatihanChanged"  
+                />
+              </div>
+            </div>
+          <TrenJumlahKategoriProgramPelatihan :filter="filterTrenJumlahKategoriProgramPelatihan"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-span-2">
+      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+            <div class="flex justify-between">
+              <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+                Program Pelatihan Yang Banyak Diminati
+              </h5>
+              <FilterProgramPelatihanProvinsi
+                @provinsiProgramPelatihanChanged="handleProgramPelatihanProvinsiChanged"
+                tipe="provinsiProgramPelatihan"
+              />
+            </div>
+          <ProgramPelatihanBanyakDiminati :filter="filterProgramPelatihanProvinsi"/>
+        </div>
       </div>
     </div>
   </div>
@@ -174,36 +218,38 @@
     <div class="col-span-2">
       <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
-            <div class="flex justify-between pb-2">
-              <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-                Tren Jumlah Peserta Pelatihan
+            <div class="flex justify-between">
+              <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+                Tren Jumlah Peserta Pemagangan
               </h5>
               <div class="relative w-32">
                 <DatePicker picker="year" id="datepicker_tren"
                   v-model="selectedDate"
-                  @change="handleTrenJumlahChanged"  
+                  @change="handleTrenJumlahPesertaPemaganganChanged"  
                 />
               </div>
             </div>
-          <TrenJumlahPesertaPelatihan :filter="filterTrenJumlah"/>
+          <TrenJumlahPesertaPemagangan :filter="filterTrenJumlahPesertaPemagangan"/>
         </div>
       </div>
     </div>
 
-    <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-      <div class="p-5">
-        <div class="flex justify-between pb-2">
-          <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-            Produktifitas Tenaga Kerja
-          </h5>
-          <div class="relative w-32">
-            <DatePicker picker="year" id="datepicker_produktifitas"
-              v-model="selectedDate"
-              @change="handleProduktifitasChanged"  
-            />
+    <div class="col-span-1">
+      <div class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+          <div class="flex justify-between">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+              Produktifitas Tenaga Kerja
+            </h5>
+            <div class="relative w-32">
+              <DatePicker picker="year" id="datepicker_produktifitas"
+                v-model="selectedDate"
+                @change="handleProduktifitasChanged"  
+              />
+            </div>
           </div>
+            <ProduktifitasTenagaKerja :filter="filterProduktifitas"/>
         </div>
-          <ProduktifitasTenagaKerja :filter="filterProduktifitas"/>
       </div>
     </div>
   </div>
@@ -242,11 +288,14 @@
 import axios from "axios";
 import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
 import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
-import PersentaseLPKTerhadapPencariKerja from "./PersentaseLPKTerhadapPencariKerja.vue";
+import PersentaseTingkatPencariKerjaPadaLPK from "./PersentaseTingkatPencariKerjaPadaLPK.vue";
 import KapasitasLPK from "./KapasitasLPK.vue";
-import TrenJumlahPesertaPelatihan from "./TrenJumlahPesertaPelatihan.vue";
+import TrenJumlahKategoriProgramPelatihan from "./TrenJumlahKategoriProgramPelatihan.vue";
+import ProgramPelatihanBanyakDiminati from "./KapasitasLPK.vue";
+import TrenJumlahPesertaPemagangan from "./TrenJumlahPesertaPemagangan.vue";
 import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
-import FilterProvinsi from "../Shared/FilterProvinsi.vue";
+import FilterKapasitasLPKProvinsi from "../Shared/FilterKapasitasLPKProvinsi.vue";
+import FilterProgramPelatihanProvinsi from "../Shared/FilterProgramPelatihanProvinsi.vue";
 import { DatePicker } from 'ant-design-vue';
 import { SyncOutlined } from '@ant-design/icons-vue';
 import { 
@@ -255,16 +304,18 @@ import {
   COffcanvasTitle, 
   COffcanvasBody } from '@coreui/vue';
 export default {
-  layout: 'network-node-page',
   name: "TheDashboard",
     components: {
       TingkatAkreditasiLembagaPelatihanKerja,
-      PersentaseLPKTerhadapPencariKerja,
+      PersentaseTingkatPencariKerjaPadaLPK,
       KapasitasLPK,
       JumlahLembagaPelatihanKerja,
       ProduktifitasTenagaKerja,
-      TrenJumlahPesertaPelatihan,
-      FilterProvinsi,
+      TrenJumlahKategoriProgramPelatihan,
+      ProgramPelatihanBanyakDiminati,
+      TrenJumlahPesertaPemagangan,
+      FilterKapasitasLPKProvinsi,
+      FilterProgramPelatihanProvinsi,
       DatePicker,
       COffcanvas,
       COffcanvasBody,
@@ -294,18 +345,14 @@ export default {
       visible: false,
       allRepo: [],
 
-      filterProvinsi            : "/recap-capacity-lpk",
-      filterTrenJumlah          : "/recap-trends-number-trainees",
-      filterProduktifitas       : "/recap-labor-productivity",
-      selectedDate              : null,
-      selectedYear              : null,
+      filterKapasitasLPKProvinsi                        : "/recap-capacity-lpk",
+      filterProgramPelatihanProvinsi                    : "/recap-training-programs-high-demand",
+      filterTrenJumlahKategoriProgramPelatihan          : "/recap-trends-number-training-program-categories",
+      filterTrenJumlahPesertaPemagangan                 : "/recap-trends-number-apprentices",
+      filterProduktifitas                               : "/recap-labor-productivity",
+      selectedDate                                      : null,
+      selectedYear                                      : null,
     }
-  },
-
-  computed: {
-    language() {
-      return this.$store.state.languageActive.key
-    },
   },
 
   async created() {
@@ -639,8 +686,8 @@ export default {
             let marker = L.marker(new L.latLng(latitude, longitude), {
               id: item.properties.ID,
             })
-            markers.addLayer(marker) //CLUSTER
-            map.addLayer(markers) // marker.on('click', this.onMapClick(nn))
+            markers.addLayer(marker)
+            map.addLayer(markers)
             marker.on('click', this.onMapClick)
           }
         })
@@ -660,7 +707,7 @@ export default {
         if (response.data && response.data.length > 0) {
           this.detailLembaga = []
           this.isOpenDetail = true
-          this.visible = true
+          this.visible = !this.visible
           this.detailLembaga.nama_lembaga = response.data[0].nama_lembaga;
           this.detailLembaga.no_vin = response.data[0].no_vin;
           this.detailLembaga.tipe_lembaga = response.data[0].tipe_lembaga;
@@ -685,9 +732,9 @@ export default {
       switch (data.tipe) {
         case "provinsi":
           if (data.id != 0) {
-            this.filterProvinsi = "/recap-capacity-province-lpk/" + data.id;
+            this.filterKapasitasLPKProvinsi = "/recap-capacity-province-lpk/" + data.id;
           } else {
-            this.filterProvinsi = "/recap-capacity-lpk";
+            this.filterKapasitasLPKProvinsi = "/recap-capacity-lpk";
           }
           break;
 
@@ -695,11 +742,32 @@ export default {
           break;
       }
     },
-    handleTrenJumlahChanged(date) {
+    handleTrenJumlahKategoriProgramPelatihanChanged(date) {
       if (date.$y != 0) {
-        this.filterTrenJumlah = "/recap-trends-number-trainees-year/" + date.$y;
+        this.filterTrenJumlahKategoriProgramPelatihan = "/recap-trends-number-training-program-categories-year/" + date.$y;
       } else {
-        this.filterTrenJumlah = "/recap-trends-number-trainees";
+        this.filterTrenJumlahKategoriProgramPelatihan = "/recap-trends-number-training-program-categories";
+      }
+    },
+    handleProgramPelatihanProvinsiChanged(data) {
+      switch (data.tipe) {
+        case "provinsi":
+          if (data.id != 0) {
+            this.filterProgramPelatihanProvinsi = "/recap-training-programs-high-demand-province/" + data.id;
+          } else {
+            this.filterProgramPelatihanProvinsi = "/recap-training-programs-high-demand";
+          }
+          break;
+
+        default:
+          break;
+      }
+    },
+    handleTrenJumlahPesertaPemaganganChanged(date) {
+      if (date.$y != 0) {
+        this.filterTrenJumlahPesertaPemagangan = "/recap-trends-number-apprentices-year/" + date.$y;
+      } else {
+        this.filterTrenJumlahPesertaPemagangan = "/recap-trends-number-apprentices";
       }
     },
     handleProduktifitasChanged(date) {

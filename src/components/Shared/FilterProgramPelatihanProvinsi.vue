@@ -11,7 +11,7 @@ onMounted(async () => {
 
   const options = {
     placement: "left",
-    offsetSkidding: 100,
+    offsetSkidding: 50,
     offsetDistance: 0,
   };
 
@@ -105,7 +105,7 @@ onMounted(async () => {
 
 <script>
 export default {
-  name: "FilterProvinsi",
+  name: "FilterProgramPelatihanProvinsi",
   props: {
     tipe: {
       type: String,
@@ -118,7 +118,7 @@ export default {
         tipe: this.tipe,
         id: id,
       };
-      this.$emit("provinsiChanged", data);
+      this.$emit("provinsiProgramPelatihanChanged", data);
     },
   },
 };
