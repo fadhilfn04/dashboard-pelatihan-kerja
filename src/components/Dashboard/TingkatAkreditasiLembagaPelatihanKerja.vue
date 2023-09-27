@@ -4,7 +4,10 @@
 
 <script>
 import axios from "axios";
-import Highcharts from "highcharts";
+
+function getRandomColor() {
+  return "#" + Math.floor(Math.random() * 16777215).toString(16);
+}
 
 export default {
   name: "TingkatAkreditasiLembagaPelatihanKerja",
@@ -47,11 +50,11 @@ export default {
           colorByPoint: true,
           data: [{
               name: 'Terakreditasi',
-              color: "#4EE1AC",
+              color: getRandomColor(),
               y: [],
           },  {
               name: 'Tidak Terakreditasi',
-              color: "#FEC435",
+              color: getRandomColor(),
               y: []
           }]
         }]

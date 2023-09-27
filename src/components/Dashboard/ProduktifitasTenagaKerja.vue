@@ -3,8 +3,11 @@
 </template>
 
 <script>
-import Highcharts from "highcharts";
 import axios from "axios";
+
+function getRandomColor() {
+  return "#" + Math.floor(Math.random() * 16777215).toString(16);
+}
 
 export default {
   name: "ProduktifitasTenagaKerja",
@@ -47,11 +50,11 @@ export default {
           colorByPoint: true,
           data: [{
               name: 'Bekerja',
-              color: "#4EE1AC",
+              color: getRandomColor(),
               y: [],
           },  {
               name: 'Tidak Bekerja',
-              color: "#FF8181",
+              color: getRandomColor(),
               y: []
           }]
         }]

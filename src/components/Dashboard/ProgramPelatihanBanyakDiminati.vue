@@ -11,7 +11,7 @@ function getRandomColor() {
 }
 
 export default {
-  name: "KapasitasLPK",
+  name: "ProgramPelatihanBanyakDiminati",
   data() {
     return {
       chartOptions: {
@@ -64,7 +64,7 @@ export default {
         },
         series: [
           {
-            name: "Jumlah Kapasitas LPK",
+            name: "Program Pelatihan Yang Banyak Diminati",
             data: [],
             color: getRandomColor(),
           },
@@ -75,7 +75,7 @@ export default {
   props: {
     filter: {
       type: String,
-      default: "/recap-capacity-lpk",
+      default: "/recap-training-programs-high-demand",
     },
   },
   mounted() {
@@ -100,8 +100,8 @@ export default {
             var categories = [];
             var value = [];
             response.data.data.forEach((item) => {
-              categories.push(item.nama_lembaga);
-              value.push(item.kapasitas_latih);
+              categories.push(item.judul_program);
+              value.push(item.count);
             });
 
             this.chartOptions.xAxis.categories = categories;

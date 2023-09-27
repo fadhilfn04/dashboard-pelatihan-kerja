@@ -4,7 +4,15 @@
 
 <script>
 import axios from "axios";
-import Highcharts from "highcharts";
+
+function getRandomColor(count) {
+  const colors = [];
+  for (let i = 0; i < count; i++) {
+    const randomColor = "#" + Math.floor(Math.random()*16777215).toString(16); // Generates a random hex color
+    colors.push(randomColor);
+  }
+  return colors;
+}
 
 export default {
   name: "PersentaseTerhadapPencariKerja",
@@ -74,10 +82,12 @@ export default {
             });
 
             var dataPoints = [];
+            const colors = getRandomColor(namaLembaga.length);
             for (let i = 0; i < namaLembaga.length; i++) {
               dataPoints.push({
                 name: namaLembaga[i],
                 y: kapasitasLatih[i],
+                color: colors[i],
               });
             }
             this.chartOptions.series[0].data = dataPoints;

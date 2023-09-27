@@ -6,6 +6,10 @@
 import axios from "axios";
 import Highcharts from "highcharts";
 
+function getRandomColor() {
+  return "#" + Math.floor(Math.random() * 16777215).toString(16);
+}
+
 export default {
   name: "TrenJumlahPesertaPemagangan",
   data() {
@@ -57,32 +61,18 @@ export default {
           },
         },
         series: [
-        {
-            name: "Reguler",
-            color: "#FF8181",
-            marker: {
-              symbol: 'circle'
-            },
-          },
-          {
-            name: "Pra Kerja",
-            color: "#FF8181",
-            marker: {
-              symbol: 'circle'
-            },
-          },
           {
             name: "Pemagangan Dalam Negeri",
-            color: "#DE4EE1",
+            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "Pemagangan Luar Negeri",
-            color: "#945FFB",
+            color: getRandomColor(),
             marker: {
-              symbol: 'circle'
+              symbol: 'square'
             },
           },
         ],
@@ -133,7 +123,7 @@ export default {
   props: {
     filter: {
       type: String,
-      default: "/recap-trends-number-trainees",
+      default: "/recap-trends-number-apprentices",
     },
   },
   mounted() {
@@ -158,7 +148,6 @@ export default {
             const data = response.data.data.rekap_tren;
 
             var categories      = [];
-            const prakerja      = data.prakerja;
             const dalam_negeri  = data.dalam_negeri;
             const luar_negeri   = data.luar_negeri;
 
@@ -167,9 +156,8 @@ export default {
             });
 
             this.chartOptions.xAxis.categories  = categories;
-            this.chartOptions.series[0].data    = prakerja;
-            this.chartOptions.series[1].data    = dalam_negeri;
-            this.chartOptions.series[2].data    = luar_negeri;
+            this.chartOptions.series[0].data    = dalam_negeri;
+            this.chartOptions.series[1].data    = luar_negeri;
           }
         });
     },

@@ -22,7 +22,7 @@
               >
             </a-select>
           </a-form-item>
-          <a-tooltip title="Pilih provinsi terlebih dahulu">
+          <a-tooltip title="Pilih provinsi/wilayah terlebih dahulu">
             <a-form-item class="city">
               <a-select
                 placeholder="Semua Kabupaten/Kota"
@@ -203,10 +203,10 @@
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
                 Program Pelatihan Yang Banyak Diminati
               </h5>
-              <FilterProgramPelatihanProvinsi
+              <!-- <FilterProgramPelatihanProvinsi
                 @provinsiProgramPelatihanChanged="handleProgramPelatihanProvinsiChanged"
                 tipe="provinsiProgramPelatihan"
-              />
+              /> -->
             </div>
           <ProgramPelatihanBanyakDiminati :filter="filterProgramPelatihanProvinsi"/>
         </div>
@@ -237,21 +237,23 @@
     <div class="col-span-1">
       <div class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
-          <div class="flex justify-between">
-            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Produktifitas Tenaga Kerja
-            </h5>
-            <div class="relative w-32">
-              <DatePicker picker="year" id="datepicker_produktifitas"
-                v-model="selectedDate"
-                @change="handleProduktifitasChanged"  
-              />
-            </div>
+            <div class="flex justify-between">
+              <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+                Produktifitas Tenaga Kerja
+              </h5>
+              <div class="relative w-32">
+                <DatePicker picker="year" id="datepicker_produktifitas"
+                  v-model="selectedDate"
+                  @change="handleProduktifitasChanged"  
+                  />
+                </div>
+              </div>
+              <a-tooltip title="Data nya belum dari WLKP">
+                <ProduktifitasTenagaKerja :filter="filterProduktifitas"/>
+              </a-tooltip>
           </div>
-            <ProduktifitasTenagaKerja :filter="filterProduktifitas"/>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -291,7 +293,7 @@ import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPe
 import PersentaseTingkatPencariKerjaPadaLPK from "./PersentaseTingkatPencariKerjaPadaLPK.vue";
 import KapasitasLPK from "./KapasitasLPK.vue";
 import TrenJumlahKategoriProgramPelatihan from "./TrenJumlahKategoriProgramPelatihan.vue";
-import ProgramPelatihanBanyakDiminati from "./KapasitasLPK.vue";
+import ProgramPelatihanBanyakDiminati from "./ProgramPelatihanBanyakDiminati.vue";
 import TrenJumlahPesertaPemagangan from "./TrenJumlahPesertaPemagangan.vue";
 import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
 import FilterKapasitasLPKProvinsi from "../Shared/FilterKapasitasLPKProvinsi.vue";
@@ -346,8 +348,8 @@ export default {
       allRepo: [],
 
       filterKapasitasLPKProvinsi                        : "/recap-capacity-lpk",
-      filterProgramPelatihanProvinsi                    : "/recap-training-programs-high-demand",
       filterTrenJumlahKategoriProgramPelatihan          : "/recap-trends-number-training-program-categories",
+      filterProgramPelatihanProvinsi                    : "/recap-training-programs-high-demand",
       filterTrenJumlahPesertaPemagangan                 : "/recap-trends-number-apprentices",
       filterProduktifitas                               : "/recap-labor-productivity",
       selectedDate                                      : null,
