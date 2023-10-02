@@ -1,68 +1,78 @@
 <template>
-  <highcharts :options="chartOptions" ref="pieChart"></highcharts>
+  <highcharts :options="chartOptions" ref="barChart"></highcharts>
 </template>
 
 <script>
+import Highcharts from "highcharts";
 import axios from "axios";
 
-function getRandomColor(count) {
-  const colors = [];
-  for (let i = 0; i < count; i++) {
-    const randomColor = "#" + Math.floor(Math.random()*16777215).toString(16); // Generates a random hex color
-    colors.push(randomColor);
-  }
-  return colors;
+function getRandomColor() {
+  return "#" + Math.floor(Math.random() * 16777215).toString(16);
 }
 
 export default {
-  name: "PersentaseTerhadapPencariKerja",
+  name: "PersentaseTingkatPencariKerjaPadaLPK",
   data() {
     return {
       chartOptions: {
         chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: 'pie'
+          type: "bar",
         },
         title: {
-          text: '',
-          align: 'left'
+          text: null,
         },
-        tooltip: {
-          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        xAxis: {
+          categories: [],
+          title: {
+            text: null,
+          },
+          labels: {
+            style: {
+              fontSize: "14px",
+            },
+          },
         },
-        accessibility: {
-          point: {
-              valueSuffix: '%'
-          }
-        },
-        credits: {
-          enabled: false
+        yAxis: {
+          min: 0,
+          title: null,
+          labels: {
+            formatter: function () {
+              return Highcharts.numberFormat(this.value, 0, ".", ",");
+            },
+            style: {
+              fontSize: "10px",
+            },
+            overflow: "justify",
+          },
         },
         plotOptions: {
-          pie: {
-              allowPointSelect: true,
-              cursor: 'pointer',
-              dataLabels: {
-                  enabled: false
-              },
-              showInLegend: true
-          }
+          bar: {
+            minPointLength: 5,
+            dataLabels: {
+              enabled: true,
+            },
+          },
+        },
+        legend: {
+          symbolWidth: 10,
+          symbolHeight: 10,
+          symbolPadding: 5,
+          symbolRadius: 0,
+        },
+        credits: {
+          enabled: false,
         },
         series: [{
-          name: 'Persentase',
-          colorByPoint: true,
+          name: 'Persentase Tingkat Pencari Kerja',
+          colorByPoint: getRandomColor(),
           data: []
         }]
       },
     };
   },
-
   mounted() {
-    this.loadData(); // uncomment this line if you want to load data from API
+    this.loadData();
   },
-
   methods: {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
@@ -74,23 +84,15 @@ export default {
         })
         .then((response) => {
           if (response.data) {
-            var namaLembaga = [];
-            var kapasitasLatih = [];
+            var categories = [];
+            var value = [];
             response.data.data.forEach((item) => {
-                namaLembaga.push(item.nama_lembaga);
-                kapasitasLatih.push(item.kapasitas_latih);
+              categories.push(item.nama_lembaga);
+              value.push(item.kapasitas_latih);
             });
 
-            var dataPoints = [];
-            const colors = getRandomColor(namaLembaga.length);
-            for (let i = 0; i < namaLembaga.length; i++) {
-              dataPoints.push({
-                name: namaLembaga[i],
-                y: kapasitasLatih[i],
-                color: colors[i],
-              });
-            }
-            this.chartOptions.series[0].data = dataPoints;
+            this.chartOptions.xAxis.categories = categories;
+            this.chartOptions.series[0].data = value;
           }
         });
     },

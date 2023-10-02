@@ -18,7 +18,7 @@
                 v-for="(provinceContent, index) in provinceContents"
                 :key="index"
                 :value="provinceContent.id"
-                >{{ provinceContent.nama_provinsi }}</a-select-option
+                >{{ provinceContent.name }}</a-select-option
               >
             </a-select>
           </a-form-item>
@@ -36,7 +36,7 @@
                   v-for="(cityContent, index) in cityContents"
                   :key="index"
                   :value="cityContent.id"
-                  >{{ cityContent.nama_kabupaten_kota }}</a-select-option
+                  >{{ cityContent.name }}</a-select-option
                 >
               </a-select>
             </a-form-item>
@@ -119,7 +119,7 @@
   </div>
 
   <div class="grid grid-cols-3 gap-8">
-    <div class="col-span-2">
+    <div class="col-span-3">
       <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -129,6 +129,9 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="grid grid-cols-3 gap-8">
     <div class="col-span-1">
       <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
@@ -138,22 +141,6 @@
             </h5>
           </div>
           <TingkatAkreditasiLembagaPelatihanKerja />
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-3 gap-8">
-    <div class="col-span-1">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-        <div class="p-5">
-          <div class="flex justify-between">
-            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Persentase Tingkat Pencari Kerja pada LPK
-            </h5>
-          </div>
-  
-          <PersentaseTingkatPencariKerjaPadaLPK />
         </div>
       </div>
     </div>
@@ -167,10 +154,26 @@
               </h5>
               <FilterKapasitasLPKProvinsi
                 @provinsiKapasitasLPKChanged="handleKapasitasLPKProvinsiChanged"
-                tipe="provinsiKapasitasLPK"
+                tipe="provinsi"
               />
             </div>
           <KapasitasLPK :filter="filterKapasitasLPKProvinsi"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-3 gap-8">
+    <div class="col-span-3">
+      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+          <div class="flex justify-between">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+              Persentase Tingkat Pencari Kerja pada LPK
+            </h5>
+          </div>
+  
+          <PersentaseTingkatPencariKerjaPadaLPK />
         </div>
       </div>
     </div>

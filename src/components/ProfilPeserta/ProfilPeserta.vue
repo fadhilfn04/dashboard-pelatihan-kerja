@@ -28,6 +28,15 @@
           <p><span class="font-semibold">Masih Bekerja Terakhir:</span></p>
         </div>
         <div class="p-6 border-b-2">
+          <h5 class="font-semibold text-lg mt-2">Masa Tunggu Lulus Bekerja:</h5>
+        </div>
+        <div class="bg-gray-100 p-4 rounded mt-2">
+          <!-- <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span></p>
+          <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span></p>
+          <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span></p>
+          <p><span class="font-semibold">Masih Bekerja Terakhir:</span></p> -->
+        </div>
+        <div class="p-6 border-b-2">
           <h5 class="font-semibold text-lg mt-2">Daftar Program Pelatihan:</h5>
         </div>
         <div class="relative overflow-x-auto mt-2">

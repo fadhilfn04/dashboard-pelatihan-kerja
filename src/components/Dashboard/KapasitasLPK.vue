@@ -65,8 +65,8 @@ export default {
         series: [
           {
             name: "Jumlah Kapasitas LPK",
-            data: [],
-            color: getRandomColor(),
+            colorByPoint: getRandomColor(),
+            data: []
           },
         ],
       },

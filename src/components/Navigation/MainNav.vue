@@ -71,8 +71,15 @@
   </header>
 </template>
 
+<style>
+.logoutAlert {
+  width: 300px;
+  height: 300px;
+  font-size: small;
+}
+</style>
+
 <script>
-import { useRouter } from 'vue-router';
 export default {
   name: "MainNav",
   data() {
@@ -87,6 +94,9 @@ export default {
       .fire({
         title: "Apakah anda yakin ingin logout?",
         icon: "warning",
+        customClass: {
+          popup: 'logoutAlert'
+        },
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
@@ -98,10 +108,6 @@ export default {
           this.$router.push("/sign-in");
         }
       });
-    },
-    toggleDropdown() {
-      // Toggle the dropdown state
-      this.isDropdownOpen = !this.isDropdownOpen;
     },
   },
 };

@@ -51,22 +51,42 @@ export default {
         },
         series: [
           {
-            name: "Lembaga Pemerintah",
+            name: "LPK SWASTA",
             data: [],
             color: getRandomColor(),
           },
           {
-            name: "Lembaga Swasta",
+            name: "BLK KOMUNITAS",
             data: [],
             color: getRandomColor(),
           },
           {
-            name: "Lembaga Yayasan",
+            name: "BLKLN",
             data: [],
             color: getRandomColor(),
           },
           {
-            name: "Lembaga Pribadi",
+            name: "Lembaga Pelatihan K/L",
+            data: [],
+            color: getRandomColor(),
+          },
+          {
+            name: "BLK UPTD",
+            data: [],
+            color: getRandomColor(),
+          },
+          {
+            name: "BLK UPTP",
+            data: [],
+            color: getRandomColor(),
+          },
+          {
+            name: "LPK PERUSAHAAN",
+            data: [],
+            color: getRandomColor(),
+          },
+          {
+            name: "SKPD",
             data: [],
             color: getRandomColor(),
           },
@@ -93,15 +113,23 @@ export default {
         })
         .then((response) => {
           if (response.data) {
-            var pemerintah = response.data.data.lpk_pemerintah;
-            var swasta = response.data.data.lpk_swasta;
-            var yayasan = response.data.data.lpk_yayasan;
-            var pribadi = response.data.data.lpk_pribadi;
+            var LPK_SWASTA            = response.data.data.LPK_SWASTA;
+            var BLK_KOMUNITAS         = response.data.data.BLK_KOMUNITAS;
+            var BLKLN                 = response.data.data.BLKLN;
+            var LEMBAGA_PELATIHAN_KL  = response.data.data.LEMBAGA_PELATIHAN_KL;
+            var BLK_UPTD              = response.data.data.BLK_UPTD;
+            var BLK_UPTP              = response.data.data.BLK_UPTP;
+            var LPK_PERUSAHAAN        = response.data.data.LPK_PERUSAHAAN;
+            var SKPD                  = response.data.data.SKPD;
 
-            this.chartOptions.series[0].data = [pemerintah];
-            this.chartOptions.series[1].data = [swasta];
-            this.chartOptions.series[2].data = [yayasan];
-            this.chartOptions.series[3].data = [pribadi];
+            this.chartOptions.series[0].data = [LPK_SWASTA];
+            this.chartOptions.series[1].data = [BLK_KOMUNITAS];
+            this.chartOptions.series[2].data = [BLKLN];
+            this.chartOptions.series[3].data = [LEMBAGA_PELATIHAN_KL];
+            this.chartOptions.series[4].data = [BLK_UPTD];
+            this.chartOptions.series[5].data = [BLK_UPTP];
+            this.chartOptions.series[6].data = [LPK_PERUSAHAAN];
+            this.chartOptions.series[7].data = [SKPD];
           }
         });
     },

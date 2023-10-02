@@ -61,7 +61,28 @@ export default {
           },
         },
         series: [
-        {
+          {
+            name: "JKM",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "TKM",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "E-Training",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
             name: "Reguler",
             color: getRandomColor(),
             marker: {
@@ -148,16 +169,22 @@ export default {
             const data = response.data.data.rekap_tren;
 
             var categories      = [];
-            const reguler       = data.reguler;
-            const prakerja      = data.prakerja;
+            const JKP       = data.JKP;
+            const TKM       = data.TKM;
+            const ET        = data.ET;
+            const reguler   = data.reguler;
+            const prakerja  = data.prakerja;
 
             this.dataTren.forEach((item) => {
               categories.push(item.categories);
             });
 
             this.chartOptions.xAxis.categories  = categories;
-            this.chartOptions.series[0].data    = reguler;
-            this.chartOptions.series[1].data    = prakerja;
+            this.chartOptions.series[0].data    = JKP;
+            this.chartOptions.series[1].data    = TKM;
+            this.chartOptions.series[2].data    = ET;
+            this.chartOptions.series[3].data    = reguler;
+            this.chartOptions.series[4].data    = prakerja;
           }
         });
     },

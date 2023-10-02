@@ -94,7 +94,7 @@ onMounted(async () => {
             <label
               for="default-radio-4"
               class="ml-2 w-full rounded text-sm font-medium text-gray-900"
-              >{{ provinsi.nama_provinsi }}</label
+              >{{ provinsi.name }}</label
             >
           </div>
         </li>
