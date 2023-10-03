@@ -105,7 +105,7 @@ onMounted(async () => {
 
 <script>
 export default {
-  name: "FilterKapasitasLPKProvinsi",
+  name: "FilterKapasitasPPKProvinsi",
   props: {
     tipe: {
       type: String,
@@ -118,7 +118,7 @@ export default {
         tipe: this.tipe,
         id: id,
       };
-      this.$emit("provinsiKapasitasLPKChanged", data);
+      this.$emit("provinsiKapasitasPPKChanged", data);
     },
   },
 };

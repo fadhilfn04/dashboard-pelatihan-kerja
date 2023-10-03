@@ -15,27 +15,32 @@
           <h5 class="font-semibold text-lg">Profil Peserta:</h5>
         </div>
         <div class="bg-gray-100 p-4 rounded mt-2">
-          <p><span class="font-semibold">NIK:</span> {{ searchedProfile.nik }}</p>
-          <p><span class="font-semibold">Nama:</span> {{ searchedProfile.nama }}</p>
+          <p><span class="font-semibold">NIK:</span> {{ searchedProfile.nik }} </p>
+          <p><span class="font-semibold">Nama:</span> {{ searchedProfile.nama }} </p>
         </div>
         <div class="p-6 border-b-2">
           <h5 class="font-semibold text-lg mt-2">Tanggal Lulus Pelatihan Terakhir:</h5>
         </div>
-        <div class="bg-gray-100 p-4 rounded mt-2">
-          <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span></p>
-          <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span></p>
-          <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span></p>
-          <p><span class="font-semibold">Masih Bekerja Terakhir:</span></p>
-        </div>
+        <a-tooltip title="API dari perusahaan belum ada">
+
+          <div class="bg-gray-100 p-4 rounded mt-2">
+            <!-- <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p>
+            <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p>
+            <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p>
+            <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p> -->
+          </div>
+        </a-tooltip>
         <div class="p-6 border-b-2">
           <h5 class="font-semibold text-lg mt-2">Masa Tunggu Lulus Bekerja:</h5>
         </div>
-        <div class="bg-gray-100 p-4 rounded mt-2">
-          <!-- <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span></p>
-          <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span></p>
-          <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span></p>
-          <p><span class="font-semibold">Masih Bekerja Terakhir:</span></p> -->
-        </div>
+        <a-tooltip title="Data nya belum ada">
+          <div class="bg-gray-100 p-4 rounded mt-2">
+            <!-- <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span> {{ searchedPeriodGraduateToWork }} </p>
+            <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span> {{ searchedPeriodGraduateToWork }} </p>
+            <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span> {{ searchedPeriodGraduateToWork }} </p>
+            <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ searchedPeriodGraduateToWork }} </p> -->
+          </div>
+        </a-tooltip>
         <div class="p-6 border-b-2">
           <h5 class="font-semibold text-lg mt-2">Daftar Program Pelatihan:</h5>
         </div>
@@ -53,12 +58,12 @@
             </thead>
             <tbody>
               <tr class="border-b bg-white dark:border-gray-700 dark:bg-gray-800" v-for="(trainingPrograms, index) in searchedTrainingPrograms" :key="index">
-                <td class="px-6 py-3">{{ index + 1 }}</td>
-                <td class="px-6 py-3">{{ trainingPrograms.kode_transaksi_pelatihan }}</td>
-                <td class="px-6 py-3">{{ trainingPrograms.nama_lembaga }}</td>
-                <td class="px-6 py-3">{{ trainingPrograms.judul_program }}</td>
-                <td class="px-6 py-3">{{ trainingPrograms.nama_kejuruan }}</td>
-                <td class="px-6 py-3">{{ trainingPrograms.nama_sub_kejuruan }}</td>
+                <td class="px-6 py-3"> {{ index + 1 }} </td>
+                <td class="px-6 py-3"> {{ trainingPrograms.kode_transaksi_pelatihan }} </td>
+                <td class="px-6 py-3"> {{ trainingPrograms.nama_lembaga }} </td>
+                <td class="px-6 py-3"> {{ trainingPrograms.judul_program }} </td>
+                <td class="px-6 py-3"> {{ trainingPrograms.nama_kejuruan }} </td>
+                <td class="px-6 py-3"> {{ trainingPrograms.nama_sub_kejuruan }} </td>
               </tr>
             </tbody>
           </table>
@@ -79,11 +84,11 @@
             </thead>
             <tbody>
               <tr class="border-b bg-white dark:border-gray-700 dark:bg-gray-800" v-for="(apprenticePrograms, index) in searchedApprenticePrograms" :key="index">
-                <td class="px-6 py-3">{{ index + 1 }}</td>
-                <td class="px-6 py-3">{{ apprenticePrograms.kode_transaksi_pelatihan }}</td>
-                <td class="px-6 py-3">{{ apprenticePrograms.nama_penyelenggara }}</td>
-                <td class="px-6 py-3">{{ apprenticePrograms.nama_kbji }}</td>
-                <td class="px-6 py-3">{{ apprenticePrograms.negara_tujuan_pemagangan }}</td>
+                <td class="px-6 py-3"> {{ index + 1 }} </td>
+                <td class="px-6 py-3"> {{ apprenticePrograms.kode_transaksi_pelatihan }} </td>
+                <td class="px-6 py-3"> {{ apprenticePrograms.nama_penyelenggara }} </td>
+                <td class="px-6 py-3"> {{ apprenticePrograms.nama_kbji }} </td>
+                <td class="px-6 py-3"> {{ apprenticePrograms.negara_tujuan_pemagangan }} </td>
               </tr>
             </tbody>
           </table>
@@ -110,11 +115,13 @@ export default {
   name: "ProfilPeserta",
   data() {
     return {
-      nik                         : "",
-      nama                        : "",
-      searchedProfile             : null,
-      searchedTrainingPrograms    : ref([]),
-      searchedApprenticePrograms  : ref([]),
+      nik                             : "",
+      nama                            : "",
+      searchedProfile                 : null,
+      searchedLastTrainingPassedDate  : null,
+      searchedPeriodGraduateToWork    : null,
+      searchedTrainingPrograms        : ref([]),
+      searchedApprenticePrograms      : ref([]),
     };
   },
 
@@ -155,6 +162,36 @@ export default {
         },
       });
       // window.location.reload();
+    },
+    searchedLastTrainingPassedDate() {
+      const url = import.meta.env.VITE_API_URL + "/participant-last-training-passed-date/" + this.nik
+      const token = JSON.parse(localStorage.getItem("token"));
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      };
+
+      axios.get(url, config).then((response) => {
+        if (response.data.success) {
+          this.searchedLastTrainingPassedDate = response.data.data;
+        }
+      });
+    },
+    searchedPeriodGraduateToWork() {
+      const url = import.meta.env.VITE_API_URL + "/participant-period-graduate-to-work/" + this.nik
+      const token = JSON.parse(localStorage.getItem("token"));
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      };
+
+      axios.get(url, config).then((response) => {
+        if (response.data.success) {
+          this.searchedPeriodGraduateToWork = response.data.data;
+        }
+      });
     },
     loadTrainingPrograms() {
       const url = import.meta.env.VITE_API_URL + "/participant-training-program-list/" + this.nik

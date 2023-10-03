@@ -150,14 +150,14 @@
         <div class="p-5">
             <div class="flex justify-between">
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-                Kapasitas Lembaga Pelatihan Kerja
+                Kapasitas Program Pelatihan Kerja
               </h5>
-              <FilterKapasitasLPKProvinsi
-                @provinsiKapasitasLPKChanged="handleKapasitasLPKProvinsiChanged"
+              <FilterKapasitasPPKProvinsi
+                @provinsiKapasitasPPKChanged="handleKapasitasPPKProvinsiChanged"
                 tipe="provinsi"
               />
             </div>
-          <KapasitasLPK :filter="filterKapasitasLPKProvinsi"/>
+          <KapasitasLPK :filter="filterKapasitasPPKProvinsi"/>
         </div>
       </div>
     </div>
@@ -299,7 +299,7 @@ import TrenJumlahKategoriProgramPelatihan from "./TrenJumlahKategoriProgramPelat
 import ProgramPelatihanBanyakDiminati from "./ProgramPelatihanBanyakDiminati.vue";
 import TrenJumlahPesertaPemagangan from "./TrenJumlahPesertaPemagangan.vue";
 import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
-import FilterKapasitasLPKProvinsi from "../Shared/FilterKapasitasLPKProvinsi.vue";
+import FilterKapasitasPPKProvinsi from "../Shared/FilterKapasitasPPKProvinsi.vue";
 import FilterProgramPelatihanProvinsi from "../Shared/FilterProgramPelatihanProvinsi.vue";
 import { DatePicker } from 'ant-design-vue';
 import { SyncOutlined } from '@ant-design/icons-vue';
@@ -319,7 +319,7 @@ export default {
       TrenJumlahKategoriProgramPelatihan,
       ProgramPelatihanBanyakDiminati,
       TrenJumlahPesertaPemagangan,
-      FilterKapasitasLPKProvinsi,
+      FilterKapasitasPPKProvinsi,
       FilterProgramPelatihanProvinsi,
       DatePicker,
       COffcanvas,
@@ -350,7 +350,7 @@ export default {
       visible: false,
       allRepo: [],
 
-      filterKapasitasLPKProvinsi                        : "/recap-capacity-lpk",
+      filterKapasitasPPKProvinsi                        : "/recap-capacity-ppk",
       filterTrenJumlahKategoriProgramPelatihan          : "/recap-trends-number-training-program-categories",
       filterProgramPelatihanProvinsi                    : "/recap-training-programs-high-demand",
       filterTrenJumlahPesertaPemagangan                 : "/recap-trends-number-apprentices",
@@ -733,13 +733,13 @@ export default {
       this.isOpenDetail = false
     },
 
-    handleKapasitasLPKProvinsiChanged(data) {
+    handleKapasitasPPKProvinsiChanged(data) {
       switch (data.tipe) {
         case "provinsi":
           if (data.id != 0) {
-            this.filterKapasitasLPKProvinsi = "/recap-capacity-province-lpk/" + data.id;
+            this.filterKapasitasPPKProvinsi = "/recap-capacity-province-ppk/" + data.id;
           } else {
-            this.filterKapasitasLPKProvinsi = "/recap-capacity-lpk";
+            this.filterKapasitasPPKProvinsi = "/recap-capacity-ppk";
           }
           break;
 
