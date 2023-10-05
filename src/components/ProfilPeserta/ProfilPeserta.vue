@@ -17,32 +17,17 @@
         <div class="bg-gray-100 p-4 rounded mt-2">
           <p><span class="font-semibold">NIK:</span> {{ searchedProfile.nik }} </p>
           <p><span class="font-semibold">Nama:</span> {{ searchedProfile.nama }} </p>
-        </div>
-        <div class="p-6 border-b-2">
-          <h5 class="font-semibold text-lg mt-2">Tanggal Lulus Pelatihan Terakhir:</h5>
-        </div>
-        <a-tooltip title="API dari perusahaan belum ada">
+          <p><span class="font-semibold">Tanggal Lulus Pelatihan Terakhir:</span> {{ searchedProfile.lulusTerakhir }} </p>
 
-          <div class="bg-gray-100 p-4 rounded mt-2">
-            <!-- <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p>
-            <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p>
-            <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p>
-            <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p> -->
-          </div>
-        </a-tooltip>
-        <div class="p-6 border-b-2">
-          <h5 class="font-semibold text-lg mt-2">Masa Tunggu Lulus Bekerja:</h5>
+          <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p>
+          <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p>
+          <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p>
+          <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p>
+
+          <p><span class="font-semibold">Masa Tunggu Lulus Bekerja:</span> {{ searchedProfile.masaTunggu }} </p>
         </div>
-        <a-tooltip title="Data nya belum ada">
-          <div class="bg-gray-100 p-4 rounded mt-2">
-            <!-- <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span> {{ searchedPeriodGraduateToWork }} </p>
-            <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span> {{ searchedPeriodGraduateToWork }} </p>
-            <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span> {{ searchedPeriodGraduateToWork }} </p>
-            <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ searchedPeriodGraduateToWork }} </p> -->
-          </div>
-        </a-tooltip>
         <div class="p-6 border-b-2">
-          <h5 class="font-semibold text-lg mt-2">Daftar Program Pelatihan:</h5>
+          <h5 class="font-semibold text-lg mt-2">Daftar Program Pelatihan</h5>
         </div>
         <div class="relative overflow-x-auto mt-2">
           <table class="w-full text-left text-sm text-gray-500">
@@ -119,7 +104,6 @@ export default {
       nama                            : "",
       searchedProfile                 : null,
       searchedLastTrainingPassedDate  : null,
-      searchedPeriodGraduateToWork    : null,
       searchedTrainingPrograms        : ref([]),
       searchedApprenticePrograms      : ref([]),
     };
@@ -163,7 +147,7 @@ export default {
       });
       // window.location.reload();
     },
-    searchedLastTrainingPassedDate() {
+    loadLastTrainingPassedDate() {
       const url = import.meta.env.VITE_API_URL + "/participant-last-training-passed-date/" + this.nik
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
@@ -175,21 +159,6 @@ export default {
       axios.get(url, config).then((response) => {
         if (response.data.success) {
           this.searchedLastTrainingPassedDate = response.data.data;
-        }
-      });
-    },
-    searchedPeriodGraduateToWork() {
-      const url = import.meta.env.VITE_API_URL + "/participant-period-graduate-to-work/" + this.nik
-      const token = JSON.parse(localStorage.getItem("token"));
-      const config = {
-        headers: {
-          Authorization: "Bearer " + token.value,
-        },
-      };
-
-      axios.get(url, config).then((response) => {
-        if (response.data.success) {
-          this.searchedPeriodGraduateToWork = response.data.data;
         }
       });
     },
@@ -239,10 +208,13 @@ export default {
               this.searchedProfile = {
                 nik           : this.nik,
                 nama          : response.data.data[0].nama_peserta,
+                masaTunggu    : response.data.data[0].masa_tunggu,
+                lulusTerakhir : response.data.data[0].lulus_terakhir,
               };
 
               this.loadTrainingPrograms();
               this.loadApprenticePrograms();
+              this.loadLastTrainingPassedDate();
             } else {
               this.systemErrorAlert()
             }
