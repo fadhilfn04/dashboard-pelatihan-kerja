@@ -19,10 +19,10 @@
           <p><span class="font-semibold">Nama:</span> {{ searchedProfile.nama }} </p>
           <p><span class="font-semibold">Tanggal Lulus Pelatihan Terakhir:</span> {{ searchedProfile.lulusTerakhir }} </p>
 
-          <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p>
-          <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p>
-          <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p>
-          <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ searchedLastTrainingPassedDate }} </p>
+          <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span> {{ companyData }} </p>
+          <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span> {{ companyData }} </p>
+          <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span> {{ companyData }} </p>
+          <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ companyData }} </p>
 
           <p><span class="font-semibold">Masa Tunggu Lulus Bekerja:</span> {{ searchedProfile.masaTunggu }} </p>
         </div>
@@ -103,7 +103,7 @@ export default {
       nik                             : "",
       nama                            : "",
       searchedProfile                 : null,
-      searchedLastTrainingPassedDate  : null,
+      companyData                     : null,
       searchedTrainingPrograms        : ref([]),
       searchedApprenticePrograms      : ref([]),
     };
@@ -139,7 +139,7 @@ export default {
     systemErrorAlert() {
       this.$swal
       .fire({
-        title: "Terjadi galat pada sistem!",
+        title: "Terjadi galat pada sistem, mohon dicoba kembali secara berkala!",
         icon: "warning",
         customClass: {
           popup: 'nikAlert'
@@ -147,8 +147,8 @@ export default {
       });
       // window.location.reload();
     },
-    loadLastTrainingPassedDate() {
-      const url = import.meta.env.VITE_API_URL + "/participant-last-training-passed-date/" + this.nik
+    loadCompanyData() {
+      const url = import.meta.env.VITE_API_URL + "/participant-company-data/" + this.nik
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: {
@@ -158,7 +158,7 @@ export default {
 
       axios.get(url, config).then((response) => {
         if (response.data.success) {
-          this.searchedLastTrainingPassedDate = response.data.data;
+          this.companyData = response.data.data;
         }
       });
     },
@@ -214,7 +214,7 @@ export default {
 
               this.loadTrainingPrograms();
               this.loadApprenticePrograms();
-              this.loadLastTrainingPassedDate();
+              // this.loadCompanyData();
             } else {
               this.systemErrorAlert()
             }
