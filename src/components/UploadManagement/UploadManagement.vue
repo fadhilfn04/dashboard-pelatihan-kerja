@@ -1,4 +1,5 @@
 <template>
+  <particles></particles>
   <div class="w-full rounded-lg border border-gray-200 bg-white shadow">
     <div class="border-b-2 p-6">
       <h5 class="text-lg font-semibold">Upload Management</h5>
@@ -96,6 +97,7 @@
 import { Modal, Alert } from "flowbite-vue";
 import { ref } from "vue";
 import { RouterLink } from "vue-router";
+import Particles from '../Shared/Particles.vue';
 
 export default {
   name: "UploadManagement",
@@ -110,6 +112,7 @@ export default {
     Modal,
     Alert,
     RouterLink,
+    Particles
   },
 
   setup() {

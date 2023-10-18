@@ -1,4 +1,5 @@
 <template>
+  <particles></particles>
   <div class="w-full rounded-lg border border-gray-200 bg-white shadow">
     <div class="p-5">
       <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
@@ -303,6 +304,7 @@ import FilterKapasitasPPKProvinsi from "../Shared/FilterKapasitasPPKProvinsi.vue
 import FilterProgramPelatihanProvinsi from "../Shared/FilterProgramPelatihanProvinsi.vue";
 import { DatePicker } from 'ant-design-vue';
 import { SyncOutlined } from '@ant-design/icons-vue';
+import Particles from '../Shared/Particles.vue';
 import { 
   COffcanvas, 
   COffcanvasHeader, 
@@ -326,7 +328,8 @@ export default {
       COffcanvasBody,
       COffcanvasTitle,
       COffcanvasHeader,
-      SyncOutlined
+      SyncOutlined,
+      Particles
     },
 
   data() {

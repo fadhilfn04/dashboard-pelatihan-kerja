@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Portal from "@/views/PortalView.vue";
 import Dashboard from "@/views/DashboardView.vue";
+import DashboardETL from "@/views/DashboardETLView.vue";
 import SignInView from "@/views/SignInView.vue";
 import ApiGenerator from "@/views/ApiGeneratorView.vue";
 import UploadManagement from "@/views/UploadManagementView.vue";
 import UploadSourceData from "@/views/UploadSourceDataView.vue";
 import UploadFilePendukung from "@/views/UploadFilePendukungView.vue";
 import ProfilPeserta from "@/views/ProfilPesertaView.vue";
+import LogAktifitas from "@/views/LogAktifitasView.vue";
 
 const routes = [
   {
@@ -21,6 +23,14 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/dashboard-etl",
+    name: "Dashboard ETL",
+    component: DashboardETL,
     meta: {
       requiresAuth: true,
     },
@@ -69,6 +79,14 @@ const routes = [
     path: "/cari-profil-peserta",
     name: "Profil Peserta",
     component: ProfilPeserta,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/log-aktifitas",
+    name: "Log Aktifitas",
+    component: LogAktifitas,
     meta: {
       requiresAuth: true,
     },

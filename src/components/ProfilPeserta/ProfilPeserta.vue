@@ -1,4 +1,5 @@
 <template>
+  <particles></particles>
   <div class="w-full bg-white border border-gray-200 rounded-lg shadow">
     <div class="p-6 border-b-2">
       <h5 class="font-semibold text-lg">Cari Profil Peserta</h5>
@@ -95,6 +96,7 @@
 import axios from "axios";
 import { Modal, Alert } from "flowbite-vue";
 import { ref } from "vue";
+import Particles from '../Shared/Particles.vue';
 
 export default {
   name: "ProfilPeserta",
@@ -112,6 +114,7 @@ export default {
   components: {
     Modal,
     Alert,
+    Particles,
   },
 
   methods: {

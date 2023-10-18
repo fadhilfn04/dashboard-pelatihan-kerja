@@ -38,6 +38,9 @@
                   <router-link to="/dashboard">Dashboard</router-link>
                 </a-menu-item>
                 <a-menu-item>
+                  <router-link to="/dashboard-etl">Dashboard Aktifitas ETL</router-link>
+                </a-menu-item>
+                <a-menu-item>
                   <router-link to="/cari-profil-peserta">Cari Profil Peserta</router-link>
                 </a-menu-item>
                 <a-menu-item>
@@ -45,6 +48,9 @@
                 </a-menu-item>
                 <a-menu-item>
                   <router-link to="/upload-management">Upload Management</router-link>
+                </a-menu-item>
+                <a-menu-item>
+                  <router-link to="/log-aktifitas">Log Aktifitas</router-link>
                 </a-menu-item>
               </a-menu>
             </template>

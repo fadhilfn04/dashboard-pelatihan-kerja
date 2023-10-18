@@ -1,4 +1,5 @@
 <template>
+  <particles></particles>
   <div class="w-full bg-white border border-gray-200 rounded-lg shadow">
     <div class="p-6 border-b-2">
       <h5 class="font-semibold text-lg">API Generator</h5>
@@ -1984,6 +1985,7 @@
 <script>
 import { Modal } from "flowbite-vue";
 import { ref } from "vue";
+import Particles from '../Shared/Particles.vue';
 
 export default {
   name: "ApiGenerator",
@@ -1996,6 +1998,7 @@ export default {
 
   components: {
     Modal,
+    Particles,
   },
 
   setup() {
