@@ -17,7 +17,7 @@ export default {
         script.onload = () => {
           particlesJS("particles-js", {
             particles: {
-              number: { value: 250, density: { enable: true, value_area: 800 } },
+              number: { value: 500, density: { enable: true, value_area: 1000 } },
               color: { value: "#00008B" },
               shape: {
                 type: "circle",
