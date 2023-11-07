@@ -3,7 +3,7 @@
   <div class="w-full rounded-lg border border-gray-200 bg-white shadow">
     <div class="p-5">
       <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-        Peta Persebaran Pelatihan Kerja Indonesia
+        Peta Persebaran Lembaga Pelatihan Kerja Indonesia
       </h5>
       <div class="dashboard-container">
         <a-form class="filter-form">

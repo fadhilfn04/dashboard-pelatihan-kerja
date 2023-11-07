@@ -1451,6 +1451,7 @@
     "tanggal_lahir": "2023-08-30",
     "nama_pendidikan": "S1",
     "nama_kategori": "Pemerintah",
+    "nama_kategori_jabatan": "Perencanaan",
     "created_at": "2023-08-30 15:39:26",
     "updated_at": "2023-08-30 15:39:26",
     "deleted_at": null,

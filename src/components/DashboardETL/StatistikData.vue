@@ -27,14 +27,14 @@ export default {
         },
         xAxis: {
           categories: [
-            "LPK SWASTA",
-            "BLK KOMUNITAS",
-            "BLKLN",
-            "Lembaga Pelatihan K/L",
-            "BLK UPTD",
-            "BLK UPTP",
-            "LPK PERUSAHAAN",
-            "SKPD",
+            "Upload",
+            "Database",
+            // "BLKLN",
+            // "Lembaga Pelatihan K/L",
+            // "BLK UPTD",
+            // "BLK UPTP",
+            // "LPK PERUSAHAAN",
+            // "SKPD",
           ],
         },
         yAxis: {
@@ -92,12 +92,12 @@ export default {
             const data = [
               response.data.data.LPK_SWASTA,
               response.data.data.BLK_KOMUNITAS,
-              response.data.data.BLKLN,
-              response.data.data.LEMBAGA_PELATIHAN_KL,
-              response.data.data.BLK_UPTD,
-              response.data.data.BLK_UPTP,
-              response.data.data.LPK_PERUSAHAAN,
-              response.data.data.SKPD,
+              // response.data.data.BLKLN,
+              // response.data.data.LEMBAGA_PELATIHAN_KL,
+              // response.data.data.BLK_UPTD,
+              // response.data.data.BLK_UPTP,
+              // response.data.data.LPK_PERUSAHAAN,
+              // response.data.data.SKPD,
             ];
 
             this.chartOptions.series[0].data = data;

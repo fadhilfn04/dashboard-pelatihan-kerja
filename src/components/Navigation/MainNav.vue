@@ -37,9 +37,32 @@
                 <a-menu-item>
                   <router-link to="/dashboard">Dashboard</router-link>
                 </a-menu-item>
-                <a-menu-item>
-                  <router-link to="/dashboard-etl">Dashboard Aktifitas ETL</router-link>
-                </a-menu-item>
+                <a-sub-menu key="dashboardAktifitasETL" title="Dashboard Aktifitas ETL">
+                  <a-menu-item>
+                    <router-link to="/dashboard-etl">Profil Lembaga Pelatihan</router-link>
+                  </a-menu-item>
+                  <a-menu-item>
+                    <router-link to="/dashboard-etl">Profil Program Pelatihan</router-link>
+                  </a-menu-item>
+                  <a-menu-item>
+                    <router-link to="/dashboard-etl">Profil Tenaga Pelatihan</router-link>
+                  </a-menu-item>
+                  <a-menu-item>
+                    <router-link to="/dashboard-etl">Profil Peserta Pelatihan</router-link>
+                  </a-menu-item>
+                  <a-menu-item>
+                    <router-link to="/dashboard-etl">Profil Penyelenggara Magang</router-link>
+                  </a-menu-item>
+                  <a-menu-item>
+                    <router-link to="/dashboard-etl">Profil Peserta Pemagangan</router-link>
+                  </a-menu-item>
+                  <a-menu-item>
+                    <router-link to="/dashboard-etl">Profil Program Pemagangan</router-link>
+                  </a-menu-item>
+                  <a-menu-item>
+                    <router-link to="/dashboard-etl">Profil Instruktur</router-link>
+                  </a-menu-item>
+                </a-sub-menu>
                 <a-menu-item>
                   <router-link to="/cari-profil-peserta">Cari Profil Peserta</router-link>
                 </a-menu-item>

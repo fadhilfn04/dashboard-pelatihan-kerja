@@ -8,8 +8,8 @@
   DataTable.use(DataTablesCore);
 
   let logData = [
-    [1, 'Upload Source Master Data Pelatihan', 'Admin', '30 Agustus 2023', '31 Agustus 2023'],
-    [2, 'Upload Pendukung Master Data Pelatihan', 'Admin', '30 Agustus 2023', '31 Agustus 2023'],
+    [1, 'http://localhost:5173/log-aktifitas', 'Upload Source Master Data Pelatihan', 'Upload', 'Admin', '30 Agustus 2023', '31 Agustus 2023'],
+    [2, 'http://localhost:5173/log-aktifitas', 'Upload Pendukung Master Data Pelatihan', 'Upload', 'Admin', '30 Agustus 2023', '31 Agustus 2023'],
   ];
 
   // let logData = [];
@@ -47,6 +47,8 @@
           <thead class="text-xs uppercase">
               <tr>
                   <th>No</th>
+                  <th>URL</th>
+                  <th>Desc</th>
                   <th>Aktifitas</th>
                   <th>Aksi Oleh</th>
                   <th>Dibuat Pada</th>

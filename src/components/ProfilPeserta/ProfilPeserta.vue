@@ -7,7 +7,7 @@
     <div class="p-6">
       <form @submit.prevent="searchProfile">
         <div class="flex justify-between">
-          <input v-model="nik" placeholder="masukkan NIK" type="text" id="nik" name="nik" class="border rounded px-2 py-1 focus:outline-none focus:border-blue-400 w-full" />
+          <input v-model="nik" placeholder="Masukkan NIK" type="text" id="nik" name="nik" class="border rounded px-2 py-1 focus:outline-none focus:border-blue-400 w-full" />
           <button type="submit" class="bg-blue-500 text-white rounded px-4 py-1 ml-2 hover:bg-blue-600 transition">Cari</button>
         </div>
       </form>
