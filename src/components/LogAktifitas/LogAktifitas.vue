@@ -1,18 +1,13 @@
 <script setup>
   import axios from 'axios';
-  import { onMounted } from "vue";
+  import { onMounted, ref } from "vue";
   import DataTable from 'datatables.net-vue3';
-  import DataTablesCore from 'datatables.net';
+  import DataTablesCore from 'datatables.net';  
   import Particles from '../Shared/Particles.vue';
 
-  DataTable.use(DataTablesCore);
+  // DataTable.use(DataTablesCore);
 
-  let logData = [
-    [1, 'http://localhost:5173/log-aktifitas', 'Upload Source Master Data Pelatihan', 'Upload', 'Admin', '30 Agustus 2023', '31 Agustus 2023'],
-    [2, 'http://localhost:5173/log-aktifitas', 'Upload Pendukung Master Data Pelatihan', 'Upload', 'Admin', '30 Agustus 2023', '31 Agustus 2023'],
-  ];
-
-  // let logData = [];
+  let logActivityData = ref([]);
 
   onMounted(async () => {
     try {
@@ -27,7 +22,7 @@
       );
 
       if (response.data.success) {
-        logData = response.data.data;
+        logActivityData.value = response.data.data;
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -42,25 +37,44 @@
       <h5 class="text-lg font-semibold">Log Aktifitas</h5>
     </div>
     <div class="p-6">
-      <div class="relative overflow-x-auto">
-        <DataTable :data="logData" class="display">
+      <div class="relative overflow-x-auto mt-2">
+        <!-- <DataTable :data="logActivityData" class="display">
           <thead class="text-xs uppercase">
               <tr>
-                  <th>No</th>
-                  <th>URL</th>
-                  <th>Desc</th>
-                  <th>Aktifitas</th>
+                  <th>URL Asal</th>
+                  <th>URL Tujuan</th>
                   <th>Aksi Oleh</th>
                   <th>Dibuat Pada</th>
-                  <th>Pembaharuan Terakhir</th>
               </tr>
           </thead>
-      </DataTable>
+      </DataTable> -->
+
+        <table class="w-full text-left text-sm text-gray-500">
+          <thead class="bg-gray-50 text-xs uppercase text-gray-700">
+            <tr>
+              <th scope="col" class="px-6 py-3">No</th>
+              <th scope="col" class="px-6 py-3">URL Asal</th>
+              <th scope="col" class="px-6 py-3">URL Tujuan</th>
+              <th scope="col" class="px-6 py-3">Aksi Oleh</th>
+              <th scope="col" class="px-6 py-3">Dibuat Pada</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b bg-white dark:border-gray-700 dark:bg-gray-800" v-for="(logActivity, index) in logActivityData" :key="index">
+              <td class="px-6 py-3"> {{ index + 1 }} </td>
+              <td class="px-6 py-3"> {{ logActivity.from }} </td>
+              <td class="px-6 py-3"> {{ logActivity.to }} </td>
+              <td class="px-6 py-3"> {{ logActivity.email }} </td>
+              <td class="px-6 py-3"> {{ logActivity.created_at }} </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </template>
 
-<style>
-  @import 'datatables.net-dt';
-</style>
+<!-- <style>
+  @import 'datatables.net-dt/css/jquery.dataTables.css';
+</style> -->
+

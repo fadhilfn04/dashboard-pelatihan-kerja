@@ -1,14 +1,15 @@
-import { createRouter, createWebHistory } from "vue-router";
+import axios from "axios";
 import Portal from "@/views/PortalView.vue";
-import Dashboard from "@/views/DashboardView.vue";
-import DashboardETL from "@/views/DashboardETLView.vue";
 import SignInView from "@/views/SignInView.vue";
+import Dashboard from "@/views/DashboardView.vue";
 import ApiGenerator from "@/views/ApiGeneratorView.vue";
+import DashboardETL from "@/views/DashboardETLView.vue";
+import LogAktifitas from "@/views/LogAktifitasView.vue";
+import ProfilPeserta from "@/views/ProfilPesertaView.vue";
+import { createRouter, createWebHistory } from "vue-router";
 import UploadManagement from "@/views/UploadManagementView.vue";
 import UploadSourceData from "@/views/UploadSourceDataView.vue";
 import UploadFilePendukung from "@/views/UploadFilePendukungView.vue";
-import ProfilPeserta from "@/views/ProfilPesertaView.vue";
-import LogAktifitas from "@/views/LogAktifitasView.vue";
 
 const routes = [
   {
@@ -114,6 +115,23 @@ router.beforeEach((to, from, next) => {
         });
       }else{
         next();
+        const email = localStorage.getItem("email");
+        const token = JSON.parse(localStorage.getItem("token"));
+        axios.post(import.meta.env.VITE_API_URL + '/activity-log-add', {
+          email: email,
+          from: from.fullPath,
+          to: to.fullPath,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        }, {
+          headers: {
+            'Authorization': "Bearer " + token.value,
+            'Content-Type': 'multipart/form-data'
+          },
+        })
+        .catch((error) => {
+          console.error("Error saving activity log:", error);
+        });
       }
     }
   } else {

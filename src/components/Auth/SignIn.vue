@@ -99,6 +99,7 @@ export default {
             value: token,
             expiredAt: Date.now()+(60*60*1000)
           }));
+          localStorage.setItem("email", this.username);
           this.$router.push("/dashboard");
           return true;
         }else {
