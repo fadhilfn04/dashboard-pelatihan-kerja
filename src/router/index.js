@@ -29,7 +29,7 @@ const routes = [
     },
   },
   {
-    path: "/dashboard-etl",
+    path: "/dashboard-etl/:title",
     name: "Dashboard ETL",
     component: DashboardETL,
     meta: {

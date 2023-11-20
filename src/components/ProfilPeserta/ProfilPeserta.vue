@@ -20,65 +20,33 @@
           <p><span class="font-semibold">Nama:</span> {{ searchedProfile.nama }} </p>
           <p><span class="font-semibold">Tanggal Lulus Pelatihan Terakhir:</span> {{ searchedProfile.lulusTerakhir }} </p>
 
-          <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span> {{ companyData }} </p>
-          <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span> {{ companyData }} </p>
-          <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span> {{ companyData }} </p>
-          <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ companyData }} </p>
+          <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span> {{ companyData.namaPerusahaanBekerjaTerakhir }} </p>
+          <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span> {{ companyData.alamatPerusahaanBekerjaTerakhir }} </p>
+          <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span> {{ companyData.tanggalMulaiBekerjaTerakhir }} </p>
+          <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ companyData.masihBekerjaTerakhir }} </p>
 
           <p><span class="font-semibold">Masa Tunggu Lulus Bekerja:</span> {{ searchedProfile.masaTunggu }} </p>
         </div>
         <div class="p-6 border-b-2">
           <h5 class="font-semibold text-lg mt-2">Daftar Program Pelatihan</h5>
         </div>
-        <div class="relative overflow-x-auto mt-2">
-          <table class="w-full text-left text-sm text-gray-500">
-            <thead class="bg-gray-50 text-xs uppercase text-gray-700">
-              <tr>
-                <th scope="col" class="px-6 py-3">No</th>
-                <th scope="col" class="px-6 py-3">Kode Transaksi Pelatihan Peserta</th>
-                <th scope="col" class="px-6 py-3">Nama Lembaga Pelatihan</th>
-                <th scope="col" class="px-6 py-3">Nama Program Pelatihan</th>
-                <th scope="col" class="px-6 py-3">Nama Kejuruan</th>
-                <th scope="col" class="px-6 py-3">Nama Sub Kejuruan</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="border-b bg-white dark:border-gray-700 dark:bg-gray-800" v-for="(trainingPrograms, index) in searchedTrainingPrograms" :key="index">
-                <td class="px-6 py-3"> {{ index + 1 }} </td>
-                <td class="px-6 py-3"> {{ trainingPrograms.kode_transaksi_pelatihan }} </td>
-                <td class="px-6 py-3"> {{ trainingPrograms.nama_lembaga }} </td>
-                <td class="px-6 py-3"> {{ trainingPrograms.judul_program }} </td>
-                <td class="px-6 py-3"> {{ trainingPrograms.nama_kejuruan }} </td>
-                <td class="px-6 py-3"> {{ trainingPrograms.nama_sub_kejuruan }} </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <a-table 
+          :columns="trainingProgramsColumns" 
+          :dataSource="searchedTrainingPrograms" 
+          :pagination="pagination"
+          :loading="loading"
+          bordered>
+        </a-table>
         <div class="p-6 border-b-2">
           <h5 class="font-semibold text-lg mt-2">Daftar Program Pemagangan:</h5>
         </div>
-        <div class="relative overflow-x-auto mt-2">
-          <table class="w-full text-left text-sm text-gray-500">
-            <thead class="bg-gray-50 text-xs uppercase text-gray-700">
-              <tr>
-                <th scope="col" class="px-6 py-3">No</th>
-                <th scope="col" class="px-6 py-3">Kode Transaksi Pelatihan Peserta</th>
-                <th scope="col" class="px-6 py-3">Nama Penyelenggara Magang</th>
-                <th scope="col" class="px-6 py-3">Nama KBJI Digit 3</th>
-                <th scope="col" class="px-6 py-3">Nama Negara Tujuan Pemagangan</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="border-b bg-white dark:border-gray-700 dark:bg-gray-800" v-for="(apprenticePrograms, index) in searchedApprenticePrograms" :key="index">
-                <td class="px-6 py-3"> {{ index + 1 }} </td>
-                <td class="px-6 py-3"> {{ apprenticePrograms.kode_transaksi_pelatihan }} </td>
-                <td class="px-6 py-3"> {{ apprenticePrograms.nama_penyelenggara }} </td>
-                <td class="px-6 py-3"> {{ apprenticePrograms.nama_kbji }} </td>
-                <td class="px-6 py-3"> {{ apprenticePrograms.negara_tujuan_pemagangan }} </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <a-table 
+          :columns="apprenticeProgramsColumns" 
+          :dataSource="searchedApprenticePrograms" 
+          :pagination="pagination"
+          :loading="loading"
+          bordered>
+        </a-table>
       </div>
     </div>
   </div>
@@ -108,6 +76,21 @@ export default {
       companyData                     : null,
       searchedTrainingPrograms        : ref([]),
       searchedApprenticePrograms      : ref([]),
+
+      trainingProgramsColumns: [
+        { title: 'Kode Transaksi Pelatihan Peserta', dataIndex: 'kode_transaksi_pelatihan', key: 'kode_transaksi_pelatihan' },
+        { title: 'Nama Lembaga Pelatihan', dataIndex: 'nama_lembaga', key: 'nama_lembaga' },
+        { title: 'Nama Program Pelatihan', dataIndex: 'judul_program', key: 'judul_program' },
+        { title: 'Nama Kejuruan', dataIndex: 'nama_kejuruan', key: 'nama_kejuruan' },
+        { title: 'Nama Sub Kejuruan', dataIndex: 'nama_sub_kejuruan', key: 'nama_sub_kejuruan' },
+      ],
+
+      apprenticeProgramsColumns: [
+        { title: 'Kode Transaksi Pelatihan Peserta', dataIndex: 'kode_transaksi_pelatihan', key: 'kode_transaksi_pelatihan' },
+        { title: 'Nama Penyelenggara Magang', dataIndex: 'nama_penyelenggara', key: 'nama_penyelenggara' },
+        { title: 'Nama KBJI Digit 3', dataIndex: 'nama_kbji', key: 'nama_kbji' },
+        { title: 'Nama Negara Tujuan Pemagangan', dataIndex: 'negara_tujuan_pemagangan', key: 'negara_tujuan_pemagangan' },
+      ],
     };
   },
 

@@ -26,6 +26,7 @@
               <th scope="col" class="px-6 py-3">Total Peserta Pemagangan</th>
               <th scope="col" class="px-6 py-3">Tanggal Mulai Diupload</th>
               <th scope="col" class="px-6 py-3">Tanggal Selesai Diupload</th>
+              <th scope="col" class="px-6 py-3">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -39,6 +40,12 @@
               <td class="px-6 py-4">{{ lfp.total_peserta_pemagangan }}</td>
               <td class="px-6 py-4">{{ lfp.upload_started }}</td>
               <td class="px-6 py-4">{{ lfp.upload_finished }}</td>
+              <td class="px-6 py-4">
+                <span
+                  class="mr-2 rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300"
+                  >Finished</span
+                >
+              </td>
             </tr>
           </tbody>
         </table>

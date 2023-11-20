@@ -18,7 +18,7 @@
             </g>
           </svg>
           <h5 class="text-lg font-medium tracking-tight text-green-500">
-            201.552.346
+            {{ totalData }}
           </h5>
           <h5 class="text-lg tracking-tight text-green-500">
             Data Total
@@ -44,7 +44,7 @@
             </g>
           </svg>
           <h5 class="text-lg font-medium tracking-tight text-yellow-500">
-            201.552.346
+            {{ totalDataUnprocessed }}
           </h5>
           <h5 class="text-lg tracking-tight text-yellow-500">
             Data Belum Diproses
@@ -70,7 +70,7 @@
             </g>
           </svg>
           <h5 class="text-lg font-medium tracking-tight text-blue-500">
-            201.552.346
+            {{ totalDataProcessed }}
           </h5>
           <h5 class="text-lg tracking-tight text-blue-500">
             Data Berhasil Diproses
@@ -96,7 +96,7 @@
             </g>
           </svg>
           <h5 class="text-lg font-medium tracking-tight text-red-500">
-            201.552.346
+            {{ totalDataEliminated }}
           </h5>
           <h5 class="text-lg tracking-tight text-red-500">
             Data Tereliminasi
@@ -123,7 +123,7 @@
             </g>
           </svg>
           <h5 class="text-lg font-medium tracking-tight text-orange-500">
-            201.552.346
+            {{ totalDataDuplicated }}
           </h5>
           <h5 class="text-lg tracking-tight text-orange-500">
             Data Duplikasi
@@ -146,10 +146,10 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-green-500">
-                201.552.346
+                {{ totalData }}
               </h5>
               <h5 class="text-lg tracking-tight text-green-500">
-                Data
+                EXCEL
               </h5>
             </div>
           </div>
@@ -159,36 +159,10 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-green-500">
-                201.552.346
+                {{ totalData }}
               </h5>
               <h5 class="text-lg tracking-tight text-green-500">
-                Data
-              </h5>
-            </div>
-          </div>
-          <div class="d-flex align-items-center mt-3">
-            <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-green-200 font-medium text-green-500 px-1 py-2.5">DATA</span>
-            </div>
-            <div class="d-flex flex-column">
-              <h5 class="text-lg font-medium tracking-tight text-green-500">
-                201.552.346
-              </h5>
-              <h5 class="text-lg tracking-tight text-green-500">
-                Data
-              </h5>
-            </div>
-          </div>
-          <div class="d-flex align-items-center mt-3">
-            <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-green-200 font-medium text-green-500 px-1 py-2.5">DATA</span>
-            </div>
-            <div class="d-flex flex-column">
-              <h5 class="text-lg font-medium tracking-tight text-green-500">
-                201.552.346
-              </h5>
-              <h5 class="text-lg tracking-tight text-green-500">
-                Data
+                DATABASE
               </h5>
             </div>
           </div>
@@ -208,10 +182,10 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-yellow-500">
-                201.552.346
+                {{ totalDataUnprocessed }}
               </h5>
               <h5 class="text-lg tracking-tight text-yellow-500">
-                Data
+                EXCEL
               </h5>
             </div>
           </div>
@@ -221,36 +195,10 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-yellow-500">
-                201.552.346
+                {{ totalDataUnprocessed }}
               </h5>
               <h5 class="text-lg tracking-tight text-yellow-500">
-                Data
-              </h5>
-            </div>
-          </div>
-          <div class="d-flex align-items-center mt-3">
-            <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-yellow-200 font-medium text-yellow-500 px-1 py-2.5">DATA</span>
-            </div>
-            <div class="d-flex flex-column">
-              <h5 class="text-lg font-medium tracking-tight text-yellow-500">
-                201.552.346
-              </h5>
-              <h5 class="text-lg tracking-tight text-yellow-500">
-                Data
-              </h5>
-            </div>
-          </div>
-          <div class="d-flex align-items-center mt-3">
-            <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-yellow-200 font-medium text-yellow-500 px-1 py-2.5">DATA</span>
-            </div>
-            <div class="d-flex flex-column">
-              <h5 class="text-lg font-medium tracking-tight text-yellow-500">
-                201.552.346
-              </h5>
-              <h5 class="text-lg tracking-tight text-yellow-500">
-                Data
+                DATABASE
               </h5>
             </div>
           </div>
@@ -270,10 +218,10 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-blue-500">
-                201.552.346
+                {{ totalDataProcessed }}
               </h5>
               <h5 class="text-lg tracking-tight text-blue-500">
-                Data
+                EXCEL
               </h5>
             </div>
           </div>
@@ -283,36 +231,10 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-blue-500">
-                201.552.346
+                {{ totalDataProcessed }}
               </h5>
               <h5 class="text-lg tracking-tight text-blue-500">
-                Data
-              </h5>
-            </div>
-          </div>
-          <div class="d-flex align-items-center mt-3">
-            <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-blue-200 font-medium text-blue-500 px-1 py-2.5">DATA</span>
-            </div>
-            <div class="d-flex flex-column">
-              <h5 class="text-lg font-medium tracking-tight text-blue-500">
-                201.552.346
-              </h5>
-              <h5 class="text-lg tracking-tight text-blue-500">
-                Data
-              </h5>
-            </div>
-          </div>
-          <div class="d-flex align-items-center mt-3">
-            <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-blue-200 font-medium text-blue-500 px-1 py-2.5">DATA</span>
-            </div>
-            <div class="d-flex flex-column">
-              <h5 class="text-lg font-medium tracking-tight text-blue-500">
-                201.552.346
-              </h5>
-              <h5 class="text-lg tracking-tight text-blue-500">
-                Data
+                DATABASE
               </h5>
             </div>
           </div>
@@ -332,10 +254,10 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-red-500">
-                201.552.346
+                {{ totalDataEliminated }}
               </h5>
               <h5 class="text-lg tracking-tight text-red-500">
-                Data
+                EXCEL
               </h5>
             </div>
           </div>
@@ -345,36 +267,10 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-red-500">
-                201.552.346
+                {{ totalDataEliminated }}
               </h5>
               <h5 class="text-lg tracking-tight text-red-500">
-                Data
-              </h5>
-            </div>
-          </div>
-          <div class="d-flex align-items-center mt-3">
-            <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-red-200 font-medium text-red-500 px-1 py-2.5">DATA</span>
-            </div>
-            <div class="d-flex flex-column">
-              <h5 class="text-lg font-medium tracking-tight text-red-500">
-                201.552.346
-              </h5>
-              <h5 class="text-lg tracking-tight text-red-500">
-                Data
-              </h5>
-            </div>
-          </div>
-          <div class="d-flex align-items-center mt-3">
-            <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-red-200 font-medium text-red-500 px-1 py-2.5">DATA</span>
-            </div>
-            <div class="d-flex flex-column">
-              <h5 class="text-lg font-medium tracking-tight text-red-500">
-                201.552.346
-              </h5>
-              <h5 class="text-lg tracking-tight text-red-500">
-                Data
+                DATABASE
               </h5>
             </div>
           </div>
@@ -394,10 +290,10 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-orange-500">
-                201.552.346
+                {{ totalDataDuplicated }}
               </h5>
               <h5 class="text-lg tracking-tight text-orange-500">
-                Data
+                EXCEL
               </h5>
             </div>
           </div>
@@ -407,36 +303,10 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-orange-500">
-                201.552.346
+                {{ totalDataDuplicated }}
               </h5>
               <h5 class="text-lg tracking-tight text-orange-500">
-                Data
-              </h5>
-            </div>
-          </div>
-          <div class="d-flex align-items-center mt-3">
-            <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-orange-200 font-medium text-orange-500 px-1 py-2.5">DATA</span>
-            </div>
-            <div class="d-flex flex-column">
-              <h5 class="text-lg font-medium tracking-tight text-orange-500">
-                201.552.346
-              </h5>
-              <h5 class="text-lg tracking-tight text-orange-500">
-                Data
-              </h5>
-            </div>
-          </div>
-          <div class="d-flex align-items-center mt-3">
-            <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-orange-200 font-medium text-orange-500 px-1 py-2.5">DATA</span>
-            </div>
-            <div class="d-flex flex-column">
-              <h5 class="text-lg font-medium tracking-tight text-orange-500">
-                201.552.346
-              </h5>
-              <h5 class="text-lg tracking-tight text-orange-500">
-                Data
+                DATABASE
               </h5>
             </div>
           </div>
@@ -460,13 +330,208 @@
 </template>
 
 <script>
+import axios from "axios";
 import StatistikData from "./StatistikData.vue";
 import Particles from '../Shared/Particles.vue';
+
 export default {
   name: "DashboardETL",
+  data() {
+    return {
+      pageTitle                             : "",
+      totalData                             : "",
+      totalDataUnprocessed                  : "",
+      totalDataProcessed                    : "",
+      totalDataEliminated                   : "",
+      totalDataDuplicated                   : "",
+    };
+  },
+  created() {
+    this.pageTitle = this.$route.params.title;
+  },
   components: {
     StatistikData,
     Particles,
   },
-}
+  methods: {
+    loadTotalData() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      };
+
+      let url = "";
+      if (this.pageTitle === "lembaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-institutions";
+      } else if (this.pageTitle === "program-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-program";
+      } else if (this.pageTitle === "tenaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-personnel";
+      } else if (this.pageTitle === "peserta-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-participants";
+      } else if (this.pageTitle === "penyelenggara-magang") {
+        url = import.meta.env.VITE_API_URL + "/total-internship-organizers";
+      } else if (this.pageTitle === "peserta-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprentices";
+      } else if (this.pageTitle === "program-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs";
+      } else if (this.pageTitle === "instruktur") {
+        url = import.meta.env.VITE_API_URL + "/total-instructors";
+      }
+
+      axios.get(url, config).then((response) => {
+        console.log('total', response.data.data);
+        if (response.data.success) {
+          this.totalData = response.data.data.toLocaleString();
+        }
+      });
+    },
+    loadTotalDataUnprocessed() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      };
+
+      let url = "";
+      if (this.pageTitle === "lembaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-institutions-unprocessed";
+      } else if (this.pageTitle === "program-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-program";
+      } else if (this.pageTitle === "tenaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-personnel";
+      } else if (this.pageTitle === "peserta-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-participants";
+      } else if (this.pageTitle === "penyelenggara-magang") {
+        url = import.meta.env.VITE_API_URL + "/total-internship-organizers";
+      } else if (this.pageTitle === "peserta-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprentices";
+      } else if (this.pageTitle === "program-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs";
+      } else if (this.pageTitle === "instruktur") {
+        url = import.meta.env.VITE_API_URL + "/total-instructors";
+      }
+
+      axios.get(url, config).then((response) => {
+        console.log('total', response.data.data);
+        if (response.data.success) {
+          this.totalDataUnprocessed = response.data.data.toLocaleString();
+        }
+      });
+    },
+    loadTotalDataProcessed() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      };
+
+      let url = "";
+      if (this.pageTitle === "lembaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-institutions-processed";
+      } else if (this.pageTitle === "program-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-program";
+      } else if (this.pageTitle === "tenaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-personnel";
+      } else if (this.pageTitle === "peserta-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-participants";
+      } else if (this.pageTitle === "penyelenggara-magang") {
+        url = import.meta.env.VITE_API_URL + "/total-internship-organizers";
+      } else if (this.pageTitle === "peserta-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprentices";
+      } else if (this.pageTitle === "program-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs";
+      } else if (this.pageTitle === "instruktur") {
+        url = import.meta.env.VITE_API_URL + "/total-instructors";
+      }
+
+      axios.get(url, config).then((response) => {
+        console.log('total', response.data.data);
+        if (response.data.success) {
+          this.totalDataProcessed = response.data.data.toLocaleString();
+        }
+      });
+    },
+    loadTotalDataEliminated() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      };
+
+      let url = "";
+      if (this.pageTitle === "lembaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-institutions-eliminated";
+      } else if (this.pageTitle === "program-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-program";
+      } else if (this.pageTitle === "tenaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-personnel";
+      } else if (this.pageTitle === "peserta-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-participants";
+      } else if (this.pageTitle === "penyelenggara-magang") {
+        url = import.meta.env.VITE_API_URL + "/total-internship-organizers";
+      } else if (this.pageTitle === "peserta-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprentices";
+      } else if (this.pageTitle === "program-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs";
+      } else if (this.pageTitle === "instruktur") {
+        url = import.meta.env.VITE_API_URL + "/total-instructors";
+      }
+
+      axios.get(url, config).then((response) => {
+        console.log('total', response.data.data);
+        if (response.data.success) {
+          this.totalDataEliminated = response.data.data.toLocaleString();
+        }
+      });
+    },
+    loadTotalDataDuplicated() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      };
+
+      let url = "";
+      if (this.pageTitle === "lembaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-institutions-duplicated";
+      } else if (this.pageTitle === "program-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-program";
+      } else if (this.pageTitle === "tenaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-personnel";
+      } else if (this.pageTitle === "peserta-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-participants";
+      } else if (this.pageTitle === "penyelenggara-magang") {
+        url = import.meta.env.VITE_API_URL + "/total-internship-organizers";
+      } else if (this.pageTitle === "peserta-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprentices";
+      } else if (this.pageTitle === "program-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs";
+      } else if (this.pageTitle === "instruktur") {
+        url = import.meta.env.VITE_API_URL + "/total-instructors";
+      }
+
+      axios.get(url, config).then((response) => {
+        console.log('total', response.data.data);
+        if (response.data.success) {
+          this.totalDataDuplicated = response.data.data.toLocaleString();
+        }
+      });
+    },
+  },
+
+  mounted() {
+    this.loadTotalData();
+    this.loadTotalDataUnprocessed();
+    this.loadTotalDataProcessed();
+    this.loadTotalDataEliminated();
+    this.loadTotalDataDuplicated();
+  },
+};
 </script>

@@ -20,8 +20,6 @@ import "leaflet-fullscreen";
 import "@coreui/coreui/dist/css/coreui.min.css";
 
 import router from "@/router/index.js";
-
-import * as L from "leaflet";
 import "leaflet.markercluster/dist/leaflet.markercluster.js";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
@@ -31,7 +29,7 @@ import "leaflet.fullscreen/Control.FullScreen.js";
 import "typeface-poppins";
 import "@/index.css";
 import App from "@/App.vue";
-
+import { Table } from 'ant-design-vue';
 
 Maps(Highcharts);
 Accessibility(Highcharts);
@@ -43,5 +41,6 @@ createApp(App)
   .use(router)
   .use(VueSweetalert2)
   .use(Antd)
+  .use(Table)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app");

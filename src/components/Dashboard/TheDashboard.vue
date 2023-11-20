@@ -292,19 +292,20 @@
 
 <script>
 import axios from "axios";
-import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
-import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
-import PersentaseTingkatPencariKerjaPadaLPK from "./PersentaseTingkatPencariKerjaPadaLPK.vue";
-import KapasitasLPK from "./KapasitasLPK.vue";
-import TrenJumlahKategoriProgramPelatihan from "./TrenJumlahKategoriProgramPelatihan.vue";
-import ProgramPelatihanBanyakDiminati from "./ProgramPelatihanBanyakDiminati.vue";
-import TrenJumlahPesertaPemagangan from "./TrenJumlahPesertaPemagangan.vue";
-import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
-import FilterKapasitasPPKProvinsi from "../Shared/FilterKapasitasPPKProvinsi.vue";
-import FilterProgramPelatihanProvinsi from "../Shared/FilterProgramPelatihanProvinsi.vue";
+import * as L from "leaflet";
 import { DatePicker } from 'ant-design-vue';
-import { SyncOutlined } from '@ant-design/icons-vue';
+import KapasitasLPK from "./KapasitasLPK.vue";
 import Particles from '../Shared/Particles.vue';
+import { SyncOutlined } from '@ant-design/icons-vue';
+import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
+import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
+import TrenJumlahPesertaPemagangan from "./TrenJumlahPesertaPemagangan.vue";
+import ProgramPelatihanBanyakDiminati from "./ProgramPelatihanBanyakDiminati.vue";
+import FilterKapasitasPPKProvinsi from "../Shared/FilterKapasitasPPKProvinsi.vue";
+import TrenJumlahKategoriProgramPelatihan from "./TrenJumlahKategoriProgramPelatihan.vue";
+import FilterProgramPelatihanProvinsi from "../Shared/FilterProgramPelatihanProvinsi.vue";
+import PersentaseTingkatPencariKerjaPadaLPK from "./PersentaseTingkatPencariKerjaPadaLPK.vue";
+import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
 import { 
   COffcanvas, 
   COffcanvasHeader, 
@@ -312,25 +313,25 @@ import {
   COffcanvasBody } from '@coreui/vue';
 export default {
   name: "TheDashboard",
-    components: {
-      TingkatAkreditasiLembagaPelatihanKerja,
-      PersentaseTingkatPencariKerjaPadaLPK,
-      KapasitasLPK,
-      JumlahLembagaPelatihanKerja,
-      ProduktifitasTenagaKerja,
-      TrenJumlahKategoriProgramPelatihan,
-      ProgramPelatihanBanyakDiminati,
-      TrenJumlahPesertaPemagangan,
-      FilterKapasitasPPKProvinsi,
-      FilterProgramPelatihanProvinsi,
-      DatePicker,
-      COffcanvas,
-      COffcanvasBody,
-      COffcanvasTitle,
-      COffcanvasHeader,
-      SyncOutlined,
-      Particles
-    },
+  components: {
+    Particles,
+    DatePicker,
+    COffcanvas,
+    KapasitasLPK,
+    SyncOutlined,
+    COffcanvasBody,
+    COffcanvasTitle,
+    COffcanvasHeader,
+    ProduktifitasTenagaKerja,
+    FilterKapasitasPPKProvinsi,
+    JumlahLembagaPelatihanKerja,
+    TrenJumlahPesertaPemagangan,
+    ProgramPelatihanBanyakDiminati,
+    FilterProgramPelatihanProvinsi,
+    TrenJumlahKategoriProgramPelatihan,
+    PersentaseTingkatPencariKerjaPadaLPK,
+    TingkatAkreditasiLembagaPelatihanKerja,
+  },
 
   data() {
     return {

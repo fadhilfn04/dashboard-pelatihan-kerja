@@ -38,29 +38,8 @@
                   <router-link to="/dashboard">Dashboard</router-link>
                 </a-menu-item>
                 <a-sub-menu key="dashboardAktifitasETL" title="Dashboard Aktifitas ETL">
-                  <a-menu-item>
-                    <router-link to="/dashboard-etl">Profil Lembaga Pelatihan</router-link>
-                  </a-menu-item>
-                  <a-menu-item>
-                    <router-link to="/dashboard-etl">Profil Program Pelatihan</router-link>
-                  </a-menu-item>
-                  <a-menu-item>
-                    <router-link to="/dashboard-etl">Profil Tenaga Pelatihan</router-link>
-                  </a-menu-item>
-                  <a-menu-item>
-                    <router-link to="/dashboard-etl">Profil Peserta Pelatihan</router-link>
-                  </a-menu-item>
-                  <a-menu-item>
-                    <router-link to="/dashboard-etl">Profil Penyelenggara Magang</router-link>
-                  </a-menu-item>
-                  <a-menu-item>
-                    <router-link to="/dashboard-etl">Profil Peserta Pemagangan</router-link>
-                  </a-menu-item>
-                  <a-menu-item>
-                    <router-link to="/dashboard-etl">Profil Program Pemagangan</router-link>
-                  </a-menu-item>
-                  <a-menu-item>
-                    <router-link to="/dashboard-etl">Profil Instruktur</router-link>
+                  <a-menu-item v-for="route in dashboardETLRoutes" :key="route.name">
+                    <router-link :to="route.to">{{ route.title }}</router-link>
                   </a-menu-item>
                 </a-sub-menu>
                 <a-menu-item>
@@ -116,6 +95,20 @@ export default {
       url: "/",
       isDropdownOpen: false,
     };
+  },
+  computed: {
+    dashboardETLRoutes() {
+      return [
+        { name: 'Dashboard ETL Lembaga Pelatihan', title: 'Profil Lembaga Pelatihan', to: '/dashboard-etl/lembaga-pelatihan' },
+        { name: 'Dashboard ETL Program Pelatihan', title: 'Profil Program Pelatihan', to: '/dashboard-etl/program-pelatihan' },
+        { name: 'Dashboard ETL Tenaga Pelatihan', title: 'Profil Tenaga Pelatihan', to: '/dashboard-etl/tenaga-pelatihan' },
+        { name: 'Dashboard ETL Peserta Pelatihan', title: 'Profil Peserta Pelatihan', to: '/dashboard-etl/peserta-pelatihan' },
+        { name: 'Dashboard ETL Penyelenggara Magang', title: 'Profil Penyelenggara Magang', to: '/dashboard-etl/penyelenggara-magang' },
+        { name: 'Dashboard ETL Peserta Pemagangan', title: 'Profil Peserta Pemagangan', to: '/dashboard-etl/peserta-pemagangan' },
+        { name: 'Dashboard ETL Program Pemagangan', title: 'Profil Program Pemagangan', to: '/dashboard-etl/program-pemagangan' },
+        { name: 'Dashboard ETL Instruktur', title: 'Instruktur', to: '/dashboard-etl/instruktur' },
+      ];
+    },
   },
   methods: {
     showAlert() {
