@@ -1,4 +1,5 @@
 <template>
+  <LoadingSpinner v-if="isLoading" />
   <particles></particles>
   <div class="w-full rounded-lg border border-gray-200 bg-white shadow">
     <div class="p-5">
@@ -297,6 +298,7 @@ import { DatePicker } from 'ant-design-vue';
 import KapasitasLPK from "./KapasitasLPK.vue";
 import Particles from '../Shared/Particles.vue';
 import { SyncOutlined } from '@ant-design/icons-vue';
+import LoadingSpinner from '@/components/Shared/LoadingSpinner.vue';
 import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
 import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
 import TrenJumlahPesertaPemagangan from "./TrenJumlahPesertaPemagangan.vue";
@@ -320,6 +322,7 @@ export default {
     KapasitasLPK,
     SyncOutlined,
     COffcanvasBody,
+    LoadingSpinner,
     COffcanvasTitle,
     COffcanvasHeader,
     ProduktifitasTenagaKerja,
@@ -341,7 +344,6 @@ export default {
       trainingCapacityValue: '',
       key: '',
       limitData: 100,
-      isLoading: true,
       isDisable: true,
       isMaker: null,
       networkNodes: [],
@@ -353,6 +355,7 @@ export default {
       isOpenDetail: false,
       visible: false,
       allRepo: [],
+      isLoading: false,
 
       filterKapasitasPPKProvinsi                        : "/recap-capacity-ppk",
       filterTrenJumlahKategoriProgramPelatihan          : "/recap-trends-number-training-program-categories",
@@ -400,8 +403,6 @@ export default {
       )
         .then((res) => res.json())
         .then((data) => data.data)
-
-      this.isLoading = false
     },
 
     onProvinceChange(value) {
@@ -617,6 +618,7 @@ export default {
     // },
 
     async getInstitution() {
+      this.isLoading = true;
       const token = JSON.parse(localStorage.getItem("token"));
       var allRepo = await fetch(
         import.meta.env.VITE_API_URL + '/repositories',
@@ -639,6 +641,7 @@ export default {
       )
         .then((res) => res.json())
         .then((data) => data.features)
+        this.isLoading = false;
       return b
     },
 

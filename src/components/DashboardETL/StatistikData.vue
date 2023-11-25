@@ -18,6 +18,7 @@ export default {
   name: "StatistikData",
   data() {
     return {
+      pageTitle   : "",
       chartOptions: {
         chart: {
           type: "column",
@@ -29,12 +30,6 @@ export default {
           categories: [
             "Upload",
             "Database",
-            // "BLKLN",
-            // "Lembaga Pelatihan K/L",
-            // "BLK UPTD",
-            // "BLK UPTP",
-            // "LPK PERUSAHAAN",
-            // "SKPD",
           ],
         },
         yAxis: {
@@ -73,7 +68,9 @@ export default {
       },
     };
   },
-
+  created() {
+    this.pageTitle = this.$route.params.title;
+  },
   mounted() {
     this.loadData();
   },
@@ -81,28 +78,40 @@ export default {
   methods: {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
-      axios
-        .get(import.meta.env.VITE_API_URL + "/total-recap-lpk", {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        })
-        .then((response) => {
-          if (response.data) {
-            const data = [
-              response.data.data.LPK_SWASTA,
-              response.data.data.BLK_KOMUNITAS,
-              // response.data.data.BLKLN,
-              // response.data.data.LEMBAGA_PELATIHAN_KL,
-              // response.data.data.BLK_UPTD,
-              // response.data.data.BLK_UPTP,
-              // response.data.data.LPK_PERUSAHAAN,
-              // response.data.data.SKPD,
-            ];
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      };
 
+      let url = "";
+      if (this.pageTitle === "lembaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-institutions";
+      } else if (this.pageTitle === "program-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-program";
+      } else if (this.pageTitle === "tenaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-personnel";
+      } else if (this.pageTitle === "peserta-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-participants";
+      } else if (this.pageTitle === "penyelenggara-magang") {
+        url = import.meta.env.VITE_API_URL + "/total-internship-organizers";
+      } else if (this.pageTitle === "peserta-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprentices";
+      } else if (this.pageTitle === "program-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs";
+      } else if (this.pageTitle === "instruktur") {
+        url = import.meta.env.VITE_API_URL + "/total-instructors";
+      }
+
+      axios.get(url, config).then((response) => {
+        if (response.data) {
+            const data = [
+              response.data.data,
+              response.data.data,
+            ];
             this.chartOptions.series[0].data = data;
           }
-        });
+      });
     },
   },
 };

@@ -1,4 +1,5 @@
 <template>
+  <LoadingSpinner v-if="isLoading" />
   <particles></particles>
   <div class="grid grid-cols-10 gap-8">
     <div class="col-span-2">
@@ -142,27 +143,27 @@
           </h5>
           <div class="d-flex align-items-center mt-4">
             <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-green-200 font-medium text-green-500 px-1 py-2.5">DATA</span>
+              <span class="inline-flex items-center rounded-md bg-green-200 font-medium text-green-500 px-2.5 py-2.5">EX</span>
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-green-500">
                 {{ totalData }}
               </h5>
               <h5 class="text-lg tracking-tight text-green-500">
-                EXCEL
+                Excel
               </h5>
             </div>
           </div>
           <div class="d-flex align-items-center mt-3">
             <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-green-200 font-medium text-green-500 px-1 py-2.5">DATA</span>
+              <span class="inline-flex items-center rounded-md bg-green-200 font-medium text-green-500 px-2.5 py-2.5">SK</span>
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-green-500">
                 {{ totalData }}
               </h5>
               <h5 class="text-lg tracking-tight text-green-500">
-                DATABASE
+                Siap Kerja
               </h5>
             </div>
           </div>
@@ -178,27 +179,27 @@
           </h5>
           <div class="d-flex align-items-center mt-4">
             <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-yellow-200 font-medium text-yellow-500 px-1 py-2.5">DATA</span>
+              <span class="inline-flex items-center rounded-md bg-yellow-200 font-medium text-yellow-500 px-2.5 py-2.5">EX</span>
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-yellow-500">
                 {{ totalDataUnprocessed }}
               </h5>
               <h5 class="text-lg tracking-tight text-yellow-500">
-                EXCEL
+                Excel
               </h5>
             </div>
           </div>
           <div class="d-flex align-items-center mt-3">
             <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-yellow-200 font-medium text-yellow-500 px-1 py-2.5">DATA</span>
+              <span class="inline-flex items-center rounded-md bg-yellow-200 font-medium text-yellow-500 px-2.5 py-2.5">SK</span>
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-yellow-500">
                 {{ totalDataUnprocessed }}
               </h5>
               <h5 class="text-lg tracking-tight text-yellow-500">
-                DATABASE
+                Siap Kerja
               </h5>
             </div>
           </div>
@@ -214,27 +215,27 @@
           </h5>
           <div class="d-flex align-items-center mt-4">
             <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-blue-200 font-medium text-blue-500 px-1 py-2.5">DATA</span>
+              <span class="inline-flex items-center rounded-md bg-blue-200 font-medium text-blue-500 px-2.5 py-2.5">EX</span>
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-blue-500">
                 {{ totalDataProcessed }}
               </h5>
               <h5 class="text-lg tracking-tight text-blue-500">
-                EXCEL
+                Excel
               </h5>
             </div>
           </div>
           <div class="d-flex align-items-center mt-3">
             <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-blue-200 font-medium text-blue-500 px-1 py-2.5">DATA</span>
+              <span class="inline-flex items-center rounded-md bg-blue-200 font-medium text-blue-500 px-2.5 py-2.5">SK</span>
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-blue-500">
                 {{ totalDataProcessed }}
               </h5>
               <h5 class="text-lg tracking-tight text-blue-500">
-                DATABASE
+                Siap Kerja
               </h5>
             </div>
           </div>
@@ -250,27 +251,27 @@
           </h5>
           <div class="d-flex align-items-center mt-4">
             <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-red-200 font-medium text-red-500 px-1 py-2.5">DATA</span>
+              <span class="inline-flex items-center rounded-md bg-red-200 font-medium text-red-500 px-2.5 py-2.5">EX</span>
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-red-500">
                 {{ totalDataEliminated }}
               </h5>
               <h5 class="text-lg tracking-tight text-red-500">
-                EXCEL
+                Excel
               </h5>
             </div>
           </div>
           <div class="d-flex align-items-center mt-3">
             <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-red-200 font-medium text-red-500 px-1 py-2.5">DATA</span>
+              <span class="inline-flex items-center rounded-md bg-red-200 font-medium text-red-500 px-2.5 py-2.5">SK</span>
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-red-500">
                 {{ totalDataEliminated }}
               </h5>
               <h5 class="text-lg tracking-tight text-red-500">
-                DATABASE
+                Siap Kerja
               </h5>
             </div>
           </div>
@@ -286,27 +287,27 @@
           </h5>
           <div class="d-flex align-items-center mt-4">
             <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-orange-200 font-medium text-orange-500 px-1 py-2.5">DATA</span>
+              <span class="inline-flex items-center rounded-md bg-orange-200 font-medium text-orange-500 px-2.5 py-2.5">EX</span>
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-orange-500">
                 {{ totalDataDuplicated }}
               </h5>
               <h5 class="text-lg tracking-tight text-orange-500">
-                EXCEL
+                Excel
               </h5>
             </div>
           </div>
           <div class="d-flex align-items-center mt-3">
             <div class="mr-3">
-              <span class="inline-flex items-center rounded-md bg-orange-200 font-medium text-orange-500 px-1 py-2.5">DATA</span>
+              <span class="inline-flex items-center rounded-md bg-orange-200 font-medium text-orange-500 px-2.5 py-2.5">SK</span>
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-orange-500">
                 {{ totalDataDuplicated }}
               </h5>
               <h5 class="text-lg tracking-tight text-orange-500">
-                DATABASE
+                Siap Kerja
               </h5>
             </div>
           </div>
@@ -333,17 +334,19 @@
 import axios from "axios";
 import StatistikData from "./StatistikData.vue";
 import Particles from '../Shared/Particles.vue';
+import LoadingSpinner from '@/components/Shared/LoadingSpinner.vue';
 
 export default {
   name: "DashboardETL",
   data() {
     return {
-      pageTitle                             : "",
-      totalData                             : "",
-      totalDataUnprocessed                  : "",
-      totalDataProcessed                    : "",
-      totalDataEliminated                   : "",
-      totalDataDuplicated                   : "",
+      isLoading             : true,
+      pageTitle             : "",
+      totalData             : "",
+      totalDataUnprocessed  : "",
+      totalDataProcessed    : "",
+      totalDataEliminated   : "",
+      totalDataDuplicated   : "",
     };
   },
   created() {
@@ -352,9 +355,10 @@ export default {
   components: {
     StatistikData,
     Particles,
+    LoadingSpinner,
   },
   methods: {
-    loadTotalData() {
+    async loadTotalData() {
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: {
@@ -381,14 +385,15 @@ export default {
         url = import.meta.env.VITE_API_URL + "/total-instructors";
       }
 
-      axios.get(url, config).then((response) => {
-        console.log('total', response.data.data);
-        if (response.data.success) {
+      return axios.get(url, config).then((response) => {
+        if (response.data.success && response.data.data > 0) {
           this.totalData = response.data.data.toLocaleString();
+        } else {
+          this.totalData = 0;
         }
       });
     },
-    loadTotalDataUnprocessed() {
+    async loadTotalDataUnprocessed() {
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: {
@@ -400,29 +405,30 @@ export default {
       if (this.pageTitle === "lembaga-pelatihan") {
         url = import.meta.env.VITE_API_URL + "/total-training-institutions-unprocessed";
       } else if (this.pageTitle === "program-pelatihan") {
-        url = import.meta.env.VITE_API_URL + "/total-training-program";
+        url = import.meta.env.VITE_API_URL + "/total-training-program-unprocessed";
       } else if (this.pageTitle === "tenaga-pelatihan") {
-        url = import.meta.env.VITE_API_URL + "/total-training-personnel";
+        url = import.meta.env.VITE_API_URL + "/total-training-personnel-unprocessed";
       } else if (this.pageTitle === "peserta-pelatihan") {
-        url = import.meta.env.VITE_API_URL + "/total-training-participants";
+        url = import.meta.env.VITE_API_URL + "/total-training-participants-unprocessed";
       } else if (this.pageTitle === "penyelenggara-magang") {
-        url = import.meta.env.VITE_API_URL + "/total-internship-organizers";
+        url = import.meta.env.VITE_API_URL + "/total-internship-organizers-unprocessed";
       } else if (this.pageTitle === "peserta-pemagangan") {
-        url = import.meta.env.VITE_API_URL + "/total-apprentices";
+        url = import.meta.env.VITE_API_URL + "/total-apprentices-unprocessed";
       } else if (this.pageTitle === "program-pemagangan") {
-        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs";
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs-unprocessed";
       } else if (this.pageTitle === "instruktur") {
-        url = import.meta.env.VITE_API_URL + "/total-instructors";
+        url = import.meta.env.VITE_API_URL + "/total-instructors-unprocessed";
       }
 
-      axios.get(url, config).then((response) => {
-        console.log('total', response.data.data);
-        if (response.data.success) {
+      return axios.get(url, config).then((response) => {
+        if (response.data.success && response.data.data > 0) {
           this.totalDataUnprocessed = response.data.data.toLocaleString();
+        } else {
+          this.totalDataUnprocessed = 0;
         }
       });
     },
-    loadTotalDataProcessed() {
+    async loadTotalDataProcessed() {
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: {
@@ -434,29 +440,30 @@ export default {
       if (this.pageTitle === "lembaga-pelatihan") {
         url = import.meta.env.VITE_API_URL + "/total-training-institutions-processed";
       } else if (this.pageTitle === "program-pelatihan") {
-        url = import.meta.env.VITE_API_URL + "/total-training-program";
+        url = import.meta.env.VITE_API_URL + "/total-training-program-processed";
       } else if (this.pageTitle === "tenaga-pelatihan") {
-        url = import.meta.env.VITE_API_URL + "/total-training-personnel";
+        url = import.meta.env.VITE_API_URL + "/total-training-personnel-processed";
       } else if (this.pageTitle === "peserta-pelatihan") {
-        url = import.meta.env.VITE_API_URL + "/total-training-participants";
+        url = import.meta.env.VITE_API_URL + "/total-training-participants-processed";
       } else if (this.pageTitle === "penyelenggara-magang") {
-        url = import.meta.env.VITE_API_URL + "/total-internship-organizers";
+        url = import.meta.env.VITE_API_URL + "/total-internship-organizers-processed";
       } else if (this.pageTitle === "peserta-pemagangan") {
-        url = import.meta.env.VITE_API_URL + "/total-apprentices";
+        url = import.meta.env.VITE_API_URL + "/total-apprentices-processed";
       } else if (this.pageTitle === "program-pemagangan") {
-        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs";
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs-processed";
       } else if (this.pageTitle === "instruktur") {
-        url = import.meta.env.VITE_API_URL + "/total-instructors";
+        url = import.meta.env.VITE_API_URL + "/total-instructors-processed";
       }
 
-      axios.get(url, config).then((response) => {
-        console.log('total', response.data.data);
-        if (response.data.success) {
+      return axios.get(url, config).then((response) => {
+        if (response.data.success && response.data.data > 0) {
           this.totalDataProcessed = response.data.data.toLocaleString();
+        } else {
+          this.totalDataProcessed = 0;
         }
       });
     },
-    loadTotalDataEliminated() {
+    async loadTotalDataEliminated() {
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: {
@@ -468,29 +475,30 @@ export default {
       if (this.pageTitle === "lembaga-pelatihan") {
         url = import.meta.env.VITE_API_URL + "/total-training-institutions-eliminated";
       } else if (this.pageTitle === "program-pelatihan") {
-        url = import.meta.env.VITE_API_URL + "/total-training-program";
+        url = import.meta.env.VITE_API_URL + "/total-training-program-eliminated";
       } else if (this.pageTitle === "tenaga-pelatihan") {
-        url = import.meta.env.VITE_API_URL + "/total-training-personnel";
+        url = import.meta.env.VITE_API_URL + "/total-training-personnel-eliminated";
       } else if (this.pageTitle === "peserta-pelatihan") {
-        url = import.meta.env.VITE_API_URL + "/total-training-participants";
+        url = import.meta.env.VITE_API_URL + "/total-training-participants-eliminated";
       } else if (this.pageTitle === "penyelenggara-magang") {
-        url = import.meta.env.VITE_API_URL + "/total-internship-organizers";
+        url = import.meta.env.VITE_API_URL + "/total-internship-organizers-eliminated";
       } else if (this.pageTitle === "peserta-pemagangan") {
-        url = import.meta.env.VITE_API_URL + "/total-apprentices";
+        url = import.meta.env.VITE_API_URL + "/total-apprentices-eliminated";
       } else if (this.pageTitle === "program-pemagangan") {
-        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs";
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs-eliminated";
       } else if (this.pageTitle === "instruktur") {
-        url = import.meta.env.VITE_API_URL + "/total-instructors";
+        url = import.meta.env.VITE_API_URL + "/total-instructors-eliminated";
       }
 
-      axios.get(url, config).then((response) => {
-        console.log('total', response.data.data);
-        if (response.data.success) {
+      return axios.get(url, config).then((response) => {
+        if (response.data.success && response.data.data > 0) {
           this.totalDataEliminated = response.data.data.toLocaleString();
+        } else {
+          this.totalDataEliminated = 0;
         }
       });
     },
-    loadTotalDataDuplicated() {
+    async loadTotalDataDuplicated() {
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: {
@@ -502,36 +510,45 @@ export default {
       if (this.pageTitle === "lembaga-pelatihan") {
         url = import.meta.env.VITE_API_URL + "/total-training-institutions-duplicated";
       } else if (this.pageTitle === "program-pelatihan") {
-        url = import.meta.env.VITE_API_URL + "/total-training-program";
+        url = import.meta.env.VITE_API_URL + "/total-training-program-duplicated";
       } else if (this.pageTitle === "tenaga-pelatihan") {
-        url = import.meta.env.VITE_API_URL + "/total-training-personnel";
+        url = import.meta.env.VITE_API_URL + "/total-training-personnel-duplicated";
       } else if (this.pageTitle === "peserta-pelatihan") {
-        url = import.meta.env.VITE_API_URL + "/total-training-participants";
+        url = import.meta.env.VITE_API_URL + "/total-training-participants-duplicated";
       } else if (this.pageTitle === "penyelenggara-magang") {
-        url = import.meta.env.VITE_API_URL + "/total-internship-organizers";
+        url = import.meta.env.VITE_API_URL + "/total-internship-organizers-duplicated";
       } else if (this.pageTitle === "peserta-pemagangan") {
-        url = import.meta.env.VITE_API_URL + "/total-apprentices";
+        url = import.meta.env.VITE_API_URL + "/total-apprentices-duplicated";
       } else if (this.pageTitle === "program-pemagangan") {
-        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs";
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs-duplicated";
       } else if (this.pageTitle === "instruktur") {
-        url = import.meta.env.VITE_API_URL + "/total-instructors";
+        url = import.meta.env.VITE_API_URL + "/total-instructors-duplicated";
       }
 
-      axios.get(url, config).then((response) => {
-        console.log('total', response.data.data);
-        if (response.data.success) {
+      return axios.get(url, config).then((response) => {
+        if (response.data.success && response.data.data > 0) {
           this.totalDataDuplicated = response.data.data.toLocaleString();
+        } else {
+          this.totalDataDuplicated = 0;
         }
       });
     },
   },
-
+  watch: {
+    $route(to, from) {
+      window.location.reload();
+    },
+  },
   mounted() {
-    this.loadTotalData();
-    this.loadTotalDataUnprocessed();
-    this.loadTotalDataProcessed();
-    this.loadTotalDataEliminated();
-    this.loadTotalDataDuplicated();
+    Promise.all([
+      this.loadTotalData(),
+      this.loadTotalDataUnprocessed(),
+      this.loadTotalDataProcessed(),
+      this.loadTotalDataEliminated(),
+      this.loadTotalDataDuplicated(),
+    ]).then(() => {
+      this.isLoading = false;
+    });
   },
 };
 </script>

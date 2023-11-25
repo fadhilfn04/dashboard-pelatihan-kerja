@@ -41,10 +41,16 @@
               <td class="px-6 py-4">{{ lfp.upload_started }}</td>
               <td class="px-6 py-4">{{ lfp.upload_finished }}</td>
               <td class="px-6 py-4">
-                <span
-                  class="mr-2 rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300"
-                  >Finished</span
-                >
+                <div v-if="lfp.upload_started != null && lfp.upload_finished == null">
+                  <span class="mr-2 rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
+                    Uploading
+                  </span>
+                </div>
+                <div v-if="lfp.upload_started != null && lfp.upload_finished !== null">
+                  <span class="mr-2 rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300">
+                    Uploaded
+                  </span>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -86,10 +92,18 @@
   </Modal>
 </template>
 
+<style>
+  .excelAlert {
+    width: 400px;
+    height: 400px;
+    font-size: small;
+  }
+</style>
+
 <script>
-import { Modal, Alert } from "flowbite-vue";
 import { ref } from "vue";
 import axios from "axios";
+import { Modal, Alert } from "flowbite-vue";
 
 export default {
   name: "UploadManagement",
@@ -100,13 +114,13 @@ export default {
       DOWNLOAD_TEMPLATE_ENDPOINT: '/download-template-source-data',
       UPLOAD_TEMPLATE_SOURCE_DATA_ENDPOINT: '/upload-template-source-data',
       LOG_UPLOAD_SOURCE_DATA_ENDPOINT: '/log-upload-source-data',
-      logUploads: []
+      logUploads: [],
     };
   },
 
   components: {
     Modal,
-    Alert
+    Alert,
   },
 
   setup() {
@@ -166,6 +180,7 @@ export default {
       let alertDivMessage;
 
       if (ext == 'xlsx') {
+        this.isLoading = true;
         axios.post(this.API_URL + this.UPLOAD_TEMPLATE_SOURCE_DATA_ENDPOINT, {
           file: uploadedFile,
         }, {
@@ -174,6 +189,18 @@ export default {
             'Content-Type': 'multipart/form-data'
           },
         })
+        .catch((error) => {
+          this.$swal.fire ({
+            title: "Excel tidak terupload! Pastikan keseluruhan data pada excel sudah sesuai dengan contoh format yang diberikan.",
+            icon: "error",
+            showCancelButton: false,
+            showConfirmButton: false,
+            customClass: {
+              popup: 'excelAlert'
+            },
+          })
+          console.log(error);
+        });
 
         alertDivContainer = document.getElementById("alert-info-container");
         alertDiv = document.getElementById("alert-info");
@@ -187,11 +214,11 @@ export default {
       else {
         alertDivContainer = document.getElementById("alert-fail-container");
         alertDiv = document.getElementById("alert-fail");
-
+        
         alertDivContainer.style.display = "block";
         alertDivMessage = alertDiv.getElementsByClassName("ml-3")[0];
         alertDivMessage.innerHTML = 'Maaf Anda hanya dapat mengupload file dengan tipe XLSX sesuai dengan template yang sudah disediakan';
-
+        
         document.getElementById("form").reset();
       }
     }

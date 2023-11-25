@@ -20,10 +20,10 @@
           <p><span class="font-semibold">Nama:</span> {{ searchedProfile.nama }} </p>
           <p><span class="font-semibold">Tanggal Lulus Pelatihan Terakhir:</span> {{ searchedProfile.lulusTerakhir }} </p>
 
-          <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span> {{ companyData.namaPerusahaanBekerjaTerakhir }} </p>
+          <!-- <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span> {{ companyData.namaPerusahaanBekerjaTerakhir }} </p>
           <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span> {{ companyData.alamatPerusahaanBekerjaTerakhir }} </p>
           <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span> {{ companyData.tanggalMulaiBekerjaTerakhir }} </p>
-          <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ companyData.masihBekerjaTerakhir }} </p>
+          <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ companyData.masihBekerjaTerakhir }} </p> -->
 
           <p><span class="font-semibold">Masa Tunggu Lulus Bekerja:</span> {{ searchedProfile.masaTunggu }} </p>
         </div>
@@ -34,7 +34,6 @@
           :columns="trainingProgramsColumns" 
           :dataSource="searchedTrainingPrograms" 
           :pagination="pagination"
-          :loading="loading"
           bordered>
         </a-table>
         <div class="p-6 border-b-2">
@@ -44,7 +43,6 @@
           :columns="apprenticeProgramsColumns" 
           :dataSource="searchedApprenticePrograms" 
           :pagination="pagination"
-          :loading="loading"
           bordered>
         </a-table>
       </div>
@@ -120,6 +118,7 @@ export default {
           popup: 'nikAlert'
         },
       });
+      this.searchedProfile = null;
       // window.location.reload();
     },
     systemErrorAlert() {
