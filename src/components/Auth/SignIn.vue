@@ -100,7 +100,9 @@ export default {
             expiredAt: Date.now()+(60*60*1000)
           }));
           localStorage.setItem("email", this.username);
-          this.$router.push("/dashboard");
+          const redirect = this.$route.query.redirect;
+          const redirectPath = redirect ? decodeURIComponent(redirect) : "/dashboard";
+          this.$router.push(redirectPath);
           return true;
         }else {
           this.loginError = true;
@@ -118,7 +120,7 @@ export default {
           this.loginError = true;
           return true;
         }
-      });
+      }); 
     },
   },
 };

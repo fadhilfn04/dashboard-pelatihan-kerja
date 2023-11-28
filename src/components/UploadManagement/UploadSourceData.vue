@@ -12,8 +12,8 @@
       </button>
     </div>
     <div class="p-6">
+      <div class="text-sm mb-6">Total sumber data yang sudah diupload: <strong>{{ logUploads.length }}</strong></div>
       <div class="relative overflow-x-auto">
-        <div class="text-sm mb-6">Total sumber data yang sudah diupload: <strong>{{ logUploads.length }}</strong></div>
         <table class="w-full text-left text-sm text-gray-500">
           <thead class="bg-gray-50 text-xs uppercase text-gray-700">
             <tr>
@@ -41,12 +41,12 @@
               <td class="px-6 py-4">{{ lfp.upload_started }}</td>
               <td class="px-6 py-4">{{ lfp.upload_finished }}</td>
               <td class="px-6 py-4">
-                <div v-if="lfp.upload_started != null && lfp.upload_finished == null">
+                <div v-if="lfp.status === 'Started'">
                   <span class="mr-2 rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
                     Uploading
                   </span>
                 </div>
-                <div v-if="lfp.upload_started != null && lfp.upload_finished !== null">
+                <div v-if="lfp.status === 'Finished'">
                   <span class="mr-2 rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300">
                     Uploaded
                   </span>
@@ -180,7 +180,6 @@ export default {
       let alertDivMessage;
 
       if (ext == 'xlsx') {
-        this.isLoading = true;
         axios.post(this.API_URL + this.UPLOAD_TEMPLATE_SOURCE_DATA_ENDPOINT, {
           file: uploadedFile,
         }, {
@@ -199,7 +198,6 @@ export default {
               popup: 'excelAlert'
             },
           })
-          console.log(error);
         });
 
         alertDivContainer = document.getElementById("alert-info-container");
