@@ -19,7 +19,7 @@
             </g>
           </svg>
           <h5 class="text-lg font-medium tracking-tight text-green-500">
-            {{ totalData }}
+            {{ totalDataEX + totalDataSK }}
           </h5>
           <h5 class="text-lg tracking-tight text-green-500">
             Data Total
@@ -45,7 +45,7 @@
             </g>
           </svg>
           <h5 class="text-lg font-medium tracking-tight text-yellow-500">
-            {{ totalDataUnprocessed }}
+            {{ totalDataEXUnprocessed + totalDataSKUnprocessed }}
           </h5>
           <h5 class="text-lg tracking-tight text-yellow-500">
             Data Belum Diproses
@@ -71,7 +71,7 @@
             </g>
           </svg>
           <h5 class="text-lg font-medium tracking-tight text-blue-500">
-            {{ totalDataProcessed }}
+            {{ totalDataEXProcessed + totalDataSKProcessed }}
           </h5>
           <h5 class="text-lg tracking-tight text-blue-500">
             Data Berhasil Diproses
@@ -97,7 +97,7 @@
             </g>
           </svg>
           <h5 class="text-lg font-medium tracking-tight text-red-500">
-            {{ totalDataEliminated }}
+            {{ totalDataEXEliminated + totalDataSKEliminated }}
           </h5>
           <h5 class="text-lg tracking-tight text-red-500">
             Data Tereliminasi
@@ -124,7 +124,7 @@
             </g>
           </svg>
           <h5 class="text-lg font-medium tracking-tight text-orange-500">
-            {{ totalDataDuplicated }}
+            {{ totalDataEXDuplicated + totalDataSKDuplicated }}
           </h5>
           <h5 class="text-lg tracking-tight text-orange-500">
             Data Duplikasi
@@ -147,7 +147,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-green-500">
-                {{ totalData }}
+                {{ totalDataEX }}
               </h5>
               <h5 class="text-lg tracking-tight text-green-500">
                 Excel
@@ -160,7 +160,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-green-500">
-                {{ totalData }}
+                {{ totalDataSK }}
               </h5>
               <h5 class="text-lg tracking-tight text-green-500">
                 Siap Kerja
@@ -183,7 +183,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-yellow-500">
-                {{ totalDataUnprocessed }}
+                {{ totalDataEXUnprocessed }}
               </h5>
               <h5 class="text-lg tracking-tight text-yellow-500">
                 Excel
@@ -196,7 +196,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-yellow-500">
-                {{ totalDataUnprocessed }}
+                {{ totalDataSKUnprocessed }}
               </h5>
               <h5 class="text-lg tracking-tight text-yellow-500">
                 Siap Kerja
@@ -219,7 +219,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-blue-500">
-                {{ totalDataProcessed }}
+                {{ totalDataEXProcessed }}
               </h5>
               <h5 class="text-lg tracking-tight text-blue-500">
                 Excel
@@ -232,7 +232,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-blue-500">
-                {{ totalDataProcessed }}
+                {{ totalDataSKProcessed }}
               </h5>
               <h5 class="text-lg tracking-tight text-blue-500">
                 Siap Kerja
@@ -255,7 +255,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-red-500">
-                {{ totalDataEliminated }}
+                {{ totalDataEXEliminated }}
               </h5>
               <h5 class="text-lg tracking-tight text-red-500">
                 Excel
@@ -268,7 +268,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-red-500">
-                {{ totalDataEliminated }}
+                {{ totalDataSKEliminated }}
               </h5>
               <h5 class="text-lg tracking-tight text-red-500">
                 Siap Kerja
@@ -291,7 +291,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-orange-500">
-                {{ totalDataDuplicated }}
+                {{ totalDataEXDuplicated }}
               </h5>
               <h5 class="text-lg tracking-tight text-orange-500">
                 Excel
@@ -304,7 +304,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-orange-500">
-                {{ totalDataDuplicated }}
+                {{ totalDataSKDuplicated }}
               </h5>
               <h5 class="text-lg tracking-tight text-orange-500">
                 Siap Kerja
@@ -340,13 +340,20 @@ export default {
   name: "DashboardETL",
   data() {
     return {
-      isLoading             : true,
-      pageTitle             : "",
-      totalData             : "",
-      totalDataUnprocessed  : "",
-      totalDataProcessed    : "",
-      totalDataEliminated   : "",
-      totalDataDuplicated   : "",
+      isLoading               : true,
+      pageTitle               : "",
+
+      totalDataEX             : "",
+      totalDataEXUnprocessed  : "",
+      totalDataEXProcessed    : "",
+      totalDataEXEliminated   : "",
+      totalDataEXDuplicated   : "",
+      
+      totalDataSK             : "",
+      totalDataSKUnprocessed  : "",
+      totalDataSKProcessed    : "",
+      totalDataSKEliminated   : "",
+      totalDataSKDuplicated   : "",
     };
   },
   created() {
@@ -358,7 +365,8 @@ export default {
     LoadingSpinner,
   },
   methods: {
-    async loadTotalData() {
+    //EXCEL
+    async loadTotalDataEX() {
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: {
@@ -387,13 +395,13 @@ export default {
 
       return axios.get(url, config).then((response) => {
         if (response.data.success && response.data.data > 0) {
-          this.totalData = response.data.data.toLocaleString();
+          this.totalDataEX = response.data.data;
         } else {
-          this.totalData = 0;
+          this.totalDataEX = 0;
         }
       });
     },
-    async loadTotalDataUnprocessed() {
+    async loadTotalDataEXUnprocessed() {
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: {
@@ -422,13 +430,13 @@ export default {
 
       return axios.get(url, config).then((response) => {
         if (response.data.success && response.data.data > 0) {
-          this.totalDataUnprocessed = response.data.data.toLocaleString();
+          this.totalDataEXUnprocessed = response.data.data;
         } else {
-          this.totalDataUnprocessed = 0;
+          this.totalDataEXUnprocessed = 0;
         }
       });
     },
-    async loadTotalDataProcessed() {
+    async loadTotalDataEXProcessed() {
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: {
@@ -457,13 +465,13 @@ export default {
 
       return axios.get(url, config).then((response) => {
         if (response.data.success && response.data.data > 0) {
-          this.totalDataProcessed = response.data.data.toLocaleString();
+          this.totalDataEXProcessed = response.data.data;
         } else {
-          this.totalDataProcessed = 0;
+          this.totalDataEXProcessed = 0;
         }
       });
     },
-    async loadTotalDataEliminated() {
+    async loadTotalDataEXEliminated() {
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: {
@@ -492,13 +500,13 @@ export default {
 
       return axios.get(url, config).then((response) => {
         if (response.data.success && response.data.data > 0) {
-          this.totalDataEliminated = response.data.data.toLocaleString();
+          this.totalDataEXEliminated = response.data.data;
         } else {
-          this.totalDataEliminated = 0;
+          this.totalDataEXEliminated = 0;
         }
       });
     },
-    async loadTotalDataDuplicated() {
+    async loadTotalDataEXDuplicated() {
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: {
@@ -527,9 +535,186 @@ export default {
 
       return axios.get(url, config).then((response) => {
         if (response.data.success && response.data.data > 0) {
-          this.totalDataDuplicated = response.data.data.toLocaleString();
+          this.totalDataEXDuplicated = response.data.data;
         } else {
-          this.totalDataDuplicated = 0;
+          this.totalDataEXDuplicated = 0;
+        }
+      });
+    },
+
+    //SIAP KERJA
+    async loadTotalDataSK() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      };
+
+      let url = "";
+      if (this.pageTitle === "lembaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-institutions";
+      } else if (this.pageTitle === "program-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-program";
+      } else if (this.pageTitle === "tenaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-personnel";
+      } else if (this.pageTitle === "peserta-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-participants";
+      } else if (this.pageTitle === "penyelenggara-magang") {
+        url = import.meta.env.VITE_API_URL + "/total-internship-organizers";
+      } else if (this.pageTitle === "peserta-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprentices";
+      } else if (this.pageTitle === "program-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs";
+      } else if (this.pageTitle === "instruktur") {
+        url = import.meta.env.VITE_API_URL + "/total-instructors";
+      }
+
+      return axios.get(url, config).then((response) => {
+        if (response.data.success && response.data.data > 0) {
+          this.totalDataSK = response.data.data;
+        } else {
+          this.totalDataSK = 0;
+        }
+      });
+    },
+    async loadTotalDataSKUnprocessed() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      };
+
+      let url = "";
+      if (this.pageTitle === "lembaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-institutions-unprocessed";
+      } else if (this.pageTitle === "program-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-program-unprocessed";
+      } else if (this.pageTitle === "tenaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-personnel-unprocessed";
+      } else if (this.pageTitle === "peserta-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-participants-unprocessed";
+      } else if (this.pageTitle === "penyelenggara-magang") {
+        url = import.meta.env.VITE_API_URL + "/total-internship-organizers-unprocessed";
+      } else if (this.pageTitle === "peserta-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprentices-unprocessed";
+      } else if (this.pageTitle === "program-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs-unprocessed";
+      } else if (this.pageTitle === "instruktur") {
+        url = import.meta.env.VITE_API_URL + "/total-instructors-unprocessed";
+      }
+
+      return axios.get(url, config).then((response) => {
+        if (response.data.success && response.data.data > 0) {
+          this.totalDataSKUnprocessed = response.data.data;
+        } else {
+          this.totalDataSKUnprocessed = 0;
+        }
+      });
+    },
+    async loadTotalDataSKProcessed() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      };
+
+      let url = "";
+      if (this.pageTitle === "lembaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-institutions-processed";
+      } else if (this.pageTitle === "program-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-program-processed";
+      } else if (this.pageTitle === "tenaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-personnel-processed";
+      } else if (this.pageTitle === "peserta-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-participants-processed";
+      } else if (this.pageTitle === "penyelenggara-magang") {
+        url = import.meta.env.VITE_API_URL + "/total-internship-organizers-processed";
+      } else if (this.pageTitle === "peserta-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprentices-processed";
+      } else if (this.pageTitle === "program-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs-processed";
+      } else if (this.pageTitle === "instruktur") {
+        url = import.meta.env.VITE_API_URL + "/total-instructors-processed";
+      }
+
+      return axios.get(url, config).then((response) => {
+        if (response.data.success && response.data.data > 0) {
+          this.totalDataSKProcessed = response.data.data;
+        } else {
+          this.totalDataSKProcessed = 0;
+        }
+      });
+    },
+    async loadTotalDataSKEliminated() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      };
+
+      let url = "";
+      if (this.pageTitle === "lembaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-institutions-eliminated";
+      } else if (this.pageTitle === "program-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-program-eliminated";
+      } else if (this.pageTitle === "tenaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-personnel-eliminated";
+      } else if (this.pageTitle === "peserta-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-participants-eliminated";
+      } else if (this.pageTitle === "penyelenggara-magang") {
+        url = import.meta.env.VITE_API_URL + "/total-internship-organizers-eliminated";
+      } else if (this.pageTitle === "peserta-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprentices-eliminated";
+      } else if (this.pageTitle === "program-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs-eliminated";
+      } else if (this.pageTitle === "instruktur") {
+        url = import.meta.env.VITE_API_URL + "/total-instructors-eliminated";
+      }
+
+      return axios.get(url, config).then((response) => {
+        if (response.data.success && response.data.data > 0) {
+          this.totalDataSKEliminated = response.data.data;
+        } else {
+          this.totalDataSKEliminated = 0;
+        }
+      });
+    },
+    async loadTotalDataSKDuplicated() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      };
+
+      let url = "";
+      if (this.pageTitle === "lembaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-institutions-duplicated";
+      } else if (this.pageTitle === "program-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-program-duplicated";
+      } else if (this.pageTitle === "tenaga-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-personnel-duplicated";
+      } else if (this.pageTitle === "peserta-pelatihan") {
+        url = import.meta.env.VITE_API_URL + "/total-training-participants-duplicated";
+      } else if (this.pageTitle === "penyelenggara-magang") {
+        url = import.meta.env.VITE_API_URL + "/total-internship-organizers-duplicated";
+      } else if (this.pageTitle === "peserta-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprentices-duplicated";
+      } else if (this.pageTitle === "program-pemagangan") {
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs-duplicated";
+      } else if (this.pageTitle === "instruktur") {
+        url = import.meta.env.VITE_API_URL + "/total-instructors-duplicated";
+      }
+
+      return axios.get(url, config).then((response) => {
+        if (response.data.success && response.data.data > 0) {
+          this.totalDataSKDuplicated = response.data.data;
+        } else {
+          this.totalDataSKDuplicated = 0;
         }
       });
     },
@@ -541,11 +726,20 @@ export default {
   },
   mounted() {
     Promise.all([
-      this.loadTotalData(),
-      this.loadTotalDataUnprocessed(),
-      this.loadTotalDataProcessed(),
-      this.loadTotalDataEliminated(),
-      this.loadTotalDataDuplicated(),
+      
+      //EXCEL
+      this.loadTotalDataEX(),
+      this.loadTotalDataEXUnprocessed(),
+      this.loadTotalDataEXProcessed(),
+      this.loadTotalDataEXEliminated(),
+      this.loadTotalDataEXDuplicated(),
+
+      //SIAP KERJA
+      this.loadTotalDataSK(),
+      this.loadTotalDataSKUnprocessed(),
+      this.loadTotalDataSKProcessed(),
+      this.loadTotalDataSKEliminated(),
+      this.loadTotalDataSKDuplicated(),
     ]).then(() => {
       this.isLoading = false;
     });

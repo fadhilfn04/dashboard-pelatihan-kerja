@@ -5,6 +5,13 @@
       <div class="flex-1"></div>
       <button
         type="button"
+        class="rounded-lg bg-brand-blue-1 px-4 py-2 text-xs font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 mr-3"
+        @click="loadData()"
+      >
+        Refresh
+      </button>
+      <button
+        type="button"
         class="rounded-lg bg-brand-blue-1 px-4 py-2 text-xs font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300"
         @click="showModal"
       >
@@ -41,16 +48,9 @@
               <td class="px-6 py-4">{{ lfp.upload_started }}</td>
               <td class="px-6 py-4">{{ lfp.upload_finished }}</td>
               <td class="px-6 py-4">
-                <div v-if="lfp.status === 'Started'">
-                  <span class="mr-2 rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
-                    Uploading
-                  </span>
-                </div>
-                <div v-if="lfp.status === 'Finished'">
-                  <span class="mr-2 rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300">
-                    Uploaded
-                  </span>
-                </div>
+                <span class="mr-2 rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300">
+                  {{ lfp.status }}
+                </span>
               </td>
             </tr>
           </tbody>
@@ -170,6 +170,9 @@ export default {
     },
     
     importTemplate() {
+      setTimeout(() => {
+        this.closeModal();
+      }, 3000);
       const token = JSON.parse(localStorage.getItem("token"));
 
       let uploadedFile  = document.getElementById('file').files[0]
@@ -188,6 +191,9 @@ export default {
             'Content-Type': 'multipart/form-data'
           },
         })
+        .then(() => {
+          window.location.reload();
+        })
         .catch((error) => {
           this.$swal.fire ({
             title: "Excel tidak terupload! Pastikan keseluruhan data pada excel sudah sesuai dengan contoh format yang diberikan.",
@@ -204,7 +210,7 @@ export default {
         alertDiv = document.getElementById("alert-info");
         alertDivContainer.style.display = "block";
         alertDivMessage = alertDiv.getElementsByClassName("ml-3")[0];
-        alertDivMessage.innerHTML = "Upload sedang berjalan. Mohon tunggu, total data akan tampil pada tabel log jika sudah selesai. Silahkan refresh halaman.";
+        alertDivMessage.innerHTML = "Upload sedang berjalan. Mohon tunggu, total data akan tampil pada tabel log jika sudah selesai dan browser akan refresh secara otomatis. Popup ini akan tertutup dalam 3 detik.";
 
         this.loadData();
         document.getElementById("form").reset();
