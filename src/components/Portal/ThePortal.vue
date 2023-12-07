@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-between">
-    <PortalItem :link="{ url: '/dashboard', title: 'Dashboard' }" />
+    <PortalItem :link="{ url: '/', title: 'Dashboard' }" />
     <PortalItem :link="{ url: '/api-generator', title: 'API Generator' }" />
     <PortalItem
       :link="{ url: '/upload-management', title: 'Upload Management' }"

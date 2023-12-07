@@ -82,54 +82,50 @@ export default {
 
       let urlEX = "";
       let urlSK = "";
+
       if (this.pageTitle === "lembaga-pelatihan") {
         urlEX = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
-        urlSK = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
+        urlSK = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-sk";
       } else if (this.pageTitle === "program-pelatihan") {
-        urlEX = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
-        urlSK = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
+        urlEX = import.meta.env.VITE_API_URL + "/total-training-program-statistics-ex";
+        urlSK = import.meta.env.VITE_API_URL + "/total-training-program-statistics-sk";
       } else if (this.pageTitle === "tenaga-pelatihan") {
-        urlEX = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
-        urlSK = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
+        urlEX = import.meta.env.VITE_API_URL + "/total-training-personnel-statistics-ex";
+        urlSK = import.meta.env.VITE_API_URL + "/total-training-personnel-statistics-sk";
       } else if (this.pageTitle === "peserta-pelatihan") {
-        urlEX = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
-        urlSK = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
+        urlEX = import.meta.env.VITE_API_URL + "/total-training-participants-statistics-ex";
+        urlSK = import.meta.env.VITE_API_URL + "/total-training-participants-statistics-sk";
       } else if (this.pageTitle === "penyelenggara-magang") {
-        urlEX = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
-        urlSK = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
+        urlEX = import.meta.env.VITE_API_URL + "/total-internship-organizers-statistics-ex";
+        urlSK = import.meta.env.VITE_API_URL + "/total-internship-organizers-statistics-sk";
       } else if (this.pageTitle === "peserta-pemagangan") {
-        urlEX = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
-        urlSK = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
+        urlEX = import.meta.env.VITE_API_URL + "/total-apprentices-statistics-ex";
+        urlSK = import.meta.env.VITE_API_URL + "/total-apprentices-statistics-sk";
       } else if (this.pageTitle === "program-pemagangan") {
-        urlEX = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
-        urlSK = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
+        urlEX = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs-statistics-ex";
+        urlSK = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs-statistics-sk";
       } else if (this.pageTitle === "instruktur") {
-        urlEX = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
-        urlSK = import.meta.env.VITE_API_URL + "/total-training-institutions-statistics-ex";
+        urlEX = import.meta.env.VITE_API_URL + "/total-instructors-statistics-ex";
+        urlSK = import.meta.env.VITE_API_URL + "/total-instructors-statistics-sk";
       }
 
-      const dataEX = axios.get(urlEX, config).then((response) => {
-        if (response.data) {
-        
-          const dataEX = [
-            response.data.data,
-            response.data.data,
+      Promise.all([
+        axios.get(urlEX, config),
+        axios.get(urlSK, config)
+      ]).then(([responseEX, responseSK]) => {
+        if (responseEX.data && responseSK.data) {
+
+          const dataEX = responseEX.data.data;
+          const dataSK = responseSK.data.data;
+
+          this.chartOptions.series[0].data = [
+            { category: "Upload Excel", y: dataEX },
+            { category: "Database Siap Kerja", y: dataSK }
           ];
-
-          this.chartOptions.series[0].data = dataEX;
         }
+      }).catch((error) => {
+        console.error("Error loading data:", error);
       });
-
-      // const dataSK = axios.get(urlSK, config).then((response) => {
-      //   if (response.data) {
-        
-      //     const dataSK = [
-      //       response.data.data,
-      //     ];
-
-      //     this.chartOptions.series[0].data = dataSK;
-      //   }
-      // });
     },
   },
   mounted() {

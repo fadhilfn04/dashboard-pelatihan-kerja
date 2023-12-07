@@ -35,7 +35,7 @@
             <template #overlay>
               <a-menu>
                 <a-menu-item>
-                  <router-link to="/dashboard">Dashboard</router-link>
+                  <router-link to="/">Dashboard</router-link>
                 </a-menu-item>
                 <a-sub-menu key="dashboardAktifitasETL" title="Dashboard Aktifitas ETL">
                   <a-menu-item v-for="route in dashboardETLRoutes" :key="route.name">

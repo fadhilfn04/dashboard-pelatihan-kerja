@@ -101,7 +101,7 @@ export default {
           }));
           localStorage.setItem("email", this.username);
           const redirect = this.$route.query.redirect;
-          const redirectPath = redirect ? decodeURIComponent(redirect) : "/dashboard";
+          const redirectPath = redirect ? decodeURIComponent(redirect) : "/";
           this.$router.push(redirectPath);
           return true;
         }else {

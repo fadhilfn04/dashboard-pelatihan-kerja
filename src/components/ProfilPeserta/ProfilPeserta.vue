@@ -11,7 +11,7 @@
           <button type="submit" class="bg-blue-500 text-white rounded px-4 py-1 ml-2 hover:bg-blue-600 transition">Cari</button>
         </div>
       </form>
-      <div v-if="searchedProfile" class="mt-4">
+      <div v-if="searchedProfile && companyData" class="mt-4">
         <div class="p-6 border-b-2">
           <h5 class="font-semibold text-lg">Profil Peserta:</h5>
         </div>
@@ -20,10 +20,10 @@
           <p><span class="font-semibold">Nama:</span> {{ searchedProfile.nama }} </p>
           <p><span class="font-semibold">Tanggal Lulus Pelatihan Terakhir:</span> {{ searchedProfile.lulusTerakhir }} </p>
 
-          <!-- <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span> {{ companyData.namaPerusahaanBekerjaTerakhir }} </p>
-          <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span> {{ companyData.alamatPerusahaanBekerjaTerakhir }} </p>
-          <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span> {{ companyData.tanggalMulaiBekerjaTerakhir }} </p>
-          <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ companyData.masihBekerjaTerakhir }} </p> -->
+          <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span> {{ companyData.namaPerusahaan }} </p>
+          <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span> {{ companyData.alamatPerusahaan }} </p>
+          <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span> {{ companyData.tanggalMulaiBekerja }} </p>
+          <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ companyData.tanggalMasihBekerja }} </p>
 
           <p><span class="font-semibold">Masa Tunggu Lulus Bekerja:</span> {{ searchedProfile.masaTunggu }} </p>
         </div>
@@ -119,7 +119,6 @@ export default {
         },
       });
       this.searchedProfile = null;
-      // window.location.reload();
     },
     systemErrorAlert() {
       this.$swal
@@ -130,7 +129,6 @@ export default {
           popup: 'nikAlert'
         },
       });
-      // window.location.reload();
     },
     loadCompanyData() {
       const url = import.meta.env.VITE_API_URL + "/participant-company-data/" + this.nik
@@ -140,10 +138,17 @@ export default {
           Authorization: "Bearer " + token.value,
         },
       };
-
       axios.get(url, config).then((response) => {
-        if (response.data.success) {
-          this.companyData = response.data.data;
+        console.log(response);
+        if(response.data.data.length > 0 && this.nik === response.data.data[0].nik){
+          if (response.data) {
+            this.companyData = {
+              namaPerusahaan      : '-',
+              alamatPerusahaan    : '-',
+              tanggalMulaiBekerja : '-',
+              tanggalMasihBekerja : '-',
+            };
+          }
         }
       });
     },
@@ -155,7 +160,6 @@ export default {
           Authorization: "Bearer " + token.value,
         },
       };
-
       axios.get(url, config).then((response) => {
         if (response.data.success) {
           this.searchedTrainingPrograms = response.data.data;
@@ -170,7 +174,6 @@ export default {
           Authorization: "Bearer " + token.value,
         },
       };
-
       axios.get(url, config).then((response) => {
         if (response.data.success) {
           this.searchedApprenticePrograms = response.data.data;
@@ -195,11 +198,12 @@ export default {
                 nama          : response.data.data[0].nama_peserta,
                 masaTunggu    : response.data.data[0].masa_tunggu,
                 lulusTerakhir : response.data.data[0].lulus_terakhir,
+                namaPerusahaan: response.data.data[0].nama_peserta
               };
 
               this.loadTrainingPrograms();
               this.loadApprenticePrograms();
-              // this.loadCompanyData();
+              this.loadCompanyData();
             } else {
               this.systemErrorAlert()
             }

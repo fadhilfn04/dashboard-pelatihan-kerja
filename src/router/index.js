@@ -1,5 +1,4 @@
 import axios from "axios";
-import Portal from "@/views/PortalView.vue";
 import SignInView from "@/views/SignInView.vue";
 import Dashboard from "@/views/DashboardView.vue";
 import ApiGenerator from "@/views/ApiGeneratorView.vue";
@@ -14,14 +13,6 @@ import UploadFilePendukung from "@/views/UploadFilePendukungView.vue";
 const routes = [
   {
     path: "/",
-    name: "Portal",
-    component: Portal,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
     meta: {
