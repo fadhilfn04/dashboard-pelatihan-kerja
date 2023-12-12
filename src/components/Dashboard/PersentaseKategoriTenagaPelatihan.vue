@@ -1,5 +1,5 @@
 <template>
-  <highcharts :options="chartOptions" ref="pieChart"></highcharts>
+  <highcharts :options="chartOptions" ref="barChart"></highcharts>
 </template>
 
 <script>
@@ -10,7 +10,7 @@ function getRandomColor() {
 }
 
 export default {
-  name: "TingkatAkreditasiLembagaPelatihanKerja",
+  name: "PersentaseKategoriTenagaPelatihan",
   data() {
     return {
       chartOptions: {
@@ -46,22 +46,14 @@ export default {
           }
         },
         series: [{
-          name: 'Tingkat Akreditasi/Terverifikasi',
+          name: 'Kategori',
           colorByPoint: true,
           data: [{
-              name: 'Terakreditasi dan Terverifikasi',
+              name: 'Pemerintah',
               color: getRandomColor(),
               y: [],
           },  {
-              name: 'Tidak Terakreditasi dan Terverifikasi',
-              color: getRandomColor(),
-              y: []
-          },  {
-              name: 'Tidak Terakreditasi dan Tidak Terverifikasi',
-              color: getRandomColor(),
-              y: []
-          },  {
-              name: 'Terverifikasi',
+              name: 'Swasta',
               color: getRandomColor(),
               y: []
           }]
@@ -69,31 +61,36 @@ export default {
       },
     };
   },
-
+  props: {
+    filter: {
+      type: String,
+      default: "/recap-training-personnel-category-percentage",
+    },
+  },
   mounted() {
     this.loadData();
   },
-
+  watch: {
+    filter() {
+      this.loadData();
+    },
+  },
   methods: {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get(import.meta.env.VITE_API_URL + '/accreditation-level-recap-lpk', {
+        .get(import.meta.env.VITE_API_URL + this.filter, {
           headers: {
             Authorization: "Bearer " + token.value,
           },
         })
         .then((response) => {
           if (response.data) {
-            var accredited_verified = response.data.data.accredited_verified;
-            var not_accredited_verified = response.data.data.not_accredited_verified;
-            var not_accredited_not_verified = response.data.data.not_accredited_not_verified;
-            var verified = response.data.data.verified;
-
-            this.chartOptions.series[0].data[0].y = accredited_verified;
-            this.chartOptions.series[0].data[1].y = not_accredited_verified;
-            this.chartOptions.series[0].data[2].y = not_accredited_not_verified;
-            this.chartOptions.series[0].data[3].y = verified;
+            var bekerja       = response.data.data.bekerja;
+            var tidakBekerja  = response.data.data.tidak_bekerja;
+            
+            this.chartOptions.series[0].data[0].y = bekerja;
+            this.chartOptions.series[0].data[1].y = tidakBekerja;
           }
         });
     },

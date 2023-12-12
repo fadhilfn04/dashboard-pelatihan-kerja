@@ -88,7 +88,7 @@ export default {
             var value = [];
             response.data.data.forEach((item) => {
               categories.push(item.nama_lembaga);
-              value.push(item.kapasitas_latih);
+              value.push(item.count);
             });
 
             this.chartOptions.xAxis.categories = categories;

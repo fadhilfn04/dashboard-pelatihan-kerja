@@ -11,7 +11,7 @@ function getRandomColor() {
 }
 
 export default {
-  name: "ProgramPelatihanBanyakDiminati",
+  name: "PersentasePeminatProgramPelatihanKejuruan",
   data() {
     return {
       chartOptions: {
@@ -62,35 +62,22 @@ export default {
         credits: {
           enabled: false,
         },
-        series: [
-          {
-            name: "Program Pelatihan Yang Banyak Diminati",
-            data: [],
-            color: getRandomColor(),
-          },
-        ],
+        series: [{
+          name: 'Persentase Peminat Program Pelatihan Berdasarkan Kejuruan',
+          colorByPoint: getRandomColor(),
+          data: []
+        }]
       },
     };
   },
-  props: {
-    filter: {
-      type: String,
-      default: "/recap-training-programs-high-demand",
-    },
-  },
   mounted() {
     this.loadData();
-  },
-  watch: {
-    filter() {
-      this.loadData();
-    },
   },
   methods: {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get(import.meta.env.VITE_API_URL + this.filter, {
+        .get(import.meta.env.VITE_API_URL + '/recap-percentage-training-program-applicants-vocational-field', {
           headers: {
             Authorization: "Bearer " + token.value,
           },
@@ -100,8 +87,8 @@ export default {
             var categories = [];
             var value = [];
             response.data.data.forEach((item) => {
-              categories.push(item.judul_program);
-              value.push(item.total_peminat);
+              categories.push(item.nama_kejuruan);
+              value.push(item.count);
             });
 
             this.chartOptions.xAxis.categories = categories;

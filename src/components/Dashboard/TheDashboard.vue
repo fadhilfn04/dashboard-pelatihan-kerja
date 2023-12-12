@@ -171,10 +171,24 @@
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Persentase Tingkat Pencari Kerja pada LPK
+              Persentase Peminat Program Pelatihan Berdasarkan Kejuruan
             </h5>
           </div>
-  
+          <PersentasePeminatProgramPelatihanKejuruan />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-3 gap-8">
+    <div class="col-span-3">
+      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+          <div class="flex justify-between">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+              Persentase Tingkat Pencari Kerja pada Lembaga Pelatihan Kerja
+            </h5>
+          </div>
           <PersentaseTingkatPencariKerjaPadaLPK />
         </div>
       </div>
@@ -240,7 +254,7 @@
     </div>
 
     <div class="col-span-1">
-      <div class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
             <div class="flex justify-between">
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -253,12 +267,50 @@
                   />
                 </div>
               </div>
-              <a-tooltip title="Data nya belum dari WLKP">
-                <ProduktifitasTenagaKerja :filter="filterProduktifitas"/>
-              </a-tooltip>
+              <ProduktifitasTenagaKerja :filter="filterProduktifitas"/>
           </div>
         </div>
       </div>
+  </div>
+
+  <div class="grid grid-cols-4 gap-8">
+    <div class="col-span-2">
+      <div class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+          <div class="flex justify-between">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+              Jumlah Persentase Kategori Instruktur
+            </h5>
+            <div class="relative w-32">
+              <DatePicker picker="year" id="datepicker_produktifitas"
+                v-model="selectedDate"
+                @change="handleInstrukturChanged"  
+                />
+              </div>
+            </div>
+            <PersentaseKategoriInstruktur :filter="filterInstruktur"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-span-2">
+      <div class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+          <div class="flex justify-between">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+              Jumlah Persentase Kategori Tenaga Pelatihan
+            </h5>
+            <div class="relative w-32">
+              <DatePicker picker="year" id="datepicker_produktifitas"
+                v-model="selectedDate"
+                @change="handleTenagaPelatihanChanged"  
+                />
+              </div>
+            </div>
+            <PersentaseKategoriTenagaPelatihan :filter="filterTenagaPelatihan"/>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -300,6 +352,8 @@ import Particles from '../Shared/Particles.vue';
 import { SyncOutlined } from '@ant-design/icons-vue';
 import LoadingSpinner from '@/components/Shared/LoadingSpinner.vue';
 import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
+import PersentaseKategoriInstruktur from "./PersentaseKategoriInstruktur.vue";
+import PersentaseKategoriTenagaPelatihan from "./PersentaseKategoriTenagaPelatihan.vue";
 import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
 import TrenJumlahPesertaPemagangan from "./TrenJumlahPesertaPemagangan.vue";
 import ProgramPelatihanBanyakDiminati from "./ProgramPelatihanBanyakDiminati.vue";
@@ -308,6 +362,7 @@ import TrenJumlahKategoriProgramPelatihan from "./TrenJumlahKategoriProgramPelat
 import FilterProgramPelatihanProvinsi from "../Shared/FilterProgramPelatihanProvinsi.vue";
 import PersentaseTingkatPencariKerjaPadaLPK from "./PersentaseTingkatPencariKerjaPadaLPK.vue";
 import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
+import PersentasePeminatProgramPelatihanKejuruan from "./PersentasePeminatProgramPelatihanKejuruan.vue";
 import { 
   COffcanvas, 
   COffcanvasHeader, 
@@ -326,12 +381,15 @@ export default {
     COffcanvasTitle,
     COffcanvasHeader,
     ProduktifitasTenagaKerja,
+    PersentaseKategoriInstruktur,
+    PersentaseKategoriTenagaPelatihan,
     FilterKapasitasPPKProvinsi,
     JumlahLembagaPelatihanKerja,
     TrenJumlahPesertaPemagangan,
     ProgramPelatihanBanyakDiminati,
     FilterProgramPelatihanProvinsi,
     TrenJumlahKategoriProgramPelatihan,
+    PersentasePeminatProgramPelatihanKejuruan,
     PersentaseTingkatPencariKerjaPadaLPK,
     TingkatAkreditasiLembagaPelatihanKerja,
   },
@@ -362,6 +420,8 @@ export default {
       filterProgramPelatihanProvinsi                    : "/recap-training-programs-high-demand",
       filterTrenJumlahPesertaPemagangan                 : "/recap-trends-number-apprentices",
       filterProduktifitas                               : "/recap-labor-productivity",
+      filterInstruktur                                  : "/recap-instructor-category-percentage",
+      filterTenagaPelatihan                             : "/recap-training-personnel-category-percentage",
       selectedDate                                      : null,
       selectedYear                                      : null,
     }
@@ -787,6 +847,20 @@ export default {
         this.filterProduktifitas = "/recap-labor-productivity-year/" + date.$y;
       } else {
         this.filterProduktifitas = "/recap-labor-productivity";
+      }
+    },
+    handleInstrukturChanged(date) {
+      if (date.$y != 0) {
+        this.filterInstruktur = "/recap-instructor-category-percentage-year/" + date.$y;
+      } else {
+        this.filterInstruktur = "/recap-instructor-category-percentage";
+      }
+    },
+    handleTenagaPelatihanChanged(date) {
+      if (date.$y != 0) {
+        this.filterTenagaPelatihan = "/recap-training-personnel-category-percentage-year/" + date.$y;
+      } else {
+        this.filterTenagaPelatihan = "/recap-training-personnel-category-percentage";
       }
     },
   },

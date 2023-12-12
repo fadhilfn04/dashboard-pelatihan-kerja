@@ -1,6 +1,16 @@
 <template>
   <LoadingSpinner v-if="isLoading" />
   <particles></particles>
+
+  <div class="d-flex justify-content-center mb-8">
+      <button class="btn border border-gray-200 bg-blue-200 shadow">
+        <h2>
+          Dashboard ETL {{ pageTitle }}
+        </h2>
+          
+      </button>
+  </div>
+
   <div class="grid grid-cols-10 gap-8">
     <div class="col-span-2">
       <div class="w-full rounded-lg border border-gray-200 bg-green-200 shadow">
@@ -456,7 +466,7 @@ export default {
       } else if (this.pageTitle === "penyelenggara-magang") {
         url = import.meta.env.VITE_API_URL + "/total-internship-organizers-ex-processed";
       } else if (this.pageTitle === "peserta-pemagangan") {
-        url = import.meta.env.VITE_API_URL + "/total-apprentices-processed";
+        url = import.meta.env.VITE_API_URL + "/total-apprentices-ex-processed";
       } else if (this.pageTitle === "program-pemagangan") {
         url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs-ex-processed";
       } else if (this.pageTitle === "instruktur") {
@@ -493,9 +503,9 @@ export default {
       } else if (this.pageTitle === "peserta-pemagangan") {
         url = import.meta.env.VITE_API_URL + "/total-apprentices-ex-eliminated";
       } else if (this.pageTitle === "program-pemagangan") {
-        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs-eliminated";
+        url = import.meta.env.VITE_API_URL + "/total-apprenticeship-programs-ex-eliminated";
       } else if (this.pageTitle === "instruktur") {
-        url = import.meta.env.VITE_API_URL + "/total-instructors-eliminated";
+        url = import.meta.env.VITE_API_URL + "/total-instructors-ex-eliminated";
       }
 
       return axios.get(url, config).then((response) => {
