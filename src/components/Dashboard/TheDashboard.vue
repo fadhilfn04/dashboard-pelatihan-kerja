@@ -260,14 +260,14 @@
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
                 Produktifitas Tenaga Kerja
               </h5>
-              <div class="relative w-32">
+              <!-- <div class="relative w-32">
                 <DatePicker picker="year" id="datepicker_produktifitas"
                   v-model="selectedDate"
                   @change="handleProduktifitasChanged"  
-                  />
-                </div>
-              </div>
-              <ProduktifitasTenagaKerja :filter="filterProduktifitas"/>
+                />
+              </div> -->
+            </div>
+            <ProduktifitasTenagaKerja :filter="filterProduktifitas"/>
           </div>
         </div>
       </div>
@@ -281,12 +281,6 @@
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
               Jumlah Persentase Kategori Instruktur
             </h5>
-            <div class="relative w-32">
-              <DatePicker picker="year" id="datepicker_produktifitas"
-                v-model="selectedDate"
-                @change="handleInstrukturChanged"  
-                />
-              </div>
             </div>
             <PersentaseKategoriInstruktur :filter="filterInstruktur"/>
         </div>
@@ -300,12 +294,6 @@
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
               Jumlah Persentase Kategori Tenaga Pelatihan
             </h5>
-            <div class="relative w-32">
-              <DatePicker picker="year" id="datepicker_produktifitas"
-                v-model="selectedDate"
-                @change="handleTenagaPelatihanChanged"  
-                />
-              </div>
             </div>
             <PersentaseKategoriTenagaPelatihan :filter="filterTenagaPelatihan"/>
         </div>
@@ -847,20 +835,6 @@ export default {
         this.filterProduktifitas = "/recap-labor-productivity-year/" + date.$y;
       } else {
         this.filterProduktifitas = "/recap-labor-productivity";
-      }
-    },
-    handleInstrukturChanged(date) {
-      if (date.$y != 0) {
-        this.filterInstruktur = "/recap-instructor-category-percentage-year/" + date.$y;
-      } else {
-        this.filterInstruktur = "/recap-instructor-category-percentage";
-      }
-    },
-    handleTenagaPelatihanChanged(date) {
-      if (date.$y != 0) {
-        this.filterTenagaPelatihan = "/recap-training-personnel-category-percentage-year/" + date.$y;
-      } else {
-        this.filterTenagaPelatihan = "/recap-training-personnel-category-percentage";
       }
     },
   },

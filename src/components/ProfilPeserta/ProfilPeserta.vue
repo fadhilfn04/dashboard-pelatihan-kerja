@@ -16,16 +16,16 @@
           <h5 class="font-semibold text-lg">Profil Peserta:</h5>
         </div>
         <div class="bg-gray-100 p-4 rounded mt-2">
-          <p><span class="font-semibold">NIK:</span> {{ searchedProfile.nik }} </p>
-          <p><span class="font-semibold">Nama:</span> {{ searchedProfile.nama }} </p>
-          <p><span class="font-semibold">Tanggal Lulus Pelatihan Terakhir:</span> {{ searchedProfile.lulusTerakhir }} </p>
+          <p><span class="font-semibold">NIK:</span> {{ searchedProfile.nik ? searchedProfile.nik : '-' }} </p>
+          <p><span class="font-semibold">Nama:</span> {{ searchedProfile.nama ? searchedProfile.nama : '-' }} </p>
+          <p><span class="font-semibold">Tanggal Lulus Pelatihan Terakhir:</span> {{ searchedProfile.lulusTerakhir ? searchedProfile.lulusTerakhir : '-' }} </p>
 
-          <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span> {{ companyData.namaPerusahaan }} </p>
-          <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span> {{ companyData.alamatPerusahaan }} </p>
-          <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span> {{ companyData.tanggalMulaiBekerja }} </p>
-          <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ companyData.tanggalMasihBekerja }} </p>
+          <p><span class="font-semibold">Nama Perusahaan Bekerja Terakhir:</span> {{ companyData.namaPerusahaan ? companyData.namaPerusahaan : '-' }} </p>
+          <p><span class="font-semibold">Alamat Perusahaan Bekerja Terakhir:</span> {{ companyData.alamatPerusahaan ? companyData.alamatPerusahaan : '-' }} </p>
+          <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span> {{ companyData.tanggalMulaiBekerja ? companyData.tanggalMulaiBekerja : '-' }} </p>
+          <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ companyData.masihBekerja ? companyData.masihBekerja : '-' }} </p>
 
-          <p><span class="font-semibold">Masa Tunggu Lulus Bekerja:</span> {{ searchedProfile.masaTunggu }} </p>
+          <p><span class="font-semibold">Masa Tunggu Lulus Bekerja:</span> {{ searchedProfile.masaTunggu ? searchedProfile.masaTunggu : '-' }} </p>
         </div>
         <div class="p-6 border-b-2">
           <h5 class="font-semibold text-lg mt-2">Daftar Program Pelatihan</h5>
@@ -130,7 +130,7 @@ export default {
         },
       });
     },
-    loadCompanyData() {
+    async loadCompanyData() {
       const url = import.meta.env.VITE_API_URL + "/participant-company-data/" + this.nik
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
@@ -139,20 +139,19 @@ export default {
         },
       };
       axios.get(url, config).then((response) => {
-        console.log(response);
-        if(response.data.data.length > 0 && this.nik === response.data.data[0].nik){
-          if (response.data) {
-            this.companyData = {
-              namaPerusahaan      : '-',
-              alamatPerusahaan    : '-',
-              tanggalMulaiBekerja : '-',
-              tanggalMasihBekerja : '-',
-            };
-          }
+        if(response.data.data.length > 0){
+          this.companyData = {
+            namaPerusahaan      : response.data.data[0].nama_perusahaan,
+            alamatPerusahaan    : response.data.data[0].alamat_perusahaan,
+            tanggalMulaiBekerja : response.data.data[0].tgl_update,
+            masihBekerja        : response.data.data[0].status_bekerja ? 'Ya' : 'Tidak',
+          };
+        } else {
+          this.companyData = {};
         }
       });
     },
-    loadTrainingPrograms() {
+    async loadTrainingPrograms() {
       const url = import.meta.env.VITE_API_URL + "/participant-training-program-list/" + this.nik
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
@@ -166,7 +165,7 @@ export default {
         }
       });
     },
-    loadApprenticePrograms() {
+    async loadApprenticePrograms() {
       const url = import.meta.env.VITE_API_URL + "/participant-apprentice-program-list/" + this.nik
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
@@ -180,8 +179,8 @@ export default {
         }
       });
     },
-    searchProfile() {
-      const url = import.meta.env.VITE_API_URL + "/participant-profile/" + this.nik
+    async searchProfile() {
+      const url = import.meta.env.VITE_API_URL + "/participant-profile/" + this.nik;
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: {
@@ -189,30 +188,33 @@ export default {
         },
       };
 
-      if(this.nik != ""){
-        axios.get(url, config).then((response) => {
-          if(response.data.data.length > 0 && this.nik === response.data.data[0].nik){
+      if (this.nik !== "") {
+        try {
+          const response = await axios.get(url, config);
+
+          if (response.data.data.length > 0 && this.nik === response.data.data[0].nik) {
             if (response.data) {
               this.searchedProfile = {
-                nik           : this.nik,
-                nama          : response.data.data[0].nama_peserta,
-                masaTunggu    : response.data.data[0].masa_tunggu,
-                lulusTerakhir : response.data.data[0].lulus_terakhir,
-                namaPerusahaan: response.data.data[0].nama_peserta
+                nik: this.nik,
+                nama: response.data.data[0].nama_peserta,
+                masaTunggu: response.data.data[0].masa_tunggu === '00:00:00' ? '-' : response.data.data[0].masa_tunggu,
+                lulusTerakhir: response.data.data[0].lulus_terakhir,
               };
 
-              this.loadTrainingPrograms();
-              this.loadApprenticePrograms();
-              this.loadCompanyData();
+              await this.loadTrainingPrograms();
+              await this.loadApprenticePrograms();
+              await this.loadCompanyData();
             } else {
-              this.systemErrorAlert()
+              this.systemErrorAlert();
             }
           } else {
-            this.wrongNikAlert()
+            this.wrongNikAlert();
           }
-        });
+        } catch (error) {
+          this.systemErrorAlert();
+        }
       } else {
-        this.emptyNikAlert()
+        this.emptyNikAlert();
       }
     },
   },
