@@ -25,7 +25,7 @@
           <p><span class="font-semibold">Tanggal Mulai Bekerja Terakhir:</span> {{ companyData.tanggalMulaiBekerja ? companyData.tanggalMulaiBekerja : '-' }} </p>
           <p><span class="font-semibold">Masih Bekerja Terakhir:</span> {{ companyData.masihBekerja ? companyData.masihBekerja : '-' }} </p>
 
-          <p><span class="font-semibold">Masa Tunggu Lulus Bekerja:</span> {{ searchedProfile.masaTunggu ? searchedProfile.masaTunggu : '-' }} </p>
+          <p><span class="font-semibold">Masa Tunggu Lulus ke Bekerja:</span> {{ searchedProfile.masaTunggu ? searchedProfile.masaTunggu : '-' }} </p>
         </div>
         <div class="p-6 border-b-2">
           <h5 class="font-semibold text-lg mt-2">Daftar Program Pelatihan</h5>
@@ -143,7 +143,7 @@ export default {
           this.companyData = {
             namaPerusahaan      : response.data.data[0].nama_perusahaan,
             alamatPerusahaan    : response.data.data[0].alamat_perusahaan,
-            tanggalMulaiBekerja : response.data.data[0].tgl_update,
+            tanggalMulaiBekerja : response.data.data[0].tgl_update_terakhir,
             masihBekerja        : response.data.data[0].status_bekerja ? 'Ya' : 'Tidak',
           };
         } else {

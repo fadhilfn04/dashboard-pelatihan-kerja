@@ -1,5 +1,6 @@
 import axios from "axios";
 import SignInView from "@/views/SignInView.vue";
+import SignInViewSSO from "@/views/SignInViewSSO.vue";
 import Dashboard from "@/views/DashboardView.vue";
 import ApiGenerator from "@/views/ApiGeneratorView.vue";
 import DashboardETL from "@/views/DashboardETLView.vue";
@@ -31,6 +32,14 @@ const routes = [
     path: "/sign-in",
     name: "Sign In",
     component: SignInView,
+    meta: {
+      requiresAuth: false,
+    },
+  },
+  {
+    path: "/sign-in-sso",
+    name: "Sign In SSO",
+    component: SignInViewSSO,
     meta: {
       requiresAuth: false,
     },
