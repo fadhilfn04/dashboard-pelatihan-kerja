@@ -43,7 +43,7 @@
               </a-select>
             </a-form-item>
           </a-tooltip>
-          <a-form-item class="institutionType">
+          <!-- <a-form-item class="institutionType">
             <a-select
               placeholder="Semua Tipe Lembaga"
               :getPopupContainer="(triggerNode) => triggerNode.parentNode"
@@ -70,7 +70,7 @@
               <a-select-option value="kurang_1000">Kurang dari 1000</a-select-option>
               <a-select-option value="lebih_1000">Lebih dari 1000</a-select-option>
             </a-select>
-          </a-form-item>
+          </a-form-item> -->
           <a-tooltip title="Klik untuk reset">
             <a-button @click="resetRepositories" type="primary" style="background-color: blue; border-color: blue; color: white;">
               <template #icon>
@@ -159,7 +159,7 @@
                 tipe="provinsi"
               />
             </div>
-          <KapasitasLPK :filter="filterKapasitasPPKProvinsi"/>
+          <KapasitasPPK :filter="filterKapasitasPPKProvinsi"/>
         </div>
       </div>
     </div>
@@ -335,7 +335,7 @@
 import axios from "axios";
 import * as L from "leaflet";
 import { DatePicker } from 'ant-design-vue';
-import KapasitasLPK from "./KapasitasLPK.vue";
+import KapasitasPPK from "./KapasitasPPK.vue";
 import Particles from '../Shared/Particles.vue';
 import { SyncOutlined } from '@ant-design/icons-vue';
 import LoadingSpinner from '@/components/Shared/LoadingSpinner.vue';
@@ -362,7 +362,7 @@ export default {
     Particles,
     DatePicker,
     COffcanvas,
-    KapasitasLPK,
+    KapasitasPPK,
     SyncOutlined,
     COffcanvasBody,
     LoadingSpinner,

@@ -11,7 +11,7 @@ function getRandomColor() {
 }
 
 export default {
-  name: "KapasitasLPK",
+  name: "KapasitasPPK",
   data() {
     return {
       chartOptions: {
@@ -64,7 +64,7 @@ export default {
         },
         series: [
           {
-            name: "Jumlah Kapasitas LPK",
+            name: "Jumlah Kapasitas PPK",
             colorByPoint: getRandomColor(),
             data: []
           },
@@ -75,7 +75,7 @@ export default {
   props: {
     filter: {
       type: String,
-      default: "/recap-capacity-lpk",
+      default: "/recap-capacity-ppk",
     },
   },
   mounted() {
@@ -96,18 +96,22 @@ export default {
           },
         })
         .then((response) => {
-          if (response.data) {
+          if (response.data.success) {
             var categories = [];
             var value = [];
             response.data.data.forEach((item) => {
               categories.push(item.nama_lembaga);
-              value.push(item.kapasitas_latih);
+              const randomKapasitas = this.getRandomKapasitas(100, 1000);
+              value.push(randomKapasitas);
             });
 
             this.chartOptions.xAxis.categories = categories;
             this.chartOptions.series[0].data = value;
           }
         });
+    },
+    getRandomKapasitas(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
     },
   },
 };

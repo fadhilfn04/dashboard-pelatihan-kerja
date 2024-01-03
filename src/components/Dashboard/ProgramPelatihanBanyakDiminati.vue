@@ -96,7 +96,7 @@ export default {
           },
         })
         .then((response) => {
-          if (response.data) {
+          if (response.data.success) {
             var categories = [];
             var value = [];
             response.data.data.forEach((item) => {
