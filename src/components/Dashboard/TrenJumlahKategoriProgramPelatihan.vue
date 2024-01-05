@@ -168,7 +168,7 @@ export default {
           if (response.data && response.data.data) {
             const data = response.data.data.rekap_tren;
 
-            var categories      = [];
+            var categories  = [];
             const JKP       = data.JKP;
             const TKM       = data.TKM;
             const ET        = data.ET;

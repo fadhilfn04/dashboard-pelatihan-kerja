@@ -10,7 +10,7 @@ function getRandomColor() {
 }
 
 export default {
-  name: "ProduktifitasTenagaKerja",
+  name: "TingkatPenyerapanLulusanPie",
   data() {
     return {
       chartOptions: {
@@ -46,7 +46,7 @@ export default {
           }
         },
         series: [{
-          name: 'Produktifitas',
+          name: 'Kategori',
           colorByPoint: true,
           data: [{
               name: 'Bekerja',
@@ -64,11 +64,11 @@ export default {
   props: {
     filter: {
       type: String,
-      default: "/recap-labor-productivity",
+      default: "/recap-graduate-absorption-rate-pie",
     },
   },
   mounted() {
-    this.loadData(); // uncomment this line if you want to load data from API
+    this.loadData();
   },
   watch: {
     filter() {
@@ -77,22 +77,28 @@ export default {
   },
   methods: {
     loadData() {
-      const token = JSON.parse(localStorage.getItem("token"));
-      axios
-        .get(import.meta.env.VITE_API_URL + this.filter, {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        })
-        .then((response) => {
-          if (response.data) {
-            var bekerja       = response.data.data.bekerja;
-            var tidakBekerja  = response.data.data.tidak_bekerja;
-            
-            this.chartOptions.series[0].data[0].y = bekerja;
-            this.chartOptions.series[0].data[1].y = tidakBekerja;
-          }
-        });
+      const token = JSON.parse(localStorage.getItem("token"));  
+      axios.get(import.meta.env.VITE_API_URL + this.filter, {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      })
+      .then((response) => {
+        if (response.data) {
+          var dataBekerja = [];
+          var dataTidakBekerja = [];
+          const randomBekerja = this.getRandomData(100, 1000);
+          const randomTidakBekerja = this.getRandomData(100, 1000);
+          dataBekerja.push(randomBekerja);
+          dataTidakBekerja.push(randomTidakBekerja);
+          
+          this.chartOptions.series[0].data[0].y = dataBekerja[0];
+          this.chartOptions.series[0].data[1].y = dataTidakBekerja[0];
+        }
+      });
+    },
+    getRandomData(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
     },
   },
 };

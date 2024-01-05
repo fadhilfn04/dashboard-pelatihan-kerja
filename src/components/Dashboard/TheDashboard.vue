@@ -258,7 +258,7 @@
         <div class="p-5">
             <div class="flex justify-between">
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-                Produktifitas Tenaga Kerja
+                Lulusan Pelatihan ke Bekerja
               </h5>
               <!-- <div class="relative w-32">
                 <DatePicker picker="year" id="datepicker_produktifitas"
@@ -267,7 +267,7 @@
                 />
               </div> -->
             </div>
-            <ProduktifitasTenagaKerja :filter="filterProduktifitas"/>
+            <LulusanPelatihanBekerja :filter="filterProduktifitas"/>
           </div>
         </div>
       </div>
@@ -275,7 +275,7 @@
 
   <div class="grid grid-cols-4 gap-8">
     <div class="col-span-2">
-      <div class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -288,7 +288,7 @@
     </div>
 
     <div class="col-span-2">
-      <div class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -296,6 +296,92 @@
             </h5>
             </div>
             <PersentaseKategoriTenagaPelatihan :filter="filterTenagaPelatihan"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-3 gap-8">
+    <div class="col-span-2">
+      <div class="mt-8  w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+          <div class="flex justify-between">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+              Masa Tunggu Lulus ke Bekerja
+            </h5>
+          </div>
+          <MasaTungguLulusBar />
+        </div>
+      </div>
+    </div>
+    <div class="col-span-1">
+      <div class="mt-8  w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+          <div class="flex justify-between">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+              Masa Tunggu Lulus ke Bekerja
+            </h5>
+            <div class="relative">
+              <a-select
+                placeholder="Semua Pelatihan"
+                :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+                option-filter-prop="children"
+                :filter-option="filterOption"
+                @change="onProvinceChange($event)"
+              >
+                <a-select-option
+                  v-for="(provinceContent, index) in provinceContents"
+                  :key="index"
+                  :value="provinceContent.id"
+                  >{{ provinceContent.name }}</a-select-option
+                >
+              </a-select>
+            </div>
+          </div>
+          <MasaTungguLulusPie />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-3 gap-8">
+    <div class="col-span-2">
+      <div class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+          <div class="flex justify-between">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+              Tingkat Penyerapan Lulusan
+            </h5>
+          </div>
+          <TingkatPenyerapanLulusanBar />
+        </div>
+      </div>
+    </div>
+    <div class="col-span-1">
+      <div class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+          <div class="flex justify-between">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+              Tingkat Penyerapan Lulusan
+            </h5>
+            <div class="relative">
+              <a-select
+                placeholder="Semua Pelatihan"
+                :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+                option-filter-prop="children"
+                :filter-option="filterOption"
+                @change="onProvinceChange($event)"
+              >
+                <a-select-option
+                  v-for="(provinceContent, index) in provinceContents"
+                  :key="index"
+                  :value="provinceContent.id"
+                  >{{ provinceContent.name }}</a-select-option
+                >
+              </a-select>
+            </div>
+          </div>
+          <TingkatPenyerapanLulusanPie />
         </div>
       </div>
     </div>
@@ -338,14 +424,18 @@ import { DatePicker } from 'ant-design-vue';
 import KapasitasPPK from "./KapasitasPPK.vue";
 import Particles from '../Shared/Particles.vue';
 import { SyncOutlined } from '@ant-design/icons-vue';
+import MasaTungguLulusBar from "./MasaTungguLulusBar.vue";
+import MasaTungguLulusPie from "./MasaTungguLulusPie.vue";
 import LoadingSpinner from '@/components/Shared/LoadingSpinner.vue';
-import ProduktifitasTenagaKerja from "./ProduktifitasTenagaKerja.vue";
-import PersentaseKategoriInstruktur from "./PersentaseKategoriInstruktur.vue";
-import PersentaseKategoriTenagaPelatihan from "./PersentaseKategoriTenagaPelatihan.vue";
+import LulusanPelatihanBekerja from "./LulusanPelatihanBekerja.vue";
+import TingkatPenyerapanLulusanBar from "./TingkatPenyerapanLulusanBar.vue";
+import TingkatPenyerapanLulusanPie from "./TingkatPenyerapanLulusanPie.vue";
 import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
 import TrenJumlahPesertaPemagangan from "./TrenJumlahPesertaPemagangan.vue";
+import PersentaseKategoriInstruktur from "./PersentaseKategoriInstruktur.vue";
 import ProgramPelatihanBanyakDiminati from "./ProgramPelatihanBanyakDiminati.vue";
 import FilterKapasitasPPKProvinsi from "../Shared/FilterKapasitasPPKProvinsi.vue";
+import PersentaseKategoriTenagaPelatihan from "./PersentaseKategoriTenagaPelatihan.vue";
 import TrenJumlahKategoriProgramPelatihan from "./TrenJumlahKategoriProgramPelatihan.vue";
 import FilterProgramPelatihanProvinsi from "../Shared/FilterProgramPelatihanProvinsi.vue";
 import PersentaseTingkatPencariKerjaPadaLPK from "./PersentaseTingkatPencariKerjaPadaLPK.vue";
@@ -366,16 +456,20 @@ export default {
     SyncOutlined,
     COffcanvasBody,
     LoadingSpinner,
+    MasaTungguLulusBar,
+    MasaTungguLulusPie,
     COffcanvasTitle,
     COffcanvasHeader,
-    ProduktifitasTenagaKerja,
-    PersentaseKategoriInstruktur,
-    PersentaseKategoriTenagaPelatihan,
+    LulusanPelatihanBekerja,
+    TingkatPenyerapanLulusanBar,
+    TingkatPenyerapanLulusanPie,
     FilterKapasitasPPKProvinsi,
     JumlahLembagaPelatihanKerja,
     TrenJumlahPesertaPemagangan,
+    PersentaseKategoriInstruktur,
     ProgramPelatihanBanyakDiminati,
     FilterProgramPelatihanProvinsi,
+    PersentaseKategoriTenagaPelatihan,
     TrenJumlahKategoriProgramPelatihan,
     PersentasePeminatProgramPelatihanKejuruan,
     PersentaseTingkatPencariKerjaPadaLPK,
