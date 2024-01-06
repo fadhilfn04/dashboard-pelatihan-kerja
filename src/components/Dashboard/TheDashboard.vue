@@ -315,7 +315,7 @@
       </div>
     </div>
     <div class="col-span-1">
-      <div class="mt-8  w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -346,7 +346,7 @@
 
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-2">
-      <div class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -358,7 +358,7 @@
       </div>
     </div>
     <div class="col-span-1">
-      <div class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -382,6 +382,27 @@
             </div>
           </div>
           <TingkatPenyerapanLulusanPie />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-3 gap-8">
+    <div class="col-span-3">
+      <div class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+            <div class="flex justify-between">
+              <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+                Produktifitas Tenaga Kerja Berdasarkan Lapangan Usaha
+              </h5>
+              <div class="relative w-32">
+                <DatePicker picker="year" id="datepicker_tren"
+                  v-model="selectedDate"
+                  @change="handleTrenJumlahKategoriProgramPelatihanChanged"  
+                />
+              </div>
+            </div>
+          <ProduktifitasLapanganUsaha :filter="filterProduktifitasLapanganUsaha"/>
         </div>
       </div>
     </div>
@@ -428,6 +449,7 @@ import MasaTungguLulusBar from "./MasaTungguLulusBar.vue";
 import MasaTungguLulusPie from "./MasaTungguLulusPie.vue";
 import LoadingSpinner from '@/components/Shared/LoadingSpinner.vue';
 import LulusanPelatihanBekerja from "./LulusanPelatihanBekerja.vue";
+import ProduktifitasLapanganUsaha from "./ProduktifitasLapanganUsaha.vue";
 import TingkatPenyerapanLulusanBar from "./TingkatPenyerapanLulusanBar.vue";
 import TingkatPenyerapanLulusanPie from "./TingkatPenyerapanLulusanPie.vue";
 import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
@@ -465,6 +487,7 @@ export default {
     TingkatPenyerapanLulusanPie,
     FilterKapasitasPPKProvinsi,
     JumlahLembagaPelatihanKerja,
+    ProduktifitasLapanganUsaha,
     TrenJumlahPesertaPemagangan,
     PersentaseKategoriInstruktur,
     ProgramPelatihanBanyakDiminati,

@@ -1,5 +1,5 @@
 <template>
-  <highcharts :options="chartOptions" ref="barChart"></highcharts>
+  <highcharts :options="chartOptions" ref="pieChart"></highcharts>
 </template>
 
 <script>
