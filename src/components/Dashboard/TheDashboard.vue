@@ -321,7 +321,7 @@
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
               Masa Tunggu Lulus ke Bekerja
             </h5>
-            <div class="relative">
+            <!-- <div class="relative">
               <a-select
                 placeholder="Semua Pelatihan"
                 :getPopupContainer="(triggerNode) => triggerNode.parentNode"
@@ -336,7 +336,7 @@
                   >{{ provinceContent.name }}</a-select-option
                 >
               </a-select>
-            </div>
+            </div> -->
           </div>
           <MasaTungguLulusPie />
         </div>
@@ -364,7 +364,7 @@
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
               Tingkat Penyerapan Lulusan
             </h5>
-            <div class="relative">
+            <!-- <div class="relative">
               <a-select
                 placeholder="Semua Pelatihan"
                 :getPopupContainer="(triggerNode) => triggerNode.parentNode"
@@ -379,7 +379,7 @@
                   >{{ provinceContent.name }}</a-select-option
                 >
               </a-select>
-            </div>
+            </div> -->
           </div>
           <TingkatPenyerapanLulusanPie />
         </div>
@@ -395,14 +395,8 @@
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
                 Produktifitas Tenaga Kerja Berdasarkan Lapangan Usaha
               </h5>
-              <div class="relative w-32">
-                <DatePicker picker="year" id="datepicker_tren"
-                  v-model="selectedDate"
-                  @change="handleTrenJumlahKategoriProgramPelatihanChanged"  
-                />
-              </div>
             </div>
-          <ProduktifitasLapanganUsaha :filter="filterProduktifitasLapanganUsaha"/>
+          <ProduktifitasLapanganUsaha />
         </div>
       </div>
     </div>

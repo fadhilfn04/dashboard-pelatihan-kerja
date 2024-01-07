@@ -43,15 +43,10 @@ export default {
           }
         },
         legend: {
-          layout: 'vertical',
-          align: 'right',
-          verticalAlign: 'top',
-          x: -40,
-          y: 80,
-          floating: true,
-          borderWidth: 1,
-          backgroundColor: '#FFFFFF',
-          shadow: true
+          symbolWidth: 10,
+          symbolHeight: 10,
+          symbolPadding: 5,
+          symbolRadius: 0,
         },
         credits: {
           enabled: false

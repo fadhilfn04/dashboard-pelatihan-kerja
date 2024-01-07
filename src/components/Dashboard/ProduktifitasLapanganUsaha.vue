@@ -48,6 +48,7 @@ export default {
             '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
             '<td style="padding:0"><b>{point.y}</b></td></tr>',
           footerFormat: "</table>",
+          valueSuffix: ' Juta',
           shared: true,
           useHTML: true,
         },
@@ -62,17 +63,122 @@ export default {
         },
         series: [
           {
-            name: "Pemagangan Dalam Negeri",
+            name: "A. Pertanian, Kehutanan, dan Perikanan",
             color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
-            name: "Pemagangan Luar Negeri",
+            name: "B. Pertambangan dan Penggalian",
             color: getRandomColor(),
             marker: {
-              symbol: 'square'
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "C. Industri Pengolahan",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "D. Pengadaan Listrik dan Gas",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "E. Pengadaan Air, Pengelolaan Sampah, Limbah dan Daur Ulang",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "F. Konstruksi",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "G. Perdagangan Besar dan Eceran; Reparasi Mobil dan Sepeda Motor",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "H. Transportasi dan Pergudangan",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "I. Penyediaan Akomodasi dan Makan Minum",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "J. Informasi dan Komunikasi",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "K. Jasa Keuangan dan Asuransi",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "L. Real Estate",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "M,N. Jasa Perusahaan",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "O. Administrasi Pemerintahan, Pertahanan dan Jaminan Sosial Wajib",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "P. Jasa Pendidikan",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "Q. Jasa Kesehatan dan Kegiatan Sosial",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
+            },
+          },
+          {
+            name: "R,S,T,U. Jasa lainnya",
+            color: getRandomColor(),
+            marker: {
+              symbol: 'circle'
             },
           },
         ],
@@ -120,46 +226,45 @@ export default {
       ],
     };
   },
-  props: {
-    filter: {
-      type: String,
-      default: "/recap-business-productivity",
-    },
-  },
   mounted() {
     this.loadData();
-  },
-  watch: {
-    filter() {
-      this.loadData();
-    },
   },
   methods: {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
-      axios
-        .get(import.meta.env.VITE_API_URL + "/recap-trends-number-apprentices", {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        })
-        .then((response) => {
-          if (response.data && response.data.data) {
-            const data = response.data.data.rekap_tren;
+      axios.get(import.meta.env.VITE_API_URL + "/recap-business-productivity", {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      })
+      .then((response) => {
+        if (response.data && response.data.data) {
+          var categories      = [];
 
-            var categories      = [];
-            const dalam_negeri  = data.dalam_negeri;
-            const luar_negeri   = data.luar_negeri;
+          this.dataTren.forEach((item) => {
+            categories.push(item.categories);
+          });
 
-            this.dataTren.forEach((item) => {
-              categories.push(item.categories);
-            });
-
-            this.chartOptions.xAxis.categories  = categories;
-            this.chartOptions.series[0].data    = dalam_negeri;
-            this.chartOptions.series[1].data    = luar_negeri;
-          }
-        });
+          this.chartOptions.xAxis.categories  = categories;
+          this.chartOptions.series[0].data    = response.data.data.rekap_produktifitas.dataA.map((value) => parseFloat(value));
+          this.chartOptions.series[1].data    = response.data.data.rekap_produktifitas.dataB.map((value) => parseFloat(value));
+          this.chartOptions.series[2].data    = response.data.data.rekap_produktifitas.dataC.map((value) => parseFloat(value));
+          this.chartOptions.series[3].data    = response.data.data.rekap_produktifitas.dataD.map((value) => parseFloat(value));
+          this.chartOptions.series[4].data    = response.data.data.rekap_produktifitas.dataE.map((value) => parseFloat(value));
+          this.chartOptions.series[5].data    = response.data.data.rekap_produktifitas.dataF.map((value) => parseFloat(value));
+          this.chartOptions.series[6].data    = response.data.data.rekap_produktifitas.dataG.map((value) => parseFloat(value));
+          this.chartOptions.series[7].data    = response.data.data.rekap_produktifitas.dataH.map((value) => parseFloat(value));
+          this.chartOptions.series[8].data    = response.data.data.rekap_produktifitas.dataI.map((value) => parseFloat(value));
+          this.chartOptions.series[9].data    = response.data.data.rekap_produktifitas.dataJ.map((value) => parseFloat(value));
+          this.chartOptions.series[10].data    = response.data.data.rekap_produktifitas.dataK.map((value) => parseFloat(value));
+          this.chartOptions.series[11].data    = response.data.data.rekap_produktifitas.dataL.map((value) => parseFloat(value));
+          this.chartOptions.series[12].data    = response.data.data.rekap_produktifitas.dataMN.map((value) => parseFloat(value));
+          this.chartOptions.series[13].data    = response.data.data.rekap_produktifitas.dataO.map((value) => parseFloat(value));
+          this.chartOptions.series[14].data    = response.data.data.rekap_produktifitas.dataP.map((value) => parseFloat(value));
+          this.chartOptions.series[15].data    = response.data.data.rekap_produktifitas.dataQ.map((value) => parseFloat(value));
+          this.chartOptions.series[16].data    = response.data.data.rekap_produktifitas.dataRSTU.map((value) => parseFloat(value));
+        }
+      });
     },
   },
 };
