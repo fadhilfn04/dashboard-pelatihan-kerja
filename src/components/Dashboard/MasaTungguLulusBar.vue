@@ -88,8 +88,21 @@ export default {
         .then((response) => {
           console.log(response)
           if (response.data) {
+            // var value = [];
+
+            // const randomData = this.getRandomData(100, 1000);
+            // value.push(randomData);
+
+            // // this.chartOptions.xAxis.categories = categories;
+            // this.chartOptions.series[0].data = value;
+            // this.chartOptions.series[1].data = value;
+            // this.chartOptions.series[2].data = value;
+            // this.chartOptions.series[3].data = value;
           }
         });
+    },
+    getRandomData(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
     },
   },
 };

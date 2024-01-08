@@ -23,18 +23,10 @@ export default {
           crosshair: true,
         },
         yAxis: {
-          min: 0,
-          title: null,
-          labels: {
-            formatter: function () {
-              return Highcharts.numberFormat(this.value, 0, ".", ",");
-            },
-            style: {
-              fontSize: "10px",
-            },
-            overflow: "justify",
-          },
-        },
+          title: {
+              text: '(Juta)'
+          }
+      },
         legend: {
           symbolWidth: 10,
           symbolHeight: 10,
@@ -64,119 +56,102 @@ export default {
         series: [
           {
             name: "A. Pertanian, Kehutanan, dan Perikanan",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "B. Pertambangan dan Penggalian",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "C. Industri Pengolahan",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "D. Pengadaan Listrik dan Gas",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "E. Pengadaan Air, Pengelolaan Sampah, Limbah dan Daur Ulang",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "F. Konstruksi",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "G. Perdagangan Besar dan Eceran; Reparasi Mobil dan Sepeda Motor",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "H. Transportasi dan Pergudangan",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "I. Penyediaan Akomodasi dan Makan Minum",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "J. Informasi dan Komunikasi",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "K. Jasa Keuangan dan Asuransi",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "L. Real Estate",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "M,N. Jasa Perusahaan",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "O. Administrasi Pemerintahan, Pertahanan dan Jaminan Sosial Wajib",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "P. Jasa Pendidikan",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "Q. Jasa Kesehatan dan Kegiatan Sosial",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },
           },
           {
             name: "R,S,T,U. Jasa lainnya",
-            color: getRandomColor(),
             marker: {
               symbol: 'circle'
             },

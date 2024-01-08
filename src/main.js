@@ -34,6 +34,9 @@ import { Table } from 'ant-design-vue';
 Maps(Highcharts);
 Accessibility(Highcharts);
 
+import Exporting from 'highcharts/modules/exporting';
+Exporting(Highcharts);
+
 library.add(faSearch);
 
 createApp(App)
