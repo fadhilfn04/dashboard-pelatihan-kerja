@@ -321,24 +321,12 @@
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
               Masa Tunggu Lulus ke Bekerja
             </h5>
-            <!-- <div class="relative">
-              <a-select
-                placeholder="Semua Pelatihan"
-                :getPopupContainer="(triggerNode) => triggerNode.parentNode"
-                option-filter-prop="children"
-                :filter-option="filterOption"
-                @change="onProvinceChange($event)"
-              >
-                <a-select-option
-                  v-for="(provinceContent, index) in provinceContents"
-                  :key="index"
-                  :value="provinceContent.id"
-                  >{{ provinceContent.name }}</a-select-option
-                >
-              </a-select>
-            </div> -->
+            <FilterMasaTungguLulusProgramPelatihan
+              @programPelatihanMasaTungguLulusChanged="handleProgramPelatihanMasaTungguLulusChanged"
+              tipe="programPelatihan"
+            />
           </div>
-          <MasaTungguLulusPie />
+          <MasaTungguLulusPie :filter="filterMasaTunggu"/>
         </div>
       </div>
     </div>
@@ -364,24 +352,12 @@
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
               Tingkat Penyerapan Lulusan
             </h5>
-            <!-- <div class="relative">
-              <a-select
-                placeholder="Semua Pelatihan"
-                :getPopupContainer="(triggerNode) => triggerNode.parentNode"
-                option-filter-prop="children"
-                :filter-option="filterOption"
-                @change="onProvinceChange($event)"
-              >
-                <a-select-option
-                  v-for="(provinceContent, index) in provinceContents"
-                  :key="index"
-                  :value="provinceContent.id"
-                  >{{ provinceContent.name }}</a-select-option
-                >
-              </a-select>
-            </div> -->
+            <FilterTingkatPenyerapanLulusProgramPelatihan
+              @programPelatihanTingkatPenyerapanLulusChanged="handleProgramPelatihanTingkatPenyerapanLulusChanged"
+              tipe="programPelatihan"
+            />
           </div>
-          <TingkatPenyerapanLulusanPie />
+          <TingkatPenyerapanLulusanPie :filter="filterTingkatPenyerapan"/>
         </div>
       </div>
     </div>
@@ -457,6 +433,8 @@ import FilterProgramPelatihanProvinsi from "../Shared/FilterProgramPelatihanProv
 import PersentaseTingkatPencariKerjaPadaLPK from "./PersentaseTingkatPencariKerjaPadaLPK.vue";
 import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
 import PersentasePeminatProgramPelatihanKejuruan from "./PersentasePeminatProgramPelatihanKejuruan.vue";
+import FilterMasaTungguLulusProgramPelatihan from "../Shared/FilterMasaTungguLulusProgramPelatihan.vue";
+import FilterTingkatPenyerapanLulusProgramPelatihan from "../Shared/FilterTingkatPenyerapanLulusProgramPelatihan.vue";
 import { 
   COffcanvas, 
   COffcanvasHeader, 
@@ -488,9 +466,11 @@ export default {
     FilterProgramPelatihanProvinsi,
     PersentaseKategoriTenagaPelatihan,
     TrenJumlahKategoriProgramPelatihan,
-    PersentasePeminatProgramPelatihanKejuruan,
     PersentaseTingkatPencariKerjaPadaLPK,
+    FilterMasaTungguLulusProgramPelatihan,
     TingkatAkreditasiLembagaPelatihanKerja,
+    PersentasePeminatProgramPelatihanKejuruan,
+    FilterTingkatPenyerapanLulusProgramPelatihan
   },
 
   data() {
@@ -505,6 +485,7 @@ export default {
       isMaker: null,
       networkNodes: [],
       provinceContents: [],
+      trainingContents: [],
       cityContents: [],
       institutionContents: [],
       institutionTypeContents: [],
@@ -521,13 +502,16 @@ export default {
       filterProduktifitas                               : "/recap-labor-productivity",
       filterInstruktur                                  : "/recap-instructor-category-percentage",
       filterTenagaPelatihan                             : "/recap-training-personnel-category-percentage",
+      filterMasaTunggu                                  : "/recap-waiting-period-graduate-pie",
+      filterTingkatPenyerapan                           : "/recap-graduate-absorption-rate-pie",
       selectedDate                                      : null,
       selectedYear                                      : null,
     }
   },
 
   async created() {
-    await this.getProvince()
+    await this.getProvince();
+    await this.getTraining();
   },
 
   methods: {
@@ -537,6 +521,20 @@ export default {
           .toLowerCase()
           .indexOf(input.toLowerCase()) >= 0
       )
+    },
+
+    async getTraining() {
+      const token = JSON.parse(localStorage.getItem("token"));
+      this.cityContents = await fetch(
+        import.meta.env.VITE_API_URL + '/training-list',
+        {
+          headers: {
+            Authorization: "Bearer " + token.value,
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => data.data)
     },
 
     async getProvince() {
@@ -946,6 +944,34 @@ export default {
         this.filterProduktifitas = "/recap-labor-productivity-year/" + date.$y;
       } else {
         this.filterProduktifitas = "/recap-labor-productivity";
+      }
+    },
+    handleProgramPelatihanMasaTungguLulusChanged(data) {
+      switch (data.tipe) {
+        case "programPelatihan":
+          if (data.uniq_id != 0) {
+            this.filterMasaTunggu = "/recap-waiting-period-graduate-pie-training/" + data.uniq_id;
+          } else {
+            this.filterMasaTunggu = "/recap-waiting-period-graduate-pie";
+          }
+          break;
+
+        default:
+          break;
+      }
+    },
+    handleProgramPelatihanTingkatPenyerapanLulusChanged(data) {
+      switch (data.tipe) {
+        case "programPelatihan":
+          if (data.uniq_id != 0) {
+            this.filterTingkatPenyerapan = "/recap-graduate-absorption-rate-pie-training/" + data.uniq_id;
+          } else {
+            this.filterTingkatPenyerapan = "/recap-graduate-absorption-rate-pie";
+          }
+          break;
+
+        default:
+          break;
       }
     },
   },
