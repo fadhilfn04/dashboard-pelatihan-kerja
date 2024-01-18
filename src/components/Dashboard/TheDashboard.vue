@@ -1,6 +1,10 @@
 <template>
   <LoadingSpinner v-if="isLoading" />
   <particles></particles>
+  <div class="text-end mb-3">
+    <!-- <a-button type="primary" @click="handleOpen(true)">Begin Tour</a-button> -->
+    <a-button type="primary" style="background-color: blue; border-color: blue; color: white;" @click="handleOpen(true)">Mulai tur aplikasi</a-button>
+  </div>
   <div class="w-full rounded-lg border border-gray-200 bg-white shadow">
     <div class="p-5">
       <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
@@ -8,7 +12,7 @@
       </h5>
       <div class="dashboard-container">
         <a-form class="filter-form">
-          <a-form-item class="province">
+          <a-form-item ref="tour1" class="province">
             <a-select
               placeholder="Semua Provinsi/Wilayah"
               :getPopupContainer="(triggerNode) => triggerNode.parentNode"
@@ -25,7 +29,7 @@
             </a-select>
           </a-form-item>
           <a-tooltip title="Pilih provinsi/wilayah terlebih dahulu">
-            <a-form-item class="city">
+            <a-form-item ref="tour2" class="city">
               <a-select
                 placeholder="Semua Kabupaten/Kota"
                 :getPopupContainer="(triggerNode) => triggerNode.parentNode"
@@ -81,7 +85,7 @@
             </a-button>
           </a-tooltip>
         </a-form>
-        <div id="map">
+        <div ref="tour3" id="map">
         </div>
         <div v-if="isOpenDetail">
           <COffcanvas placement="start" :visible="visible" @hide="() => { visible = !visible }">
@@ -122,7 +126,7 @@
 
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-3">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour4" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
             Jumlah Lembaga Pelatihan Kerja
@@ -135,7 +139,7 @@
 
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-1">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour5" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-start">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -148,7 +152,7 @@
     </div>
     
     <div class="col-span-2">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour6" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
             <div class="flex justify-between">
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -167,7 +171,7 @@
 
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-3">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour7" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -182,7 +186,7 @@
 
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-3">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour8" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -197,7 +201,7 @@
 
   <div class="grid grid-cols-4 gap-8">
     <div class="col-span-2">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour9" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
             <div class="flex justify-between">
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -216,16 +220,12 @@
     </div>
 
     <div class="col-span-2">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour10" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
             <div class="flex justify-between">
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
                 Program Pelatihan Yang Banyak Diminati
               </h5>
-              <!-- <FilterProgramPelatihanProvinsi
-                @provinsiProgramPelatihanChanged="handleProgramPelatihanProvinsiChanged"
-                tipe="provinsiProgramPelatihan"
-              /> -->
             </div>
           <ProgramPelatihanBanyakDiminati :filter="filterProgramPelatihanProvinsi"/>
         </div>
@@ -235,7 +235,7 @@
 
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-2">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour11" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
             <div class="flex justify-between">
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -254,7 +254,7 @@
     </div>
 
     <div class="col-span-1">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour12" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
             <div class="flex justify-between">
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -275,7 +275,7 @@
 
   <div class="grid grid-cols-4 gap-8">
     <div class="col-span-2">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour13" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -288,7 +288,7 @@
     </div>
 
     <div class="col-span-2">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour14" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -303,7 +303,7 @@
 
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-2">
-      <div class="mt-8  w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour15" class="mt-8  w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -315,16 +315,16 @@
       </div>
     </div>
     <div class="col-span-1">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour16" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
               Masa Tunggu Lulus ke Bekerja
             </h5>
-            <FilterMasaTungguLulusProgramPelatihan
+            <!-- <FilterMasaTungguLulusProgramPelatihan
               @programPelatihanMasaTungguLulusChanged="handleProgramPelatihanMasaTungguLulusChanged"
-              tipe="programPelatihan"
-            />
+              tipe="programPelatihanMasaTunggu"
+            /> -->
           </div>
           <MasaTungguLulusPie :filter="filterMasaTunggu"/>
         </div>
@@ -334,7 +334,7 @@
 
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-2">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour17" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -346,16 +346,16 @@
       </div>
     </div>
     <div class="col-span-1">
-      <div class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour18" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
               Tingkat Penyerapan Lulusan
             </h5>
-            <FilterTingkatPenyerapanLulusProgramPelatihan
+            <!-- <FilterTingkatPenyerapanLulusProgramPelatihan
               @programPelatihanTingkatPenyerapanLulusChanged="handleProgramPelatihanTingkatPenyerapanLulusChanged"
-              tipe="programPelatihan"
-            />
+              tipe="programPelatihanTingkatPenyerapan"
+            /> -->
           </div>
           <TingkatPenyerapanLulusanPie :filter="filterTingkatPenyerapan"/>
         </div>
@@ -365,7 +365,7 @@
 
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-3">
-      <div class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <div ref="tour19" class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
             <div class="flex justify-between">
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
@@ -377,6 +377,8 @@
       </div>
     </div>
   </div>
+
+  <a-tour v-model:current="current" :open="open" :steps="steps" @close="handleOpen(false)" />
 </template>
 
 <style>
@@ -410,6 +412,7 @@
 
 <script>
 import axios from "axios";
+import { ref } from 'vue';
 import * as L from "leaflet";
 import { DatePicker } from 'ant-design-vue';
 import KapasitasPPK from "./KapasitasPPK.vue";
@@ -471,6 +474,135 @@ export default {
     TingkatAkreditasiLembagaPelatihanKerja,
     PersentasePeminatProgramPelatihanKejuruan,
     FilterTingkatPenyerapanLulusProgramPelatihan
+  },
+
+  setup() {
+    const open = ref(false);
+    const current = ref(0);
+
+    const tour1 = ref(null);
+    const tour2 = ref(null);
+    const tour3 = ref(null);
+    const tour4 = ref(null);
+    const tour5 = ref(null);
+    const tour6 = ref(null);
+    const tour7 = ref(null);
+    const tour8 = ref(null);
+    const tour9 = ref(null);
+    const tour10 = ref(null);
+    const tour11 = ref(null);
+    const tour12 = ref(null);
+    const tour13 = ref(null);
+    const tour14 = ref(null);
+    const tour15 = ref(null);
+    const tour16 = ref(null);
+    const tour17 = ref(null);
+    const tour18 = ref(null);
+    const tour19 = ref(null);
+
+    const steps = [
+      {
+        title: 'Filter Provinsi',
+        description: 'Berfungsi untuk melakukan Filter Provinsi pada Peta Persebaran.',
+        target: () => tour1.value.$el,
+      },
+      {
+        title: 'Filter Kota',
+        description: 'Berfungsi untuk melakukan Filter Kota pada Peta Persebaran.',
+        target: () => tour2.value.$el,
+      },
+      {
+        title: 'Peta Persebaran Lembaga Pelatihan Kerja Indonesia',
+        description: 'Menampilkan Peta Persebaran Lembaga Pelatihan Kerja Indonesia.',
+        target: () => tour3.value,
+      },
+      {
+        title: 'Jumlah Lembaga Pelatihan Kerja',
+        description: 'Menampilkan grafik Jumlah Lembaga Pelatihan Kerja.',
+        target: () => tour4.value,
+      },
+      {
+        title: 'Tingkat Akreditasi Lembaga Pelatihan Kerja',
+        description: 'Menampilkan grafik Tingkat Akreditasi Lembaga Pelatihan Kerja.',
+        target: () => tour5.value,
+      },
+      {
+        title: 'Kapasitas Program Pelatihan Kerja',
+        description: 'Menampilkan grafik Kapasitas Program Pelatihan Kerja.',
+        target: () => tour6.value,
+      },
+      {
+        title: 'Persentase Peminat Program Pelatihan Berdasarkan Kejuruan',
+        description: 'Menampilkan grafik Persentase Peminat Program Pelatihan Berdasarkan Kejuruan.',
+        target: () => tour7.value,
+      },
+      {
+        title: 'Persentase Tingkat Pencari Kerja pada Lembaga Pelatihan Kerja',
+        description: 'Menampilkan grafik Persentase Tingkat Pencari Kerja pada Lembaga Pelatihan Kerja.',
+        target: () => tour8.value,
+      },
+      {
+        title: 'Tren Jumlah Kategori Program Pelatihan',
+        description: 'Menampilkan grafik Tren Jumlah Kategori Program Pelatihan.',
+        target: () => tour9.value,
+      },
+      {
+        title: 'Program Pelatihan Yang Banyak Diminati',
+        description: 'Menampilkan grafik Program Pelatihan Yang Banyak Diminati.',
+        target: () => tour10.value,
+      },
+      {
+        title: 'Tren Jumlah Peserta Pemagangan',
+        description: 'Menampilkan grafik Tren Jumlah Peserta Pemagangan.',
+        target: () => tour11.value,
+      },
+      {
+        title: 'Lulusan Pelatihan ke Bekerja',
+        description: 'Menampilkan grafik Lulusan Pelatihan ke Bekerja.',
+        target: () => tour12.value,
+      },
+      {
+        title: 'Jumlah Persentase Kategori Instruktur',
+        description: 'Menampilkan grafik Jumlah Persentase Kategori Instruktur.',
+        target: () => tour13.value,
+      },
+      {
+        title: 'Jumlah Persentase Kategori Tenaga Pelatihan',
+        description: 'Menampilkan grafik Jumlah Persentase Kategori Tenaga Pelatihan.',
+        target: () => tour14.value,
+      },
+      {
+        title: 'Masa Tunggu Lulus ke Bekerja',
+        description: 'Menampilkan grafik Masa Tunggu Lulus ke Bekerja.',
+        target: () => tour15.value,
+      },
+      {
+        title: 'Masa Tunggu Lulus ke Bekerja',
+        description: 'Menampilkan grafik Masa Tunggu Lulus ke Bekerja.',
+        target: () => tour16.value,
+      },
+      {
+        title: 'Tingkat Penyerapan Lulusan',
+        description: 'Menampilkan grafik Tingkat Penyerapan Lulusan.',
+        target: () => tour17.value,
+      },
+      {
+        title: 'Tingkat Penyerapan Lulusan',
+        description: 'Menampilkan grafik Tingkat Penyerapan Lulusan.',
+        target: () => tour18.value,
+      },
+      {
+        title: 'Produktifitas Tenaga Kerja Berdasarkan Lapangan Usaha',
+        description: 'Menampilkan grafik Produktifitas Tenaga Kerja Berdasarkan Lapangan Usaha.',
+        target: () => tour19.value,
+      },
+    ];
+
+    const handleOpen = (val) => {
+      open.value = val;
+    };
+
+    return { open, current, steps, tour1, tour2, tour3, tour4, tour5, tour6, tour7, tour8, tour9, tour10, tour11, tour12, tour13, tour14, tour15, tour16, tour17, tour18, tour19, handleOpen };
   },
 
   data() {
@@ -748,32 +880,6 @@ export default {
       this.initMap(true)
     },
 
-    // async filterRepositories() {
-    //   const token = JSON.parse(localStorage.getItem("token"));
-    //   this.institutionContents = await fetch(
-    //     import.meta.env.VITE_API_URL + 
-    //         '/repositories?institutionId=' + 
-    //         this.institutionId + 
-    //         '&provinceId=' + 
-    //         this.provinceId + 
-    //         '&cityId=' + 
-    //         this.cityId,
-    //       {
-    //       headers: {
-    //         Authorization: "Bearer " + token.value,
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     if (!res.ok) {
-    //       throw new Error('Network response was not ok');
-    //     }
-    //     return res.json();
-    //   })
-    //   .then((data) => data.features);
-    //   this.initMap(true)
-    // },
-
     async getInstitution() {
       this.isLoading = true;
       const token = JSON.parse(localStorage.getItem("token"));
@@ -948,7 +1054,7 @@ export default {
     },
     handleProgramPelatihanMasaTungguLulusChanged(data) {
       switch (data.tipe) {
-        case "programPelatihan":
+        case "programPelatihMasaTunggu":
           if (data.uniq_id != 0) {
             this.filterMasaTunggu = "/recap-waiting-period-graduate-pie-training/" + data.uniq_id;
           } else {
@@ -962,7 +1068,7 @@ export default {
     },
     handleProgramPelatihanTingkatPenyerapanLulusChanged(data) {
       switch (data.tipe) {
-        case "programPelatihan":
+        case "programPelatihanTingkatPenyerapan":
           if (data.uniq_id != 0) {
             this.filterTingkatPenyerapan = "/recap-graduate-absorption-rate-pie-training/" + data.uniq_id;
           } else {

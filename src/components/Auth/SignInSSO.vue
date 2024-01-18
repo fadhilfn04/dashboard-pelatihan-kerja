@@ -88,28 +88,35 @@ export default {
   },
   methods: {
     async login() {
-      axios.post(import.meta.env.VITE_API_URL + '/login', {
-        email: this.username,
-        password: this.password
+      const token = localStorage.getItem("token");
+      axios.get(import.meta.env.VITE_API_URL + '/login-pelatihan', {
+          headers: {
+              Authorization: `Bearer ${token}` // The token you got from Laravel app
+          }
       })
       .then(response => {
-        if (response.data.metadata.code == 200) {
-          const token = response.data.response.token;
-          localStorage.setItem("token", JSON.stringify({
-            value: token,
-            expiredAt: Date.now()+(60*60*1000)
-          }));
-          localStorage.setItem("email", this.username);
-          const redirect = this.$route.query.redirect;
-          const redirectPath = redirect ? decodeURIComponent(redirect) : "/";
-          this.$router.push(redirectPath);
-          return true;
-        }else {
-          this.loginError = true;
-          return true;
-        }
+        const redirect = this.$route.query.redirect;
+        const redirectPath = redirect ? decodeURIComponent(redirect) : "/";
+        this.$router.push(redirectPath);
+        return true;
+        // if (response.data.metadata.code == 200) {
+        //   const token = response.data.response.token;
+        //   localStorage.setItem("token", JSON.stringify({
+        //     value: token,
+        //     expiredAt: Date.now()+(60*60*1000)
+        //   }));
+        //   localStorage.setItem("email", this.username);
+        //   const redirect = this.$route.query.redirect;
+        //   const redirectPath = redirect ? decodeURIComponent(redirect) : "/";
+        //   this.$router.push(redirectPath);
+        //   return true;
+        // } else {
+        //   this.loginError = true;
+        //   return true;
+        // }
       })
       .catch(error => {
+        console.log(false)
         if (error.response && error.response.status === 401) {
           this.loginError = true;
           return true;
@@ -120,7 +127,41 @@ export default {
           this.loginError = true;
           return true;
         }
-      }); 
+      });
+
+      // axios.post(import.meta.env.VITE_API_URL + '/login-pelatihan', {
+      //   email: this.username,
+      //   password: this.password
+      // })
+      // .then(response => {
+      //   if (response.data.metadata.code == 200) {
+      //     const token = response.data.response.token;
+      //     localStorage.setItem("token", JSON.stringify({
+      //       value: token,
+      //       expiredAt: Date.now()+(60*60*1000)
+      //     }));
+      //     localStorage.setItem("email", this.username);
+      //     const redirect = this.$route.query.redirect;
+      //     const redirectPath = redirect ? decodeURIComponent(redirect) : "/";
+      //     this.$router.push(redirectPath);
+      //     return true;
+      //   } else {
+      //     this.loginError = true;
+      //     return true;
+      //   }
+      // })
+      // .catch(error => {
+      //   if (error.response && error.response.status === 401) {
+      //     this.loginError = true;
+      //     return true;
+      //   } else if (error.request) {
+      //     this.loginError = true;
+      //     return true;
+      //   } else {
+      //     this.loginError = true;
+      //     return true;
+      //   }
+      // }); 
     },
   },
 };

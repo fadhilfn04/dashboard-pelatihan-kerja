@@ -70,7 +70,7 @@ onMounted(async () => {
               id="all"
               type="radio"
               value="all"
-              name="radioProgramPelatihan"
+              name="radioTingkatPenyerapan"
               class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-blue-500"
               @change="emitEvent(0)"
             />
@@ -87,7 +87,7 @@ onMounted(async () => {
               :id="programPelatihan.uniq_id"
               type="radio"
               :value="programPelatihan.uniq_id"
-              name="radioPelatihan"
+              name="radioTingkatPenyerapan"
               class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-blue-500"
               @change="emitEvent(programPelatihan.uniq_id)"
             />

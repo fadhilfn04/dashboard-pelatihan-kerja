@@ -52,8 +52,8 @@
 
 <style>
 .nikAlert {
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 350px;
   font-size: small;
 }
 </style>
