@@ -101,8 +101,8 @@
               <div class="info">{{ detailLembaga.nama_lembaga }}</div>
               <div class="title">No. VIN</div>
               <div class="info">{{ detailLembaga.no_vin }}</div>
-              <div class="title">Tipe Lembaga</div>
-              <div class="info">{{ detailLembaga.tipe_lembaga }}</div>
+              <!-- <div class="title">Tipe Lembaga</div>
+              <div class="info">{{ detailLembaga.tipe_lembaga }}</div> -->
               <div class="title">Email</div>
               <div class="info">{{ detailLembaga.email }}</div>
               <div class="title">Nomor Telepon</div>
@@ -115,8 +115,8 @@
               <div class="info">{{ detailLembaga.alamat }}</div>
               <div class="title">Status Akreditasi</div>
               <div class="info">{{ detailLembaga.status_akreditasi }}</div>
-              <div class="title">Kapasitas Latih</div>
-              <div class="info">{{ detailLembaga.kapasitas_latih }}</div>
+              <!-- <div class="title">Kapasitas Latih</div>
+              <div class="info">{{ detailLembaga.kapasitas_latih }}</div> -->
             </COffcanvasBody>
           </COffcanvas>
         </div>
@@ -414,12 +414,12 @@
 import axios from "axios";
 import { ref } from 'vue';
 import * as L from "leaflet";
-import { DatePicker } from 'ant-design-vue';
 import KapasitasPPK from "./KapasitasPPK.vue";
 import Particles from '../Shared/Particles.vue';
 import { SyncOutlined } from '@ant-design/icons-vue';
 import MasaTungguLulusBar from "./MasaTungguLulusBar.vue";
 import MasaTungguLulusPie from "./MasaTungguLulusPie.vue";
+import { DatePicker, notification, message } from 'ant-design-vue';
 import LoadingSpinner from '@/components/Shared/LoadingSpinner.vue';
 import LulusanPelatihanBekerja from "./LulusanPelatihanBekerja.vue";
 import ProduktifitasLapanganUsaha from "./ProduktifitasLapanganUsaha.vue";
@@ -861,7 +861,6 @@ export default {
 
     async filterTrainingCapacity() {
       const token = JSON.parse(localStorage.getItem("token"));
-      console.log(this.trainingCapacityValue)
       this.institutionContents = await fetch(
         import.meta.env.VITE_API_URL + '/trainingCapacityFilter/' + this.trainingCapacityValue,
           {
@@ -968,6 +967,14 @@ export default {
         })
       }
     },
+    alert() {
+      message.open({
+        type: 'loading',
+        content: 'Sedang dilakukan pengambilan data. Jika tetap tidak muncul maka tidak ditemukan data Lembaga Pelatihan disini. Silahkan diklik kembali...',
+        duration: 0,
+      });
+      setTimeout(message.destroy, 5000);
+    },
     onMapClick(event) {
       const markerId = event.target.options.id
       const url = import.meta.env.VITE_API_URL + "/training-institutions/" + markerId
@@ -982,7 +989,7 @@ export default {
         if (response.data && response.data.length > 0) {
           this.detailLembaga = []
           this.isOpenDetail = true
-          this.visible = !this.visible
+          this.visible = true
           this.detailLembaga.nama_lembaga = response.data[0].nama_lembaga;
           this.detailLembaga.no_vin = response.data[0].no_vin;
           this.detailLembaga.tipe_lembaga = response.data[0].tipe_lembaga;
@@ -994,7 +1001,7 @@ export default {
           this.detailLembaga.status_akreditasi = response.data[0].status_akreditasi;
           this.detailLembaga.kapasitas_latih = response.data[0].kapasitas_latih;
         } else {
-          console.log('empty data!')
+          this.alert();
         }
       });
     },
