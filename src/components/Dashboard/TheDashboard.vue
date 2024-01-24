@@ -92,31 +92,31 @@
             <COffcanvasHeader>
               <COffcanvasTitle>
                 <div class="title">
-                  {{ detailLembaga.kabupaten_kota }}
+                  {{ detailLembaga.kab_kota ? detailLembaga.kab_kota : '-' }}
                 </div>
               </COffcanvasTitle>
             </COffcanvasHeader>
             <COffcanvasBody>
               <div class="title">Nama Lembaga</div>
-              <div class="info">{{ detailLembaga.nama_lembaga }}</div>
+              <div class="info">{{ detailLembaga.nama_lembaga ? detailLembaga.nama_lembaga : '-' }}</div>
               <div class="title">No. VIN</div>
-              <div class="info">{{ detailLembaga.no_vin }}</div>
+              <div class="info">{{ detailLembaga.no_vin ? detailLembaga.no_vin : '-' }}</div>
               <!-- <div class="title">Tipe Lembaga</div>
-              <div class="info">{{ detailLembaga.tipe_lembaga }}</div> -->
+              <div class="info">{{ detailLembaga.tipe_lembaga ? detailLembaga.tipe_lembaga : '-' }}</div> -->
               <div class="title">Email</div>
-              <div class="info">{{ detailLembaga.email }}</div>
+              <div class="info">{{ detailLembaga.email ? detailLembaga.email : '-' }}</div>
               <div class="title">Nomor Telepon</div>
-              <div class="info">{{ detailLembaga.no_telp }}</div>
+              <div class="info">{{ detailLembaga.no_telp ? detailLembaga.no_telp : '-' }}</div>
               <div class="title">Provinsi</div>
-              <div class="info">{{ detailLembaga.provinsi }}</div>
+              <div class="info">{{ detailLembaga.provinsi ? detailLembaga.provinsi : '-' }}</div>
               <div class="title">Kota/Kabupaten</div>
-              <div class="info">{{ detailLembaga.kabupaten_kota }}</div>
+              <div class="info">{{ detailLembaga.kabupaten_kota ? detailLembaga.kabupaten_kota : '-' }}</div>
               <div class="title">Alamat</div>
-              <div class="info">{{ detailLembaga.alamat }}</div>
+              <div class="info">{{ detailLembaga.alamat ? detailLembaga.alamat : '-' }}</div>
               <div class="title">Status Akreditasi</div>
-              <div class="info">{{ detailLembaga.status_akreditasi }}</div>
+              <div class="info">{{ detailLembaga.status_akreditasi ? detailLembaga.status_akreditasi : '-' }}</div>
               <!-- <div class="title">Kapasitas Latih</div>
-              <div class="info">{{ detailLembaga.kapasitas_latih }}</div> -->
+              <div class="info">{{ detailLembaga.kapasitas_latih ? detailLembaga.kapasitas_latih : '-' }}</div> -->
             </COffcanvasBody>
           </COffcanvas>
         </div>
@@ -175,7 +175,7 @@
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Persentase Peminat Program Pelatihan Berdasarkan Kejuruan
+              Peminat Program Pelatihan Berdasarkan Kejuruan
             </h5>
           </div>
           <PersentasePeminatProgramPelatihanKejuruan />
@@ -190,7 +190,7 @@
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Persentase Tingkat Pencari Kerja pada Lembaga Pelatihan Kerja
+              Tingkat Pencari Kerja pada Lembaga Pelatihan Kerja
             </h5>
           </div>
           <PersentaseTingkatPencariKerjaPadaLPK />
@@ -996,7 +996,7 @@ export default {
           this.detailLembaga.email = response.data[0].email;
           this.detailLembaga.no_telp = response.data[0].no_telp;
           this.detailLembaga.provinsi = response.data[0].provinsi;
-          this.detailLembaga.kabupaten_kota = response.data[0].kabupaten_kota;
+          this.detailLembaga.kab_kota = response.data[0].kab_kota;
           this.detailLembaga.alamat = response.data[0].alamat;
           this.detailLembaga.status_akreditasi = response.data[0].status_akreditasi;
           this.detailLembaga.kapasitas_latih = response.data[0].kapasitas_latih;
