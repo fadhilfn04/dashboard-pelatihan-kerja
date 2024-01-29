@@ -76,23 +76,23 @@ export default {
     },
   },
   methods: {
-    loadData() {
+    async loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
-      axios
-        .get(import.meta.env.VITE_API_URL + this.filter, {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        })
-        .then((response) => {
-          if (response.data) {
-            var bekerja       = response.data.data.bekerja;
-            var tidakBekerja  = response.data.data.tidak_bekerja;
-            
-            this.chartOptions.series[0].data[0].y = bekerja;
-            this.chartOptions.series[0].data[1].y = tidakBekerja;
-          }
-        });
+      await axios.get(import.meta.env.VITE_API_URL + this.filter, {
+        headers: {
+          Authorization: "Bearer " + token.value,
+        },
+      })
+      .then((response) => {
+        if (response.data) {
+          var bekerja       = response.data.data.bekerja;
+          var tidakBekerja  = response.data.data.tidak_bekerja;
+          
+          this.chartOptions.series[0].data[0].y = bekerja;
+          this.chartOptions.series[0].data[1].y = tidakBekerja;
+        }
+      });
+      this.$emit('loading-complete', false);
     },
   },
 };

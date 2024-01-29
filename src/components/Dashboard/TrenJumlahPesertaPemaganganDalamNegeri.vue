@@ -6,7 +6,7 @@
 import axios from "axios";
 
 export default {
-  name: "JumlahLembagaPelatihanKerja",
+  name: "TrenJumlahPesertaPemaganganDalamNegeri",
   data() {
     return {
       chartOptions: {

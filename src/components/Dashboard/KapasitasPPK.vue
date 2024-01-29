@@ -97,21 +97,18 @@ export default {
         })
         .then((response) => {
           if (response.data.success) {
+            console.log(response.data)
             var categories = [];
             var value = [];
             response.data.data.forEach((item) => {
               categories.push(item.nama_lembaga);
-              const randomKapasitas = this.getRandomKapasitas(100, 1000);
-              value.push(randomKapasitas);
+              value.push(item.kapasitas_latih);
             });
 
             this.chartOptions.xAxis.categories = categories;
             this.chartOptions.series[0].data = value;
           }
         });
-    },
-    getRandomKapasitas(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
     },
   },
 };

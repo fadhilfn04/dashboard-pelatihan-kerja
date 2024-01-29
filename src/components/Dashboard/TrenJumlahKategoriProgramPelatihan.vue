@@ -6,10 +6,6 @@
 import axios from "axios";
 import Highcharts from "highcharts";
 
-function getRandomColor() {
-  return "#" + Math.floor(Math.random() * 16777215).toString(16);
-}
-
 export default {
   name: "TrenJumlahKategoriProgramPelatihan",
   data() {
@@ -63,23 +59,18 @@ export default {
         series: [
           {
             name: "JKP",
-            color: getRandomColor(),
           },
           {
             name: "TKM",
-            color: getRandomColor(),
           },
           {
             name: "E-Training",
-            color: getRandomColor(),
           },
           {
             name: "Reguler",
-            color: getRandomColor(),
           },
           {
             name: "Pra Kerja",
-            color: getRandomColor(),
           },
         ],
         credits: {

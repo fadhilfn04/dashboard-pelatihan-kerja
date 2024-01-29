@@ -164,7 +164,7 @@
               </h5>
             </div>
           </div>
-          <div class="d-flex align-items-center mt-3">
+          <div class="d-flex align-items-center mt-3" v-if="!['tenaga-pelatihan', 'penyelenggara-magang', 'peserta-pemagangan', 'program-pemagangan', 'instruktur'].includes(pageTitle)">
             <div class="mr-3">
               <span class="inline-flex items-center rounded-md bg-green-200 font-medium text-green-500 px-2.5 py-2.5">SK</span>
             </div>
@@ -200,7 +200,7 @@
               </h5>
             </div>
           </div>
-          <div class="d-flex align-items-center mt-3">
+          <div class="d-flex align-items-center mt-3" v-if="!['tenaga-pelatihan', 'penyelenggara-magang', 'peserta-pemagangan', 'program-pemagangan', 'instruktur'].includes(pageTitle)">
             <div class="mr-3">
               <span class="inline-flex items-center rounded-md bg-yellow-200 font-medium text-yellow-500 px-2.5 py-2.5">SK</span>
             </div>
@@ -236,7 +236,7 @@
               </h5>
             </div>
           </div>
-          <div class="d-flex align-items-center mt-3">
+          <div class="d-flex align-items-center mt-3" v-if="!['tenaga-pelatihan', 'penyelenggara-magang', 'peserta-pemagangan', 'program-pemagangan', 'instruktur'].includes(pageTitle)">
             <div class="mr-3">
               <span class="inline-flex items-center rounded-md bg-blue-200 font-medium text-blue-500 px-2.5 py-2.5">SK</span>
             </div>
@@ -272,7 +272,7 @@
               </h5>
             </div>
           </div>
-          <div class="d-flex align-items-center mt-3">
+          <div class="d-flex align-items-center mt-3" v-if="!['tenaga-pelatihan', 'penyelenggara-magang', 'peserta-pemagangan', 'program-pemagangan', 'instruktur'].includes(pageTitle)">
             <div class="mr-3">
               <span class="inline-flex items-center rounded-md bg-red-200 font-medium text-red-500 px-2.5 py-2.5">SK</span>
             </div>
@@ -308,7 +308,7 @@
               </h5>
             </div>
           </div>
-          <div class="d-flex align-items-center mt-3">
+          <div class="d-flex align-items-center mt-3" v-if="!['tenaga-pelatihan', 'penyelenggara-magang', 'peserta-pemagangan', 'program-pemagangan', 'instruktur'].includes(pageTitle)">
             <div class="mr-3">
               <span class="inline-flex items-center rounded-md bg-orange-200 font-medium text-orange-500 px-2.5 py-2.5">SK</span>
             </div>

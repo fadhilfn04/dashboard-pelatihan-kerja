@@ -8,7 +8,7 @@
   <div class="w-full rounded-lg border border-gray-200 bg-white shadow">
     <div class="p-5">
       <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-        Peta Persebaran Lembaga Pelatihan Kerja Indonesia
+        Peta Persebaran Lembaga Pelatihan Kerja Terverifikasi di Indonesia s.d Bulan Desember Tahun 2024
       </h5>
       <div class="dashboard-container">
         <a-form class="filter-form">
@@ -129,7 +129,7 @@
       <div ref="tour4" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-            Jumlah Lembaga Pelatihan Kerja
+            Jumlah Lembaga Pelatihan Kerja Terverifikasi di Indonesia Menurut Tipe Lembaga s.d Bulan Desember Tahun 2024
           </h5>
           <JumlahLembagaPelatihanKerja />
         </div>
@@ -137,7 +137,19 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-3 gap-8">
+  <div
+    class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
+    data-aos="zoom-in"
+  >
+    <div class="p-5">
+      <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+        Jumlah Lembaga Pelatihan Kerja Yang Sudah dan Belum Terakreditasi di Indonesia s.d Bulan Desember Tahun 2024
+      </h5>
+    <PetaPersebaranLPKTerakreditasi />
+    </div>
+  </div>
+
+  <!-- <div class="grid grid-cols-3 gap-8">
     <div class="col-span-1">
       <div ref="tour5" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
@@ -151,7 +163,7 @@
       </div>
     </div>
     
-    <div class="col-span-2">
+    <div class="col-span-3">
       <div ref="tour6" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
             <div class="flex justify-between">
@@ -167,6 +179,18 @@
         </div>
       </div>
     </div>
+  </div> -->
+
+  <div
+    class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
+    data-aos="zoom-in"
+  >
+    <div class="p-5">
+      <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+        Persebaran Kapasitas Latih di Indonesia s.d Bulan Desember Tahun 2024
+      </h5>
+    <PetaPersebaranKapasitasLatih />
+    </div>
   </div>
 
   <div class="grid grid-cols-3 gap-8">
@@ -175,7 +199,7 @@
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Peminat Program Pelatihan Berdasarkan Kejuruan
+              10 Kejuruan Pelatihan Dengan Peminat Terbesar
             </h5>
           </div>
           <PersentasePeminatProgramPelatihanKejuruan />
@@ -190,7 +214,7 @@
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Tingkat Pencari Kerja pada Lembaga Pelatihan Kerja
+              Persentase Lulusan Pelatihan yang Bekerja s.d Bulan Desember Tahun 2024
             </h5>
           </div>
           <PersentaseTingkatPencariKerjaPadaLPK />
@@ -199,7 +223,7 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-4 gap-8">
+  <!-- <div class="grid grid-cols-4 gap-8">
     <div class="col-span-2">
       <div ref="tour9" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
@@ -219,7 +243,7 @@
       </div>
     </div>
 
-    <div class="col-span-2">
+    <div class="col-span-4">
       <div ref="tour10" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
             <div class="flex justify-between">
@@ -231,46 +255,66 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="grid grid-cols-3 gap-8">
+  <div class="grid grid-cols-4 gap-8">
     <div class="col-span-2">
       <div ref="tour11" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
             <div class="flex justify-between">
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-                Tren Jumlah Peserta Pemagangan
+                Tren Jumlah Peserta Pemagangan Dalam Negeri
               </h5>
-              <div class="relative w-32">
+              <!-- <div class="relative w-32">
                 <DatePicker picker="year" id="datepicker_tren"
                   v-model="selectedDate"
                   @change="handleTrenJumlahPesertaPemaganganChanged"  
                 />
-              </div>
+              </div> -->
             </div>
-          <TrenJumlahPesertaPemagangan :filter="filterTrenJumlahPesertaPemagangan"/>
+            <TrenJumlahPesertaPemaganganDalamNegeri />
+          <!-- <TrenJumlahPesertaPemagangan :filter="filterTrenJumlahPesertaPemagangan"/> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-span-2">
+      <div ref="tour11" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
+        <div class="p-5">
+            <div class="flex justify-between">
+              <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+                Tren Jumlah Peserta Pemagangan Luar Negeri
+              </h5>
+              <!-- <div class="relative w-32">
+                <DatePicker picker="year" id="datepicker_tren"
+                  v-model="selectedDate"
+                  @change="handleTrenJumlahPesertaPemaganganChanged"  
+                />
+              </div> -->
+            </div>
+            <TrenJumlahPesertaPemaganganLuarNegeri />
+          <!-- <TrenJumlahPesertaPemagangan :filter="filterTrenJumlahPesertaPemagangan"/> -->
         </div>
       </div>
     </div>
 
-    <div class="col-span-1">
+    <!-- <div class="col-span-1">
       <div ref="tour12" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
-            <div class="flex justify-between">
-              <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-                Lulusan Pelatihan ke Bekerja
-              </h5>
-              <!-- <div class="relative w-32">
-                <DatePicker picker="year" id="datepicker_produktifitas"
-                  v-model="selectedDate"
-                  @change="handleProduktifitasChanged"  
-                />
-              </div> -->
+          <div class="flex justify-between">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+              Lulusan Pelatihan ke Bekerja
+            </h5>
+            <div class="relative w-32">
+              <DatePicker picker="year" id="datepicker_produktifitas"
+                v-model="selectedDate"
+                @change="handleProduktifitasChanged"  
+              />
             </div>
-            <LulusanPelatihanBekerja :filter="filterProduktifitas"/>
           </div>
+          <LulusanPelatihanBekerja :filter="filterProduktifitas" @loading-complete="handleLoadingComplete" />
         </div>
       </div>
+    </div> -->
   </div>
 
   <div class="grid grid-cols-4 gap-8">
@@ -428,13 +472,17 @@ import TingkatPenyerapanLulusanPie from "./TingkatPenyerapanLulusanPie.vue";
 import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
 import TrenJumlahPesertaPemagangan from "./TrenJumlahPesertaPemagangan.vue";
 import PersentaseKategoriInstruktur from "./PersentaseKategoriInstruktur.vue";
+import PetaPersebaranKapasitasLatih from "./PetaPersebaranKapasitasLatih.vue";
 import ProgramPelatihanBanyakDiminati from "./ProgramPelatihanBanyakDiminati.vue";
 import FilterKapasitasPPKProvinsi from "../Shared/FilterKapasitasPPKProvinsi.vue";
+import PetaPersebaranLPKTerakreditasi from "./PetaPersebaranLPKTerakreditasi.vue";
 import PersentaseKategoriTenagaPelatihan from "./PersentaseKategoriTenagaPelatihan.vue";
 import TrenJumlahKategoriProgramPelatihan from "./TrenJumlahKategoriProgramPelatihan.vue";
 import FilterProgramPelatihanProvinsi from "../Shared/FilterProgramPelatihanProvinsi.vue";
 import PersentaseTingkatPencariKerjaPadaLPK from "./PersentaseTingkatPencariKerjaPadaLPK.vue";
+import TrenJumlahPesertaPemaganganLuarNegeri from "./TrenJumlahPesertaPemaganganLuarNegeri.vue";
 import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
+import TrenJumlahPesertaPemaganganDalamNegeri from "./TrenJumlahPesertaPemaganganDalamNegeri.vue";
 import PersentasePeminatProgramPelatihanKejuruan from "./PersentasePeminatProgramPelatihanKejuruan.vue";
 import FilterMasaTungguLulusProgramPelatihan from "../Shared/FilterMasaTungguLulusProgramPelatihan.vue";
 import FilterTingkatPenyerapanLulusProgramPelatihan from "../Shared/FilterTingkatPenyerapanLulusProgramPelatihan.vue";
@@ -465,12 +513,16 @@ export default {
     ProduktifitasLapanganUsaha,
     TrenJumlahPesertaPemagangan,
     PersentaseKategoriInstruktur,
+    PetaPersebaranKapasitasLatih,
     ProgramPelatihanBanyakDiminati,
     FilterProgramPelatihanProvinsi,
+    PetaPersebaranLPKTerakreditasi,
     PersentaseKategoriTenagaPelatihan,
     TrenJumlahKategoriProgramPelatihan,
     PersentaseTingkatPencariKerjaPadaLPK,
     FilterMasaTungguLulusProgramPelatihan,
+    TrenJumlahPesertaPemaganganLuarNegeri,
+    TrenJumlahPesertaPemaganganDalamNegeri,
     TingkatAkreditasiLembagaPelatihanKerja,
     PersentasePeminatProgramPelatihanKejuruan,
     FilterTingkatPenyerapanLulusProgramPelatihan
@@ -527,8 +579,8 @@ export default {
         target: () => tour5.value,
       },
       {
-        title: 'Kapasitas Program Pelatihan Kerja',
-        description: 'Menampilkan grafik Kapasitas Program Pelatihan Kerja.',
+        title: 'Kapasitas Lembaga Pelatihan Kerja',
+        description: 'Menampilkan grafik Kapasitas Lembaga Pelatihan Kerja.',
         target: () => tour6.value,
       },
       {
@@ -625,7 +677,7 @@ export default {
       isOpenDetail: false,
       visible: false,
       allRepo: [],
-      isLoading: false,
+      isLoading: true,
 
       filterKapasitasPPKProvinsi                        : "/recap-capacity-ppk",
       filterTrenJumlahKategoriProgramPelatihan          : "/recap-trends-number-training-program-categories",
@@ -880,7 +932,6 @@ export default {
     },
 
     async getInstitution() {
-      this.isLoading = true;
       const token = JSON.parse(localStorage.getItem("token"));
       var allRepo = await fetch(
         import.meta.env.VITE_API_URL + '/repositories',
@@ -990,16 +1041,16 @@ export default {
           this.detailLembaga = []
           this.isOpenDetail = true
           this.visible = true
-          this.detailLembaga.nama_lembaga = response.data[0].nama_lembaga;
-          this.detailLembaga.no_vin = response.data[0].no_vin;
-          this.detailLembaga.tipe_lembaga = response.data[0].tipe_lembaga;
-          this.detailLembaga.email = response.data[0].email;
-          this.detailLembaga.no_telp = response.data[0].no_telp;
-          this.detailLembaga.provinsi = response.data[0].provinsi;
-          this.detailLembaga.kab_kota = response.data[0].kab_kota;
-          this.detailLembaga.alamat = response.data[0].alamat;
-          this.detailLembaga.status_akreditasi = response.data[0].status_akreditasi;
-          this.detailLembaga.kapasitas_latih = response.data[0].kapasitas_latih;
+          this.detailLembaga.nama_lembaga = response.data[0].nama_lembaga ? response.data[0].nama_lembaga : '-';
+          this.detailLembaga.no_vin = response.data[0].no_vin ? response.data[0].no_vin : '-';
+          this.detailLembaga.tipe_lembaga = response.data[0].tipe_lembaga ? response.data[0].tipe_lembaga : '-';
+          this.detailLembaga.email = response.data[0].email ? response.data[0].email : '-';
+          this.detailLembaga.no_telp = response.data[0].no_telp ? response.data[0].no_telp : '-';
+          this.detailLembaga.provinsi = response.data[0].provinsi ? response.data[0].provinsi : '-';
+          this.detailLembaga.kab_kota = response.data[0].kab_kota ? response.data[0].kab_kota : '-';
+          this.detailLembaga.alamat = response.data[0].alamat ? response.data[0].alamat : '-';
+          this.detailLembaga.status_akreditasi = response.data[0].status_akreditasi ? response.data[0].status_akreditasi : '-';
+          this.detailLembaga.kapasitas_latih = response.data[0].kapasitas_latih ? response.data[0].kapasitas_latih : '-';
         } else {
           this.alert();
         }
@@ -1086,6 +1137,9 @@ export default {
         default:
           break;
       }
+    },
+    handleLoadingComplete(isLoading) {
+      this.isLoading = isLoading;
     },
   },
   mounted() {

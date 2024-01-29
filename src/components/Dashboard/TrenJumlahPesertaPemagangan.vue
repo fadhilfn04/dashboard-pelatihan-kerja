@@ -6,10 +6,6 @@
 import axios from "axios";
 import Highcharts from "highcharts";
 
-function getRandomColor() {
-  return "#" + Math.floor(Math.random() * 16777215).toString(16);
-}
-
 export default {
   name: "TrenJumlahPesertaPemagangan",
   data() {
@@ -63,17 +59,9 @@ export default {
         series: [
           {
             name: "Pemagangan Dalam Negeri",
-            color: getRandomColor(),
-            marker: {
-              symbol: 'circle'
-            },
           },
           {
             name: "Pemagangan Luar Negeri",
-            color: getRandomColor(),
-            marker: {
-              symbol: 'square'
-            },
           },
         ],
         credits: {

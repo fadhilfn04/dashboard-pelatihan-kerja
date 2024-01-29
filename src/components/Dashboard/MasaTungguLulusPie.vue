@@ -84,21 +84,14 @@ export default {
         },
       })
       .then((response) => {
-        if (response.data) {
-          var dataBekerja = [];
-          var dataTidakBekerja = [];
-          const randomBekerja = this.getRandomData(100, 1000);
-          const randomTidakBekerja = this.getRandomData(100, 1000);
-          dataBekerja.push(randomBekerja);
-          dataTidakBekerja.push(randomTidakBekerja);
+      if (response.data) {
+          var bekerja       = response.data.data.bekerja;
+          var tidakBekerja  = response.data.data.tidak_bekerja;
           
-          this.chartOptions.series[0].data[0].y = dataBekerja[0];
-          this.chartOptions.series[0].data[1].y = dataTidakBekerja[0];
+          this.chartOptions.series[0].data[0].y = bekerja;
+          this.chartOptions.series[0].data[1].y = tidakBekerja;
         }
       });
-    },
-    getRandomData(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
     },
   },
 };

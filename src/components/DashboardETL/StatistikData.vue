@@ -27,10 +27,7 @@ export default {
           text: null,
         },
         xAxis: {
-          categories: [
-            "Upload Excel",
-            "Database Siap Kerja",
-          ],
+          categories: [],
         },
         yAxis: {
           title: null,
@@ -70,6 +67,9 @@ export default {
   },
   created() {
     this.pageTitle = this.$route.params.title;
+    this.chartOptions.xAxis.categories = ['tenaga-pelatihan', 'penyelenggara-magang', 'peserta-pemagangan', 'program-pemagangan', 'instruktur'].includes(this.pageTitle) ? 
+      ["Upload Excel"] : 
+      ["Upload Excel", "Database Siap Kerja"];
   },
   methods: {
     loadData() {
@@ -118,10 +118,16 @@ export default {
           const dataEX = responseEX.data.data;
           const dataSK = responseSK.data.data;
 
-          this.chartOptions.series[0].data = [
-            { category: "Upload Excel", y: dataEX },
-            { category: "Database Siap Kerja", y: dataSK }
-          ];
+          if( ['tenaga-pelatihan', 'penyelenggara-magang', 'peserta-pemagangan', 'program-pemagangan', 'instruktur'].includes(this.pageTitle)) {
+            this.chartOptions.series[0].data = [
+              { category: "Upload Excel", y: dataEX },
+            ];
+          } else {
+            this.chartOptions.series[0].data = [
+              { category: "Upload Excel", y: dataEX },
+              { category: "Database Siap Kerja", y: dataSK }
+            ];
+          }
         }
       }).catch((error) => {
         console.error("Error loading data:", error);
