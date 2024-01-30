@@ -63,10 +63,21 @@ export default {
           enabled: false,
         },
         series: [{
-          name: 'Persentase Tingkat Pencari Kerja',
+          name: 'Persentase Lulusan Pelatihan',
           colorByPoint: getRandomColor(),
-          data: []
-        }]
+          data: [],
+          dataLabels: {
+            enabled: true,
+            formatter: function () {
+              return this.y + '%'; // Add '%' after the value
+            },
+          },
+        }],
+        tooltip: {
+          formatter: function () {
+            return this.series.name + ': <b>' + this.y + '%</b>'; // Add '%' to tooltip
+          },
+        },
       },
     };
   },
@@ -87,8 +98,8 @@ export default {
             var categories = [];
             var value = [];
             response.data.data.forEach((item) => {
-              categories.push(item.nama_lembaga);
-              value.push(item.count);
+              categories.push(item.nama_kejuruan);
+              value.push(item.count / 100);
             });
 
             this.chartOptions.xAxis.categories = categories;

@@ -145,7 +145,7 @@
       <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
         Jumlah Lembaga Pelatihan Kerja Yang Sudah dan Belum Terakreditasi di Indonesia s.d Bulan Desember Tahun 2024
       </h5>
-    <PetaPersebaranLPKTerakreditasi />
+    <!-- <PetaPersebaranLPKTerakreditasi /> -->
     </div>
   </div>
 
@@ -317,7 +317,7 @@
     </div> -->
   </div>
 
-  <div class="grid grid-cols-4 gap-8">
+  <!-- <div class="grid grid-cols-4 gap-8">
     <div class="col-span-2">
       <div ref="tour13" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
@@ -343,10 +343,34 @@
         </div>
       </div>
     </div>
+  </div> -->
+
+  <div
+    class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
+    data-aos="zoom-in"
+  >
+    <div class="p-5">
+      <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+        Persentase Kategori Instruktur s.d Bulan Desember Tahun 2024
+      </h5>
+    <PetaPersebaranKategoriInstruktur />
+    </div>
+  </div>
+
+  <div
+    class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
+    data-aos="zoom-in"
+  >
+    <div class="p-5">
+      <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+        Persentase Kategori Tenaga Pelatihan s.d Bulan Desember Tahun 2024
+      </h5>
+    <PetaPersebaranTenagaPelatihan />
+    </div>
   </div>
 
   <div class="grid grid-cols-3 gap-8">
-    <div class="col-span-2">
+    <div class="col-span-3">
       <div ref="tour15" class="mt-8  w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between">
@@ -358,25 +382,25 @@
         </div>
       </div>
     </div>
-    <div class="col-span-1">
+    <!-- <div class="col-span-1">
       <div ref="tour16" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
               Masa Tunggu Lulus ke Bekerja
             </h5>
-            <!-- <FilterMasaTungguLulusProgramPelatihan
+            <FilterMasaTungguLulusProgramPelatihan
               @programPelatihanMasaTungguLulusChanged="handleProgramPelatihanMasaTungguLulusChanged"
               tipe="programPelatihanMasaTunggu"
-            /> -->
+            />
           </div>
           <MasaTungguLulusPie :filter="filterMasaTunggu"/>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
-  <div class="grid grid-cols-3 gap-8">
+  <!-- <div class="grid grid-cols-3 gap-8">
     <div class="col-span-2">
       <div ref="tour17" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
@@ -396,16 +420,16 @@
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
               Tingkat Penyerapan Lulusan
             </h5>
-            <!-- <FilterTingkatPenyerapanLulusProgramPelatihan
+            <FilterTingkatPenyerapanLulusProgramPelatihan
               @programPelatihanTingkatPenyerapanLulusChanged="handleProgramPelatihanTingkatPenyerapanLulusChanged"
               tipe="programPelatihanTingkatPenyerapan"
-            /> -->
+            />
           </div>
           <TingkatPenyerapanLulusanPie :filter="filterTingkatPenyerapan"/>
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-3">
@@ -413,7 +437,7 @@
         <div class="p-5">
             <div class="flex justify-between">
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-                Produktifitas Tenaga Kerja Berdasarkan Lapangan Usaha
+                Tren Produktifitas Tenaga Kerja Berdasarkan Lapangan Usaha
               </h5>
             </div>
           <ProduktifitasLapanganUsaha />
@@ -473,9 +497,11 @@ import JumlahLembagaPelatihanKerja from "./JumlahLembagaPelatihanKerja.vue";
 import TrenJumlahPesertaPemagangan from "./TrenJumlahPesertaPemagangan.vue";
 import PersentaseKategoriInstruktur from "./PersentaseKategoriInstruktur.vue";
 import PetaPersebaranKapasitasLatih from "./PetaPersebaranKapasitasLatih.vue";
+import PetaPersebaranTenagaPelatihan from "./PetaPersebaranTenagaPelatihan.vue";
 import ProgramPelatihanBanyakDiminati from "./ProgramPelatihanBanyakDiminati.vue";
 import FilterKapasitasPPKProvinsi from "../Shared/FilterKapasitasPPKProvinsi.vue";
 import PetaPersebaranLPKTerakreditasi from "./PetaPersebaranLPKTerakreditasi.vue";
+import PetaPersebaranKategoriInstruktur from "./PetaPersebaranKategoriInstruktur.vue";
 import PersentaseKategoriTenagaPelatihan from "./PersentaseKategoriTenagaPelatihan.vue";
 import TrenJumlahKategoriProgramPelatihan from "./TrenJumlahKategoriProgramPelatihan.vue";
 import FilterProgramPelatihanProvinsi from "../Shared/FilterProgramPelatihanProvinsi.vue";
@@ -514,9 +540,11 @@ export default {
     TrenJumlahPesertaPemagangan,
     PersentaseKategoriInstruktur,
     PetaPersebaranKapasitasLatih,
+    PetaPersebaranTenagaPelatihan,
     ProgramPelatihanBanyakDiminati,
     FilterProgramPelatihanProvinsi,
     PetaPersebaranLPKTerakreditasi,
+    PetaPersebaranKategoriInstruktur,
     PersentaseKategoriTenagaPelatihan,
     TrenJumlahKategoriProgramPelatihan,
     PersentaseTingkatPencariKerjaPadaLPK,
@@ -998,6 +1026,21 @@ export default {
           position: 'topright',
         })
       .addTo(map)
+
+      var legend = L.control({ position: "bottomleft" });
+
+      legend.onAdd = function(map) {
+        var div = L.DomUtil.create("div", "legend");
+        div.innerHTML += "<h4>Keterangan Warna :</h4>";
+        div.innerHTML += '<i style="background: #477AC2"></i><span>Merah: Jumlah LPK Sedikit</span><br>';
+        div.innerHTML += '<i style="background: #477AC2"></i><span>Hijau: Jumlah LPK Banyak</span><br>';
+        
+        
+
+        return div;
+      };
+
+      legend.addTo(map);
 
       var markers = L.markerClusterGroup()
       this.isMaker = markers

@@ -22,7 +22,7 @@ export default {
           title: {
               text: '(Juta)'
           }
-      },
+        },
         legend: {
           symbolWidth: 10,
           symbolHeight: 10,

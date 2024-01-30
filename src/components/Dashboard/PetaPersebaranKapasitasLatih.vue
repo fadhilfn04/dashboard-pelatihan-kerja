@@ -7,64 +7,10 @@
     :zoom="zoom"
     @update-data="updateData"
   />
-  <!-- <TheLegend
-    v-if="dataPolygon"
-    :level="level"
-    :legends="legends"
-    @update-data="updateData"
-  /> -->
-
-  <Modal size="2xl" v-if="isShowModal" @close="closeModal" class="z-1000">
-    <template #header>
-      <div class="flex items-center text-lg">
-        Detail Persebaran Tenaga Kerja
-      </div>
-    </template>
-    <template #body>
-      <div class="h-80 overflow-y-auto">
-        <table class="w-full text-left text-sm text-gray-500">
-          <thead class="bg-gray-50 text-xs uppercase text-gray-700">
-            <tr>
-              <th scope="col" class="px-2 py-3">Kecamatan</th>
-              <th scope="col" class="px-2 py-3">Jumlah Tenaga Kerja</th>
-              <th scope="col" class="px-2 py-3">Persentase</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              class="border-b bg-white"
-              v-for="(city, index) in dataKecamatan"
-              :key="index"
-            >
-              <td class="px-2 py-4">
-                <a href="#" class="font-semibold text-brand-blue-1">{{
-                  city.name
-                }}</a>
-              </td>
-              <td class="px-2 py-4">{{ city.jumlah }}</td>
-              <td class="px-2 py-4">{{ city.persentase }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </template>
-    <template #footer>
-      <div class="flex justify-end">
-        <button
-          @click="closeModal"
-          type="button"
-          class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300"
-        >
-          Kembali
-        </button>
-      </div>
-    </template>
-  </Modal>
 </template>
 
 <script>
 import MapKapasitasLatih from "./MapKapasitasLatih.vue";
-// import TheLegend from "./PetaPersebaran/TheLegend.vue";
 import { ref } from "vue";
 import { Modal } from "flowbite-vue";
 import axios from "axios";
@@ -73,15 +19,14 @@ export default {
   name: "PetaPersebaranGis",
   components: {
     MapKapasitasLatih,
-    // TheLegend,
     Modal,
   },
   data() {
     return {
       imageUrl: window.BASE_URL + "assets/images/bg-item.png",
-      host: "https://matatk-api.kemnaker.go.id",
+      host: import.meta.env.VITE_API_URL,
       center: [-0.884123, 116.038462],
-      api: "/provinsigis",
+      api: "/recap-capacity-ppk",
       dataPolygon: undefined,
       dataDaerah: undefined,
       legends: [],
@@ -181,6 +126,8 @@ export default {
                 dataDetail.push({
                   name: item.properties.PROVINSI,
                   value: item.properties.TOTAL,
+                  accredited: item.properties.ACCREDITED,
+                  not_accredited: item.properties.NOT_ACCREDITED,
                   polygon: item.geometry.coordinates,
                   uuid: item.properties.UUID,
                   color: "",
@@ -208,24 +155,6 @@ export default {
         });
         this.level = 2;
       }
-      // fetch(this.api)
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     var provinceData = [];
-      //     data.features.forEach((item) => {
-      //       provinceData.push({
-      //         name: item.name,
-      //         value: item.total,
-      //         polygon: item.path,
-      //         kabupatenKotaData: [],
-      //         color: "",
-      //       });
-      //     });
-      //     this.dataProvinsi = provinceData;
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
     },
     updateData(newData) {
       if (newData.isKecamatan) {

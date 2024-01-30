@@ -14,70 +14,75 @@ export default {
           type: 'column'
         },
         title: {
-          text: null,
+          text: null
         },
-        xAxis: null,
+        subtitle: {
+          text: null
+        },
+        xAxis: {
+          type: 'category',
+          labels: {
+            autoRotation: [-45, -90],
+            style: {
+              fontSize: '13px',
+              fontFamily: 'Verdana, sans-serif'
+            }
+          }
+        },
         yAxis: {
-          title: null,
-          enabled: false,
+          min: 0,
+          title: {
+            text: 'Jumlah (Data)'
+          }
+        },
+        legend: {
+          enabled: false
         },
         tooltip: {
-          headerFormat:
-            '<span style="font-size:10px"></span><table>',
-          pointFormat:
-            '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y}</b></td></tr>',
-          footerFormat: "</table>",
-          shared: true,
-          useHTML: true,
+          pointFormat: 'Jumlah in 2024: <b>{point.y:.1f} Data</b>'
         },
-        plotOptions: {
-          column: {
-            pointPadding: 0.1,
-            borderWidth: 0,
-          },
-          series: {
-            groupPadding: 0.1,
-          },
-        },
-        series: [
-          {
-            name: "LPK SWASTA",
-            data: [],
-          },
-          {
-            name: "BLK KOMUNITAS",
-            data: [],
-          },
-          {
-            name: "BLKLN",
-            data: [],
-          },
-          {
-            name: "Lembaga Pelatihan K/L",
-            data: [],
-          },
-          {
-            name: "BLK UPTD",
-            data: [],
-          },
-          {
-            name: "UPTP BPVP",
-            data: [],
-          },
-          {
-            name: "LPK PERUSAHAAN",
-            data: [],
-          },
-          {
-            name: "SKPD",
-            data: [],
-          },
-        ],
         credits: {
           enabled: false,
         },
-      },
+        series: [
+          {
+            name: 'Population',
+            colors: [
+              '#9b20d9', '#9215ac', '#861ec9', '#7a17e6', '#7010f9', '#691af3',
+              '#6225ed', '#5b30e7', '#533be1', '#4c46db', '#4551d5', '#3e5ccf',
+              '#3667c9', '#2f72c3', '#277dbd', '#1f88b7', '#1693b1', '#0a9eaa',
+              '#03c69b',  '#00f194'
+            ],
+            colorByPoint: true,
+            groupPadding: 0,
+            data: [
+              ['Jan', 37.33],
+              ['Feb', 31.18],
+              ['Mar', 27.79],
+              ['Apr', 22.23],
+              ['Mei', 21.91],
+              ['Jun', 21.74],
+              ['Jul', 21.32],
+              ['Agu', 20.89],
+              ['Sept', 20.67],
+              ['Okt', 19.11],
+              ['Nov', 16.45],
+            ],
+            dataLabels: {
+              enabled: true,
+              rotation: -90,
+              color: '#FFFFFF',
+              align: 'right',
+              format: '{point.y:.1f}',
+              y: 10,
+              style: {
+                fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif'
+              }
+            }
+          }
+        ]
+      }
     };
   },
 
@@ -89,31 +94,32 @@ export default {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get(import.meta.env.VITE_API_URL + '/total-recap-lpk', {
+        .get(import.meta.env.VITE_API_URL + '/recap-trends-number-apprentices-dagri', {
           headers: {
             Authorization: "Bearer " + token.value,
           },
         })
         .then((response) => {
-          if (response.data) {
-            var LPK_SWASTA            = response.data.data.LPK_SWASTA;
-            var BLK_KOMUNITAS         = response.data.data.BLK_KOMUNITAS;
-            var BLKLN                 = response.data.data.BLKLN;
-            var LEMBAGA_PELATIHAN_KL  = response.data.data.LEMBAGA_PELATIHAN_KL;
-            var BLK_UPTD              = response.data.data.BLK_UPTD;
-            var BLK_UPTP              = response.data.data.BLK_UPTP;
-            var LPK_PERUSAHAAN        = response.data.data.LPK_PERUSAHAAN;
-            var SKPD                  = response.data.data.SKPD;
+          console.log(response)
+          // if (response.data) {
+          //   var LPK_SWASTA            = response.data.data.LPK_SWASTA;
+          //   var BLK_KOMUNITAS         = response.data.data.BLK_KOMUNITAS;
+          //   var BLKLN                 = response.data.data.BLKLN;
+          //   var LEMBAGA_PELATIHAN_KL  = response.data.data.LEMBAGA_PELATIHAN_KL;
+          //   var BLK_UPTD              = response.data.data.BLK_UPTD;
+          //   var BLK_UPTP              = response.data.data.BLK_UPTP;
+          //   var LPK_PERUSAHAAN        = response.data.data.LPK_PERUSAHAAN;
+          //   var SKPD                  = response.data.data.SKPD;
 
-            this.chartOptions.series[0].data = [LPK_SWASTA];
-            this.chartOptions.series[1].data = [BLK_KOMUNITAS];
-            this.chartOptions.series[2].data = [BLKLN];
-            this.chartOptions.series[3].data = [LEMBAGA_PELATIHAN_KL];
-            this.chartOptions.series[4].data = [BLK_UPTD];
-            this.chartOptions.series[5].data = [BLK_UPTP];
-            this.chartOptions.series[6].data = [LPK_PERUSAHAAN];
-            this.chartOptions.series[7].data = [SKPD];
-          }
+          //   this.chartOptions.series[0].data = [LPK_SWASTA];
+          //   this.chartOptions.series[1].data = [BLK_KOMUNITAS];
+          //   this.chartOptions.series[2].data = [BLKLN];
+          //   this.chartOptions.series[3].data = [LEMBAGA_PELATIHAN_KL];
+          //   this.chartOptions.series[4].data = [BLK_UPTD];
+          //   this.chartOptions.series[5].data = [BLK_UPTP];
+          //   this.chartOptions.series[6].data = [LPK_PERUSAHAAN];
+          //   this.chartOptions.series[7].data = [SKPD];
+          // }
         });
     },
   },

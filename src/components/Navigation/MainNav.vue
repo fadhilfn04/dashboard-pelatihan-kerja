@@ -48,10 +48,10 @@
                 <a-menu-item>
                   <router-link to="/api-generator">API Generator</router-link>
                 </a-menu-item>
-                <a-menu-item>
+                <a-menu-item v-if="email !== 'user@gmail.com'">
                   <router-link to="/upload-management">Upload Management</router-link>
                 </a-menu-item>
-                <a-menu-item>
+                <a-menu-item v-if="email !== 'user@gmail.com'">
                   <router-link to="/log-aktifitas">Log Aktifitas</router-link>
                 </a-menu-item>
               </a-menu>
@@ -94,6 +94,7 @@ export default {
     return {
       url: "/",
       isDropdownOpen: false,
+      email: localStorage.getItem('email') || '',
     };
   },
   computed: {
@@ -131,6 +132,7 @@ export default {
         }
       });
     },
+
   },
 };
 </script>

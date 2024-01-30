@@ -1,5 +1,5 @@
 <template>
-  <MapLPKTerakreditasi
+  <MapKategoriInstruktur
     v-if="dataPolygon"
     :level="level"
     :center="center"
@@ -10,15 +10,15 @@
 </template>
 
 <script>
-import MapLPKTerakreditasi from "./MapLPKTerakreditasi.vue";
+import MapKategoriInstruktur from "./MapKategoriInstruktur.vue";
 import { ref } from "vue";
 import { Modal } from "flowbite-vue";
 import axios from "axios";
 
 export default {
-  name: "PetaPersebaranGis",
+  name: "PetaPersebaranKategoriInstruktur",
   components: {
-    MapLPKTerakreditasi,
+    MapKategoriInstruktur,
     Modal,
   },
   data() {
@@ -26,7 +26,7 @@ export default {
       imageUrl: window.BASE_URL + "assets/images/bg-item.png",
       host: import.meta.env.VITE_API_URL,
       center: [-0.884123, 116.038462],
-      api: "/accreditation-level-recap-lpk",
+      api: "/recap-capacity-ppk",
       dataPolygon: undefined,
       dataDaerah: undefined,
       legends: [],

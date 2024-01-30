@@ -26,9 +26,7 @@
         <l-tooltip>
           <span class="text-md font-bold">{{ polygon.name }}</span
           ><br />
-          <span class="text-xs font-normal">Jumlah LPK Terakreditasi : {{ polygon.accredited }}</span>
-          <br />
-          <span class="text-xs font-normal">Jumlah LPK Tidak Terakreditasi : {{ polygon.not_accredited }}</span>
+          <span class="text-xs font-normal">Jumlah Kapasitas Latih : {{ polygon.value }}</span>
         </l-tooltip>
       </l-polygon>
     </LMap>
@@ -37,9 +35,10 @@
 <script>
 import "leaflet/dist/leaflet.css";
 import { LPolygon, LMap, LTileLayer, LTooltip } from "@vue-leaflet/vue-leaflet";
+import L from "leaflet";
 
 export default {
-  name: "MapLPKTerakreditasi",
+  name: "MapKategoriInstruktur",
   components: {
     LMap,
     LTileLayer,
@@ -54,6 +53,29 @@ export default {
     };
   },
   props: ["zoom", "level", "center", "dataPolygon", "legends"],
+  methods: {
+    detailProvinsi(polygon, uuid) {
+      if (this.level == 2) {
+        const isKecamatan = true;
+        const level = 3;
+        const newData = {
+          api: "/provinsi/kab_kota/" + uuid,
+          level: level,
+          isKecamatan: isKecamatan,
+        };
+        this.$emit("update-data", newData);
+      } else if (this.level == 1) {
+        const center = L.polygon(polygon.polygon).getBounds().getCenter();
+        const level = 2;
+        const newData = {
+          api: "/provinsigis/" + uuid,
+          level: level,
+          center: center,
+        };
+        this.$emit("update-data", newData);
+      }
+    },
+  },
   computed: {
     formattedDataPolygon() {
       return this.dataPolygon.map((polygon) => {
