@@ -32,14 +32,14 @@ export default {
         yAxis: {
           min: 0,
           title: {
-            text: 'Jumlah (Data)'
+            text: 'Jumlah (Peserta)'
           }
         },
         legend: {
           enabled: false
         },
         tooltip: {
-          pointFormat: 'Jumlah in 2024: <b>{point.y:.1f} Data</b>'
+          pointFormat: 'Jumlah: <b>{point.y} Peserta</b>'
         },
         credits: {
           enabled: false,
@@ -55,25 +55,13 @@ export default {
             ],
             colorByPoint: true,
             groupPadding: 0,
-            data: [
-              ['Jan', 37.33],
-              ['Feb', 31.18],
-              ['Mar', 27.79],
-              ['Apr', 22.23],
-              ['Mei', 21.91],
-              ['Jun', 21.74],
-              ['Jul', 21.32],
-              ['Agu', 20.89],
-              ['Sept', 20.67],
-              ['Okt', 19.11],
-              ['Nov', 16.45],
-            ],
+            data: [],
             dataLabels: {
               enabled: true,
               rotation: -90,
               color: '#FFFFFF',
               align: 'right',
-              format: '{point.y:.1f}',
+              format: '{point.y}',
               y: 10,
               style: {
                 fontSize: '13px',
@@ -100,26 +88,22 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response)
-          // if (response.data) {
-          //   var LPK_SWASTA            = response.data.data.LPK_SWASTA;
-          //   var BLK_KOMUNITAS         = response.data.data.BLK_KOMUNITAS;
-          //   var BLKLN                 = response.data.data.BLKLN;
-          //   var LEMBAGA_PELATIHAN_KL  = response.data.data.LEMBAGA_PELATIHAN_KL;
-          //   var BLK_UPTD              = response.data.data.BLK_UPTD;
-          //   var BLK_UPTP              = response.data.data.BLK_UPTP;
-          //   var LPK_PERUSAHAAN        = response.data.data.LPK_PERUSAHAAN;
-          //   var SKPD                  = response.data.data.SKPD;
+          if (response.data) {
+            const data = response.data.data.rekap_tren;
+            const dalam_negeri  = data.dalam_negeri;
 
-          //   this.chartOptions.series[0].data = [LPK_SWASTA];
-          //   this.chartOptions.series[1].data = [BLK_KOMUNITAS];
-          //   this.chartOptions.series[2].data = [BLKLN];
-          //   this.chartOptions.series[3].data = [LEMBAGA_PELATIHAN_KL];
-          //   this.chartOptions.series[4].data = [BLK_UPTD];
-          //   this.chartOptions.series[5].data = [BLK_UPTP];
-          //   this.chartOptions.series[6].data = [LPK_PERUSAHAAN];
-          //   this.chartOptions.series[7].data = [SKPD];
-          // }
+            const months = [
+              "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+              "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+
+            const monthlyData = months.map((month, index) => ({
+              name: month,
+              y: dalam_negeri[index]
+            }));
+
+            this.chartOptions.series[0].data = monthlyData;
+          }
         });
     },
   },

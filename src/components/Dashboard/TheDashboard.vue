@@ -137,7 +137,7 @@
     </div>
   </div>
 
-  <!-- <div
+  <div
     class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
     data-aos="zoom-in"
   >
@@ -147,7 +147,7 @@
       </h5>
     <PetaPersebaranLPKTerakreditasi />
     </div>
-  </div> -->
+  </div>
 
   <!-- <div class="grid grid-cols-3 gap-8">
     <div class="col-span-1">
@@ -265,12 +265,18 @@
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
                 Tren Jumlah Peserta Pemagangan Dalam Negeri
               </h5>
-              <!-- <div class="relative w-32">
-                <DatePicker picker="year" id="datepicker_tren"
-                  v-model="selectedDate"
-                  @change="handleTrenJumlahPesertaPemaganganChanged"  
-                />
-              </div> -->
+              <div class="relative">
+                <div class="flex">
+                  <DatePicker picker="year" id="datepicker_tren"
+                    v-model="selectedDate"
+                    @change="handleTrenJumlahPesertaPemaganganChanged"  
+                  />
+                  <FilterKapasitasPPKProvinsi
+                    @provinsiKapasitasPPKChanged="handleKapasitasPPKProvinsiChanged"
+                    tipe="provinsi"
+                  />
+                </div>
+              </div>
             </div>
             <TrenJumlahPesertaPemaganganDalamNegeri />
           <!-- <TrenJumlahPesertaPemagangan :filter="filterTrenJumlahPesertaPemagangan"/> -->
@@ -284,12 +290,18 @@
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
                 Tren Jumlah Peserta Pemagangan Luar Negeri
               </h5>
-              <!-- <div class="relative w-32">
-                <DatePicker picker="year" id="datepicker_tren"
-                  v-model="selectedDate"
-                  @change="handleTrenJumlahPesertaPemaganganChanged"  
-                />
-              </div> -->
+              <div class="relative">
+                <div class="flex">
+                  <DatePicker picker="year" id="datepicker_tren"
+                    v-model="selectedDate"
+                    @change="handleTrenJumlahPesertaPemaganganChanged"  
+                  />
+                  <FilterKapasitasPPKProvinsi
+                    @provinsiKapasitasPPKChanged="handleKapasitasPPKProvinsiChanged"
+                    tipe="provinsi"
+                  />
+                </div>
+              </div>
             </div>
             <TrenJumlahPesertaPemaganganLuarNegeri />
           <!-- <TrenJumlahPesertaPemagangan :filter="filterTrenJumlahPesertaPemagangan"/> -->
@@ -1020,8 +1032,7 @@ export default {
 
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         minZoom: 5,
-        maxZoom: 12,
-        attribution: '© OpenStreetMap',
+        maxZoom: 12
       }).addTo(map)
 
       L.control

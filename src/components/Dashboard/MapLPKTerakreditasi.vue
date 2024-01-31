@@ -5,6 +5,8 @@
       :use-global-leaflet="false"
       :center="center"
       :zoom="zoomMap"
+      :min-zoom="minZoom"
+      :max-zoom="maxZoom"
       style="z-index: 0"
     >
       <LTileLayer
@@ -51,6 +53,8 @@ export default {
     return {
       zoomMap: 5,
       dataMap: undefined,
+      minZoom: 5,
+      maxZoom: 12,
     };
   },
   props: ["zoom", "level", "center", "dataPolygon", "legends"],

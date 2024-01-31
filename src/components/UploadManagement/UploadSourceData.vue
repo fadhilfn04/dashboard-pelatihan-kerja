@@ -75,9 +75,11 @@
           <a :href="API_URL + DOWNLOAD_TEMPLATE_ENDPOINT" target="_blank" class="text-sm" style="background-color:white; border:none; color:dodgerblue;">template-data-kelembagaan-pelatihan.xlsx</a>
 
           <span class="block mt-5 mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload file</span>
+          <div class="mb-3">
+              <DatePicker picker="year" id="datepicker_upload" class="block w-full" v-model="selectedYear" @change="logSelectedYear" />
+            </div>
           <form id="form" @submit.prevent="importTemplate">
             <input id="file" class="block w-full text-sm border-[1px] border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file">
-
             <div class="flex justify-end mt-4">
               <button
                 @click="importTemplate"
@@ -101,9 +103,10 @@
 </style>
 
 <script>
-import { ref } from "vue";
 import axios from "axios";
+import { ref } from "vue";
 import { Modal, Alert } from "flowbite-vue";
+import { DatePicker } from 'ant-design-vue';
 
 export default {
   name: "UploadManagement",
@@ -115,12 +118,14 @@ export default {
       UPLOAD_TEMPLATE_SOURCE_DATA_ENDPOINT: '/upload-template-source-data',
       LOG_UPLOAD_SOURCE_DATA_ENDPOINT: '/log-upload-source-data',
       logUploads: [],
+      selectedYear: null,
     };
   },
 
   components: {
     Modal,
     Alert,
+    DatePicker,
   },
 
   setup() {
@@ -146,6 +151,9 @@ export default {
   },
 
   methods: {
+    logSelectedYear(date) {
+      this.selectedYear = date.$y;
+    },
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       
@@ -173,6 +181,8 @@ export default {
       setTimeout(() => {
         this.closeModal();
       }, 3000);
+
+      const selectedYear = this.selectedYear;
       const token = JSON.parse(localStorage.getItem("token"));
 
       let uploadedFile  = document.getElementById('file').files[0]

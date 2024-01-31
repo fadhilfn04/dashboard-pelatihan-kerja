@@ -123,7 +123,6 @@ export default {
             var dataDetail = [];
             if (this.level == 1) {
               response.data.features.forEach((item) => {
-                console.log(item)
                 dataDetail.push({
                   name: item.properties.PROVINSI,
                   value: item.properties.TOTAL,
