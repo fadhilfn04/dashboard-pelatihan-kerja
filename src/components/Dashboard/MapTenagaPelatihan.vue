@@ -26,7 +26,11 @@
         <l-tooltip>
           <span class="text-md font-bold">{{ polygon.name }}</span
           ><br />
-          <span class="text-xs font-normal">Jumlah Kapasitas Latih : {{ polygon.value }}</span>
+          <span class="text-xs font-normal">Jumlah Tenaga Pelatihan : {{ polygon.value }}</span>
+          <br />
+          <span class="text-xs font-normal">Jumlah Pemerintah : {{ polygon.pemerintah }}</span>
+          <br />
+          <span class="text-xs font-normal">Jumlah Swasta : {{ polygon.swasta }}</span>
         </l-tooltip>
       </l-polygon>
     </LMap>

@@ -26,7 +26,7 @@ export default {
       imageUrl: window.BASE_URL + "assets/images/bg-item.png",
       host: import.meta.env.VITE_API_URL,
       center: [-0.884123, 116.038462],
-      api: "/recap-capacity-ppk",
+      api: "/recap-training-personnel-category-percentage",
       dataPolygon: undefined,
       dataDaerah: undefined,
       legends: [],
@@ -123,11 +123,12 @@ export default {
             var dataDetail = [];
             if (this.level == 1) {
               response.data.features.forEach((item) => {
+                console.log(item)
                 dataDetail.push({
                   name: item.properties.PROVINSI,
                   value: item.properties.TOTAL,
-                  accredited: item.properties.ACCREDITED,
-                  not_accredited: item.properties.NOT_ACCREDITED,
+                  pemerintah: item.properties.PEMERINTAH,
+                  swasta: item.properties.SWASTA,
                   polygon: item.geometry.coordinates,
                   uuid: item.properties.UUID,
                   color: "",

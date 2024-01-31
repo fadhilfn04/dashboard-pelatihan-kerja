@@ -137,7 +137,7 @@
     </div>
   </div>
 
-  <div
+  <!-- <div
     class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
     data-aos="zoom-in"
   >
@@ -145,9 +145,9 @@
       <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
         Jumlah Lembaga Pelatihan Kerja Yang Sudah dan Belum Terakreditasi di Indonesia s.d Bulan Desember Tahun 2024
       </h5>
-    <!-- <PetaPersebaranLPKTerakreditasi /> -->
+    <PetaPersebaranLPKTerakreditasi />
     </div>
-  </div>
+  </div> -->
 
   <!-- <div class="grid grid-cols-3 gap-8">
     <div class="col-span-1">
@@ -351,7 +351,7 @@
   >
     <div class="p-5">
       <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-        Persentase Kategori Instruktur s.d Bulan Desember Tahun 2024
+        Persentase Sebaran Instruktur Menurut Kategori di Indonesia s.d Bulan Desember Tahun 2024
       </h5>
     <PetaPersebaranKategoriInstruktur />
     </div>
@@ -363,7 +363,7 @@
   >
     <div class="p-5">
       <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-        Persentase Kategori Tenaga Pelatihan s.d Bulan Desember Tahun 2024
+        Persentase Sebaran Tenaga Pelatihan Menurut Kategori di Indonesia s.d Bulan Desember Tahun 2024
       </h5>
     <PetaPersebaranTenagaPelatihan />
     </div>
@@ -378,7 +378,8 @@
               Masa Tunggu Lulus ke Bekerja
             </h5>
           </div>
-          <MasaTungguLulusBar />
+          <TableMasaTungguLulus />
+          <!-- <MasaTungguLulusBar /> -->
         </div>
       </div>
     </div>
@@ -487,6 +488,7 @@ import Particles from '../Shared/Particles.vue';
 import { SyncOutlined } from '@ant-design/icons-vue';
 import MasaTungguLulusBar from "./MasaTungguLulusBar.vue";
 import MasaTungguLulusPie from "./MasaTungguLulusPie.vue";
+import TableMasaTungguLulus from "./TableMasaTungguLulus.vue";
 import { DatePicker, notification, message } from 'ant-design-vue';
 import LoadingSpinner from '@/components/Shared/LoadingSpinner.vue';
 import LulusanPelatihanBekerja from "./LulusanPelatihanBekerja.vue";
@@ -527,10 +529,11 @@ export default {
     SyncOutlined,
     COffcanvasBody,
     LoadingSpinner,
-    MasaTungguLulusBar,
-    MasaTungguLulusPie,
     COffcanvasTitle,
     COffcanvasHeader,
+    MasaTungguLulusPie,
+    MasaTungguLulusBar,
+    TableMasaTungguLulus,
     LulusanPelatihanBekerja,
     TingkatPenyerapanLulusanBar,
     TingkatPenyerapanLulusanPie,
