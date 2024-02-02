@@ -2,8 +2,7 @@
   <LoadingSpinner v-if="isLoading" />
   <particles></particles>
   <div class="text-end mb-3">
-    <!-- <a-button type="primary" @click="handleOpen(true)">Begin Tour</a-button> -->
-    <a-button type="primary" style="background-color: blue; border-color: blue; color: white;" @click="handleOpen(true)">Mulai tur aplikasi</a-button>
+    <!-- <a-button type="primary" style="background-color: blue; border-color: blue; color: white;" @click="handleOpen(true)">Mulai tur aplikasi</a-button> -->
   </div>
   <div class="w-full rounded-lg border border-gray-200 bg-white shadow">
     <div class="p-5">
@@ -28,53 +27,23 @@
               >
             </a-select>
           </a-form-item>
-          <a-tooltip title="Pilih provinsi/wilayah terlebih dahulu">
-            <a-form-item ref="tour2" class="city">
-              <a-select
-                placeholder="Semua Kabupaten/Kota"
-                :getPopupContainer="(triggerNode) => triggerNode.parentNode"
-                option-filter-prop="children"
-                :filter-option="filterOption"
-                @change="onCityChange($event)"
-                :disabled="isDisable"
-              >
-                <a-select-option
-                  v-for="(cityContent, index) in cityContents"
-                  :key="index"
-                  :value="cityContent.id"
-                  >{{ cityContent.name }}</a-select-option
-                >
-              </a-select>
-            </a-form-item>
-          </a-tooltip>
-          <!-- <a-form-item class="institutionType">
+          <a-form-item ref="tour2" class="city">
             <a-select
-              placeholder="Semua Tipe Lembaga"
+              placeholder="Semua Kabupaten/Kota"
               :getPopupContainer="(triggerNode) => triggerNode.parentNode"
               option-filter-prop="children"
               :filter-option="filterOption"
-              @change="onInstitutionTypeChange($event)"
+              @change="onCityChange($event)"
+              :disabled="isDisable"
             >
               <a-select-option
-                v-for="(institutionTypeContent, index) in institutionTypeContents"
+                v-for="(cityContent, index) in cityContents"
                 :key="index"
-                :value="institutionTypeContent.id"
-                >{{ institutionTypeContent.nama_tipe_lembaga }}</a-select-option
+                :value="cityContent.id"
+                >{{ cityContent.name }}</a-select-option
               >
             </a-select>
           </a-form-item>
-          <a-form-item class="trainingCapacity">
-            <a-select 
-              placeholder="Semua Kapasitas Latih"
-              :filter-option="filterOption"
-              @change="onTrainingCapacityChange($event)"
-            >
-              <a-select-option value="kurang_500">Kurang dari 500</a-select-option>
-              <a-select-option value="lebih_500">Lebih dari 500</a-select-option>
-              <a-select-option value="kurang_1000">Kurang dari 1000</a-select-option>
-              <a-select-option value="lebih_1000">Lebih dari 1000</a-select-option>
-            </a-select>
-          </a-form-item> -->
           <a-tooltip title="Klik untuk reset">
             <a-button @click="resetRepositories" type="primary" style="background-color: blue; border-color: blue; color: white;">
               <template #icon>
@@ -149,38 +118,6 @@
     </div>
   </div>
 
-  <!-- <div class="grid grid-cols-3 gap-8">
-    <div class="col-span-1">
-      <div ref="tour5" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-        <div class="p-5">
-          <div class="flex justify-start">
-            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Tingkat Akreditasi Lembaga Pelatihan Kerja
-            </h5>
-          </div>
-          <TingkatAkreditasiLembagaPelatihanKerja />
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-span-3">
-      <div ref="tour6" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-        <div class="p-5">
-            <div class="flex justify-between">
-              <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-                Kapasitas Program Pelatihan Kerja
-              </h5>
-              <FilterKapasitasPPKProvinsi
-                @provinsiKapasitasPPKChanged="handleKapasitasPPKProvinsiChanged"
-                tipe="provinsi"
-              />
-            </div>
-          <KapasitasPPK :filter="filterKapasitasPPKProvinsi"/>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
   <div
     class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
     data-aos="zoom-in"
@@ -223,63 +160,28 @@
     </div>
   </div>
 
-  <!-- <div class="grid grid-cols-4 gap-8">
-    <div class="col-span-2">
-      <div ref="tour9" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-        <div class="p-5">
-            <div class="flex justify-between">
-              <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-                Tren Jumlah Kategori Program Pelatihan
-              </h5>
-              <div class="relative w-32">
-                <DatePicker picker="year" id="datepicker_tren"
-                  v-model="selectedDate"
-                  @change="handleTrenJumlahKategoriProgramPelatihanChanged"  
-                />
-              </div>
-            </div>
-          <TrenJumlahKategoriProgramPelatihan :filter="filterTrenJumlahKategoriProgramPelatihan"/>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-span-4">
-      <div ref="tour10" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-        <div class="p-5">
-            <div class="flex justify-between">
-              <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-                Program Pelatihan Yang Banyak Diminati
-              </h5>
-            </div>
-          <ProgramPelatihanBanyakDiminati :filter="filterProgramPelatihanProvinsi"/>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
   <div class="grid grid-cols-4 gap-8">
     <div class="col-span-2">
       <div ref="tour11" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
-            <div class="flex justify-between">
-              <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-                Tren Jumlah Peserta Pemagangan Dalam Negeri
-              </h5>
-              <div class="relative">
-                <div class="flex">
-                  <DatePicker picker="year" id="datepicker_tren"
-                    v-model="selectedDate"
-                    @change="handleTrenJumlahPesertaPemaganganChanged"  
-                  />
-                  <FilterKapasitasPPKProvinsi
-                    @provinsiKapasitasPPKChanged="handleKapasitasPPKProvinsiChanged"
-                    tipe="provinsi"
-                  />
-                </div>
+          <div class="flex justify-between">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+              Tren Jumlah Peserta Pemagangan Dalam Negeri
+            </h5>
+            <div class="relative">
+              <div class="flex">
+                <DatePicker picker="year" id="datepicker_tren_dagri"
+                  v-model="selectedYear"
+                  @change="handleTrenJumlahPesertaPemaganganDagriYearChanged"  
+                />
+                <!-- <FilterTrenJumlahPesertaPemaganganDagriProvinsi
+                  @provinsiTrenJumlahPesertaPemaganganDagriChanged="handleTrenJumlahPesertaPemaganganDagriProvinsiChanged"
+                  tipe="provinsi"
+                /> -->
               </div>
             </div>
-            <TrenJumlahPesertaPemaganganDalamNegeri />
-          <!-- <TrenJumlahPesertaPemagangan :filter="filterTrenJumlahPesertaPemagangan"/> -->
+          </div>
+          <TrenJumlahPesertaPemaganganDalamNegeri :filter="filterTrenJumlahPesertaPemaganganDagri" />
         </div>
       </div>
     </div>
@@ -292,70 +194,22 @@
               </h5>
               <div class="relative">
                 <div class="flex">
-                  <DatePicker picker="year" id="datepicker_tren"
-                    v-model="selectedDate"
-                    @change="handleTrenJumlahPesertaPemaganganChanged"  
+                  <DatePicker picker="year" id="datepicker_tren_lugri"
+                    v-model="selectedYear"
+                    @change="handleTrenJumlahPesertaPemaganganLugriYearChanged"
                   />
-                  <FilterKapasitasPPKProvinsi
+                  <!-- <FilterKapasitasPPKProvinsi
                     @provinsiKapasitasPPKChanged="handleKapasitasPPKProvinsiChanged"
                     tipe="provinsi"
-                  />
+                  /> -->
                 </div>
               </div>
             </div>
-            <TrenJumlahPesertaPemaganganLuarNegeri />
-          <!-- <TrenJumlahPesertaPemagangan :filter="filterTrenJumlahPesertaPemagangan"/> -->
+            <TrenJumlahPesertaPemaganganLuarNegeri :filter="filterTrenJumlahPesertaPemaganganLugri" />
         </div>
       </div>
     </div>
-
-    <!-- <div class="col-span-1">
-      <div ref="tour12" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-        <div class="p-5">
-          <div class="flex justify-between">
-            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Lulusan Pelatihan ke Bekerja
-            </h5>
-            <div class="relative w-32">
-              <DatePicker picker="year" id="datepicker_produktifitas"
-                v-model="selectedDate"
-                @change="handleProduktifitasChanged"  
-              />
-            </div>
-          </div>
-          <LulusanPelatihanBekerja :filter="filterProduktifitas" @loading-complete="handleLoadingComplete" />
-        </div>
-      </div>
-    </div> -->
   </div>
-
-  <!-- <div class="grid grid-cols-4 gap-8">
-    <div class="col-span-2">
-      <div ref="tour13" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-        <div class="p-5">
-          <div class="flex justify-between">
-            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Jumlah Persentase Kategori Instruktur
-            </h5>
-            </div>
-            <PersentaseKategoriInstruktur :filter="filterInstruktur"/>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-span-2">
-      <div ref="tour14" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-        <div class="p-5">
-          <div class="flex justify-between">
-            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Jumlah Persentase Kategori Tenaga Pelatihan
-            </h5>
-            </div>
-            <PersentaseKategoriTenagaPelatihan :filter="filterTenagaPelatihan"/>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
   <div
     class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
@@ -391,58 +245,10 @@
             </h5>
           </div>
           <TableMasaTungguLulus />
-          <!-- <MasaTungguLulusBar /> -->
         </div>
       </div>
     </div>
-    <!-- <div class="col-span-1">
-      <div ref="tour16" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-        <div class="p-5">
-          <div class="flex justify-between">
-            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Masa Tunggu Lulus ke Bekerja
-            </h5>
-            <FilterMasaTungguLulusProgramPelatihan
-              @programPelatihanMasaTungguLulusChanged="handleProgramPelatihanMasaTungguLulusChanged"
-              tipe="programPelatihanMasaTunggu"
-            />
-          </div>
-          <MasaTungguLulusPie :filter="filterMasaTunggu"/>
-        </div>
-      </div>
-    </div> -->
   </div>
-
-  <!-- <div class="grid grid-cols-3 gap-8">
-    <div class="col-span-2">
-      <div ref="tour17" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-        <div class="p-5">
-          <div class="flex justify-between">
-            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Tingkat Penyerapan Lulusan
-            </h5>
-          </div>
-          <TingkatPenyerapanLulusanBar />
-        </div>
-      </div>
-    </div>
-    <div class="col-span-1">
-      <div ref="tour18" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
-        <div class="p-5">
-          <div class="flex justify-between">
-            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Tingkat Penyerapan Lulusan
-            </h5>
-            <FilterTingkatPenyerapanLulusProgramPelatihan
-              @programPelatihanTingkatPenyerapanLulusChanged="handleProgramPelatihanTingkatPenyerapanLulusChanged"
-              tipe="programPelatihanTingkatPenyerapan"
-            />
-          </div>
-          <TingkatPenyerapanLulusanPie :filter="filterTingkatPenyerapan"/>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-3">
@@ -526,6 +332,7 @@ import TrenJumlahPesertaPemaganganDalamNegeri from "./TrenJumlahPesertaPemaganga
 import PersentasePeminatProgramPelatihanKejuruan from "./PersentasePeminatProgramPelatihanKejuruan.vue";
 import FilterMasaTungguLulusProgramPelatihan from "../Shared/FilterMasaTungguLulusProgramPelatihan.vue";
 import FilterTingkatPenyerapanLulusProgramPelatihan from "../Shared/FilterTingkatPenyerapanLulusProgramPelatihan.vue";
+import FilterTrenJumlahPesertaPemaganganDagriProvinsi from "../Shared/FilterTrenJumlahPesertaPemaganganDagriProvinsi.vue";
 import { 
   COffcanvas, 
   COffcanvasHeader, 
@@ -568,7 +375,8 @@ export default {
     TrenJumlahPesertaPemaganganDalamNegeri,
     TingkatAkreditasiLembagaPelatihanKerja,
     PersentasePeminatProgramPelatihanKejuruan,
-    FilterTingkatPenyerapanLulusProgramPelatihan
+    FilterTingkatPenyerapanLulusProgramPelatihan,
+    FilterTrenJumlahPesertaPemaganganDagriProvinsi,
   },
 
   setup() {
@@ -725,7 +533,10 @@ export default {
       filterKapasitasPPKProvinsi                        : "/recap-capacity-ppk",
       filterTrenJumlahKategoriProgramPelatihan          : "/recap-trends-number-training-program-categories",
       filterProgramPelatihanProvinsi                    : "/recap-training-programs-high-demand",
-      filterTrenJumlahPesertaPemagangan                 : "/recap-trends-number-apprentices",
+      filterTrenJumlahPesertaPemaganganDagri            : "/recap-trends-number-apprentices-dagri",
+      filterTrenJumlahPesertaPemaganganDagriProvinsi    : "/recap-trends-number-apprentices-dagri",
+      filterTrenJumlahPesertaPemaganganLugri            : "/recap-trends-number-apprentices-lugri",
+      filterTrenJumlahPesertaPemaganganLugriProvinsi    : "/recap-trends-number-apprentices-dagri",
       filterProduktifitas                               : "/recap-labor-productivity",
       filterInstruktur                                  : "/recap-instructor-category-percentage",
       filterTenagaPelatihan                             : "/recap-training-personnel-category-percentage",
@@ -802,48 +613,6 @@ export default {
       this.isDisable = false
       this.getCity(value)
     },
-
-    // async resetRepositories() {
-    //   const token = JSON.parse(localStorage.getItem("token"));
-    //   await fetch(
-    //     import.meta.env.VITE_API_URL + '/repositories',
-    //     {
-    //       headers: {
-    //           Authorization: "Bearer " + token.value,
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     if (!res.ok) {
-    //       throw new Error('Network response was not ok');
-    //     }
-    //     return res.json();
-    //   })
-    //   .then((data) => data.features);
-
-    //   this.institutionContents = await fetch(
-    //     import.meta.env.VITE_API_URL + '/repositories',
-    //     {
-    //       headers: {
-    //           Authorization: "Bearer " + token.value,
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     if (!res.ok) {
-    //       throw new Error('Network response was not ok');
-    //     }
-    //     return res.json();
-    //   })
-    //   .then((data) => data.features);
-    //   this.provinceId = ''
-    //   this.cityId = ''
-    //   this.institutionId = ''
-    //   this.trainingCapacityValue = ''
-    //   this.isDisable = true
-    //   // this.form.resetFields()
-    //   this.initMap(true)
-    // },
 
     async resetRepositories() {
       window.location.reload();
@@ -1113,11 +882,9 @@ export default {
         }
       });
     },
-
     closeDetail() {
       this.isOpenDetail = false
     },
-
     handleKapasitasPPKProvinsiChanged(data) {
       switch (data.tipe) {
         case "provinsi":
@@ -1153,11 +920,46 @@ export default {
           break;
       }
     },
-    handleTrenJumlahPesertaPemaganganChanged(date) {
+    handleTrenJumlahPesertaPemaganganDagriYearChanged(date) {
       if (date.$y != 0) {
-        this.filterTrenJumlahPesertaPemagangan = "/recap-trends-number-apprentices-year/" + date.$y;
+        this.filterTrenJumlahPesertaPemaganganDagri = "/recap-trends-number-apprentices-dagri-year/" + date.$y;
       } else {
-        this.filterTrenJumlahPesertaPemagangan = "/recap-trends-number-apprentices";
+        this.filterTrenJumlahPesertaPemaganganDagri = "/recap-trends-number-apprentices-dagri";
+      }
+    },
+    handleTrenJumlahPesertaPemaganganDagriProvinsiChanged(data) {
+      switch (data.tipe) {
+        case "provinsi":
+          if (data.id != 0) {
+            this.filterTrenJumlahPesertaPemaganganDagriProvinsi = "/recap-trends-number-apprentices-dagri-province/" + data.id;
+          } else {
+            this.filterTrenJumlahPesertaPemaganganDagriProvinsi = "/recap-trends-number-apprentices-dagri";
+          }
+          break;
+
+        default:
+          break;
+      }
+    },
+    handleTrenJumlahPesertaPemaganganLugriYearChanged(date) {
+      if (date.$y != 0) {
+        this.filterTrenJumlahPesertaPemaganganLugri = "/recap-trends-number-apprentices-lugri-year/" + date.$y;
+      } else {
+        this.filterTrenJumlahPesertaPemaganganLugri = "/recap-trends-number-apprentices-lugri";
+      }
+    },
+    handleTrenJumlahPesertaPemaganganLugriProvinsiChanged(data) {
+      switch (data.tipe) {
+        case "provinsi":
+          if (data.id != 0) {
+            this.filterTrenJumlahPesertaPemaganganLugriProvinsi = "/recap-trends-number-apprentices-dagri-province/" + data.id;
+          } else {
+            this.filterTrenJumlahPesertaPemaganganLugriProvinsi = "/recap-trends-number-apprentices-dagri";
+          }
+          break;
+
+        default:
+          break;
       }
     },
     handleProduktifitasChanged(date) {

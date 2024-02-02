@@ -73,16 +73,25 @@ export default {
       }
     };
   },
-
+  props: {
+    filter: {
+      type: String,
+      default: '/recap-trends-number-apprentices-dagri',
+    },
+  },
   mounted() {
     this.loadData();
   },
-
+  watch: {
+    filter() {
+      this.loadData();
+    },
+  },
   methods: {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get(import.meta.env.VITE_API_URL + '/recap-trends-number-apprentices-dagri', {
+        .get(import.meta.env.VITE_API_URL + this.filter, {
           headers: {
             Authorization: "Bearer " + token.value,
           },

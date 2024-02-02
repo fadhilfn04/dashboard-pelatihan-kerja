@@ -45,7 +45,7 @@
                 <a-menu-item>
                   <router-link to="/cari-profil-peserta">Cari Profil Peserta</router-link>
                 </a-menu-item>
-                <a-menu-item>
+                <a-menu-item v-if="email !== 'user@gmail.com'">
                   <router-link to="/api-generator">API Generator</router-link>
                 </a-menu-item>
                 <a-menu-item v-if="email !== 'user@gmail.com'">
