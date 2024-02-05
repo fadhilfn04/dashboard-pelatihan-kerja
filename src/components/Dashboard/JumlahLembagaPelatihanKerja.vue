@@ -80,16 +80,25 @@ export default {
       },
     };
   },
-
+  props: {
+    filter: {
+      type: String,
+      default: '/total-recap-lpk',
+    },
+  },
   mounted() {
     this.loadData();
   },
-
+  watch: {
+    filter() {
+      this.loadData();
+    },
+  },
   methods: {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get(import.meta.env.VITE_API_URL + '/total-recap-lpk', {
+        .get(import.meta.env.VITE_API_URL + this.filter, {
           headers: {
             Authorization: "Bearer " + token.value,
           },

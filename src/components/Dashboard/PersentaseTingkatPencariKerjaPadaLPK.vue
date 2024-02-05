@@ -81,14 +81,25 @@ export default {
       },
     };
   },
+  props: {
+    filter: {
+      type: String,
+      default: '/recap-percentage-job-seekers-lpk',
+    },
+  },
   mounted() {
     this.loadData();
+  },
+  watch: {
+    filter() {
+      this.loadData();
+    },
   },
   methods: {
     loadData() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get(import.meta.env.VITE_API_URL + '/recap-percentage-job-seekers-lpk', {
+        .get(import.meta.env.VITE_API_URL + this.filter, {
           headers: {
             Authorization: "Bearer " + token.value,
           },

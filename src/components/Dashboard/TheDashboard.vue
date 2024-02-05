@@ -6,9 +6,17 @@
   </div>
   <div class="w-full rounded-lg border border-gray-200 bg-white shadow">
     <div class="p-5">
-      <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-        Peta Persebaran Lembaga Pelatihan Kerja Terverifikasi di Indonesia s.d Bulan Desember Tahun 2024
-      </h5>
+      <div class="flex justify-between">
+        <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+          Peta Persebaran Lembaga Pelatihan Kerja Terverifikasi di Indonesia s.d Tahun {{ selectedYear }}
+        </h5>
+        <div class="relative">
+          <DatePicker picker="year" id="datepicker_peta_persebaran_lpk_terverifikasi"
+            v-model="selectedYear"
+            @change="handlePetaPersebaranLPKTerverifikasiYearChanged"
+          />
+        </div>
+      </div>
       <div class="dashboard-container">
         <a-form class="filter-form">
           <a-form-item ref="tour1" class="province">
@@ -97,10 +105,18 @@
     <div class="col-span-3">
       <div ref="tour4" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
-          <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-            Jumlah Lembaga Pelatihan Kerja Terverifikasi di Indonesia Menurut Tipe Lembaga s.d Bulan Desember Tahun 2024
-          </h5>
-          <JumlahLembagaPelatihanKerja />
+          <div class="flex justify-between">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+              Jumlah Lembaga Pelatihan Kerja Terverifikasi di Indonesia Menurut Tipe Lembaga s.d Tahun {{ selectedYear }}
+            </h5>
+            <div class="relative">
+              <DatePicker picker="year" id="datepicker_tren"
+                v-model="selectedYear"
+                @change="handleJumlahLPKTerverifikasiYearChanged"
+              />
+            </div>
+          </div>
+          <JumlahLembagaPelatihanKerja :filter="filterJumlahLPKTerverifikasi"/>
         </div>
       </div>
     </div>
@@ -111,10 +127,18 @@
     data-aos="zoom-in"
   >
     <div class="p-5">
-      <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-        Jumlah Lembaga Pelatihan Kerja Yang Sudah dan Belum Terakreditasi di Indonesia s.d Bulan Desember Tahun 2024
-      </h5>
-    <PetaPersebaranLPKTerakreditasi />
+      <div class="flex justify-between">
+        <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+          Jumlah Lembaga Pelatihan Kerja Yang Sudah dan Belum Terakreditasi di Indonesia s.d Tahun {{ selectedYear }}
+        </h5>
+        <div class="relative">
+          <DatePicker picker="year" id="datepicker_tren"
+            v-model="selectedYear"
+            @change="handleJumlahLPKBelumTerakreditasiYearChanged"
+          />
+        </div>
+      </div>
+    <PetaPersebaranLPKTerakreditasi :filter="filterJumlahLPKBelumTerakreditasi"/>
     </div>
   </div>
 
@@ -123,9 +147,17 @@
     data-aos="zoom-in"
   >
     <div class="p-5">
-      <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-        Persebaran Kapasitas Latih di Indonesia s.d Bulan Desember Tahun 2024
-      </h5>
+      <div class="flex justify-between">
+        <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+          Persebaran Kapasitas Latih di Indonesia s.d Tahun {{ selectedYear }}
+        </h5>
+        <div class="relative">
+          <DatePicker picker="year" id="datepicker_tren"
+            v-model="selectedYear"
+            @change="handlePersebaranKapasitasLatihYearChanged"
+          />
+        </div>
+      </div>
     <PetaPersebaranKapasitasLatih />
     </div>
   </div>
@@ -153,8 +185,18 @@
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
               Persentase Lulusan Pelatihan yang Bekerja s.d Bulan Desember Tahun 2024
             </h5>
+            <div class="relative">
+              <!-- <a-range-picker 
+                v-model="selectedDate"
+                @change="handlePersentaseLulusanPelatihanDateChanged"
+              /> -->
+              <DatePicker picker="year" id="datepicker_tren"
+                v-model="selectedYear"
+                @change="handlePersentaseLulusanPelatihanYearChanged"
+              />
+            </div>
           </div>
-          <PersentaseTingkatPencariKerjaPadaLPK />
+          <PersentaseTingkatPencariKerjaPadaLPK :filter="filterPersentaseLulusanPelatihan"/>
         </div>
       </div>
     </div>
@@ -216,9 +258,17 @@
     data-aos="zoom-in"
   >
     <div class="p-5">
-      <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-        Persentase Sebaran Instruktur Menurut Kategori di Indonesia s.d Bulan Desember Tahun 2024
-      </h5>
+      <div class="flex justify-between">
+        <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+          Persentase Sebaran Instruktur Menurut Kategori di Indonesia s.d Tahun {{ selectedYear }}
+        </h5>
+        <div class="relative">
+          <DatePicker picker="year" id="datepicker_tren"
+            v-model="selectedDate"
+            @change="handlePersentaseSebaranInstrukturYearChanged"
+          />
+        </div>
+      </div>
     <PetaPersebaranKategoriInstruktur />
     </div>
   </div>
@@ -228,9 +278,17 @@
     data-aos="zoom-in"
   >
     <div class="p-5">
-      <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-        Persentase Sebaran Tenaga Pelatihan Menurut Kategori di Indonesia s.d Bulan Desember Tahun 2024
-      </h5>
+      <div class="flex justify-between">
+        <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+          Persentase Sebaran Tenaga Pelatihan Menurut Kategori di Indonesia s.d Tahun {{ selectedYear }}
+        </h5>
+        <div class="relative">
+          <DatePicker picker="year" id="datepicker_tren"
+            v-model="selectedDate"
+            @change="handlePersentaseSebaranTenagaPelatihanYearChanged"
+          />
+        </div>
+      </div>
     <PetaPersebaranTenagaPelatihan />
     </div>
   </div>
@@ -327,6 +385,7 @@ import TrenJumlahKategoriProgramPelatihan from "./TrenJumlahKategoriProgramPelat
 import FilterProgramPelatihanProvinsi from "../Shared/FilterProgramPelatihanProvinsi.vue";
 import PersentaseTingkatPencariKerjaPadaLPK from "./PersentaseTingkatPencariKerjaPadaLPK.vue";
 import TrenJumlahPesertaPemaganganLuarNegeri from "./TrenJumlahPesertaPemaganganLuarNegeri.vue";
+import PetaPersebaranKategoriInstrukturFilter from "./PetaPersebaranKategoriInstrukturFilter.vue";
 import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
 import TrenJumlahPesertaPemaganganDalamNegeri from "./TrenJumlahPesertaPemaganganDalamNegeri.vue";
 import PersentasePeminatProgramPelatihanKejuruan from "./PersentasePeminatProgramPelatihanKejuruan.vue";
@@ -374,6 +433,7 @@ export default {
     TrenJumlahPesertaPemaganganLuarNegeri,
     TrenJumlahPesertaPemaganganDalamNegeri,
     TingkatAkreditasiLembagaPelatihanKerja,
+    PetaPersebaranKategoriInstrukturFilter,
     PersentasePeminatProgramPelatihanKejuruan,
     FilterTingkatPenyerapanLulusProgramPelatihan,
     FilterTrenJumlahPesertaPemaganganDagriProvinsi,
@@ -509,6 +569,7 @@ export default {
   },
 
   data() {
+    const currentYear = new Date().getFullYear();
     return {
       provinceId: '',
       cityId: '',
@@ -528,8 +589,16 @@ export default {
       isOpenDetail: false,
       visible: false,
       allRepo: [],
-      isLoading: true,
+      isLoading: false,
+      useSecondComponent: false,
 
+      filterPetaPersebaranLPKTerverifikasi              : "/repositories",
+      filterJumlahLPKTerverifikasi                      : "/total-recap-lpk",
+      filterJumlahLPKBelumTerakreditasi                 : "/accreditation-level-recap-lpk",
+      filterPersebaranKapasitasLatih                    : "/recap-capacity-ppk",
+      filterPersentaseLulusanPelatihan                  : "/recap-percentage-job-seekers-lpk",
+      filterPersentaseSebaranInstruktur                 : "/recap-instructor-category-percentage",
+      filterPersentaseSebaranTenagaPelatihan            : "/recap-training-personnel-category-percentage",
       filterKapasitasPPKProvinsi                        : "/recap-capacity-ppk",
       filterTrenJumlahKategoriProgramPelatihan          : "/recap-trends-number-training-program-categories",
       filterProgramPelatihanProvinsi                    : "/recap-training-programs-high-demand",
@@ -543,7 +612,7 @@ export default {
       filterMasaTunggu                                  : "/recap-waiting-period-graduate-pie",
       filterTingkatPenyerapan                           : "/recap-graduate-absorption-rate-pie",
       selectedDate                                      : null,
-      selectedYear                                      : null,
+      selectedYear                                      : currentYear,
     }
   },
 
@@ -884,6 +953,75 @@ export default {
     },
     closeDetail() {
       this.isOpenDetail = false
+    },
+    handlePetaPersebaranLPKTerverifikasiYearChanged(date) {
+      if (date.$y != 0) {
+        this.selectedYear = date.$y;
+        this.filterPetaPersebaranLPKTerverifikasi = "/repositories-year/" + date.$y;
+      } else {
+        this.filterPetaPersebaranLPKTerverifikasi = "/repositories";
+      }
+    },
+    handleJumlahLPKTerverifikasiYearChanged(date) {
+      if (date.$y != 0) {
+        this.selectedYear = date.$y;
+        this.filterJumlahLPKTerverifikasi = "/total-recap-lpk-year/" + date.$y;
+      } else {
+        this.filterJumlahLPKTerverifikasi = "/total-recap-lpk";
+      }
+    },
+    handleJumlahLPKBelumTerakreditasiYearChanged(date) {
+      if (date.$y != 0) {
+        this.selectedYear = date.$y;
+        this.filterJumlahLPKBelumTerakreditasi = "/accreditation-level-recap-lpk-year/" + date.$y;
+      } else {
+        this.filterJumlahLPKBelumTerakreditasi = "/accreditation-level-recap-lpk";
+      }
+    },
+    handlePersebaranKapasitasLatihYearChanged(date) {
+      if (date.$y != 0) {
+        this.selectedYear = date.$y;
+        this.filterPersebaranKapasitasLatih = "/recap-capacity-ppk-year/" + date.$y;
+      } else {
+        this.filterPersebaranKapasitasLatih = "/recap-capacity-ppk";
+      }
+    },
+    handlePersentaseLulusanPelatihanDateChanged(date) {
+      const start_year = date[0].$y;
+      const start_month = date[0].$M;
+      const start_date = date[0].$D;
+
+      const end_year = date[0].$y;
+      const end_month = date[0].$M;
+      const end_date = date[0].$D;
+      
+      if (date.$y != 0) {
+        this.selectedYear = date.$y;
+        this.filterPersentaseLulusanPelatihan = "/recap-percentage-job-seekers-lpk-year/" + date.$y;
+      } else {
+        this.filterPersentaseLulusanPelatihan = "/recap-percentage-job-seekers-lpk";
+      }
+    },
+    handlePersentaseLulusanPelatihanYearChanged(date) {
+      if (date.$y != 0) {
+        this.selectedYear = date.$y;
+        this.filterPersentaseLulusanPelatihan = "/recap-percentage-job-seekers-lpk-year/" + date.$y;
+      } else {
+        this.filterPersentaseLulusanPelatihan = "/recap-percentage-job-seekers-lpk";
+      }
+    },
+    handlePersentaseSebaranInstrukturYearChanged(date) {
+      if (date.$y) {
+        this.selectedYear = date.$y;
+      }
+      this.useSecondComponent = true;
+    },
+    handlePersentaseSebaranTenagaPelatihanYearChanged(date) {
+      if (date.$y != 0) {
+        this.filterPersentaseSebaranTenagaPelatihan = "/recap-training-personnel-category-percentage-year/" + date.$y;
+      } else {
+        this.filterPersentaseSebaranTenagaPelatihan = "/recap-training-personnel-category-percentage";
+      }
     },
     handleKapasitasPPKProvinsiChanged(data) {
       switch (data.tipe) {
