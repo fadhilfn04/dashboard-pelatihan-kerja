@@ -37,9 +37,15 @@ export default {
       kabKota: undefined,
     };
   },
+  props: {
+    selectedYearSebaranTenagaPelatihan: {
+      type: Number,
+      default: null,
+    },
+  },
   watch: {
-    api(newApi) {
-      this.fetchData();
+    selectedYearSebaranTenagaPelatihan(newYear) {
+      this.updateApi(newYear);
     },
     dataDaerah(newDataDaerah) {
       this.processingData();
@@ -109,6 +115,14 @@ export default {
     this.fetchData();
   },
   methods: {
+    updateApi(newYear) {
+      if (newYear) {
+        this.api = `/recap-training-personnel-category-percentage-year/${newYear}`;
+      } else {
+        this.api = "/recap-training-personnel-category-percentage";
+      }
+      this.fetchData();
+    },
     fetchData() {
       const url = this.host + this.api;
       const token = JSON.parse(localStorage.getItem("token"));

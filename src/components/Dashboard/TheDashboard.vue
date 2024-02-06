@@ -8,18 +8,17 @@
     <div class="p-5">
       <div class="flex justify-between">
         <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-          Peta Persebaran Lembaga Pelatihan Kerja Terverifikasi di Indonesia s.d Tahun {{ selectedYear }}
+          Peta Persebaran Lembaga Pelatihan Kerja Terverifikasi di Indonesia s.d Tahun {{ selectedYearPersebaranLPKTerverifikasi }}
         </h5>
-        <div class="relative">
+        <!-- <div class="relative">
           <DatePicker picker="year" id="datepicker_peta_persebaran_lpk_terverifikasi"
-            v-model="selectedYear"
             @change="handlePetaPersebaranLPKTerverifikasiYearChanged"
           />
-        </div>
+        </div> -->
       </div>
       <div class="dashboard-container">
-        <a-form class="filter-form">
-          <a-form-item ref="tour1" class="province">
+        <a-form class="flex mb-3 mt-2">
+          <a-form-item ref="tour1" class="province" style="margin-right: 5px;">
             <a-select
               placeholder="Semua Provinsi/Wilayah"
               :getPopupContainer="(triggerNode) => triggerNode.parentNode"
@@ -35,7 +34,7 @@
               >
             </a-select>
           </a-form-item>
-          <a-form-item ref="tour2" class="city">
+          <a-form-item ref="tour2" class="city" style="margin-right: 5px;">
             <a-select
               placeholder="Semua Kabupaten/Kota"
               :getPopupContainer="(triggerNode) => triggerNode.parentNode"
@@ -129,16 +128,15 @@
     <div class="p-5">
       <div class="flex justify-between">
         <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-          Jumlah Lembaga Pelatihan Kerja Yang Sudah dan Belum Terakreditasi di Indonesia s.d Tahun {{ selectedYear }}
+          Jumlah Lembaga Pelatihan Kerja Yang Sudah dan Belum Terakreditasi di Indonesia s.d Tahun {{ selectedYearJumlahLPKBelumTerakreditasi }}
         </h5>
         <div class="relative">
           <DatePicker picker="year" id="datepicker_tren"
-            v-model="selectedYear"
             @change="handleJumlahLPKBelumTerakreditasiYearChanged"
           />
         </div>
       </div>
-    <PetaPersebaranLPKTerakreditasi :filter="filterJumlahLPKBelumTerakreditasi"/>
+    <PetaPersebaranLPKTerakreditasi :selectedYearJumlahLPKBelumTerakreditasi="selectedYearJumlahLPKBelumTerakreditasi" />
     </div>
   </div>
 
@@ -149,16 +147,15 @@
     <div class="p-5">
       <div class="flex justify-between">
         <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-          Persebaran Kapasitas Latih di Indonesia s.d Tahun {{ selectedYear }}
+          Persebaran Kapasitas Latih di Indonesia s.d Tahun {{ selectedYearSebaranKapasitasLatih }}
         </h5>
         <div class="relative">
           <DatePicker picker="year" id="datepicker_tren"
-            v-model="selectedYear"
             @change="handlePersebaranKapasitasLatihYearChanged"
           />
         </div>
       </div>
-    <PetaPersebaranKapasitasLatih />
+    <PetaPersebaranKapasitasLatih :selectedYearSebaranKapasitasLatih="selectedYearSebaranKapasitasLatih" />
     </div>
   </div>
 
@@ -187,7 +184,7 @@
             </h5>
             <div class="relative">
               <!-- <a-range-picker 
-                v-model="selectedDate"
+                v-model="selectedYear"
                 @change="handlePersentaseLulusanPelatihanDateChanged"
               /> -->
               <DatePicker picker="year" id="datepicker_tren"
@@ -260,16 +257,15 @@
     <div class="p-5">
       <div class="flex justify-between">
         <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-          Persentase Sebaran Instruktur Menurut Kategori di Indonesia s.d Tahun {{ selectedYear }}
+          Persentase Sebaran Instruktur Menurut Kategori di Indonesia s.d Tahun {{ selectedYearSebaranInstruktur }}
         </h5>
         <div class="relative">
           <DatePicker picker="year" id="datepicker_tren"
-            v-model="selectedDate"
             @change="handlePersentaseSebaranInstrukturYearChanged"
           />
         </div>
       </div>
-    <PetaPersebaranKategoriInstruktur />
+      <PetaPersebaranKategoriInstruktur :selectedYearSebaranInstruktur="selectedYearSebaranInstruktur" />
     </div>
   </div>
 
@@ -280,16 +276,16 @@
     <div class="p-5">
       <div class="flex justify-between">
         <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-          Persentase Sebaran Tenaga Pelatihan Menurut Kategori di Indonesia s.d Tahun {{ selectedYear }}
+          Persentase Sebaran Tenaga Pelatihan Menurut Kategori di Indonesia s.d Tahun {{ selectedYearSebaranTenagaPelatihan }}
         </h5>
         <div class="relative">
-          <DatePicker picker="year" id="datepicker_tren"
-            v-model="selectedDate"
+          <DatePicker picker="year" id="datepicker_sebaran_tenaga_pelatihan"
+            v-model="selectedYearSebaranTenagaPelatihan"
             @change="handlePersentaseSebaranTenagaPelatihanYearChanged"
           />
         </div>
       </div>
-    <PetaPersebaranTenagaPelatihan />
+    <PetaPersebaranTenagaPelatihan :selectedYearSebaranTenagaPelatihan="selectedYearSebaranTenagaPelatihan" />
     </div>
   </div>
 
@@ -340,12 +336,6 @@
   margin-bottom: 15px;
 }
 
-.filter-form {
-  display: flex;
-  gap: 10px;
-  padding: 10px;
-}
-
 .province,
 .city,
 .institutionType,
@@ -385,7 +375,6 @@ import TrenJumlahKategoriProgramPelatihan from "./TrenJumlahKategoriProgramPelat
 import FilterProgramPelatihanProvinsi from "../Shared/FilterProgramPelatihanProvinsi.vue";
 import PersentaseTingkatPencariKerjaPadaLPK from "./PersentaseTingkatPencariKerjaPadaLPK.vue";
 import TrenJumlahPesertaPemaganganLuarNegeri from "./TrenJumlahPesertaPemaganganLuarNegeri.vue";
-import PetaPersebaranKategoriInstrukturFilter from "./PetaPersebaranKategoriInstrukturFilter.vue";
 import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
 import TrenJumlahPesertaPemaganganDalamNegeri from "./TrenJumlahPesertaPemaganganDalamNegeri.vue";
 import PersentasePeminatProgramPelatihanKejuruan from "./PersentasePeminatProgramPelatihanKejuruan.vue";
@@ -433,7 +422,6 @@ export default {
     TrenJumlahPesertaPemaganganLuarNegeri,
     TrenJumlahPesertaPemaganganDalamNegeri,
     TingkatAkreditasiLembagaPelatihanKerja,
-    PetaPersebaranKategoriInstrukturFilter,
     PersentasePeminatProgramPelatihanKejuruan,
     FilterTingkatPenyerapanLulusProgramPelatihan,
     FilterTrenJumlahPesertaPemaganganDagriProvinsi,
@@ -613,6 +601,11 @@ export default {
       filterTingkatPenyerapan                           : "/recap-graduate-absorption-rate-pie",
       selectedDate                                      : null,
       selectedYear                                      : currentYear,
+      selectedYearPersebaranLPKTerverifikasi            : currentYear,
+      selectedYearJumlahLPKBelumTerakreditasi           : currentYear,
+      selectedYearSebaranKapasitasLatih                 : currentYear,
+      selectedYearSebaranInstruktur                     : currentYear,
+      selectedYearSebaranTenagaPelatihan                : currentYear,
     }
   },
 
@@ -620,7 +613,6 @@ export default {
     await this.getProvince();
     await this.getTraining();
   },
-
   methods: {
     filterOption(input, option) {
       return (
@@ -629,7 +621,6 @@ export default {
           .indexOf(input.toLowerCase()) >= 0
       )
     },
-
     async getTraining() {
       const token = JSON.parse(localStorage.getItem("token"));
       this.cityContents = await fetch(
@@ -643,7 +634,6 @@ export default {
         .then((res) => res.json())
         .then((data) => data.data)
     },
-
     async getProvince() {
       const token = JSON.parse(localStorage.getItem("token"));
       this.provinceContents = await fetch(
@@ -668,7 +658,6 @@ export default {
         .then((res) => res.json())
         .then((data) => data.data)
     },
-
     onProvinceChange(value) {
       this.provinceId = value
       if (this.isDisable == false) {
@@ -682,26 +671,21 @@ export default {
       this.isDisable = false
       this.getCity(value)
     },
-
     async resetRepositories() {
       window.location.reload();
     },
-
     onCityChange(value) {
       this.cityId = value
       this.filterCity()
     },
-
     onInstitutionTypeChange(value) {
       this.institutionId = value
       this.filterInstitution()
     },
-
     onTrainingCapacityChange(value) {
       this.trainingCapacityValue = value
       this.filterTrainingCapacity()
     },
-
     checkNull(text, isParagraf) {
       if (text == null || text == '') {
         return '-'
@@ -713,11 +697,9 @@ export default {
         }
       }
     },
-
     escapeString(escape) {
       return escape.replaceAll('\\n', '<br>')
     },
-
     async getCity(value) {
       const token = JSON.parse(localStorage.getItem("token"));
       this.cityContents = await fetch(
@@ -731,7 +713,6 @@ export default {
         .then((res) => res.json())
         .then((data) => data.data)
     },
-
     async filterProvince() {
       const token = JSON.parse(localStorage.getItem("token"));
       this.institutionContents = await fetch(
@@ -751,7 +732,6 @@ export default {
       .then((data) => data.features);
       this.initMap(true)
     },
-
     async filterCity() {
       const token = JSON.parse(localStorage.getItem("token"));
       this.institutionContents = await fetch(
@@ -771,7 +751,6 @@ export default {
       .then((data) => data.features);
       this.initMap(true)
     },
-
     async filterInstitution() {
       const token = JSON.parse(localStorage.getItem("token"));
       this.institutionContents = await fetch(
@@ -791,7 +770,6 @@ export default {
       .then((data) => data.features);
       this.initMap(true)
     },
-
     async filterTrainingCapacity() {
       const token = JSON.parse(localStorage.getItem("token"));
       this.institutionContents = await fetch(
@@ -811,7 +789,6 @@ export default {
       .then((data) => data.features);
       this.initMap(true)
     },
-
     async getInstitution() {
       const token = JSON.parse(localStorage.getItem("token"));
       var allRepo = await fetch(
@@ -824,7 +801,6 @@ export default {
       )
       .then((res) => res.json())
       .then((data) => data.features)
-
       var b = await fetch(
         import.meta.env.VITE_API_URL + '/repositories',
         {
@@ -838,7 +814,6 @@ export default {
         this.isLoading = false;
       return b
     },
-
     async initMap(value) {
       if (value != true) {
         var map = L.map('map', {
@@ -955,11 +930,10 @@ export default {
       this.isOpenDetail = false
     },
     handlePetaPersebaranLPKTerverifikasiYearChanged(date) {
-      if (date.$y != 0) {
-        this.selectedYear = date.$y;
-        this.filterPetaPersebaranLPKTerverifikasi = "/repositories-year/" + date.$y;
+      if (date.$y !== 0) {
+        this.selectedYearPersebaranLPKTerverifikasi = date.$y;
       } else {
-        this.filterPetaPersebaranLPKTerverifikasi = "/repositories";
+        this.selectedYearPersebaranLPKTerverifikasi = null;
       }
     },
     handleJumlahLPKTerverifikasiYearChanged(date) {
@@ -971,19 +945,17 @@ export default {
       }
     },
     handleJumlahLPKBelumTerakreditasiYearChanged(date) {
-      if (date.$y != 0) {
-        this.selectedYear = date.$y;
-        this.filterJumlahLPKBelumTerakreditasi = "/accreditation-level-recap-lpk-year/" + date.$y;
+      if (date.$y !== 0) {
+        this.selectedYearJumlahLPKBelumTerakreditasi = date.$y;
       } else {
-        this.filterJumlahLPKBelumTerakreditasi = "/accreditation-level-recap-lpk";
+        this.selectedYearJumlahLPKBelumTerakreditasi = null;
       }
     },
     handlePersebaranKapasitasLatihYearChanged(date) {
-      if (date.$y != 0) {
-        this.selectedYear = date.$y;
-        this.filterPersebaranKapasitasLatih = "/recap-capacity-ppk-year/" + date.$y;
+      if (date.$y !== 0) {
+        this.selectedYearSebaranKapasitasLatih = date.$y;
       } else {
-        this.filterPersebaranKapasitasLatih = "/recap-capacity-ppk";
+        this.selectedYearSebaranKapasitasLatih = null;
       }
     },
     handlePersentaseLulusanPelatihanDateChanged(date) {
@@ -1011,16 +983,17 @@ export default {
       }
     },
     handlePersentaseSebaranInstrukturYearChanged(date) {
-      if (date.$y) {
-        this.selectedYear = date.$y;
+      if (date.$y !== 0) {
+        this.selectedYearSebaranInstruktur = date.$y;
+      } else {
+        this.selectedYearSebaranInstruktur = null;
       }
-      this.useSecondComponent = true;
     },
     handlePersentaseSebaranTenagaPelatihanYearChanged(date) {
-      if (date.$y != 0) {
-        this.filterPersentaseSebaranTenagaPelatihan = "/recap-training-personnel-category-percentage-year/" + date.$y;
+      if (date.$y !== 0) {
+        this.selectedYearSebaranTenagaPelatihan = date.$y;
       } else {
-        this.filterPersentaseSebaranTenagaPelatihan = "/recap-training-personnel-category-percentage";
+        this.selectedYearSebaranTenagaPelatihan = null;
       }
     },
     handleKapasitasPPKProvinsiChanged(data) {
