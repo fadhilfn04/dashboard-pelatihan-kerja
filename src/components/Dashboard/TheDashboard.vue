@@ -220,7 +220,9 @@
               </div>
             </div>
           </div>
-          <TrenJumlahPesertaPemaganganDalamNegeri :filter="filterTrenJumlahPesertaPemaganganDagri" />
+          <TrenJumlahPesertaPemaganganDalamNegeri
+            :filter="filterTrenJumlahPesertaPemaganganDagri"
+          />
         </div>
       </div>
     </div>
@@ -237,14 +239,16 @@
                     v-model="selectedYear"
                     @change="handleTrenJumlahPesertaPemaganganLugriYearChanged"
                   />
-                  <!-- <FilterKapasitasPPKProvinsi
-                    @provinsiKapasitasPPKChanged="handleKapasitasPPKProvinsiChanged"
+                  <!-- <FilterTrenJumlahPesertaPemaganganLugriProvinsi
+                    @provinsiTrenJumlahPesertaPemaganganLugriChanged="handleTrenJumlahPesertaPemaganganLugriProvinsiChanged"
                     tipe="provinsi"
                   /> -->
                 </div>
               </div>
             </div>
-            <TrenJumlahPesertaPemaganganLuarNegeri :filter="filterTrenJumlahPesertaPemaganganLugri" />
+            <TrenJumlahPesertaPemaganganLuarNegeri 
+              :filter="filterTrenJumlahPesertaPemaganganLugri" 
+            />
         </div>
       </div>
     </div>
@@ -381,6 +385,7 @@ import PersentasePeminatProgramPelatihanKejuruan from "./PersentasePeminatProgra
 import FilterMasaTungguLulusProgramPelatihan from "../Shared/FilterMasaTungguLulusProgramPelatihan.vue";
 import FilterTingkatPenyerapanLulusProgramPelatihan from "../Shared/FilterTingkatPenyerapanLulusProgramPelatihan.vue";
 import FilterTrenJumlahPesertaPemaganganDagriProvinsi from "../Shared/FilterTrenJumlahPesertaPemaganganDagriProvinsi.vue";
+import FilterTrenJumlahPesertaPemaganganLugriProvinsi from "../Shared/FilterTrenJumlahPesertaPemaganganLugriProvinsi.vue";
 import { 
   COffcanvas, 
   COffcanvasHeader, 
@@ -425,6 +430,7 @@ export default {
     PersentasePeminatProgramPelatihanKejuruan,
     FilterTingkatPenyerapanLulusProgramPelatihan,
     FilterTrenJumlahPesertaPemaganganDagriProvinsi,
+    FilterTrenJumlahPesertaPemaganganLugriProvinsi,
   },
 
   setup() {
