@@ -308,6 +308,29 @@
     </div>
   </div>
 
+  <div
+    class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
+    data-aos="zoom-in"
+  >
+    <div class="p-5">
+      <div class="flex justify-between">
+        <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
+          Tren Produktifitas Tenaga Kerja Berdasarkan Provinsi Tahun {{ selectedYearTrenProduktifitasTenagaKerja }}
+        </h5>
+        <div class="relative">
+          <DatePicker 
+            picker="year" 
+            id="datepicker_sebaran_tren_produktifitas_tenaga_kerja"
+            v-model="selectedYearTrenProduktifitasTenagaKerja"
+            :disabled-date="disabledDate"
+            @change="handleTrenProduktifitasTenagaKerjaYearChanged"
+          />
+        </div>
+      </div>
+    <ProduktifitasNasional :selectedYearTrenProduktifitasTenagaKerja="selectedYearTrenProduktifitasTenagaKerja" />
+    </div>
+  </div>
+
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-3">
       <div ref="tour19" class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
@@ -359,6 +382,7 @@ import { SyncOutlined } from '@ant-design/icons-vue';
 import MasaTungguLulusBar from "./MasaTungguLulusBar.vue";
 import MasaTungguLulusPie from "./MasaTungguLulusPie.vue";
 import TableMasaTungguLulus from "./TableMasaTungguLulus.vue";
+import ProduktifitasNasional from "./ProduktifitasNasional.vue";
 import { DatePicker, notification, message } from 'ant-design-vue';
 import LoadingSpinner from '@/components/Shared/LoadingSpinner.vue';
 import LulusanPelatihanBekerja from "./LulusanPelatihanBekerja.vue";
@@ -406,6 +430,7 @@ export default {
     MasaTungguLulusPie,
     MasaTungguLulusBar,
     TableMasaTungguLulus,
+    ProduktifitasNasional,
     LulusanPelatihanBekerja,
     TingkatPenyerapanLulusanBar,
     TingkatPenyerapanLulusanPie,
@@ -612,6 +637,7 @@ export default {
       selectedYearSebaranKapasitasLatih                 : currentYear,
       selectedYearSebaranInstruktur                     : currentYear,
       selectedYearSebaranTenagaPelatihan                : currentYear,
+      selectedYearTrenProduktifitasTenagaKerja          : 2022,
     }
   },
 
@@ -620,6 +646,12 @@ export default {
     await this.getTraining();
   },
   methods: {
+    disabledDate(current) {
+      const year = current.year();
+      const minYear = 2011;
+      const maxYear = 2022;
+      return year < minYear || year > maxYear;
+    },
     filterOption(input, option) {
       return (
         option.children.text
@@ -1000,6 +1032,13 @@ export default {
         this.selectedYearSebaranTenagaPelatihan = date.$y;
       } else {
         this.selectedYearSebaranTenagaPelatihan = null;
+      }
+    },
+    handleTrenProduktifitasTenagaKerjaYearChanged(date) {
+      if (date.$y !== 0) {
+        this.selectedYearTrenProduktifitasTenagaKerja = date.$y;
+      } else {
+        this.selectedYearTrenProduktifitasTenagaKerja = null;
       }
     },
     handleKapasitasPPKProvinsiChanged(data) {
