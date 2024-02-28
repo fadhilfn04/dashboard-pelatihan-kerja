@@ -183,10 +183,6 @@
               Persentase Lulusan Pelatihan yang Bekerja s.d Bulan Desember Tahun 2024
             </h5>
             <div class="relative">
-              <!-- <a-range-picker 
-                v-model="selectedYear"
-                @change="handlePersentaseLulusanPelatihanDateChanged"
-              /> -->
               <DatePicker picker="year" id="datepicker_tren"
                 v-model="selectedYear"
                 @change="handlePersentaseLulusanPelatihanYearChanged"
@@ -213,10 +209,6 @@
                   v-model="selectedYear"
                   @change="handleTrenJumlahPesertaPemaganganDagriYearChanged"  
                 />
-                <!-- <FilterTrenJumlahPesertaPemaganganDagriProvinsi
-                  @provinsiTrenJumlahPesertaPemaganganDagriChanged="handleTrenJumlahPesertaPemaganganDagriProvinsiChanged"
-                  tipe="provinsi"
-                /> -->
               </div>
             </div>
           </div>
@@ -239,10 +231,6 @@
                     v-model="selectedYear"
                     @change="handleTrenJumlahPesertaPemaganganLugriYearChanged"
                   />
-                  <!-- <FilterTrenJumlahPesertaPemaganganLugriProvinsi
-                    @provinsiTrenJumlahPesertaPemaganganLugriChanged="handleTrenJumlahPesertaPemaganganLugriProvinsiChanged"
-                    tipe="provinsi"
-                  /> -->
                 </div>
               </div>
             </div>
@@ -289,7 +277,7 @@
           />
         </div>
       </div>
-    <PetaPersebaranTenagaPelatihan :selectedYearSebaranTenagaPelatihan="selectedYearSebaranTenagaPelatihan" />
+    <PetaPersebaranTenagaPelatihan :selectedYearSebaranTenagaPelatihan="selectedYearSebaranTenagaPelatihan"  @loading-complete="handleLoadingComplete" />
     </div>
   </div>
 
@@ -608,7 +596,7 @@ export default {
       isOpenDetail: false,
       visible: false,
       allRepo: [],
-      isLoading: false,
+      isLoading: true,
       useSecondComponent: false,
 
       filterPetaPersebaranLPKTerverifikasi              : "/repositories",
@@ -849,7 +837,7 @@ export default {
       )
         .then((res) => res.json())
         .then((data) => data.features)
-        this.isLoading = false;
+        // this.isLoading = false;
       return b
     },
     async initMap(value) {

@@ -169,6 +169,7 @@ export default {
         });
         this.level = 2;
       }
+      this.$emit('loading-complete', false);
     },
     updateData(newData) {
       if (newData.isKecamatan) {
@@ -247,5 +248,6 @@ export default {
       showModal,
     };
   },
+  
 };
 </script>

@@ -106,7 +106,7 @@ export default {
         { name: 'Dashboard ETL Peserta Pelatihan', title: 'Profil Peserta Pelatihan', to: '/dashboard-etl/peserta-pelatihan' },
         { name: 'Dashboard ETL Penyelenggara Magang', title: 'Profil Penyelenggara Magang', to: '/dashboard-etl/penyelenggara-magang' },
         { name: 'Dashboard ETL Peserta Pemagangan', title: 'Profil Peserta Pemagangan', to: '/dashboard-etl/peserta-pemagangan' },
-        { name: 'Dashboard ETL Program Pemagangan', title: 'Profil Program Pemagangan', to: '/dashboard-etl/program-pemagangan' },
+        // { name: 'Dashboard ETL Program Pemagangan', title: 'Profil Program Pemagangan', to: '/dashboard-etl/program-pemagangan' },
         { name: 'Dashboard ETL Instruktur', title: 'Instruktur', to: '/dashboard-etl/instruktur' },
       ];
     },
