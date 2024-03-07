@@ -63,7 +63,7 @@ export default {
           enabled: false,
         },
         series: [{
-          name: 'Persentase Peminat Program Pelatihan Berdasarkan Kejuruan',
+          name: 'Peminat Program Pelatihan Berdasarkan Kejuruan',
           colorByPoint: getRandomColor(),
           data: []
         }]

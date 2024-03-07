@@ -1,5 +1,5 @@
 <template>
-  <MapKapasitasLatih
+  <MapLembagaPelatihanKerja
     v-if="dataPolygon"
     :level="level"
     :center="center"
@@ -7,45 +7,104 @@
     :zoom="zoom"
     @update-data="updateData"
   />
+  <TheLegend
+    v-if="dataPolygon"
+    :level="level"
+    :legends="legends"
+    @update-data="updateData"
+  />
+
+  <Modal size="5x1" v-if="isShowModal" @close="closeModal">
+    <template #header>
+      <div class="flex items-center text-lg">
+        Detail Persebaran Lembaga Pelatihan Kerja
+      </div>
+    </template>
+    <template #body>
+      <div class="h-80 overflow-y-auto">
+        <table class="w-full text-left text-sm text-gray-500">
+          <thead class="bg-gray-50 text-xs uppercase text-gray-700">
+            <tr>
+              <th scope="col" class="px-2 py-3">Nama Lembaga</th>
+              <th scope="col" class="px-2 py-3">Provinsi</th>
+              <th scope="col" class="px-2 py-3">Kota/Kabupaten</th>
+              <th scope="col" class="px-2 py-3">Alamat</th>
+              <th scope="col" class="px-2 py-3">Email</th>
+              <th scope="col" class="px-2 py-3">No. Telepon</th>
+              <th scope="col" class="px-2 py-3">No. VIN</th>
+              <th scope="col" class="px-2 py-3">Status Akreditasi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="border-b bg-white"
+              v-for="(lembagaPelatihan, index) in dataLembagaPelatihan"
+              :key="index"
+            >
+              <td class="px-2 py-4">
+                <a href="#" class="font-semibold text-brand-blue-1">{{
+                  lembagaPelatihan.nama_lembaga
+                }}</a>
+              </td>
+              <td class="px-2 py-4">{{ lembagaPelatihan.nama_provinsi }}</td>
+              <td class="px-2 py-4">{{ lembagaPelatihan.nama_kab_kota }}</td>
+              <td class="px-2 py-4">{{ lembagaPelatihan.alamat }}</td>
+              <td class="px-2 py-4">{{ lembagaPelatihan.email }}</td>
+              <td class="px-2 py-4">{{ lembagaPelatihan.no_telp }}</td>
+              <td class="px-2 py-4">{{ lembagaPelatihan.vin }}</td>
+              <td class="px-2 py-4">{{ lembagaPelatihan.status_akreditasi }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </template>
+    <template #footer>
+      <div class="flex justify-end">
+        <button
+          @click="closeModal"
+          type="button"
+          class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300"
+        >
+          Kembali
+        </button>
+      </div>
+    </template>
+  </Modal>
 </template>
 
 <script>
-import MapKapasitasLatih from "./MapKapasitasLatih.vue";
+import MapLembagaPelatihanKerja from "./MapLembagaPelatihanKerja.vue";
+import TheLegend from "./TheLegend.vue";
 import { ref } from "vue";
 import { Modal } from "flowbite-vue";
 import axios from "axios";
 
 export default {
-  name: "PetaPersebaranGis",
+  name: "PetaPersebaranLembagaPelatihanKerja",
   components: {
-    MapKapasitasLatih,
+    MapLembagaPelatihanKerja,
+    TheLegend,
     Modal,
   },
   data() {
     return {
       imageUrl: window.BASE_URL + "assets/images/bg-item.png",
-      host: import.meta.env.VITE_API_URL,
+      host: "https://matapvp-api.kemnaker.go.id",
       center: [-0.884123, 116.038462],
-      api: "/recap-capacity-ppk",
+      api: "/province",
       dataPolygon: undefined,
       dataDaerah: undefined,
       legends: [],
       zoom: 5,
       level: 1,
-      isKecamatan: false,
-      dataKecamatan: undefined,
+      isLembagaPelatihan: false,
+      dataLembagaPelatihan: undefined,
       kabKota: undefined,
     };
   },
-  props: {
-    selectedYearSebaranKapasitasLatih: {
-      type: Number,
-      default: null,
-    },
-  },
   watch: {
-    selectedYearSebaranKapasitasLatih(newYear) {
-      this.updateApi(newYear);
+    api(newApi) {
+      this.fetchData();
     },
     dataDaerah(newDataDaerah) {
       this.processingData();
@@ -115,14 +174,6 @@ export default {
     this.fetchData();
   },
   methods: {
-    updateApi(newYear) {
-      if (newYear) {
-        this.api = `/recap-capacity-ppk-year/${newYear}`;
-      } else {
-        this.api = "/recap-capacity-ppk";
-      }
-      this.fetchData();
-    },
     fetchData() {
       const url = this.host + this.api;
       const token = JSON.parse(localStorage.getItem("token"));
@@ -140,8 +191,6 @@ export default {
                 dataDetail.push({
                   name: item.properties.PROVINSI,
                   value: item.properties.TOTAL,
-                  accredited: item.properties.ACCREDITED,
-                  not_accredited: item.properties.NOT_ACCREDITED,
                   polygon: item.geometry.coordinates,
                   uuid: item.properties.UUID,
                   color: "",
@@ -164,22 +213,22 @@ export default {
       } else if (this.level == 3) {
         axios.get(url, config).then((response) => {
           if (response.data) {
-            this.dataKecamatan = response.data;
+            this.dataLembagaPelatihan = response.data.data;
           }
         });
         this.level = 2;
       }
     },
     updateData(newData) {
-      if (newData.isKecamatan) {
-        this.isKecamatan = true;
+      if (newData.isLembagaPelatihan) {
+        this.isLembagaPelatihan = true;
       }
 
       this.api = newData.api;
       this.level = newData.level;
       this.center = newData.center;
 
-      if (this.isKecamatan == true && this.level == 3) {
+      if (this.isLembagaPelatihan == true && this.level == 3) {
         this.showModal();
       }
     },
@@ -228,7 +277,6 @@ export default {
       const min = 0;
       const interval = Math.floor((max - min) / 10);
       this.generateGradientColors(max, interval);
-      this.$emit('loading-complete', false);
     },
   },
   setup() {

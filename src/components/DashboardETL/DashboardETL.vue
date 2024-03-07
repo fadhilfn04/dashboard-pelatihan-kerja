@@ -29,7 +29,7 @@
             </g>
           </svg>
           <h5 class="text-lg font-medium tracking-tight text-green-500">
-            {{ totalDataEX + totalDataSK }}
+            {{ (Number(totalDataEX) + Number(totalDataSK)).toLocaleString() }}
           </h5>
           <h5 class="text-lg tracking-tight text-green-500">
             Data Total
@@ -55,7 +55,7 @@
             </g>
           </svg>
           <h5 class="text-lg font-medium tracking-tight text-yellow-500">
-            {{ totalDataEXUnprocessed + totalDataSKUnprocessed }}
+            {{ (Number(totalDataEXUnprocessed) + Number(totalDataSKUnprocessed)).toLocaleString() }}
           </h5>
           <h5 class="text-lg tracking-tight text-yellow-500">
             Data Belum Diproses
@@ -81,7 +81,7 @@
             </g>
           </svg>
           <h5 class="text-lg font-medium tracking-tight text-blue-500">
-            {{ totalDataEXProcessed + totalDataSKProcessed }}
+            {{ (Number(totalDataEXProcessed) + Number(totalDataSKProcessed)).toLocaleString() }}
           </h5>
           <h5 class="text-lg tracking-tight text-blue-500">
             Data Berhasil Diproses
@@ -107,7 +107,7 @@
             </g>
           </svg>
           <h5 class="text-lg font-medium tracking-tight text-red-500">
-            {{ totalDataEXEliminated + totalDataSKEliminated }}
+            {{ (Number(totalDataEXEliminated) + Number(totalDataSKEliminated)).toLocaleString() }}
           </h5>
           <h5 class="text-lg tracking-tight text-red-500">
             Data Tereliminasi
@@ -134,7 +134,7 @@
             </g>
           </svg>
           <h5 class="text-lg font-medium tracking-tight text-orange-500">
-            {{ totalDataEXDuplicated + totalDataSKDuplicated }}
+            {{ (Number(totalDataEXDuplicated) + Number(totalDataSKDuplicated)).toLocaleString() }}
           </h5>
           <h5 class="text-lg tracking-tight text-orange-500">
             Data Duplikasi
@@ -157,7 +157,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-green-500">
-                {{ totalDataEX }}
+                {{ totalDataEX.toLocaleString() }}
               </h5>
               <h5 class="text-lg tracking-tight text-green-500">
                 Excel
@@ -170,7 +170,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-green-500">
-                {{ totalDataSK }}
+                {{ totalDataSK.toLocaleString() }}
               </h5>
               <h5 class="text-lg tracking-tight text-green-500">
                 Siap Kerja
@@ -193,7 +193,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-yellow-500">
-                {{ totalDataEXUnprocessed }}
+                {{ totalDataEXUnprocessed.toLocaleString() }}
               </h5>
               <h5 class="text-lg tracking-tight text-yellow-500">
                 Excel
@@ -206,7 +206,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-yellow-500">
-                {{ totalDataSKUnprocessed }}
+                {{ totalDataSKUnprocessed.toLocaleString() }}
               </h5>
               <h5 class="text-lg tracking-tight text-yellow-500">
                 Siap Kerja
@@ -229,7 +229,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-blue-500">
-                {{ totalDataEXProcessed }}
+                {{ totalDataEXProcessed.toLocaleString() }}
               </h5>
               <h5 class="text-lg tracking-tight text-blue-500">
                 Excel
@@ -242,7 +242,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-blue-500">
-                {{ totalDataSKProcessed }}
+                {{ totalDataSKProcessed.toLocaleString() }}
               </h5>
               <h5 class="text-lg tracking-tight text-blue-500">
                 Siap Kerja
@@ -265,7 +265,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-red-500">
-                {{ totalDataEXEliminated }}
+                {{ totalDataEXEliminated.toLocaleString() }}
               </h5>
               <h5 class="text-lg tracking-tight text-red-500">
                 Excel
@@ -278,7 +278,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-red-500">
-                {{ totalDataSKEliminated }}
+                {{ totalDataSKEliminated.toLocaleString() }}
               </h5>
               <h5 class="text-lg tracking-tight text-red-500">
                 Siap Kerja
@@ -301,7 +301,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-orange-500">
-                {{ totalDataEXDuplicated }}
+                {{ totalDataEXDuplicated.toLocaleString() }}
               </h5>
               <h5 class="text-lg tracking-tight text-orange-500">
                 Excel
@@ -314,7 +314,7 @@
             </div>
             <div class="d-flex flex-column">
               <h5 class="text-lg font-medium tracking-tight text-orange-500">
-                {{ totalDataSKDuplicated }}
+                {{ totalDataSKDuplicated.toLocaleString() }}
               </h5>
               <h5 class="text-lg tracking-tight text-orange-500">
                 Siap Kerja

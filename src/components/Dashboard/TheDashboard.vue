@@ -1,102 +1,21 @@
 <template>
   <LoadingSpinner v-if="isLoading" />
-  <particles></particles>
+  <!-- <particles></particles> -->
   <div class="text-end mb-3">
     <!-- <a-button type="primary" style="background-color: blue; border-color: blue; color: white;" @click="handleOpen(true)">Mulai tur aplikasi</a-button> -->
   </div>
-  <div class="w-full rounded-lg border border-gray-200 bg-white shadow">
+
+  <div
+    class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
+    data-aos="zoom-in"
+  >
     <div class="p-5">
       <div class="flex justify-between">
         <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-          Peta Persebaran Lembaga Pelatihan Kerja Terverifikasi di Indonesia s.d Tahun {{ selectedYearPersebaranLPKTerverifikasi }}
+          Peta Persebaran Lembaga Pelatihan Kerja Terverifikasi Berdasarkan Provinsi di Indonesia s.d Tahun {{ selectedYearPersebaranLPKTerverifikasi }}
         </h5>
-        <!-- <div class="relative">
-          <DatePicker picker="year" id="datepicker_peta_persebaran_lpk_terverifikasi"
-            @change="handlePetaPersebaranLPKTerverifikasiYearChanged"
-          />
-        </div> -->
       </div>
-      <div class="dashboard-container">
-        <a-form class="flex mb-3 mt-2">
-          <a-form-item ref="tour1" class="province" style="margin-right: 5px;">
-            <a-select
-              placeholder="Semua Provinsi/Wilayah"
-              :getPopupContainer="(triggerNode) => triggerNode.parentNode"
-              option-filter-prop="children"
-              :filter-option="filterOption"
-              @change="onProvinceChange($event)"
-            >
-              <a-select-option
-                v-for="(provinceContent, index) in provinceContents"
-                :key="index"
-                :value="provinceContent.id"
-                >{{ provinceContent.name }}</a-select-option
-              >
-            </a-select>
-          </a-form-item>
-          <a-form-item ref="tour2" class="city" style="margin-right: 5px;">
-            <a-select
-              placeholder="Semua Kabupaten/Kota"
-              :getPopupContainer="(triggerNode) => triggerNode.parentNode"
-              option-filter-prop="children"
-              :filter-option="filterOption"
-              @change="onCityChange($event)"
-              :disabled="isDisable"
-            >
-              <a-select-option
-                v-for="(cityContent, index) in cityContents"
-                :key="index"
-                :value="cityContent.id"
-                >{{ cityContent.name }}</a-select-option
-              >
-            </a-select>
-          </a-form-item>
-          <a-tooltip title="Klik untuk reset">
-            <a-button @click="resetRepositories" type="primary" style="background-color: blue; border-color: blue; color: white;">
-              <template #icon>
-                <a-space>
-                  <SyncOutlined spin style="vertical-align: middle;"/>
-                </a-space>
-              </template>
-            </a-button>
-          </a-tooltip>
-        </a-form>
-        <div ref="tour3" id="map">
-        </div>
-        <div v-if="isOpenDetail">
-          <COffcanvas placement="start" :visible="visible" @hide="() => { visible = !visible }">
-            <COffcanvasHeader>
-              <COffcanvasTitle>
-                <div class="title">
-                  {{ detailLembaga.kab_kota ? detailLembaga.kab_kota : '-' }}
-                </div>
-              </COffcanvasTitle>
-            </COffcanvasHeader>
-            <COffcanvasBody>
-              <div class="title">Nama Lembaga</div>
-              <div class="info">{{ detailLembaga.nama_lembaga ? detailLembaga.nama_lembaga : '-' }}</div>
-              <div class="title">No. VIN</div>
-              <div class="info">{{ detailLembaga.no_vin ? detailLembaga.no_vin : '-' }}</div>
-              <!-- <div class="title">Tipe Lembaga</div>
-              <div class="info">{{ detailLembaga.tipe_lembaga ? detailLembaga.tipe_lembaga : '-' }}</div> -->
-              <div class="title">Email</div>
-              <div class="info">{{ detailLembaga.email ? detailLembaga.email : '-' }}</div>
-              <div class="title">Nomor Telepon</div>
-              <div class="info">{{ detailLembaga.no_telp ? detailLembaga.no_telp : '-' }}</div>
-              <div class="title">Provinsi</div>
-              <div class="info">{{ detailLembaga.provinsi ? detailLembaga.provinsi : '-' }}</div>
-              <div class="title">Kota/Kabupaten</div>
-              <div class="info">{{ detailLembaga.kabupaten_kota ? detailLembaga.kabupaten_kota : '-' }}</div>
-              <div class="title">Alamat</div>
-              <div class="info">{{ detailLembaga.alamat ? detailLembaga.alamat : '-' }}</div>
-              <div class="title">Status Akreditasi</div>
-              <div class="info">{{ detailLembaga.status_akreditasi ? detailLembaga.status_akreditasi : '-' }}</div>
-              <!-- <div class="title">Kapasitas Latih</div>
-              <div class="info">{{ detailLembaga.kapasitas_latih ? detailLembaga.kapasitas_latih : '-' }}</div> -->
-            </COffcanvasBody>
-          </COffcanvas>
-        </div>
-      </div>
+    <PetaPersebaranLembagaPelatihanKerja />
     </div>
   </div>
 
@@ -155,7 +74,7 @@
           />
         </div>
       </div>
-    <PetaPersebaranKapasitasLatih :selectedYearSebaranKapasitasLatih="selectedYearSebaranKapasitasLatih" />
+    <PetaPersebaranKapasitasLatih :selectedYearSebaranKapasitasLatih="selectedYearSebaranKapasitasLatih" @loading-complete="handleLoadingComplete" />
     </div>
   </div>
 
@@ -180,7 +99,7 @@
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Persentase Lulusan Pelatihan yang Bekerja s.d Bulan Desember Tahun 2024
+              Persentase Lulusan Pelatihan yang Bekerja s.d Tahun {{ selectedYearPersentaseTingkatPencariKerja }}
             </h5>
             <div class="relative">
               <DatePicker picker="year" id="datepicker_tren"
@@ -261,7 +180,7 @@
     </div>
   </div>
 
-  <div
+  <!-- <div
     class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
     data-aos="zoom-in"
   >
@@ -277,11 +196,11 @@
           />
         </div>
       </div>
-    <PetaPersebaranTenagaPelatihan :selectedYearSebaranTenagaPelatihan="selectedYearSebaranTenagaPelatihan"  @loading-complete="handleLoadingComplete" />
+      <PetaPersebaranTenagaPelatihan :selectedYearSebaranTenagaPelatihan="selectedYearSebaranTenagaPelatihan"  @loading-complete="handleLoadingComplete" />
     </div>
-  </div>
+  </div> -->
 
-  <div class="grid grid-cols-3 gap-8">
+  <!-- <div class="grid grid-cols-3 gap-8">
     <div class="col-span-3">
       <div ref="tour15" class="mt-8  w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
@@ -294,7 +213,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div
     class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
@@ -334,7 +253,7 @@
     </div>
   </div>
 
-  <a-tour v-model:current="current" :open="open" :steps="steps" @close="handleOpen(false)" />
+  <!-- <a-tour v-model:current="current" :open="open" :steps="steps" @close="handleOpen(false)" /> -->
 </template>
 
 <style>
@@ -389,6 +308,7 @@ import PetaPersebaranKategoriInstruktur from "./PetaPersebaranKategoriInstruktur
 import PersentaseKategoriTenagaPelatihan from "./PersentaseKategoriTenagaPelatihan.vue";
 import TrenJumlahKategoriProgramPelatihan from "./TrenJumlahKategoriProgramPelatihan.vue";
 import FilterProgramPelatihanProvinsi from "../Shared/FilterProgramPelatihanProvinsi.vue";
+import PetaPersebaranLembagaPelatihanKerja from "./PetaPersebaranLembagaPelatihanKerja.vue";
 import PersentaseTingkatPencariKerjaPadaLPK from "./PersentaseTingkatPencariKerjaPadaLPK.vue";
 import TrenJumlahPesertaPemaganganLuarNegeri from "./TrenJumlahPesertaPemaganganLuarNegeri.vue";
 import TingkatAkreditasiLembagaPelatihanKerja from "./TingkatAkreditasiLembagaPelatihanKerja.vue";
@@ -435,6 +355,7 @@ export default {
     PetaPersebaranKategoriInstruktur,
     PersentaseKategoriTenagaPelatihan,
     TrenJumlahKategoriProgramPelatihan,
+    PetaPersebaranLembagaPelatihanKerja,
     PersentaseTingkatPencariKerjaPadaLPK,
     FilterMasaTungguLulusProgramPelatihan,
     TrenJumlahPesertaPemaganganLuarNegeri,
@@ -446,137 +367,137 @@ export default {
     FilterTrenJumlahPesertaPemaganganLugriProvinsi,
   },
 
-  setup() {
-    const open = ref(false);
-    const current = ref(0);
+  // setup() {
+  //   const open = ref(false);
+  //   const current = ref(0);
 
-    const tour1 = ref(null);
-    const tour2 = ref(null);
-    const tour3 = ref(null);
-    const tour4 = ref(null);
-    const tour5 = ref(null);
-    const tour6 = ref(null);
-    const tour7 = ref(null);
-    const tour8 = ref(null);
-    const tour9 = ref(null);
-    const tour10 = ref(null);
-    const tour11 = ref(null);
-    const tour12 = ref(null);
-    const tour13 = ref(null);
-    const tour14 = ref(null);
-    const tour15 = ref(null);
-    const tour16 = ref(null);
-    const tour17 = ref(null);
-    const tour18 = ref(null);
-    const tour19 = ref(null);
+  //   const tour1 = ref(null);
+  //   const tour2 = ref(null);
+  //   const tour3 = ref(null);
+  //   const tour4 = ref(null);
+  //   const tour5 = ref(null);
+  //   const tour6 = ref(null);
+  //   const tour7 = ref(null);
+  //   const tour8 = ref(null);
+  //   const tour9 = ref(null);
+  //   const tour10 = ref(null);
+  //   const tour11 = ref(null);
+  //   const tour12 = ref(null);
+  //   const tour13 = ref(null);
+  //   const tour14 = ref(null);
+  //   const tour15 = ref(null);
+  //   const tour16 = ref(null);
+  //   const tour17 = ref(null);
+  //   const tour18 = ref(null);
+  //   const tour19 = ref(null);
 
-    const steps = [
-      {
-        title: 'Filter Provinsi',
-        description: 'Berfungsi untuk melakukan Filter Provinsi pada Peta Persebaran.',
-        target: () => tour1.value.$el,
-      },
-      {
-        title: 'Filter Kota',
-        description: 'Berfungsi untuk melakukan Filter Kota pada Peta Persebaran.',
-        target: () => tour2.value.$el,
-      },
-      {
-        title: 'Peta Persebaran Lembaga Pelatihan Kerja Indonesia',
-        description: 'Menampilkan Peta Persebaran Lembaga Pelatihan Kerja Indonesia.',
-        target: () => tour3.value,
-      },
-      {
-        title: 'Jumlah Lembaga Pelatihan Kerja',
-        description: 'Menampilkan grafik Jumlah Lembaga Pelatihan Kerja.',
-        target: () => tour4.value,
-      },
-      {
-        title: 'Tingkat Akreditasi Lembaga Pelatihan Kerja',
-        description: 'Menampilkan grafik Tingkat Akreditasi Lembaga Pelatihan Kerja.',
-        target: () => tour5.value,
-      },
-      {
-        title: 'Kapasitas Lembaga Pelatihan Kerja',
-        description: 'Menampilkan grafik Kapasitas Lembaga Pelatihan Kerja.',
-        target: () => tour6.value,
-      },
-      {
-        title: 'Persentase Peminat Program Pelatihan Berdasarkan Kejuruan',
-        description: 'Menampilkan grafik Persentase Peminat Program Pelatihan Berdasarkan Kejuruan.',
-        target: () => tour7.value,
-      },
-      {
-        title: 'Persentase Tingkat Pencari Kerja pada Lembaga Pelatihan Kerja',
-        description: 'Menampilkan grafik Persentase Tingkat Pencari Kerja pada Lembaga Pelatihan Kerja.',
-        target: () => tour8.value,
-      },
-      {
-        title: 'Tren Jumlah Kategori Program Pelatihan',
-        description: 'Menampilkan grafik Tren Jumlah Kategori Program Pelatihan.',
-        target: () => tour9.value,
-      },
-      {
-        title: 'Program Pelatihan Yang Banyak Diminati',
-        description: 'Menampilkan grafik Program Pelatihan Yang Banyak Diminati.',
-        target: () => tour10.value,
-      },
-      {
-        title: 'Tren Jumlah Peserta Pemagangan',
-        description: 'Menampilkan grafik Tren Jumlah Peserta Pemagangan.',
-        target: () => tour11.value,
-      },
-      {
-        title: 'Lulusan Pelatihan ke Bekerja',
-        description: 'Menampilkan grafik Lulusan Pelatihan ke Bekerja.',
-        target: () => tour12.value,
-      },
-      {
-        title: 'Jumlah Persentase Kategori Instruktur',
-        description: 'Menampilkan grafik Jumlah Persentase Kategori Instruktur.',
-        target: () => tour13.value,
-      },
-      {
-        title: 'Jumlah Persentase Kategori Tenaga Pelatihan',
-        description: 'Menampilkan grafik Jumlah Persentase Kategori Tenaga Pelatihan.',
-        target: () => tour14.value,
-      },
-      {
-        title: 'Masa Tunggu Lulus ke Bekerja',
-        description: 'Menampilkan grafik Masa Tunggu Lulus ke Bekerja.',
-        target: () => tour15.value,
-      },
-      {
-        title: 'Masa Tunggu Lulus ke Bekerja',
-        description: 'Menampilkan grafik Masa Tunggu Lulus ke Bekerja.',
-        target: () => tour16.value,
-      },
-      {
-        title: 'Tingkat Penyerapan Lulusan',
-        description: 'Menampilkan grafik Tingkat Penyerapan Lulusan.',
-        target: () => tour17.value,
-      },
-      {
-        title: 'Tingkat Penyerapan Lulusan',
-        description: 'Menampilkan grafik Tingkat Penyerapan Lulusan.',
-        target: () => tour18.value,
-      },
-      {
-        title: 'Produktifitas Tenaga Kerja Berdasarkan Lapangan Usaha',
-        description: 'Menampilkan grafik Produktifitas Tenaga Kerja Berdasarkan Lapangan Usaha.',
-        target: () => tour19.value,
-      },
-    ];
+  //   const steps = [
+  //     {
+  //       title: 'Filter Provinsi',
+  //       description: 'Berfungsi untuk melakukan Filter Provinsi pada Peta Persebaran.',
+  //       target: () => tour1.value.$el,
+  //     },
+  //     {
+  //       title: 'Filter Kota',
+  //       description: 'Berfungsi untuk melakukan Filter Kota pada Peta Persebaran.',
+  //       target: () => tour2.value.$el,
+  //     },
+  //     {
+  //       title: 'Peta Persebaran Lembaga Pelatihan Kerja Indonesia',
+  //       description: 'Menampilkan Peta Persebaran Lembaga Pelatihan Kerja Indonesia.',
+  //       target: () => tour3.value,
+  //     },
+  //     {
+  //       title: 'Jumlah Lembaga Pelatihan Kerja',
+  //       description: 'Menampilkan grafik Jumlah Lembaga Pelatihan Kerja.',
+  //       target: () => tour4.value,
+  //     },
+  //     {
+  //       title: 'Tingkat Akreditasi Lembaga Pelatihan Kerja',
+  //       description: 'Menampilkan grafik Tingkat Akreditasi Lembaga Pelatihan Kerja.',
+  //       target: () => tour5.value,
+  //     },
+  //     {
+  //       title: 'Kapasitas Lembaga Pelatihan Kerja',
+  //       description: 'Menampilkan grafik Kapasitas Lembaga Pelatihan Kerja.',
+  //       target: () => tour6.value,
+  //     },
+  //     {
+  //       title: 'Persentase Peminat Program Pelatihan Berdasarkan Kejuruan',
+  //       description: 'Menampilkan grafik Persentase Peminat Program Pelatihan Berdasarkan Kejuruan.',
+  //       target: () => tour7.value,
+  //     },
+  //     {
+  //       title: 'Persentase Tingkat Pencari Kerja pada Lembaga Pelatihan Kerja',
+  //       description: 'Menampilkan grafik Persentase Tingkat Pencari Kerja pada Lembaga Pelatihan Kerja.',
+  //       target: () => tour8.value,
+  //     },
+  //     {
+  //       title: 'Tren Jumlah Kategori Program Pelatihan',
+  //       description: 'Menampilkan grafik Tren Jumlah Kategori Program Pelatihan.',
+  //       target: () => tour9.value,
+  //     },
+  //     {
+  //       title: 'Program Pelatihan Yang Banyak Diminati',
+  //       description: 'Menampilkan grafik Program Pelatihan Yang Banyak Diminati.',
+  //       target: () => tour10.value,
+  //     },
+  //     {
+  //       title: 'Tren Jumlah Peserta Pemagangan',
+  //       description: 'Menampilkan grafik Tren Jumlah Peserta Pemagangan.',
+  //       target: () => tour11.value,
+  //     },
+  //     {
+  //       title: 'Lulusan Pelatihan ke Bekerja',
+  //       description: 'Menampilkan grafik Lulusan Pelatihan ke Bekerja.',
+  //       target: () => tour12.value,
+  //     },
+  //     {
+  //       title: 'Jumlah Persentase Kategori Instruktur',
+  //       description: 'Menampilkan grafik Jumlah Persentase Kategori Instruktur.',
+  //       target: () => tour13.value,
+  //     },
+  //     {
+  //       title: 'Jumlah Persentase Kategori Tenaga Pelatihan',
+  //       description: 'Menampilkan grafik Jumlah Persentase Kategori Tenaga Pelatihan.',
+  //       target: () => tour14.value,
+  //     },
+  //     {
+  //       title: 'Masa Tunggu Lulus ke Bekerja',
+  //       description: 'Menampilkan grafik Masa Tunggu Lulus ke Bekerja.',
+  //       target: () => tour15.value,
+  //     },
+  //     {
+  //       title: 'Masa Tunggu Lulus ke Bekerja',
+  //       description: 'Menampilkan grafik Masa Tunggu Lulus ke Bekerja.',
+  //       target: () => tour16.value,
+  //     },
+  //     {
+  //       title: 'Tingkat Penyerapan Lulusan',
+  //       description: 'Menampilkan grafik Tingkat Penyerapan Lulusan.',
+  //       target: () => tour17.value,
+  //     },
+  //     {
+  //       title: 'Tingkat Penyerapan Lulusan',
+  //       description: 'Menampilkan grafik Tingkat Penyerapan Lulusan.',
+  //       target: () => tour18.value,
+  //     },
+  //     {
+  //       title: 'Produktifitas Tenaga Kerja Berdasarkan Lapangan Usaha',
+  //       description: 'Menampilkan grafik Produktifitas Tenaga Kerja Berdasarkan Lapangan Usaha.',
+  //       target: () => tour19.value,
+  //     },
+  //   ];
 
-    const handleOpen = (val) => {
-      open.value = val;
-    };
+  //   const handleOpen = (val) => {
+  //     open.value = val;
+  //   };
 
-    return { open, current, steps, tour1, tour2, tour3, tour4, tour5, tour6, tour7, tour8, tour9, tour10, tour11, tour12, tour13, tour14, tour15, tour16, tour17, tour18, tour19, handleOpen };
-  },
+  //   return { open, current, steps, tour1, tour2, tour3, tour4, tour5, tour6, tour7, tour8, tour9, tour10, tour11, tour12, tour13, tour14, tour15, tour16, tour17, tour18, tour19, handleOpen };
+  // },
 
   data() {
-    const currentYear = new Date().getFullYear();
+    const currentYear = new Date().getFullYear() - 1;
     return {
       provinceId: '',
       cityId: '',
@@ -623,6 +544,7 @@ export default {
       selectedYearPersebaranLPKTerverifikasi            : currentYear,
       selectedYearJumlahLPKBelumTerakreditasi           : currentYear,
       selectedYearSebaranKapasitasLatih                 : currentYear,
+      selectedYearPersentaseTingkatPencariKerja         : currentYear,
       selectedYearSebaranInstruktur                     : currentYear,
       selectedYearSebaranTenagaPelatihan                : currentYear,
       selectedYearTrenProduktifitasTenagaKerja          : 2022,
@@ -725,194 +647,6 @@ export default {
     },
     escapeString(escape) {
       return escape.replaceAll('\\n', '<br>')
-    },
-    async getCity(value) {
-      const token = JSON.parse(localStorage.getItem("token"));
-      this.cityContents = await fetch(
-        import.meta.env.VITE_API_URL + '/district-list/' + value,
-        {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => data.data)
-    },
-    async filterProvince() {
-      const token = JSON.parse(localStorage.getItem("token"));
-      this.institutionContents = await fetch(
-        import.meta.env.VITE_API_URL + '/provinceFilter/' + this.provinceId,
-          {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        }
-      )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
-      })
-      .then((data) => data.features);
-      this.initMap(true)
-    },
-    async filterCity() {
-      const token = JSON.parse(localStorage.getItem("token"));
-      this.institutionContents = await fetch(
-        import.meta.env.VITE_API_URL + '/cityFilter/' + this.cityId,
-          {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        }
-      )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
-      })
-      .then((data) => data.features);
-      this.initMap(true)
-    },
-    async filterInstitution() {
-      const token = JSON.parse(localStorage.getItem("token"));
-      this.institutionContents = await fetch(
-        import.meta.env.VITE_API_URL + '/institutionFilter/' + this.institutionId,
-          {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        }
-      )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
-      })
-      .then((data) => data.features);
-      this.initMap(true)
-    },
-    async filterTrainingCapacity() {
-      const token = JSON.parse(localStorage.getItem("token"));
-      this.institutionContents = await fetch(
-        import.meta.env.VITE_API_URL + '/trainingCapacityFilter/' + this.trainingCapacityValue,
-          {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        }
-      )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
-      })
-      .then((data) => data.features);
-      this.initMap(true)
-    },
-    async getInstitution() {
-      const token = JSON.parse(localStorage.getItem("token"));
-      var allRepo = await fetch(
-        import.meta.env.VITE_API_URL + '/repositories',
-        {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        }
-      )
-      .then((res) => res.json())
-      .then((data) => data.features)
-      var b = await fetch(
-        import.meta.env.VITE_API_URL + '/repositories',
-        {
-          headers: {
-            Authorization: "Bearer " + token.value,
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => data.features)
-        // this.isLoading = false;
-      return b
-    },
-    async initMap(value) {
-      if (value != true) {
-        var map = L.map('map', {
-          zoomControl: false,
-        }).setView([-3, 122], 5)
-
-        L.control.fullscreen({
-          position: 'topright',
-        }).addTo(map)
-      } else {
-        this.isMaker.clearLayers()
-        if (this.institutionContents && this.institutionContents.length > 0) {
-          this.institutionContents.forEach((item) => {
-            {
-              var name_search = item.name,
-              latitude = item.geometry.coordinates[0],
-              longitude = item.geometry.coordinates[1]
-              let marker = L.marker(new L.latLng(latitude, longitude), {
-                id: item.properties.ID,
-              })
-              this.isMaker.addLayer(marker) //CLUSTER
-              marker.on('click', this.onMapClick)
-            }
-          })
-        }
-        return false
-      }
-      this.institutionContents = await this.getInstitution()
-
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        minZoom: 5,
-        maxZoom: 12
-      }).addTo(map)
-
-      L.control
-        .zoom({
-          position: 'topright',
-        })
-      .addTo(map)
-
-      var legend = L.control({ position: "bottomleft" });
-
-      legend.onAdd = function(map) {
-        var div = L.DomUtil.create("div", "legend");
-        div.innerHTML += "<h4>Keterangan Warna :</h4>";
-        div.innerHTML += '<i style="background: #477AC2"></i><span>Merah: Jumlah LPK Sedikit</span><br>';
-        div.innerHTML += '<i style="background: #477AC2"></i><span>Hijau: Jumlah LPK Banyak</span><br>';
-        
-        
-
-        return div;
-      };
-
-      legend.addTo(map);
-
-      var markers = L.markerClusterGroup()
-      this.isMaker = markers
-
-      if (this.institutionContents && this.institutionContents.length > 0) {
-        this.institutionContents.forEach((item) => {
-          {
-            var name_search = item.name,
-            latitude = item.geometry.coordinates[0],
-            longitude = item.geometry.coordinates[1]
-            let marker = L.marker(new L.latLng(latitude, longitude), {
-              id: item.properties.ID,
-            })
-            markers.addLayer(marker)
-            map.addLayer(markers)
-            marker.on('click', this.onMapClick)
-          }
-        })
-      }
     },
     alert() {
       message.open({
@@ -1142,11 +876,9 @@ export default {
       }
     },
     handleLoadingComplete(isLoading) {
-      this.isLoading = isLoading;
+      console.log('mantep', isLoading)
+      this.isLoading = false;
     },
-  },
-  mounted() {
-    this.initMap()
   },
 }
 </script>
