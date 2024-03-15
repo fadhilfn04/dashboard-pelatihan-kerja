@@ -110,11 +110,15 @@ export default {
             var value = [];
             response.data.data.forEach((item) => {
               categories.push(item.nama_kejuruan);
-              value.push(item.count / 100);
+              value.push({
+                category: item.nama_kejuruan,
+                percentage: Math.floor((item.bekerja / item.count) * 100)
+              });
             });
+            value.sort((a, b) => b.percentage - a.percentage);
 
-            this.chartOptions.xAxis.categories = categories;
-            this.chartOptions.series[0].data = value;
+            this.chartOptions.xAxis.categories = value.map(item => item.category);
+            this.chartOptions.series[0].data = value.map(item => item.percentage);
           }
         });
     },
