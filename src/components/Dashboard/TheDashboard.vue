@@ -200,7 +200,7 @@
     </div>
   </div> -->
 
-  <!-- <div class="grid grid-cols-3 gap-8">
+  <div class="grid grid-cols-3 gap-8">
     <div class="col-span-3">
       <div ref="tour15" class="mt-8  w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
@@ -213,7 +213,7 @@
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 
   <div
     class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
