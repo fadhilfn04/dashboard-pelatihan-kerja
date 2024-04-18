@@ -180,7 +180,7 @@
     </div>
   </div>
 
-  <!-- <div
+  <div
     class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
     data-aos="zoom-in"
   >
@@ -196,9 +196,9 @@
           />
         </div>
       </div>
-      <PetaPersebaranTenagaPelatihan :selectedYearSebaranTenagaPelatihan="selectedYearSebaranTenagaPelatihan"  @loading-complete="handleLoadingComplete" />
+      <PetaPersebaranTenagaPelatihan :selectedYearSebaranTenagaPelatihan="selectedYearSebaranTenagaPelatihan" />
     </div>
-  </div> -->
+  </div>
 
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-3">
