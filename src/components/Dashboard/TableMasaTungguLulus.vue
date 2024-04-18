@@ -16,8 +16,9 @@ export default {
   name: "TableMasaTungguLulus",
   data() {
     return {
+      host: import.meta.env.VITE_API_URL,
+      api: "/recap-waiting-period-graduate",
       waitingPeriodGraduate : ref([]),
-
       waitingPeriodGraduateColumns: [
         { title: 'Nama Kejuruan', dataIndex: 'nama_kejuruan', key: 'nama_kejuruan' },
         { title: 'Masa Tunggu 1-3 Bulan', dataIndex: 'masa_tunggu_pertama', key: 'masa_tunggu_pertama' },
@@ -27,7 +28,17 @@ export default {
       ],
     };
   },
-
+  props: {
+    selectedYearMasaTungguLulus: {
+      type: Number,
+      default: null,
+    },
+  },
+  watch: {
+    selectedYearMasaTungguLulus(newYear) {
+      this.updateApi(newYear);
+    },
+  },
   components: {
     Modal,
     Alert,
@@ -38,8 +49,16 @@ export default {
   },
 
   methods: {
+    updateApi(newYear) {
+      if (newYear) {
+        this.api = `/recap-waiting-period-graduate-year/${newYear}`;
+      } else {
+        this.api = "/recap-waiting-period-graduate";
+      }
+      this.loadData();
+    },
     loadData() {
-      const url = import.meta.env.VITE_API_URL + "/recap-waiting-period-graduate"
+      const url = this.host + this.api;
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
         headers: {

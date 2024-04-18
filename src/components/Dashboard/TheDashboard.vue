@@ -208,8 +208,14 @@
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
               Masa Tunggu Lulus ke Bekerja
             </h5>
+            <div class="relative">
+              <DatePicker picker="year" id="datepicker_masa_tunggu_lulus"
+                v-model="selectedYearMasaTungguLulus"
+                @change="handleMasaTungguLulusYearChanged"
+              />
+            </div>
           </div>
-          <TableMasaTungguLulus />
+          <TableMasaTungguLulus :selectedYearMasaTungguLulus="selectedYearMasaTungguLulus"/>
         </div>
       </div>
     </div>
@@ -547,6 +553,7 @@ export default {
       selectedYearPersentaseTingkatPencariKerja         : currentYear,
       selectedYearSebaranInstruktur                     : currentYear,
       selectedYearSebaranTenagaPelatihan                : currentYear,
+      selectedYearMasaTungguLulus                       : currentYear,
       selectedYearTrenProduktifitasTenagaKerja          : 2022,
     }
   },
@@ -690,14 +697,14 @@ export default {
       this.isOpenDetail = false
     },
     handlePetaPersebaranLPKTerverifikasiYearChanged(date) {
-      if (date.$y !== 0) {
+      if (date != null) {
         this.selectedYearPersebaranLPKTerverifikasi = date.$y;
       } else {
         this.selectedYearPersebaranLPKTerverifikasi = null;
       }
     },
     handleJumlahLPKTerverifikasiYearChanged(date) {
-      if (date.$y != 0) {
+      if (date != null) {
         this.selectedYear = date.$y;
         this.filterJumlahLPKTerverifikasi = "/total-recap-lpk-year/" + date.$y;
       } else {
@@ -705,14 +712,14 @@ export default {
       }
     },
     handleJumlahLPKBelumTerakreditasiYearChanged(date) {
-      if (date.$y !== 0) {
+      if (date != null) {
         this.selectedYearJumlahLPKBelumTerakreditasi = date.$y;
       } else {
         this.selectedYearJumlahLPKBelumTerakreditasi = null;
       }
     },
     handlePersebaranKapasitasLatihYearChanged(date) {
-      if (date.$y !== 0) {
+      if (date != null) {
         this.selectedYearSebaranKapasitasLatih = date.$y;
       } else {
         this.selectedYearSebaranKapasitasLatih = null;
@@ -727,7 +734,7 @@ export default {
       const end_month = date[0].$M;
       const end_date = date[0].$D;
       
-      if (date.$y != 0) {
+      if (date != null) {
         this.selectedYear = date.$y;
         this.filterPersentaseLulusanPelatihan = "/recap-percentage-job-seekers-lpk-year/" + date.$y;
       } else {
@@ -735,7 +742,7 @@ export default {
       }
     },
     handlePersentaseLulusanPelatihanYearChanged(date) {
-      if (date.$y != 0) {
+      if (date != null) {
         this.selectedYear = date.$y;
         this.filterPersentaseLulusanPelatihan = "/recap-percentage-job-seekers-lpk-year/" + date.$y;
       } else {
@@ -743,21 +750,28 @@ export default {
       }
     },
     handlePersentaseSebaranInstrukturYearChanged(date) {
-      if (date.$y !== 0) {
+      if (date != null) {
         this.selectedYearSebaranInstruktur = date.$y;
       } else {
         this.selectedYearSebaranInstruktur = null;
       }
     },
     handlePersentaseSebaranTenagaPelatihanYearChanged(date) {
-      if (date.$y !== 0) {
+      if (date != null) {
         this.selectedYearSebaranTenagaPelatihan = date.$y;
       } else {
         this.selectedYearSebaranTenagaPelatihan = null;
       }
     },
+    handleMasaTungguLulusYearChanged(date) {
+      if (date != null) {
+        this.selectedYearMasaTungguLulus = date.$y;
+      } else {
+        this.selectedYearMasaTungguLulus = null;
+      }
+    },
     handleTrenProduktifitasTenagaKerjaYearChanged(date) {
-      if (date.$y !== 0) {
+      if (date != null) {
         this.selectedYearTrenProduktifitasTenagaKerja = date.$y;
       } else {
         this.selectedYearTrenProduktifitasTenagaKerja = null;
@@ -778,7 +792,7 @@ export default {
       }
     },
     handleTrenJumlahKategoriProgramPelatihanChanged(date) {
-      if (date.$y != 0) {
+      if (date != null) {
         this.filterTrenJumlahKategoriProgramPelatihan = "/recap-trends-number-training-program-categories-year/" + date.$y;
       } else {
         this.filterTrenJumlahKategoriProgramPelatihan = "/recap-trends-number-training-program-categories";
@@ -799,7 +813,7 @@ export default {
       }
     },
     handleTrenJumlahPesertaPemaganganDagriYearChanged(date) {
-      if (date.$y != 0) {
+      if (date != null) {
         this.filterTrenJumlahPesertaPemaganganDagri = "/recap-trends-number-apprentices-dagri-year/" + date.$y;
       } else {
         this.filterTrenJumlahPesertaPemaganganDagri = "/recap-trends-number-apprentices-dagri";
@@ -820,7 +834,7 @@ export default {
       }
     },
     handleTrenJumlahPesertaPemaganganLugriYearChanged(date) {
-      if (date.$y != 0) {
+      if (date != null) {
         this.filterTrenJumlahPesertaPemaganganLugri = "/recap-trends-number-apprentices-lugri-year/" + date.$y;
       } else {
         this.filterTrenJumlahPesertaPemaganganLugri = "/recap-trends-number-apprentices-lugri";
@@ -841,7 +855,7 @@ export default {
       }
     },
     handleProduktifitasChanged(date) {
-      if (date.$y != 0) {
+      if (date != null) {
         this.filterProduktifitas = "/recap-labor-productivity-year/" + date.$y;
       } else {
         this.filterProduktifitas = "/recap-labor-productivity";
@@ -876,7 +890,6 @@ export default {
       }
     },
     handleLoadingComplete(isLoading) {
-      console.log('mantep', isLoading)
       this.isLoading = false;
     },
   },
