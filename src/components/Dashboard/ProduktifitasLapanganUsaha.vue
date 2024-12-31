@@ -20,7 +20,7 @@ export default {
         },
         yAxis: {
           title: {
-              text: '(Juta)'
+              text: '(Rp/TK)'
           }
         },
         legend: {

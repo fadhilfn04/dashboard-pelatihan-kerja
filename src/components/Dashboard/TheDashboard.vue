@@ -12,7 +12,7 @@
     <div class="p-5">
       <div class="flex justify-between">
         <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-          Peta Persebaran Lembaga Pelatihan Kerja Terverifikasi Berdasarkan Provinsi di Indonesia s.d Tahun {{ selectedYearPersebaranLPKTerverifikasi }}
+          Peta Persebaran Lembaga Pelatihan Kerja Provinsi di Indonesia per Januari - Desember s.d Tahun {{ selectedYearPersebaranLPKTerverifikasi }}
         </h5>
       </div>
     <PetaPersebaranLembagaPelatihanKerja />
@@ -25,7 +25,7 @@
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Jumlah Lembaga Pelatihan Kerja Terverifikasi di Indonesia Menurut Tipe Lembaga s.d Tahun {{ selectedYear }}
+              Peta Persebaran Lembaga Pelatihan Kerja Provinsi di Indonesia per Januari - Desember Tahun {{ selectedYear }}
             </h5>
             <div class="relative">
               <DatePicker picker="year" id="datepicker_tren"
@@ -84,10 +84,16 @@
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              10 Kejuruan Pelatihan Dengan Peminat Terbesar
+              10 Kejuruan Pelatihan Dengan Peminat Terbesar Periode Januari - Desember Tahun {{ selectedYear }}
             </h5>
+            <div class="relative">
+              <DatePicker picker="year" id="datepicker_tren"
+                v-model="selectedYear"
+                @change="handleKejuruanPelatihanPeminatTerbesarYearChanged"
+              />
+            </div>
           </div>
-          <PersentasePeminatProgramPelatihanKejuruan />
+          <PersentasePeminatProgramPelatihanKejuruan :filter="filterKejuruanPelatihanPeminatTerbesar"/>
         </div>
       </div>
     </div>
@@ -99,7 +105,7 @@
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Persentase Lulusan Pelatihan yang Bekerja s.d Tahun {{ selectedYearPersentaseTingkatPencariKerja }}
+              Persentase Kebekerjaan Lulusan LPK s.d Tahun {{ selectedYearPersentaseTingkatPencariKerja }}
             </h5>
             <div class="relative">
               <DatePicker picker="year" id="datepicker_tren"
@@ -206,7 +212,7 @@
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Masa Tunggu Lulus ke Bekerja
+              Jumlah Kebekerjaan Peserta Pelatihan Menurut Masa Tunggu Periode Januari - Desember {{ selectedYear }}
             </h5>
             <div class="relative">
               <DatePicker picker="year" id="datepicker_masa_tunggu_lulus"
@@ -228,7 +234,7 @@
     <div class="p-5">
       <div class="flex justify-between">
         <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-          Tren Produktifitas Tenaga Kerja Berdasarkan Provinsi Tahun {{ selectedYearTrenProduktifitasTenagaKerja }}
+          Sebaran Produktivitas Tenaga Kerja Tahun {{ selectedYearTrenProduktifitasTenagaKerja }} (Rp/TK)
         </h5>
         <div class="relative">
           <DatePicker 
@@ -250,7 +256,7 @@
         <div class="p-5">
             <div class="flex justify-between">
               <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-                Tren Produktifitas Tenaga Kerja Berdasarkan Lapangan Usaha
+                Tren Produktifitas Tenaga Kerja Berdasarkan Lapangan Usaha (Rp/TK)
               </h5>
             </div>
           <ProduktifitasLapanganUsaha />
@@ -503,7 +509,7 @@ export default {
   // },
 
   data() {
-    const currentYear = new Date().getFullYear() - 1;
+    const currentYear = new Date().getFullYear();
     return {
       provinceId: '',
       cityId: '',
@@ -530,6 +536,7 @@ export default {
       filterJumlahLPKTerverifikasi                      : "/total-recap-lpk",
       filterJumlahLPKBelumTerakreditasi                 : "/accreditation-level-recap-lpk",
       filterPersebaranKapasitasLatih                    : "/recap-capacity-ppk",
+      filterKejuruanPelatihanPeminatTerbesar            : "/recap-percentage-training-program-applicants-vocational-field",
       filterPersentaseLulusanPelatihan                  : "/recap-percentage-job-seekers-lpk",
       filterPersentaseSebaranInstruktur                 : "/recap-instructor-category-percentage",
       filterPersentaseSebaranTenagaPelatihan            : "/recap-training-personnel-category-percentage",
@@ -554,7 +561,7 @@ export default {
       selectedYearSebaranInstruktur                     : currentYear,
       selectedYearSebaranTenagaPelatihan                : currentYear,
       selectedYearMasaTungguLulus                       : currentYear,
-      selectedYearTrenProduktifitasTenagaKerja          : 2022,
+      selectedYearTrenProduktifitasTenagaKerja          : 2024,
     }
   },
 
@@ -739,6 +746,14 @@ export default {
         this.filterPersentaseLulusanPelatihan = "/recap-percentage-job-seekers-lpk-year/" + date.$y;
       } else {
         this.filterPersentaseLulusanPelatihan = "/recap-percentage-job-seekers-lpk";
+      }
+    },
+    handleKejuruanPelatihanPeminatTerbesarYearChanged(date) {
+      if (date != null) {
+        this.selectedYear = date.$y;
+        this.filterKejuruanPelatihanPeminatTerbesar = "/recap-percentage-training-program-applicants-vocational-field-year/" + date.$y;
+      } else {
+        this.filterKejuruanPelatihanPeminatTerbesar = "/recap-percentage-training-program-applicants-vocational-field";
       }
     },
     handlePersentaseLulusanPelatihanYearChanged(date) {
