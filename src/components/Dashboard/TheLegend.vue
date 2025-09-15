@@ -96,7 +96,7 @@ export default {
     getSummaryTrainingInstitutions() {
       const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .get("https://matapvp-api.kemnaker.go.id/summary-training-institutions", {
+        .get(`${import.meta.env.VITE_API_URL}/summary-training-institutions`, {
           headers: {
             Authorization: "Bearer " + token.value,
           },

@@ -511,6 +511,10 @@ export default {
   data() {
     const currentYear = new Date().getFullYear();
     return {
+      totalLPK: 0,
+      totalProgram: 0,
+      totalPeserta: 0,
+      totalInstruktur: 0,
       provinceId: '',
       cityId: '',
       institutionId: '',
@@ -566,10 +570,59 @@ export default {
   },
 
   async created() {
+    await this.loadStatistics();
     await this.getProvince();
     await this.getTraining();
   },
   methods: {
+    async loadStatistics() {
+      try {
+        const token = JSON.parse(localStorage.getItem("token"));
+        const config = {
+          headers: {
+            Authorization: "Bearer " + token.value,
+          },
+        };
+        
+        // Load statistics in parallel for better performance
+        const [lpkResponse, programResponse, pesertaResponse, instrukturResponse] = await Promise.all([
+          axios.get(import.meta.env.VITE_API_URL + '/total-recap-lpk', config),
+          axios.get(import.meta.env.VITE_API_URL + '/recap-training-programs-high-demand', config),
+          axios.get(import.meta.env.VITE_API_URL + '/recap-percentage-job-seekers-lpk', config),
+          axios.get(import.meta.env.VITE_API_URL + '/recap-instructor-category-percentage', config)
+        ]);
+        
+        // Process responses
+        if (lpkResponse.data?.data) {
+          this.totalLPK = Object.values(lpkResponse.data.data).reduce((sum, val) => sum + (val || 0), 0);
+        }
+        if (programResponse.data?.data) {
+          this.totalProgram = programResponse.data.data.length;
+        }
+        if (pesertaResponse.data?.data) {
+          this.totalPeserta = pesertaResponse.data.data.reduce((sum, item) => sum + (item.count || 0), 0);
+        }
+        if (instrukturResponse.data?.data) {
+          this.totalInstruktur = instrukturResponse.data.data.bekerja + instrukturResponse.data.data.tidak_bekerja;
+        }
+      } catch (error) {
+        console.error('Error loading statistics:', error);
+      }
+    },
+    
+    async refreshAllData() {
+      this.isLoading = true;
+      try {
+        await this.loadStatistics();
+        // Trigger refresh for other components
+        this.$forceUpdate();
+      } catch (error) {
+        console.error('Error refreshing data:', error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    
     disabledDate(current) {
       const year = current.year();
       const minYear = 2011;
@@ -906,6 +959,19 @@ export default {
     },
     handleLoadingComplete(isLoading) {
       this.isLoading = false;
+    },
+    
+    // Debounced method for better performance
+    debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
     },
   },
 }

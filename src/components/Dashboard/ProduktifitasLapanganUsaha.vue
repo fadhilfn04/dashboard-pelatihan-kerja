@@ -194,6 +194,12 @@ export default {
         {
           categories: "2022",
         },
+        {
+          categories: "2023",
+        },
+        {
+          categories: "2024",
+        },
       ],
     };
   },

@@ -89,7 +89,7 @@ export default {
   data() {
     return {
       imageUrl: window.BASE_URL + "assets/images/bg-item.png",
-      host: "https://matapvp-api.kemnaker.go.id",
+      host: import.meta.env.VITE_API_URL,
       center: [-0.884123, 116.038462],
       api: "/province",
       dataPolygon: undefined,

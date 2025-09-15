@@ -10,6 +10,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import UploadManagement from "@/views/UploadManagementView.vue";
 import UploadSourceData from "@/views/UploadSourceDataView.vue";
 import UploadFilePendukung from "@/views/UploadFilePendukungView.vue";
+import UploadDataChart from "@/views/UploadDataChartView.vue";
 
 const routes = [
   {
@@ -72,6 +73,14 @@ const routes = [
     path: "/upload-management/file-pendukung",
     name: "Upload Management File Pendukung",
     component: UploadFilePendukung,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/upload-management/chart-data",
+    name: "Upload Management Chart Data",
+    component: UploadDataChart,
     meta: {
       requiresAuth: true,
     },
