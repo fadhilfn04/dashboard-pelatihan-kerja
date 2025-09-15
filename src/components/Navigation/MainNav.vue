@@ -1,6 +1,6 @@
 <template>
-  <header class="absolute top-0 left-0 right-0 z-20 h-48 w-full text-sm backdrop-blur-sm">
-    <div class="bg-gradient-to-r from-brand-blue-1 via-blue-600 to-brand-blue-1 top-0 left-0 h-full w-full py-12 px-16 shadow-lg">
+  <header class="absolute top-0 left-0 right-0 z-20 h-48 w-full text-sm">
+    <div class="bg-transparancy top-0 left-0 h-full w-full py-12 px-16">
       <div class="mx-auto flex h-full flex-nowrap px-8">
         <a :href="url" class="mr-auto h-full basis-1/3 items-start text-xl">
           <img class="h-12 hover:scale-105 transition-transform duration-300" src="/assets/images/logo-kemnaker.png" alt="" />
