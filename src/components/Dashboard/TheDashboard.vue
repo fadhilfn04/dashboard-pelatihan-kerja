@@ -1,5 +1,5 @@
 <template>
-  <!-- <LoadingSpinner v-if="isLoading" /> -->
+  <LoadingSpinner v-if="isLoading" />
   <!-- <particles></particles> -->
   <div class="text-end mb-3">
     <div class="flex space-x-4">
