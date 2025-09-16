@@ -55,6 +55,21 @@ export default {
   },
   props: ["zoom", "level", "center", "dataPolygon", "legends"],
   methods: {
+    reverseCoordinates(coordinates) {
+      if (Array.isArray(coordinates[0][0][0])) {
+        return coordinates.map(polygon => 
+          polygon.map(ring => 
+            ring.map(([lat, lng]) => [lng, lat])
+          )
+        );
+      }
+      if (Array.isArray(coordinates[0][0])) {
+        return coordinates;
+      }
+      return coordinates.map(ring => 
+        ring.map(([lat, lng]) => [lng, lat])
+      );
+    },
     detailProvinsi(polygon, uuid) {
       if (this.level == 2) {
         const isLembagaPelatihan = true;
@@ -80,15 +95,21 @@ export default {
   computed: {
     formattedDataPolygon() {
       return this.dataPolygon.map((polygon) => {
+        const reversedCoordinates = this.reverseCoordinates(polygon.polygon);
+
         if (typeof polygon.value === "number") {
           return {
             ...polygon,
+            polygon: reversedCoordinates,
             value: polygon.value.toLocaleString(),
           };
         }
-        return polygon;
+        return {
+          ...polygon,
+          polygon: reversedCoordinates,
+        };
       });
-    },
+    }
   },
   watch: {
     zoom: function (val) {

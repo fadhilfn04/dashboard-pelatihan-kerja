@@ -1,21 +1,30 @@
 <template>
-  <LoadingSpinner v-if="isLoading" />
+  <!-- <LoadingSpinner v-if="isLoading" /> -->
   <!-- <particles></particles> -->
   <div class="text-end mb-3">
+    <div class="flex space-x-4">
+      <a-tooltip title="Lihat Tutorial">
+        <button @click="isTutorialOpen = true" type="button"
+          class="fixed bottom-6 right-6 rounded-full bg-blue-600 p-3 hover:bg-blue-700 focus:ring-4 focus:ring-blue-400 transition-all duration-300 shadow-md">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M10 8l6 4-6 4V8zM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z" />
+          </svg>
+        </button>
+      </a-tooltip>
+    </div>
     <!-- <a-button type="primary" style="background-color: blue; border-color: blue; color: white;" @click="handleOpen(true)">Mulai tur aplikasi</a-button> -->
   </div>
 
-  <div
-    class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
-    data-aos="zoom-in"
-  >
+  <div class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8" data-aos="zoom-in">
     <div class="p-5">
       <div class="flex justify-between">
         <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-          Peta Persebaran Lembaga Pelatihan Kerja Provinsi di Indonesia per Januari - Desember s.d Tahun {{ selectedYearPersebaranLPKTerverifikasi }}
+          Peta Persebaran Lembaga Pelatihan Kerja Provinsi di Indonesia per Januari - Desember s.d Tahun {{
+          selectedYearPersebaranLPKTerverifikasi }}
         </h5>
       </div>
-    <PetaPersebaranLembagaPelatihanKerja />
+      <PetaPersebaranLembagaPelatihanKerja />
     </div>
   </div>
 
@@ -25,56 +34,48 @@
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Peta Persebaran Lembaga Pelatihan Kerja Provinsi di Indonesia per Januari - Desember Tahun {{ selectedYear }}
+              Peta Persebaran Lembaga Pelatihan Kerja Provinsi di Indonesia per Januari - Desember Tahun {{ selectedYear
+              }}
             </h5>
             <div class="relative">
-              <DatePicker picker="year" id="datepicker_tren"
-                v-model="selectedYear"
-                @change="handleJumlahLPKTerverifikasiYearChanged"
-              />
+              <DatePicker picker="year" id="datepicker_tren" v-model="selectedYear"
+                @change="handleJumlahLPKTerverifikasiYearChanged" />
             </div>
           </div>
-          <JumlahLembagaPelatihanKerja :filter="filterJumlahLPKTerverifikasi"/>
+          <JumlahLembagaPelatihanKerja :filter="filterJumlahLPKTerverifikasi" />
         </div>
       </div>
     </div>
   </div>
 
-  <div
-    class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
-    data-aos="zoom-in"
-  >
+  <div class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8" data-aos="zoom-in">
     <div class="p-5">
       <div class="flex justify-between">
         <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-          Jumlah Lembaga Pelatihan Kerja Yang Sudah dan Belum Terakreditasi di Indonesia s.d Tahun {{ selectedYearJumlahLPKBelumTerakreditasi }}
+          Jumlah Lembaga Pelatihan Kerja Yang Sudah dan Belum Terakreditasi di Indonesia s.d Tahun {{
+          selectedYearJumlahLPKBelumTerakreditasi }}
         </h5>
         <div class="relative">
-          <DatePicker picker="year" id="datepicker_tren"
-            @change="handleJumlahLPKBelumTerakreditasiYearChanged"
-          />
+          <DatePicker picker="year" id="datepicker_tren" @change="handleJumlahLPKBelumTerakreditasiYearChanged" />
         </div>
       </div>
-    <PetaPersebaranLPKTerakreditasi :selectedYearJumlahLPKBelumTerakreditasi="selectedYearJumlahLPKBelumTerakreditasi" />
+      <PetaPersebaranLPKTerakreditasi
+        :selectedYearJumlahLPKBelumTerakreditasi="selectedYearJumlahLPKBelumTerakreditasi" />
     </div>
   </div>
 
-  <div
-    class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
-    data-aos="zoom-in"
-  >
+  <div class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8" data-aos="zoom-in">
     <div class="p-5">
       <div class="flex justify-between">
         <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
           Persebaran Kapasitas Latih di Indonesia s.d Tahun {{ selectedYearSebaranKapasitasLatih }}
         </h5>
         <div class="relative">
-          <DatePicker picker="year" id="datepicker_tren"
-            @change="handlePersebaranKapasitasLatihYearChanged"
-          />
+          <DatePicker picker="year" id="datepicker_tren" @change="handlePersebaranKapasitasLatihYearChanged" />
         </div>
       </div>
-    <PetaPersebaranKapasitasLatih :selectedYearSebaranKapasitasLatih="selectedYearSebaranKapasitasLatih" @loading-complete="handleLoadingComplete" />
+      <PetaPersebaranKapasitasLatih :selectedYearSebaranKapasitasLatih="selectedYearSebaranKapasitasLatih"
+        @loading-complete="handleLoadingComplete" />
     </div>
   </div>
 
@@ -87,13 +88,11 @@
               10 Kejuruan Pelatihan Dengan Peminat Terbesar Periode Januari - Desember Tahun {{ selectedYear }}
             </h5>
             <div class="relative">
-              <DatePicker picker="year" id="datepicker_tren"
-                v-model="selectedYear"
-                @change="handleKejuruanPelatihanPeminatTerbesarYearChanged"
-              />
+              <DatePicker picker="year" id="datepicker_tren" v-model="selectedYear"
+                @change="handleKejuruanPelatihanPeminatTerbesarYearChanged" />
             </div>
           </div>
-          <PersentasePeminatProgramPelatihanKejuruan :filter="filterKejuruanPelatihanPeminatTerbesar"/>
+          <PersentasePeminatProgramPelatihanKejuruan :filter="filterKejuruanPelatihanPeminatTerbesar" />
         </div>
       </div>
     </div>
@@ -108,13 +107,11 @@
               Persentase Kebekerjaan Lulusan LPK s.d Tahun {{ selectedYearPersentaseTingkatPencariKerja }}
             </h5>
             <div class="relative">
-              <DatePicker picker="year" id="datepicker_tren"
-                v-model="selectedYear"
-                @change="handlePersentaseLulusanPelatihanYearChanged"
-              />
+              <DatePicker picker="year" id="datepicker_tren" v-model="selectedYear"
+                @change="handlePersentaseLulusanPelatihanYearChanged" />
             </div>
           </div>
-          <PersentaseTingkatPencariKerjaPadaLPK :filter="filterPersentaseLulusanPelatihan"/>
+          <PersentaseTingkatPencariKerjaPadaLPK :filter="filterPersentaseLulusanPelatihan" />
         </div>
       </div>
     </div>
@@ -130,76 +127,59 @@
             </h5>
             <div class="relative">
               <div class="flex">
-                <DatePicker picker="year" id="datepicker_tren_dagri"
-                  v-model="selectedYear"
-                  @change="handleTrenJumlahPesertaPemaganganDagriYearChanged"  
-                />
+                <DatePicker picker="year" id="datepicker_tren_dagri" v-model="selectedYear"
+                  @change="handleTrenJumlahPesertaPemaganganDagriYearChanged" />
               </div>
             </div>
           </div>
-          <TrenJumlahPesertaPemaganganDalamNegeri
-            :filter="filterTrenJumlahPesertaPemaganganDagri"
-          />
+          <TrenJumlahPesertaPemaganganDalamNegeri :filter="filterTrenJumlahPesertaPemaganganDagri" />
         </div>
       </div>
     </div>
     <div class="col-span-2">
       <div ref="tour11" class="mt-8 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
-            <div class="flex justify-between">
-              <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-                Tren Jumlah Peserta Pemagangan Luar Negeri
-              </h5>
-              <div class="relative">
-                <div class="flex">
-                  <DatePicker picker="year" id="datepicker_tren_lugri"
-                    v-model="selectedYear"
-                    @change="handleTrenJumlahPesertaPemaganganLugriYearChanged"
-                  />
-                </div>
+          <div class="flex justify-between">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+              Tren Jumlah Peserta Pemagangan Luar Negeri
+            </h5>
+            <div class="relative">
+              <div class="flex">
+                <DatePicker picker="year" id="datepicker_tren_lugri" v-model="selectedYear"
+                  @change="handleTrenJumlahPesertaPemaganganLugriYearChanged" />
               </div>
             </div>
-            <TrenJumlahPesertaPemaganganLuarNegeri 
-              :filter="filterTrenJumlahPesertaPemaganganLugri" 
-            />
+          </div>
+          <TrenJumlahPesertaPemaganganLuarNegeri :filter="filterTrenJumlahPesertaPemaganganLugri" />
         </div>
       </div>
     </div>
   </div>
 
-  <div
-    class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
-    data-aos="zoom-in"
-  >
+  <div class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8" data-aos="zoom-in">
     <div class="p-5">
       <div class="flex justify-between">
         <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
           Persentase Sebaran Instruktur Menurut Kategori di Indonesia s.d Tahun {{ selectedYearSebaranInstruktur }}
         </h5>
         <div class="relative">
-          <DatePicker picker="year" id="datepicker_tren"
-            @change="handlePersentaseSebaranInstrukturYearChanged"
-          />
+          <DatePicker picker="year" id="datepicker_tren" @change="handlePersentaseSebaranInstrukturYearChanged" />
         </div>
       </div>
       <PetaPersebaranKategoriInstruktur :selectedYearSebaranInstruktur="selectedYearSebaranInstruktur" />
     </div>
   </div>
 
-  <div
-    class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
-    data-aos="zoom-in"
-  >
+  <div class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8" data-aos="zoom-in">
     <div class="p-5">
       <div class="flex justify-between">
         <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
-          Persentase Sebaran Tenaga Pelatihan Menurut Kategori di Indonesia s.d Tahun {{ selectedYearSebaranTenagaPelatihan }}
+          Persentase Sebaran Tenaga Pelatihan Menurut Kategori di Indonesia s.d Tahun {{
+          selectedYearSebaranTenagaPelatihan }}
         </h5>
         <div class="relative">
           <DatePicker picker="year" id="datepicker_sebaran_tenaga_pelatihan"
-            v-model="selectedYearSebaranTenagaPelatihan"
-            @change="handlePersentaseSebaranTenagaPelatihanYearChanged"
-          />
+            v-model="selectedYearSebaranTenagaPelatihan" @change="handlePersentaseSebaranTenagaPelatihanYearChanged" />
         </div>
       </div>
       <PetaPersebaranTenagaPelatihan :selectedYearSebaranTenagaPelatihan="selectedYearSebaranTenagaPelatihan" />
@@ -215,38 +195,29 @@
               Jumlah Kebekerjaan Peserta Pelatihan Menurut Masa Tunggu Periode Januari - Desember {{ selectedYear }}
             </h5>
             <div class="relative">
-              <DatePicker picker="year" id="datepicker_masa_tunggu_lulus"
-                v-model="selectedYearMasaTungguLulus"
-                @change="handleMasaTungguLulusYearChanged"
-              />
+              <DatePicker picker="year" id="datepicker_masa_tunggu_lulus" v-model="selectedYearMasaTungguLulus"
+                @change="handleMasaTungguLulusYearChanged" />
             </div>
           </div>
-          <TableMasaTungguLulus :selectedYearMasaTungguLulus="selectedYearMasaTungguLulus"/>
+          <TableMasaTungguLulus :selectedYearMasaTungguLulus="selectedYearMasaTungguLulus" />
         </div>
       </div>
     </div>
   </div>
 
-  <div
-    class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8"
-    data-aos="zoom-in"
-  >
+  <div class="w-full rounded-lg border border-gray-200 bg-white shadow mt-8" data-aos="zoom-in">
     <div class="p-5">
       <div class="flex justify-between">
         <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900">
           Sebaran Produktivitas Tenaga Kerja Tahun {{ selectedYearTrenProduktifitasTenagaKerja }} (Rp/TK)
         </h5>
         <div class="relative">
-          <DatePicker 
-            picker="year" 
-            id="datepicker_sebaran_tren_produktifitas_tenaga_kerja"
-            v-model="selectedYearTrenProduktifitasTenagaKerja"
-            :disabled-date="disabledDate"
-            @change="handleTrenProduktifitasTenagaKerjaYearChanged"
-          />
+          <DatePicker picker="year" id="datepicker_sebaran_tren_produktifitas_tenaga_kerja"
+            v-model="selectedYearTrenProduktifitasTenagaKerja" :disabled-date="disabledDate"
+            @change="handleTrenProduktifitasTenagaKerjaYearChanged" />
         </div>
       </div>
-    <ProduktifitasNasional :selectedYearTrenProduktifitasTenagaKerja="selectedYearTrenProduktifitasTenagaKerja" />
+      <ProduktifitasNasional :selectedYearTrenProduktifitasTenagaKerja="selectedYearTrenProduktifitasTenagaKerja" />
     </div>
   </div>
 
@@ -254,11 +225,11 @@
     <div class="col-span-3">
       <div ref="tour19" class="mt-8 mb-5 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div class="p-5">
-            <div class="flex justify-between">
-              <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-                Tren Produktifitas Tenaga Kerja Berdasarkan Lapangan Usaha (Rp/TK)
-              </h5>
-            </div>
+          <div class="flex justify-between">
+            <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
+              Tren Produktifitas Tenaga Kerja Berdasarkan Lapangan Usaha (Rp/TK)
+            </h5>
+          </div>
           <ProduktifitasLapanganUsaha />
         </div>
       </div>
@@ -266,6 +237,36 @@
   </div>
 
   <!-- <a-tour v-model:current="current" :open="open" :steps="steps" @close="handleOpen(false)" /> -->
+
+  <Modal v-if="isTutorialOpen" @close="isTutorialOpen = false">
+    <template #header>
+      <h3 class="text-lg font-semibold text-gray-900">
+        Tutorial Untuk Upload Data Chart
+      </h3>
+    </template>
+
+    <template #body>
+      <div class="flex flex-col items-center">
+        <video width="720" height="400" controls>
+          <source src="/assets/videos/upload-tutorial.mp4" type="video/mp4" />
+          Browser Anda tidak mendukung pemutaran video.
+        </video>
+
+        <p class="mt-4 text-gray-700 text-center">
+          Tutorial ini menjelaskan langkah-langkah untuk melakukan upload data chart pada aplikasi.
+        </p>
+      </div>
+    </template>
+
+    <template #footer>
+      <div class="flex justify-end">
+        <button @click="isTutorialOpen = false" type="button"
+          class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+          Tutup
+        </button>
+      </div>
+    </template>
+  </Modal>
 </template>
 
 <style>
@@ -295,6 +296,7 @@
 import axios from "axios";
 import { ref } from 'vue';
 import * as L from "leaflet";
+import { Modal, Alert } from "flowbite-vue";
 import KapasitasPPK from "./KapasitasPPK.vue";
 import Particles from '../Shared/Particles.vue';
 import { SyncOutlined } from '@ant-design/icons-vue';
@@ -330,14 +332,17 @@ import FilterMasaTungguLulusProgramPelatihan from "../Shared/FilterMasaTungguLul
 import FilterTingkatPenyerapanLulusProgramPelatihan from "../Shared/FilterTingkatPenyerapanLulusProgramPelatihan.vue";
 import FilterTrenJumlahPesertaPemaganganDagriProvinsi from "../Shared/FilterTrenJumlahPesertaPemaganganDagriProvinsi.vue";
 import FilterTrenJumlahPesertaPemaganganLugriProvinsi from "../Shared/FilterTrenJumlahPesertaPemaganganLugriProvinsi.vue";
-import { 
-  COffcanvas, 
-  COffcanvasHeader, 
-  COffcanvasTitle, 
-  COffcanvasBody } from '@coreui/vue';
+import {
+  COffcanvas,
+  COffcanvasHeader,
+  COffcanvasTitle,
+  COffcanvasBody
+} from '@coreui/vue';
 export default {
   name: "TheDashboard",
   components: {
+    Modal,
+    Alert,
     Particles,
     DatePicker,
     COffcanvas,
@@ -534,38 +539,39 @@ export default {
       visible: false,
       allRepo: [],
       isLoading: true,
+      isTutorialOpen: false,
       useSecondComponent: false,
 
-      filterPetaPersebaranLPKTerverifikasi              : "/repositories",
-      filterJumlahLPKTerverifikasi                      : "/total-recap-lpk",
-      filterJumlahLPKBelumTerakreditasi                 : "/accreditation-level-recap-lpk",
-      filterPersebaranKapasitasLatih                    : "/recap-capacity-ppk",
-      filterKejuruanPelatihanPeminatTerbesar            : "/recap-percentage-training-program-applicants-vocational-field",
-      filterPersentaseLulusanPelatihan                  : "/recap-percentage-job-seekers-lpk",
-      filterPersentaseSebaranInstruktur                 : "/recap-instructor-category-percentage",
-      filterPersentaseSebaranTenagaPelatihan            : "/recap-training-personnel-category-percentage",
-      filterKapasitasPPKProvinsi                        : "/recap-capacity-ppk",
-      filterTrenJumlahKategoriProgramPelatihan          : "/recap-trends-number-training-program-categories",
-      filterProgramPelatihanProvinsi                    : "/recap-training-programs-high-demand",
-      filterTrenJumlahPesertaPemaganganDagri            : "/recap-trends-number-apprentices-dagri",
-      filterTrenJumlahPesertaPemaganganDagriProvinsi    : "/recap-trends-number-apprentices-dagri",
-      filterTrenJumlahPesertaPemaganganLugri            : "/recap-trends-number-apprentices-lugri",
-      filterTrenJumlahPesertaPemaganganLugriProvinsi    : "/recap-trends-number-apprentices-dagri",
-      filterProduktifitas                               : "/recap-labor-productivity",
-      filterInstruktur                                  : "/recap-instructor-category-percentage",
-      filterTenagaPelatihan                             : "/recap-training-personnel-category-percentage",
-      filterMasaTunggu                                  : "/recap-waiting-period-graduate-pie",
-      filterTingkatPenyerapan                           : "/recap-graduate-absorption-rate-pie",
-      selectedDate                                      : null,
-      selectedYear                                      : currentYear,
-      selectedYearPersebaranLPKTerverifikasi            : currentYear,
-      selectedYearJumlahLPKBelumTerakreditasi           : currentYear,
-      selectedYearSebaranKapasitasLatih                 : currentYear,
-      selectedYearPersentaseTingkatPencariKerja         : currentYear,
-      selectedYearSebaranInstruktur                     : currentYear,
-      selectedYearSebaranTenagaPelatihan                : currentYear,
-      selectedYearMasaTungguLulus                       : currentYear,
-      selectedYearTrenProduktifitasTenagaKerja          : 2024,
+      filterPetaPersebaranLPKTerverifikasi: "/repositories",
+      filterJumlahLPKTerverifikasi: "/total-recap-lpk",
+      filterJumlahLPKBelumTerakreditasi: "/accreditation-level-recap-lpk",
+      filterPersebaranKapasitasLatih: "/recap-capacity-ppk",
+      filterKejuruanPelatihanPeminatTerbesar: "/recap-percentage-training-program-applicants-vocational-field",
+      filterPersentaseLulusanPelatihan: "/recap-percentage-job-seekers-lpk",
+      filterPersentaseSebaranInstruktur: "/recap-instructor-category-percentage",
+      filterPersentaseSebaranTenagaPelatihan: "/recap-training-personnel-category-percentage",
+      filterKapasitasPPKProvinsi: "/recap-capacity-ppk",
+      filterTrenJumlahKategoriProgramPelatihan: "/recap-trends-number-training-program-categories",
+      filterProgramPelatihanProvinsi: "/recap-training-programs-high-demand",
+      filterTrenJumlahPesertaPemaganganDagri: "/recap-trends-number-apprentices-dagri",
+      filterTrenJumlahPesertaPemaganganDagriProvinsi: "/recap-trends-number-apprentices-dagri",
+      filterTrenJumlahPesertaPemaganganLugri: "/recap-trends-number-apprentices-lugri",
+      filterTrenJumlahPesertaPemaganganLugriProvinsi: "/recap-trends-number-apprentices-dagri",
+      filterProduktifitas: "/recap-labor-productivity",
+      filterInstruktur: "/recap-instructor-category-percentage",
+      filterTenagaPelatihan: "/recap-training-personnel-category-percentage",
+      filterMasaTunggu: "/recap-waiting-period-graduate-pie",
+      filterTingkatPenyerapan: "/recap-graduate-absorption-rate-pie",
+      selectedDate: null,
+      selectedYear: currentYear,
+      selectedYearPersebaranLPKTerverifikasi: currentYear,
+      selectedYearJumlahLPKBelumTerakreditasi: currentYear,
+      selectedYearSebaranKapasitasLatih: currentYear,
+      selectedYearPersentaseTingkatPencariKerja: currentYear,
+      selectedYearSebaranInstruktur: currentYear,
+      selectedYearSebaranTenagaPelatihan: currentYear,
+      selectedYearMasaTungguLulus: currentYear,
+      selectedYearTrenProduktifitasTenagaKerja: 2024,
     }
   },
 
@@ -583,7 +589,7 @@ export default {
             Authorization: "Bearer " + token.value,
           },
         };
-        
+
         // Load statistics in parallel for better performance
         const [lpkResponse, programResponse, pesertaResponse, instrukturResponse] = await Promise.all([
           axios.get(import.meta.env.VITE_API_URL + '/total-recap-lpk', config),
@@ -591,7 +597,7 @@ export default {
           axios.get(import.meta.env.VITE_API_URL + '/recap-percentage-job-seekers-lpk', config),
           axios.get(import.meta.env.VITE_API_URL + '/recap-instructor-category-percentage', config)
         ]);
-        
+
         // Process responses
         if (lpkResponse.data?.data) {
           this.totalLPK = Object.values(lpkResponse.data.data).reduce((sum, val) => sum + (val || 0), 0);
@@ -609,7 +615,7 @@ export default {
         console.error('Error loading statistics:', error);
       }
     },
-    
+
     async refreshAllData() {
       this.isLoading = true;
       try {
@@ -622,7 +628,7 @@ export default {
         this.isLoading = false;
       }
     },
-    
+
     disabledDate(current) {
       const year = current.year();
       const minYear = 2011;
@@ -655,7 +661,7 @@ export default {
         import.meta.env.VITE_API_URL + '/province-list',
         {
           headers: {
-              Authorization: "Bearer " + token.value,
+            Authorization: "Bearer " + token.value,
           },
         }
       )
@@ -666,7 +672,7 @@ export default {
         import.meta.env.VITE_API_URL + '/institutions-type-list',
         {
           headers: {
-              Authorization: "Bearer " + token.value,
+            Authorization: "Bearer " + token.value,
           },
         }
       )
@@ -793,7 +799,7 @@ export default {
       const end_year = date[0].$y;
       const end_month = date[0].$M;
       const end_date = date[0].$D;
-      
+
       if (date != null) {
         this.selectedYear = date.$y;
         this.filterPersentaseLulusanPelatihan = "/recap-percentage-job-seekers-lpk-year/" + date.$y;
@@ -960,7 +966,7 @@ export default {
     handleLoadingComplete(isLoading) {
       this.isLoading = false;
     },
-    
+
     // Debounced method for better performance
     debounce(func, wait) {
       let timeout;
