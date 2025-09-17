@@ -116,10 +116,11 @@ export default {
   },
   methods: {
     updateApi(newYear) {
+      const currentYear = new Date().getFullYear();
       if (newYear) {
         this.api = `/recap-capacity-ppk-year/${newYear}`;
       } else {
-        this.api = "/recap-capacity-ppk";
+        this.api = `/recap-capacity-ppk-year/${currentYear}`;
       }
       this.fetchData();
     },

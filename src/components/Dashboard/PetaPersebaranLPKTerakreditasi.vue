@@ -116,10 +116,11 @@ export default {
   },
   methods: {
     updateApi(newYear) {
+      const currentYear = new Date().getFullYear();
       if (newYear) {
         this.api = `/accreditation-level-recap-lpk-year/${newYear}`;
       } else {
-        this.api = "/accreditation-level-recap-lpk";
+        this.api = `/accreditation-level-recap-lpk-year/${currentYear}`;
       }
       this.fetchData();
     },

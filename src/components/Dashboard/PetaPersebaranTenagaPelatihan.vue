@@ -116,10 +116,11 @@ export default {
   },
   methods: {
     updateApi(newYear) {
+      const currentYear = new Date().getFullYear();
       if (newYear) {
         this.api = `/recap-training-personnel-category-percentage-year/${newYear}`;
       } else {
-        this.api = "/recap-training-personnel-category-percentage";
+        this.api = `/recap-training-personnel-category-percentage-year/${currentYear}`;
       }
       this.fetchData();
     },

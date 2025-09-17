@@ -116,10 +116,11 @@ export default {
   },
   methods: {
     updateApi(newYear) {
+      const currentYear = new Date().getFullYear();
       if (newYear) {
         this.api = `/recap-national-productivity-year/${newYear}`;
       } else {
-        this.api = "/recap-national-productivity";
+        this.api = `/recap-national-productivity-year/${currentYear}`;
       }
       this.fetchData();
     },

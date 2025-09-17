@@ -542,19 +542,19 @@ export default {
       useSecondComponent: false,
 
       filterPetaPersebaranLPKTerverifikasi: "/repositories",
-      filterJumlahLPKTerverifikasi: "/total-recap-lpk",
+      filterJumlahLPKTerverifikasi: `/total-recap-lpk-year/${currentYear}`,
       filterJumlahLPKBelumTerakreditasi: "/accreditation-level-recap-lpk",
       filterPersebaranKapasitasLatih: "/recap-capacity-ppk",
-      filterKejuruanPelatihanPeminatTerbesar: "/recap-percentage-training-program-applicants-vocational-field",
-      filterPersentaseLulusanPelatihan: "/recap-percentage-job-seekers-lpk",
+      filterKejuruanPelatihanPeminatTerbesar: `/recap-percentage-training-program-applicants-vocational-field-year/${currentYear}`,
+      filterPersentaseLulusanPelatihan: `/recap-percentage-job-seekers-lpk-year/${currentYear}`,
       filterPersentaseSebaranInstruktur: "/recap-instructor-category-percentage",
       filterPersentaseSebaranTenagaPelatihan: "/recap-training-personnel-category-percentage",
       filterKapasitasPPKProvinsi: "/recap-capacity-ppk",
-      filterTrenJumlahKategoriProgramPelatihan: "/recap-trends-number-training-program-categories",
+      filterTrenJumlahKategoriProgramPelatihan: `/recap-trends-number-training-program-categories-year/${currentYear}`,
       filterProgramPelatihanProvinsi: "/recap-training-programs-high-demand",
-      filterTrenJumlahPesertaPemaganganDagri: "/recap-trends-number-apprentices-dagri",
+      filterTrenJumlahPesertaPemaganganDagri: `/recap-trends-number-apprentices-dagri-year/${currentYear}`,
       filterTrenJumlahPesertaPemaganganDagriProvinsi: "/recap-trends-number-apprentices-dagri",
-      filterTrenJumlahPesertaPemaganganLugri: "/recap-trends-number-apprentices-lugri",
+      filterTrenJumlahPesertaPemaganganLugri: `/recap-trends-number-apprentices-lugri-year/${currentYear}`,
       filterTrenJumlahPesertaPemaganganLugriProvinsi: "/recap-trends-number-apprentices-dagri",
       filterProduktifitas: "/recap-labor-productivity",
       filterInstruktur: "/recap-instructor-category-percentage",
@@ -769,28 +769,33 @@ export default {
       }
     },
     handleJumlahLPKTerverifikasiYearChanged(date) {
+      const currentYear = new Date().getFullYear();
       if (date != null) {
         this.selectedYear = date.$y;
         this.filterJumlahLPKTerverifikasi = "/total-recap-lpk-year/" + date.$y;
       } else {
-        this.filterJumlahLPKTerverifikasi = "/total-recap-lpk";
+        this.selectedYear = currentYear;
+        this.filterJumlahLPKTerverifikasi = `/total-recap-lpk-year/${currentYear}`;
       }
     },
     handleJumlahLPKBelumTerakreditasiYearChanged(date) {
+      const currentYear = new Date().getFullYear();
       if (date != null) {
         this.selectedYearJumlahLPKBelumTerakreditasi = date.$y;
       } else {
-        this.selectedYearJumlahLPKBelumTerakreditasi = null;
+        this.selectedYearJumlahLPKBelumTerakreditasi = currentYear;
       }
     },
     handlePersebaranKapasitasLatihYearChanged(date) {
+      const currentYear = new Date().getFullYear();
       if (date != null) {
         this.selectedYearSebaranKapasitasLatih = date.$y;
       } else {
-        this.selectedYearSebaranKapasitasLatih = null;
+        this.selectedYearSebaranKapasitasLatih = currentYear;
       }
     },
     handlePersentaseLulusanPelatihanDateChanged(date) {
+      const currentYear = new Date().getFullYear();
       const start_year = date[0].$y;
       const start_month = date[0].$M;
       const start_date = date[0].$D;
@@ -803,51 +808,60 @@ export default {
         this.selectedYear = date.$y;
         this.filterPersentaseLulusanPelatihan = "/recap-percentage-job-seekers-lpk-year/" + date.$y;
       } else {
-        this.filterPersentaseLulusanPelatihan = "/recap-percentage-job-seekers-lpk";
+        this.selectedYear = currentYear;
+        this.filterPersentaseLulusanPelatihan = `/recap-percentage-job-seekers-lpk-year/${currentYear}`;
       }
     },
     handleKejuruanPelatihanPeminatTerbesarYearChanged(date) {
+      const currentYear = new Date().getFullYear();
       if (date != null) {
         this.selectedYear = date.$y;
         this.filterKejuruanPelatihanPeminatTerbesar = "/recap-percentage-training-program-applicants-vocational-field-year/" + date.$y;
       } else {
-        this.filterKejuruanPelatihanPeminatTerbesar = "/recap-percentage-training-program-applicants-vocational-field";
+        this.selectedYear = currentYear;
+        this.filterKejuruanPelatihanPeminatTerbesar = `/recap-percentage-training-program-applicants-vocational-field-year/${currentYear}`;
       }
     },
     handlePersentaseLulusanPelatihanYearChanged(date) {
+      const currentYear = new Date().getFullYear();
       if (date != null) {
         this.selectedYear = date.$y;
         this.filterPersentaseLulusanPelatihan = "/recap-percentage-job-seekers-lpk-year/" + date.$y;
       } else {
-        this.filterPersentaseLulusanPelatihan = "/recap-percentage-job-seekers-lpk";
+        this.selectedYear = currentYear;
+        this.filterPersentaseLulusanPelatihan = `/recap-percentage-job-seekers-lpk-year/${currentYear}`;
       }
     },
     handlePersentaseSebaranInstrukturYearChanged(date) {
+      const currentYear = new Date().getFullYear();
       if (date != null) {
         this.selectedYearSebaranInstruktur = date.$y;
       } else {
-        this.selectedYearSebaranInstruktur = null;
+        this.selectedYearSebaranInstruktur = currentYear;
       }
     },
     handlePersentaseSebaranTenagaPelatihanYearChanged(date) {
+      const currentYear = new Date().getFullYear();
       if (date != null) {
         this.selectedYearSebaranTenagaPelatihan = date.$y;
       } else {
-        this.selectedYearSebaranTenagaPelatihan = null;
+        this.selectedYearSebaranTenagaPelatihan = currentYear;
       }
     },
     handleMasaTungguLulusYearChanged(date) {
+      const currentYear = new Date().getFullYear();
       if (date != null) {
         this.selectedYearMasaTungguLulus = date.$y;
       } else {
-        this.selectedYearMasaTungguLulus = null;
+        this.selectedYearMasaTungguLulus = currentYear;
       }
     },
     handleTrenProduktifitasTenagaKerjaYearChanged(date) {
+      const currentYear = new Date().getFullYear();
       if (date != null) {
         this.selectedYearTrenProduktifitasTenagaKerja = date.$y;
       } else {
-        this.selectedYearTrenProduktifitasTenagaKerja = null;
+        this.selectedYearTrenProduktifitasTenagaKerja = currentYear;
       }
     },
     handleKapasitasPPKProvinsiChanged(data) {
@@ -865,10 +879,11 @@ export default {
       }
     },
     handleTrenJumlahKategoriProgramPelatihanChanged(date) {
+      const currentYear = new Date().getFullYear();
       if (date != null) {
         this.filterTrenJumlahKategoriProgramPelatihan = "/recap-trends-number-training-program-categories-year/" + date.$y;
       } else {
-        this.filterTrenJumlahKategoriProgramPelatihan = "/recap-trends-number-training-program-categories";
+        this.filterTrenJumlahKategoriProgramPelatihan = `/recap-trends-number-training-program-categories-year/${currentYear}`;
       }
     },
     handleProgramPelatihanProvinsiChanged(data) {
@@ -886,10 +901,11 @@ export default {
       }
     },
     handleTrenJumlahPesertaPemaganganDagriYearChanged(date) {
+      const currentYear = new Date().getFullYear();
       if (date != null) {
         this.filterTrenJumlahPesertaPemaganganDagri = "/recap-trends-number-apprentices-dagri-year/" + date.$y;
       } else {
-        this.filterTrenJumlahPesertaPemaganganDagri = "/recap-trends-number-apprentices-dagri";
+        this.filterTrenJumlahPesertaPemaganganDagri = `/recap-trends-number-apprentices-dagri-year/${currentYear}`;
       }
     },
     handleTrenJumlahPesertaPemaganganDagriProvinsiChanged(data) {
@@ -907,10 +923,11 @@ export default {
       }
     },
     handleTrenJumlahPesertaPemaganganLugriYearChanged(date) {
+      const currentYear = new Date().getFullYear();
       if (date != null) {
         this.filterTrenJumlahPesertaPemaganganLugri = "/recap-trends-number-apprentices-lugri-year/" + date.$y;
       } else {
-        this.filterTrenJumlahPesertaPemaganganLugri = "/recap-trends-number-apprentices-lugri";
+        this.filterTrenJumlahPesertaPemaganganLugri = `/recap-trends-number-apprentices-lugri-year/${currentYear}`;
       }
     },
     handleTrenJumlahPesertaPemaganganLugriProvinsiChanged(data) {
@@ -928,10 +945,11 @@ export default {
       }
     },
     handleProduktifitasChanged(date) {
+      const currentYear = new Date().getFullYear();
       if (date != null) {
         this.filterProduktifitas = "/recap-labor-productivity-year/" + date.$y;
       } else {
-        this.filterProduktifitas = "/recap-labor-productivity";
+        this.filterProduktifitas = `/recap-labor-productivity-year/${currentYear}`;
       }
     },
     handleProgramPelatihanMasaTungguLulusChanged(data) {
