@@ -1,5 +1,5 @@
 <template>
-  <LoadingSpinner v-if="isLoading" />
+  <!-- <LoadingSpinner v-if="isLoading" /> -->
   <!-- <particles></particles> -->
   <div class="text-end mb-3">
     <div class="flex space-x-4">
@@ -34,7 +34,7 @@
         <div class="p-5">
           <div class="flex justify-between">
             <h5 class="mb-5 text-lg font-medium tracking-tight text-gray-900">
-              Peta Persebaran Lembaga Pelatihan Kerja Provinsi di Indonesia per Januari - Desember Tahun {{ selectedYear
+              Jumlah Lembaga Pelatihan Kerja Terverifikasi di Indonesia Menurut Tipe Lembaga s.d Tahun {{ selectedYear
               }}
             </h5>
             <div class="relative">
@@ -74,8 +74,7 @@
           <DatePicker picker="year" id="datepicker_tren" @change="handlePersebaranKapasitasLatihYearChanged" />
         </div>
       </div>
-      <PetaPersebaranKapasitasLatih :selectedYearSebaranKapasitasLatih="selectedYearSebaranKapasitasLatih"
-        @loading-complete="handleLoadingComplete" />
+      <PetaPersebaranKapasitasLatih :selectedYearSebaranKapasitasLatih="selectedYearSebaranKapasitasLatih" />
     </div>
   </div>
 
@@ -571,7 +570,7 @@ export default {
       selectedYearSebaranInstruktur: currentYear,
       selectedYearSebaranTenagaPelatihan: currentYear,
       selectedYearMasaTungguLulus: currentYear,
-      selectedYearTrenProduktifitasTenagaKerja: 2024,
+      selectedYearTrenProduktifitasTenagaKerja: currentYear,
     }
   },
 

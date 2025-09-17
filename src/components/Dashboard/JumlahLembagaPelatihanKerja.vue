@@ -105,14 +105,14 @@ export default {
         })
         .then((response) => {
           if (response.data) {
-            var LPK_SWASTA            = response.data.data.LPK_SWASTA;
-            var BLK_KOMUNITAS         = response.data.data.BLK_KOMUNITAS;
-            var BLKLN                 = response.data.data.BLKLN;
-            var LEMBAGA_PELATIHAN_KL  = response.data.data.LEMBAGA_PELATIHAN_KL;
-            var BLK_UPTD              = response.data.data.BLK_UPTD;
-            var BLK_UPTP              = response.data.data.BLK_UPTP;
-            var LPK_PERUSAHAAN        = response.data.data.LPK_PERUSAHAAN;
-            var SKPD                  = response.data.data.SKPD;
+            var LPK_SWASTA = response.data.data.LPK_SWASTA;
+            var BLK_KOMUNITAS = response.data.data.BLK_KOMUNITAS;
+            var BLKLN = response.data.data.BLKLN;
+            var LEMBAGA_PELATIHAN_KL = response.data.data.LEMBAGA_PELATIHAN_KL;
+            var BLK_UPTD = response.data.data.BLK_UPTD;
+            var BLK_UPTP = response.data.data.BLK_UPTP;
+            var LPK_PERUSAHAAN = response.data.data.LPK_PERUSAHAAN;
+            var SKPD = response.data.data.SKPD;
 
             this.chartOptions.series[0].data = [LPK_SWASTA];
             this.chartOptions.series[1].data = [BLK_KOMUNITAS];
@@ -122,7 +122,13 @@ export default {
             this.chartOptions.series[5].data = [BLK_UPTP];
             this.chartOptions.series[6].data = [LPK_PERUSAHAAN];
             this.chartOptions.series[7].data = [SKPD];
+
+            this.$emit('loading-complete', false);
           }
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+          this.$emit('loading-complete', false);
         });
     },
   },
